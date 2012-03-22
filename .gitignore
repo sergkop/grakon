@@ -1,0 +1,8 @@
+*~
+*.project*
+*.pydevproject*
+*.pyc
+*.bak
+*.kate-swp
+grakon/site_settings.py
+grakon/database.sqlite

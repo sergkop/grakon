@@ -1,0 +1,3 @@
+CREATE DATABASE grakon CHARACTER SET utf8;
+create user 'user'@'localhost' identified by 'password';
+grant all privileges on *.* to 'user'@'localhost';

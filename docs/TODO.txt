@@ -1,0 +1,4 @@
+* configure virtualenv inside settings properly
+* describe complete deployment process - file access rights, running services, directories and users to create, etc.
+* move postfix to a separate server
+* when django 1.4 is released - change it's path in requirements.txt
