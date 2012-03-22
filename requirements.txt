@@ -1,8 +1,8 @@
--e svn+http://code.djangoproject.com/svn/django/trunk/#egg=Django
+http://www.djangoproject.com/download/1.4-rc-2/tarball/
 django-tinymce
 south>=0.7.3
 flup
--e git://github.com/pydanny/django-uni-form.git#egg=uni_form
+django-crispy-forms
 bleach
 django-debug-toolbar
 pylibmc
