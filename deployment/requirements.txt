@@ -8,6 +8,7 @@ django-debug-toolbar
 pylibmc
 mysql-python
 scrapy
+pygraphviz
 #python-cloudfiles
 #PIL
 #django-simple-captcha

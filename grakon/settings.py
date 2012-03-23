@@ -72,7 +72,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
 
+    # Libraries
+    'crispy_forms',
+    'south',
+    'tinymce',
+
+    # Applications
     'grakon',
+    'maintenance',
     'navigation',
 )
 

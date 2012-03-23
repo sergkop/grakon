@@ -1,0 +1,383 @@
+/* Header */
+#title_link {
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-decoration: none;
+    font-size: 350%;
+    line-height: 0.8571em;
+    margin: 0.4286em 0 0 1.8em;
+}
+
+#title_link:visited  {
+    color: #fff;
+}
+#title_link sup {
+    padding-left: 0.5em;
+    font-size: 40%;
+    top: -1em;
+}
+#slogan {
+    text-align: left;
+    color: #fff;
+    font-size: 150%;
+}
+.asteriskField{
+    color: #F00;
+}
+
+.dialog_switch_button {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid;
+    cursor: pointer;
+}
+.dialog_switch_button_active {
+    background-color: #BCE4EB;
+}
+
+
+/* additional styles */
+.login_logout {
+    float: right;
+    padding-right: 5px;
+    margin-top: 0.5em;
+}
+
+.user_actions {
+    padding: 5px 0;
+}
+
+.news_header {
+    margin: 0.5em 0 0.3em 0;
+}
+
+.news_text {
+    margin-top: 0.7em;
+}
+
+/* Lists in side panels */
+.column_header {
+    padding: 5px 10px;
+}
+
+.content_block {
+    background: #f5f5f5;
+    border: 1px solid #727DC2; /* #eee*/
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    -webkit-box-shadow: 0 8px 6px -6px #888;
+    -moz-box-shadow: 0 8px 6px -6px #888;
+    box-shadow: 0 8px 6px -6px #888;
+}
+
+.side_block_header h4 {
+    border: 1px solid #727DC2;
+    border-radius: 3px 3px 0 0;
+    border-bottom: none;
+    margin: 0.3em 0 0 0;
+    padding: 5px 0;
+}
+.side_list {
+    padding: 0 10px 0 0;
+    margin: 0 0 0 1em;
+}
+.side_list_btn {
+    text-decoration: none;
+    cursor: normal;
+    float: right;
+    margin-right: 10px;
+    color: grey;
+    opacity: 0.5;
+}
+.side_list_btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    opacity: 1;
+}
+.side_block_image {
+    border: 1px solid #777;
+}
+
+.partner_block {
+    background: #f5f5f5;
+    border: 1px solid #727DC2; /* #eee*/
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin: 0 0 10px;
+    padding: 10px;
+    -webkit-box-shadow: 0 8px 6px -6px #888;
+    -moz-box-shadow: 0 8px 6px -6px #888;
+    box-shadow: 0 8px 6px -6px #888;
+    text-align: center;
+}
+
+select {
+    width: 23em;
+}
+
+.dialog_user_span {
+    font-weight: bold;
+}
+
+.clickable {
+    color: #1C94C4;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.clickable:hover {
+    color: #c77405;
+}
+
+.text_between_btns {
+    padding-right: 1em;
+}
+
+.welcome_message {
+    padding: 0 0 30px 0;
+    font-size: 115%;
+}
+
+.login_dialog_table {
+    border: none;
+}
+.login_dialog_table td {
+    vertical-align: top;
+    border: none;
+}
+
+/* Report link dialog */
+#report_link_ul {
+    list-style-type: none;
+}
+#report_link_ul input {
+    margin-right: 0.5em;
+}
+
+.footer_menu a {
+    margin-right: 1.5em;
+}
+
+.location_header {
+    text-align: center;
+    margin: 0;
+}
+
+div#publicElectionsMap {
+	z-index: 2;
+}
+
+div.olMap {
+    background-color: #ffffff;
+}
+
+div.olControlNavToolbar {
+	top: 10px;
+	left: 60px;
+}
+
+div.olControlNavToolbar div {
+	float: left;
+	margin: 0 3px;
+    width: 24px;
+    height: 22px;
+}
+
+.olControlNavToolbar .fullscreenBtnItemInactive {
+    background: transparent url(../js/theme/default/img/move_feature_off.png) no-repeat center center;
+}
+
+.olControlNavToolbar .fullscreenBtnItemActive {
+    background: transparent url(../js/theme/default/img/move_feature_on.png) no-repeat center center;
+}
+
+div.olControlLayerSwitcher div.layersDiv {
+    background-color: #3980a3;
+}
+
+div.olControlLayerSwitcher div span {
+    background-color: #3980a3;
+}
+
+div.olPopup {
+    border-radius: 3px;
+}
+
+div.olPopupContent {
+    font-size: 12px;
+    overflow: visible;
+    padding: 2px;
+    font-family: Arial;
+    color: black;
+}
+
+div.olPopupContent h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2f8dbc;
+}
+
+div.olPopupContent .description {
+    margin: 0;
+    padding: 1px 1px 1px 8px;
+}
+
+div.olPopupContent .subtitle {
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+div.olPopupCloseBox {
+    background-image: url(/static/js/theme/default/img/map_close.png)
+}
+
+.zoomIn {
+	padding-right: 25px;
+	background: url(/static/images/zoom_in.png) right center no-repeat;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.zoomOut {
+	padding-right: 25px;
+	background: url(/static/images/zoom_out.png) right center no-repeat;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.commissionType {
+    font-size: 9pt;
+    font-style: italic;
+}
+
+.address {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 9pt;
+}
+
+.olControlPanel {
+    position: relative;
+    left: 256px;
+}
+
+.olControlPanel div { 
+    display: block;
+    width:  24px;
+    height: 22px;
+    margin: 15px 5px;
+    background-color: transparent;
+    cursor: pointer;
+    float: left;
+}
+
+.olControlPanel .voterItemInactive {
+    background: transparent url("../images/map/voters_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .voterItemActive {
+    background: transparent url("../images/map/voters_active.png") no-repeat left center;
+}
+
+.olControlPanel .observerItemInactive {
+    background: transparent url("../images/map/observer_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .observerItemActive {
+    background: transparent url("../images/map/observer_active.png") no-repeat left center;
+}
+
+.olControlPanel .memberItemInactive {
+    background: transparent url("../images/map/member_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .memberItemActive {
+    background: transparent url("../images/map/member_active.png") no-repeat left center;
+}
+
+.olControlPanel .prosecutorItemInactive {
+    background: transparent url("../images/map/prosecutor_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .prosecutorItemActive {
+    background: transparent url("../images/map/prosecutor_active.png") no-repeat left center;
+}
+
+.olControlPanel .authorityItemInactive {
+    background: transparent url("../images/map/authority_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .authorityItemActive {
+    background: transparent url("../images/map/authority_active.png") no-repeat left center;
+}
+
+.olControlPanel .journalistItemInactive {
+    background: transparent url("../images/map/journalist_inactive.png") no-repeat left center;
+}
+
+.olControlPanel .journalistItemActive {
+    background: transparent url("../images/map/journalist_active.png") no-repeat left center;
+}
+
+.markerLabel {
+    font-size: 7pt;
+    height: 11px;
+    width: 36px;
+    text-align: center;
+}
+
+#div_id_captcha img{
+	float: left;
+	margin-right: 5px;
+}
+
+#id_captcha_1{
+	width: 35%;
+	margin: 0;
+	background: none repeat scroll 0 0 #FFF;
+	border: 1px solid #AAA;
+	padding: 4px 2px
+}
+
+.ui-dialog .uniForm{ z-index: 1007 !important; }
+
+/* User activity */
+.points {display: inline; float: right; font-weight: bold; font-size: 2em;}
+.points_active {color: #58B555;}
+.points_inactive {color: #B0BFB0;}
+.checklist_form {display: inline;}
+
+/* Banners */
+.find_uik_btn {display: none;}
+#main_tab .find_uik_btn {display:block;}
+
+.addressFields select {display: block;}
+
+.left {text-align: left !important;}
+.results_table th {font-weight: normal;}
+	.results_table th span {display: block; color: #92ba29; font-weight: bold;} 
+	.results_table td a {text-decoration: none; border-bottom: 1px solid #e6eadf;}
+	.results_table td:hover {background-color: #d9e5b7!important;}
+		.results_table td:hover a {border-color: #0077CA; color: #0077CA;}
+
+
+.web_observers_table {width: 100%;}
+.web_observers_table th, .web_observers_table td {border: 1px solid #e6e8dd; text-align: center; vertical-align: middle; padding: 3px 7px;}
+.web_observers_table tr:nth-child(odd) td {background-color: #f4f5f2;}
+.web_observers_table th {box-shadow: inset 0 -1px 0 #ecede5}
+
+.web_observers_table th {background-color: #e6e8de;
+background: -moz-linear-gradient(top, #f6f7f3, #e6e8dd);
+background: -ms-linear-gradient(top, #f6f7f3, #e6e8dd);
+background: -o-linear-gradient(top, #f6f7f3, #e6e8dd);
+background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f7f3), to(#e6e8dd));
+background: -webkit-linear-gradient(top, #f6f7f3, #e6e8dd);
+background: linear-gradient(top, #f6f7f3, #e6e8dd);
+}
+
+.column_right_border {
+    border-right: 1px solid;
+}
