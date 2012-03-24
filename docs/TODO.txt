@@ -1,10 +1,17 @@
 * organize css by files, add blocks, styling
 * take only necessary parts of jquery-ui, compress
 
-* configure virtualenv inside settings properly
 * describe complete deployment process - file access rights, running services, directories and users to create, etc.
+
+* configure virtualenv inside settings properly
 * move postfix to a separate server
 * when django 1.4 is released - change it's path in requirements.txt
 
-* analyze email postfixes, detect sending problems, configure properly
+* analyze email postfixes, detect sending problems, configure properly; start using mailgun.net
 * add google+ page to list of services
+
+* start using celery
+* configure logging
+
+* user pictures
+* replace disqus?
