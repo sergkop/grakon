@@ -11,8 +11,7 @@ Create virtualenv (optional)
     * sudo pip install virtualenv
     * virtualenv --no-site-packages VIRTUAL_ENV_DIR
     * 'source VIRTUAL_ENV_DIR/bin/activate'
-    
-    
+
     * Run every time before running django server or set VIRTUALENV in site_settings.py (?)
 
 Get code from repository:

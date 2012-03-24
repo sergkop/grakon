@@ -1,8 +1,6 @@
 * {box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
-html, #publicElectionsMap {width: 100%; height: 100%;}
+html {width: 100%; height: 100%;}
 body {width: 100%; height: 100%; background-color: #f3f3f3; font-family: Arial, Helvetica, sans-serif;}
-/*header {background: none; box-shadow: none;}
-nav {background: none;}*/
 .ym-wrapper{min-width:1030px; max-width: 1600px; position: relative;}
 a {color: #0077ca;}
 	.ym-col1 a, .ym-col2 a {color: #333;}
@@ -104,17 +102,6 @@ h4, h2 {margin: 1.5em 0 1em; border-bottom: 1px dotted #ccc; padding-bottom: 0.2
 	.ui-dialog-content {font-size: 0.8em;}
 	/*.ui-dialog-content center {text-align:left;}*/
 	
-.side_block_voter { background: url(/static/images/icon_voters.png) 7px 13px no-repeat;}
-.side_block_observer { background: url(/static/images/icon_observer.png) 7px 13px no-repeat;}
-.side_block_member { background: url(/static/images/icon_member.png) 7px 13px no-repeat;}
-	.column_header_icon .side_block_member {background-position: 7px center;}
-.side_block_authority { background: url(/static/images/icon_authority.png) 7px 13px no-repeat;}
-.side_block_prosecutor { background: url(/static/images/icon_prosecutor.png) 7px 13px no-repeat;}
-.side_block_journalist { background: url(/static/images/icon_journalist.png) 7px  13px no-repeat;}
-.side_block_lawyer { background: url(/static/images/icon_lawyer.png) 7px 13px no-repeat;}
-.organizations { background: url(/static/images/icon_organizations.png) 7px 9px no-repeat;}
-.complaints { background: url(/static/images/icon_complaints.png) 7px center no-repeat;}
-.protocols { background: url(/static/images/icon_protocols.gif) 10px center no-repeat;}
 .team { background: url(/static/images/icon_team.png) 7px center no-repeat;}
 .documents { background: url(/static/images/icon_documents.png) 10px 10px no-repeat;}
 .events { background: url(/static/images/icon_events.gif) 7px center no-repeat;}
@@ -122,7 +109,6 @@ h4, h2 {margin: 1.5em 0 1em; border-bottom: 1px dotted #ccc; padding-bottom: 0.2
 .contacts { background: url(/static/images/icon_contacts.png) 10px 8px no-repeat;}
 .steps{ background: url(/static/images/icon_steps.png) 7px 6px no-repeat;}
 .support{ background: url(/static/images/icon_support.png) 7px center no-repeat;}
-.web_observers{ background: url(/static/images/icon_web_observers.png) 5px 8px no-repeat;}
 .participants {background: url(/static/images/icon_participants.png) 7px center no-repeat;}
 .icon_info {background: url(/static/images/icon_infographic.gif) center center no-repeat;}
 	.icon_info a {width: 30px;}
@@ -162,7 +148,6 @@ h3 {margin: 0.3em 0 0;}
 .ui-tabs .ui-tabs-panel {background-color: #fff; margin-top: 0;}
 
 #tabs, #tabs ul.ui-widget-header {background: none; border: none;}
-/*.ui-widget-content, .ui-widget-header {background: none; border: none;}*/
 
 .ui-button {margin: 0;}
 
@@ -239,21 +224,11 @@ h3 {margin: 0.3em 0 0;}
 #add_commission_member_form .ctrlHolder {margin: 1em 0 0 0.4em !important;}
 #add_commission_member_form .textInput, #add_commission_member_form select  {width: 15em;}
 
-#become_web_observer_form label {width: 100px; display: block; float: left;}
-#become_web_observer_form .ctrlHolder {margin: 1em 0 0 0.4em !important;}
-#become_web_observer_form .textInput, #become_web_observer_form select  {width: 15em;}
-
 .banners {border: 1px solid #dedede; padding: 10px; border-radius: 5px; float: left; margin-right: 20px; margin-bottom: 20px; text-align:center}	
 	.banners img {border: 1px solid #dedede;}
 	.banners textarea {width: 238px; height: 70px; resize: none; border: 1px solid #dedede;}
 
-.videoconf {border: 1px dotted #a5a5a5; border-width: 1px 0; margin-bottom:15px; background:url(../images/icon_tools.png) 5px center no-repeat; padding-left: 75px;}
-	.videoconf h4 {margin: 0.7em 0 0.5em; border: none; font-size: 1em; font-weight: bold;}
-		.videoconf h4 a {color: #000;}
-	.videoconf p {font-size: 0.85em; margin: 0 0 1em}
-	.videoconf p a {color: #2f8dbc; text-decoration: none;}
-		.videoconf a:hover {color: #7E17A3;}
-		
+
 .dsq-comment-header {white-space: normal !important;}	
 .ext-search {margin: 1em -1em; position: relative;}
 	.ext-search input.text {width: 100%; border-radius: 1em; border: none; background-color: #f3f3f3; padding: 0.3em 0.9em; box-shadow: inset 0 2px 2px #dbdbdb, inset 0 -1px 1px #dbdbdb; font-size: 1.1em;}

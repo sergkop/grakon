@@ -32,10 +32,10 @@ def init_system():
         'gcc', 'git', 'graphviz', 'mc',
 
         # Services
-        'nginx', 'postfix',
+        'nginx', #'postfix',
 
         # Libraries
-        'libmysqlclient-dev', 'libxslt-dev',
+        'libmysqlclient-dev', 'libxslt-dev', 'graphviz-dev',
     ]
 
     sudo('aptitude install %s' % ' '.join(ubuntu_packages))
@@ -43,6 +43,7 @@ def init_system():
     # TODO: use external configuration file with all passwords, server ips, etc.
 
 def prepare_code():
+    # TODO: if code is already there - make git pull and update it
     run('git clone %s %s' % (REPOSITORY, CODE_DIR_PATH))
 
     # Create settings file

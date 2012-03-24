@@ -5,13 +5,22 @@
 
 * configure virtualenv inside settings properly
 * move postfix to a separate server
-* when django 1.4 is released - change it's path in requirements.txt
+* update path to jquery 1.7.2 when google publishes it
 
-* analyze email postfixes, detect sending problems, configure properly; start using mailgun.net
-* add google+ page to list of services
+* start using mailgun.net (analyze email postfixes, detect sending problems, configure properly;)
+* add google+ page to list of services (Юля)
 
 * start using celery
 * configure logging
+* captchas
+* analyze access logs
+
+* perform testing and code testing before commit
+* http://sass-lang.com/
+* testing in browsers, selenium
+* http://www.modernizr.com/
+
+* use debug toolbar, page speed to optimize page load
 
 * user pictures
 * replace disqus?

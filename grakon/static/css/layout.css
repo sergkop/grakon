@@ -38,7 +38,6 @@
 	nav {
         background: -webkit-gradient(linear, left top, left bottom, from(#003366), to(#003457));
         background: -moz-linear-gradient(top, #003366, #003457);
-		/*background: #ccc;*/
 	}
 
 	#main .info {
@@ -88,17 +87,6 @@
         padding-left: 248px;
         padding-right: 248px;
     } 
-
-	/* skip links styling */
-	.ym-skiplinks a.ym-skip:focus,
-	.ym-skiplinks a.ym-skip:active {
-		color:#fff;
-		background:#333;
-		border-bottom:1px #000 solid;
-		padding:10px 0;
-		text-align: center;
-		text-decoration:none;
-	}
 }
 
 /* reset fallback values in modern browsers */
@@ -109,7 +97,6 @@
 }
 
 @media screen and ( max-width: 760px ) {
-
 	.secondary {
 		border-top: 1px #888 solid;
 		margin-top: 1.5em !important;

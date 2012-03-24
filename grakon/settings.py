@@ -37,6 +37,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
+
+    'grakon.context_processors.media_files',
 )
 
 TEMPLATE_LOADERS = (
@@ -74,6 +76,7 @@ INSTALLED_APPS = (
 
     # Libraries
     'crispy_forms',
+    'social_auth',
     'south',
     'tinymce',
 
