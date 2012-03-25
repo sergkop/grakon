@@ -18,7 +18,7 @@ def init_system():
     # TODO: create user serg, home directory, add ssh key of developer to be able to access it,
     #       set bash as default shell, make it sudoer, put ssh key to access git repository from the server
     #       create directories, install required software, add server ip to mysql's server whitelist,
-    #       close ports, (add server to load balancer list), configure services (nginx, postfix, etc.)
+    #       close ports, activate firewall, (add server to load balancer list), configure services (nginx, postfix, etc.)
     #       set files permissions, set .selected_editor, init database (optional), install sentry,
     #       minify static files, set different cache time headers for static files
     run('mkdir -p %s' % CODE_DIR_PATH)
@@ -35,7 +35,7 @@ def init_system():
         'nginx', #'postfix',
 
         # Libraries
-        'libmysqlclient-dev', 'libxslt-dev', 'graphviz-dev',
+        'libmysqlclient-dev', 'libxslt-dev', 'graphviz-dev', # python-dev?
     ]
 
     sudo('aptitude install %s' % ' '.join(ubuntu_packages))

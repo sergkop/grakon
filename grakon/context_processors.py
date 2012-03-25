@@ -2,7 +2,7 @@ from django.conf import settings
 from django.forms.widgets import Media
 
 # TODO: add IE-specific styles here
-# TODO: take extra media files from request - ability to add them per-view
+# TODO: take extra media files from request - ability to add them per-view (variable in class-based views?)
 def media_files(request):
     media = Media()
     media.add_css({
@@ -34,3 +34,9 @@ def media_files(request):
     )
     media.add_js(js)
     return {'media_files': media}
+
+def project_settings(request):
+    context = {}
+    for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY', 'URL_PREFIX'):
+        context[setting] = getattr(settings, setting)
+    return context

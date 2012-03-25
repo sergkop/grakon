@@ -1,3 +1,11 @@
+* captchas
+* social registration
+* sending emails using mailgun.net
+* analytics of registration
+* tests
+
+
+
 * organize css by files, add blocks, styling
 * take only necessary parts of jquery-ui, compress
 
@@ -7,20 +15,24 @@
 * move postfix to a separate server
 * update path to jquery 1.7.2 when google publishes it
 
-* start using mailgun.net (analyze email postfixes, detect sending problems, configure properly;)
 * add google+ page to list of services (Юля)
 
 * start using celery
 * configure logging
-* captchas
-* analyze access logs
+* analyze access logs, use google analytics api; regularly build and analyze statistics of visits
+* use yandex targets (?) to monitor pressing buttons, registration and other activities
 
 * perform testing and code testing before commit
 * http://sass-lang.com/
-* testing in browsers, selenium
+* testing in browsers, selenium, http://www.browserstack.com
 * http://www.modernizr.com/
 
+* activate compression for tinymce
 * use debug toolbar, page speed to optimize page load
+
+* analyze when user visited site/logged in last time
 
 * user pictures
 * replace disqus?
+
+* analyze email postfixes, detect sending problems, configure properly

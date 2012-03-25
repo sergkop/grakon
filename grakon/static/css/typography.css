@@ -69,6 +69,11 @@
 		margin: 1.5em 0 0 0;
 	}
 
+	h4, h2 {margin: 1.5em 0 1em; border-bottom: 1px dotted #ccc; padding-bottom: 0.2em;}
+    h2 {margin-top: 0.5em;}
+    h4 a {text-decoration: none;}
+    h3 {margin: 0.3em 0 0;}
+
 	/* --- Lists  ----------------------------------- */
 
 	ul, ol, dl {
@@ -376,6 +381,8 @@
 		border-top:1px solid #ccc;
 	}
 
+	table, tbody td {border: none; margin: 0;}
+
 	.bordertable tbody td {
 		border-right:1px solid #ccc;
 	}
@@ -384,4 +391,19 @@
 	/*tbody tr:hover th, tbody tr:hover td {
 		background:#f8f8f8;
 	}*/
+
+    input {outline: none;}  
+
+    select {
+        width: 23em;
+    }
+    
+    .clickable {
+        color: #1C94C4;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .clickable:hover {
+        color: #c77405;
+    }
 }

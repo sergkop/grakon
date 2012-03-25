@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from utils.cache import cache_view
+from services.cache import cache_view
 
 def main(request):
     ctx = {}

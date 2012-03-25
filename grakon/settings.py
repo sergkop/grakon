@@ -39,6 +39,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'grakon.context_processors.media_files',
+    'grakon.context_processors.project_settings',
 )
 
 TEMPLATE_LOADERS = (
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'tinymce',
 
     # Applications
+    'auth',
     'grakon',
     'maintenance',
     'navigation',
@@ -116,3 +118,19 @@ LOGGING = {
 }
 
 from grakon.site_settings import *
+
+TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'libs', 'tiny_mce')
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'relative_urls': False,
+    'width': '100%',
+    'height': 300,
+    'theme_advanced_buttons3': ",fontselect,fontsizeselect,forecolor,backcolor,|,sub,sup,|,charmap,",
+    'extended_valid_elements': "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],",
+}
+TINYMCE_COMPRESSOR = False # TODO: compression doesn't work at the moment
+
+# force removal of mysite.fcgi from URL:
+# http://docs.djangoproject.com/en/dev/howto/deployment/fastcgi/#forcing-the-url-prefix-to-a-particular-value
+FORCE_SCRIPT_NAME = ''
