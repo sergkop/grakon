@@ -1,0 +1,10 @@
+{% load elements crispy_forms_tags %}
+
+<script src="{{ STATIC_URL }}libs/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+
+{% crispy form form.helper %}
+
+<hr/>
+<p>
+    {% button "pencil" "Сменить пароль" "password_change" "password_change" "" %}
+</p>

@@ -15,9 +15,9 @@ def media_files(request):
 
             'css/layout.css',
             'css/typography.css',
+            'css/hlist.css',
             'css/style.css',
             'css/julia_style.css',
-            'css/hlist.css',
         ),
     })
 

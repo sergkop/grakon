@@ -2,7 +2,7 @@ from django.conf.urls.defaults import url, patterns
 
 from auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
-urlpatterns = patterns('registration.views',
+urlpatterns = patterns('auth.views',
     url(r'^register$', 'register', name='register'),
     url(r'^registration_completed$', 'registration_completed', name='registration_completed'),
     url(r'^email_not_sent$', 'email_not_sent', name='email_not_sent'),
@@ -45,6 +45,6 @@ urlpatterns += patterns('django.contrib.auth.views',
 # TODO: fix it
 from django.views.generic.base import TemplateView
 urlpatterns += patterns('grakon.views',
-    url(r'^password_change_forbidden/$', TemplateView.as_view(template_name='registration/password_change_forbidden.html'),
+    url(r'^password_change_forbidden/$', TemplateView.as_view(template_name='auth/password_change_forbidden.html'),
         name='password_change_forbidden')
 )

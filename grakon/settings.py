@@ -54,6 +54,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'users.middleware.ProfileMiddleware',
 )
 
 ROOT_URLCONF = 'grakon.urls'
@@ -82,6 +83,7 @@ INSTALLED_APPS = (
     'tinymce',
 
     # Applications
+    'users',
     'auth',
     'grakon',
     'maintenance',
@@ -117,6 +119,10 @@ LOGGING = {
     }
 }
 
+AUTH_PROFILE_MODULE = 'users.Profile'
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/profile'
+
 from grakon.site_settings import *
 
 TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
@@ -130,6 +136,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'extended_valid_elements': "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],",
 }
 TINYMCE_COMPRESSOR = False # TODO: compression doesn't work at the moment
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 # force removal of mysite.fcgi from URL:
 # http://docs.djangoproject.com/en/dev/howto/deployment/fastcgi/#forcing-the-url-prefix-to-a-particular-value

@@ -28,15 +28,6 @@ class ActivationManager(models.Manager):
                 user.is_active = True
                 user.save()
 
-                # if user registered with loginza - activate his account
-                try:
-                    user_map = UserMap.objects.get(user=user)
-                except UserMap.DoesNotExist:
-                    pass
-                else:
-                    user_map.verified = True
-                    user_map.save()
-
                 profile.activation_key = ACTIVATED
                 profile.save()
                 return user
@@ -88,15 +79,14 @@ class ActivationProfile(models.Model):
 
     def activation_key_expired(self):
         """ Boolean showing whether this activation key has expired """
-        expiration_date = datetime.timedelta(days=2)
-        return self.activation_key==ACTIVATED or \
-               (self.user.date_joined+expiration_date<=datetime.datetime.now())
+        expiration_date = (self.user.date_joined+datetime.timedelta(days=2)).replace(tzinfo=None)
+        return self.activation_key==ACTIVATED or (expiration_date<=datetime.datetime.utcnow())
 
     # TODO: use services.email to send mail
     def send_activation_email(self):
         subject = u'Активация учетной записи на grakon.org'
         profile = self.user.get_profile()
-        message = render_to_string('registration/activation_email.txt', {
+        message = render_to_string('letters/activation_email.html', {
             'activation_key': self.activation_key,
             'URL_PREFIX': settings.URL_PREFIX,
             'full_name': '%s %s' % (profile.first_name, profile.last_name),

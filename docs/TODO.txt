@@ -1,15 +1,27 @@
 * captchas
 * social registration
 * sending emails using mailgun.net
-* analytics of registration
+* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 * tests
-
-
+* reasons to register on registration page
 
 * organize css by files, add blocks, styling
-* take only necessary parts of jquery-ui, compress
 
-* describe complete deployment process - file access rights, running services, directories and users to create, etc.
+* implement deployment and test on rackspace server
+
+* move password change views to users (from auth)
+
+--------------------------------------
+
+* take only necessary parts of jquery-ui, compress
+* Reorganize classes in button and tabs templates, icons are not used in buttons anymore
+* share and share_horizontal are overlap a lot
+
+* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.)
+
+* describe complete deployment process - file access rights, running services,
+     directories and users to create, creating database, etc.
+* database backups
 
 * configure virtualenv inside settings properly
 * move postfix to a separate server
@@ -21,6 +33,7 @@
 * configure logging
 * analyze access logs, use google analytics api; regularly build and analyze statistics of visits
 * use yandex targets (?) to monitor pressing buttons, registration and other activities
+* Webmaster Tools
 
 * perform testing and code testing before commit
 * http://sass-lang.com/
@@ -36,3 +49,14 @@
 * replace disqus?
 
 * analyze email postfixes, detect sending problems, configure properly
+
+* stackoverflow-like ordering of news
+
+* search
+* sitemaps
+
+* show messages after post requests
+
+* include sqlite file with empty db ready for use
+
+* set proper page titles

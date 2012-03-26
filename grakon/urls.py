@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^', include('auth.urls')),
     url(r'^', include('navigation.urls')),
+    url(r'^', include('users.urls')),
 
     url(r'^tinymce/', include('tinymce.urls')),
 

@@ -1,5 +1,47 @@
 {% extends "base.html" %}
 
+{% load elements %}
+
+{% block title %}О проекте - Гракон{% endblock %}
+
+{% block head %}
+    <style type="text/css">
+        .ym-col3 {padding-right: 0;}
+    </style>
+{% endblock %}
+
+{% block left_column %}
+    <h3 class="column_header column_header_icon"><span class="team">Команда</span></h3>
+    <div class="ym-clearfix">
+        <div class="content_block">
+            <ul class="side_list">
+                <li><a href="https://www.facebook.com/mikpanko" target="_blank">Михаил Панько</a> <br/> <i>координатор проекта</i></li>
+                <li><a href="https://www.facebook.com/sergey.kopylov"  target="_blank">Сергей Копылов</a> <br/> <i>главный разработчик</i></li>
+                <li><a href="http://www.facebook.com/profile.php?id=100001093316533" target="_blank">Юлия Котова</a> <br/> <i>front-end разработчик</i></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100001256049867"  target="_blank">Леонид Хайлов</a> <br/> <i>разработка интерактивных карт</i></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100001101092669" target="_blank">Оксана Васильева</a> <br/> <i>дизайн</i></li>
+                <li><a href="http://koder.posterous.com/" target="_blank">Григорий Соловьев</a> <br/> <i>информационная безопасность</i></li>
+                <li><a href="https://www.facebook.com/maria.gaidar" target="_blank">Мария Гайдар</a> <br/> <i>информационная работа и интеграция</i></li>
+                <li><a href="http://www.facebook.com/Ilia.Boykov" target="_blank">Илья Бойков</a> <br/> <i>продвижение, официальный представитель в России</i></li>
+                <li><a href="http://www.facebook.com/profile.php?id=589927701" target="_blank">Мария Чарная</a> <br/> <i>информационный контент</i></li>
+                <li><a href="http://www.facebook.com/profile.php?id=100000559544517" target="_blank">Ирина Хряева</a> <br/> <i>ведение блога проекта</i></li>
+                <li><a href="https://www.facebook.com/dukovsky" target="_blank">Антон Дуковский</a> <br/> <i>позиционирование проекта</i></li>
+            </ul>
+        </div>
+    </div>
+    
+    <h3 class="column_header column_header_icon"><span class="documents">Документы</span></h3>
+    <div class="ym-clearfix">
+        <div class="content_block">
+            <ul class="side_list">
+                <li><a href="" style="font-weight: normal;">Презентация проекта</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
-    hi!
+    <h2 class="page-header">О проекте</h2>
+
+    {% tabs "tabs" tab "" "" "Описание" "about" "static_pages/about/about.html" "" "Новости" "news" "static_pages/development/news.html" "" "О нас в СМИ" "publications" "static_pages/about/publications.html" "" %}
 {% endblock %}

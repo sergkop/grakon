@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth import views as auth_views
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
@@ -13,32 +14,33 @@ def register(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
+            # TODO: crashes on registering user with the same username
             user = form.save()
             return redirect('registration_completed')
     else:
         form = RegistrationForm()
 
-    return TemplateResponse(request, 'registration/register.html', {'form': form})
+    return TemplateResponse(request, 'auth/register.html', {'form': form})
 
 @authenticated_redirect('my_profile')
 def activate(request, activation_key):
     account = ActivationProfile.objects.activate_user(activation_key)
     if account:
         return redirect('activation_completed')
-    return TemplateResponse(request, 'registration/activation_fail.html')
+    return TemplateResponse(request, 'auth/activation_fail.html')
 
 # TODO: introduce shortcut for it or write it shorter
 @authenticated_redirect('my_profile')
 def registration_completed(request):
-    return TemplateResponse(request, 'registration/registration_completed.html')
+    return TemplateResponse(request, 'auth/registration_completed.html')
 
 @authenticated_redirect('my_profile')
 def email_not_sent(request):
-    return TemplateResponse(request, 'registration/email_not_sent.html')
+    return TemplateResponse(request, 'auth/email_not_sent.html')
 
 @authenticated_redirect('my_profile')
 def activation_completed(request):
-    return TemplateResponse(request, 'registration/activation_completed.html')
+    return TemplateResponse(request, 'auth/activation_completed.html')
 
 # TODO: fix it
 def password_change(request, **kwargs):

@@ -12,7 +12,7 @@ class Profile(models.Model):
             help_text=u'<b>Мы не будем показывать ваше настоящее имя другим пользователям без вашего разрешения.</b>')
     #middle_name = models.CharField(u'Отчество', max_length=30, blank=True, default='')
     show_name = models.BooleanField(u'Показывать настоящее имя', default=False,
-            help_text=u'<b>Поставьте эту галку чтобы другие пользователи видели ваше настоящее имя</b>' \
+            help_text=u'<b>Поставьте эту галку, чтобы другие пользователи видели ваше настоящее имя</b>' \
                     u' (к участникам, открывающим свое имя, больше доверия на площадке)')
     about = HTMLField(u'О себе', default='', blank=True)
 

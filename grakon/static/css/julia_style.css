@@ -9,7 +9,7 @@
 .ym-wbox {padding: 0;}  
 .ym-col1 .ym-cbox {padding: 0;} 
 .ym-col2 .ym-cbox {padding: 0;} 
-.ym-col3 {box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; font-size: 0.9em;}
+.ym-col3 {box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; font-size: 0.9em; margin: 0;}
 
 
 

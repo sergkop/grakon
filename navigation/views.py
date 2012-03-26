@@ -7,7 +7,7 @@ def main(request):
     ctx = {}
     return render_to_response("main/base.html", context_instance=RequestContext(request, ctx))
 
-# TODO: how to utilise caching for logged in users
+# TODO: how to utilise caching for logged in users?
 @cache_view(lambda args, kwargs: kwargs['name'], 30)
 def static_page(request, name, template):
     ctx = {

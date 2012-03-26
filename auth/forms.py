@@ -20,11 +20,6 @@ from users.models import Profile
 password_digit_re = re.compile(r'\d')
 password_letter_re = re.compile(r'[a-zA-Z]')
 
-# TODO: do we need next hidden field?
-layout = Layout(
-    HTML(r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'),
-)
-
 class BaseRegistrationForm(forms.ModelForm):
     username = forms.RegexField(label=u'Имя пользователя (логин)', max_length=20, min_length=4, regex=r'^[\w\.]+$',
             help_text=u'Имя пользователя может содержать от 4 до 20 символов (латинские буквы, цифры, подчеркивания и точки).<br/>' \
@@ -32,18 +27,10 @@ class BaseRegistrationForm(forms.ModelForm):
 
     email = forms.EmailField(label=u'Электронная почта',
             help_text=u'<b>На ваш электронный адрес будет выслано письмо со ссылкой для активации аккаунта</b>')
-    email1 = forms.EmailField(label=u'Электронная почта еще раз',
-            help_text=u"<b>Внимание! Проверьте что правильность написания email'а. В случае ошибки ваш аккаунт не будет активирован.</b>")
 
     class Meta:
         model = Profile
         fields = ('username', 'last_name', 'first_name')
-
-    def clean(self):
-        if self.cleaned_data.get('email1') != self.cleaned_data.get('email'):
-            raise forms.ValidationError(u'Введенные электронные адреса не совпадают!')
-
-        return self.cleaned_data
 
     def save(self):
         username, email, password = self.cleaned_data['username'], \
@@ -70,7 +57,10 @@ class RegistrationForm(BaseRegistrationForm):
 
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
-    helper.layout = layout
+    # TODO: do we need next hidden field?
+    #helper.layout = Layout(
+    #        HTML(r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'),
+    #)
 
     #if CaptchaField:
     #    captcha = CaptchaField(label=u'Код проверки', error_messages = {'invalid': u'Неверный код проверки'},
@@ -96,8 +86,11 @@ class RegistrationForm(BaseRegistrationForm):
 
 class LoginForm(auth_forms.AuthenticationForm):
     helper = form_helper('login', u'Войти')
-    helper.layout = Layout(HTML(
-            r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'))
+    helper.form_id = 'login_form'
+    # TODO: fix it
+    #helper.layout = Layout(
+    #    HTML(r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'),
+    #)
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)

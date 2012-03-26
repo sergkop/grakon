@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon">
 
     <meta property="fb:admins" content="1844239989" />
-    <meta property="og:image" content="{{ URL_PREFIX }}{{ STATIC_URL }}images/grakon_share_logo.jpg" />
+    <meta property="og:image" content="{{ URL_PREFIX }}{{ STATIC_URL }}images/logos/share.jpg" />
     <meta property="og:description" content="Гракон - мини-соцсеть для координации работы организаций и граждан" />
 
     {{ media_files }}
@@ -20,6 +20,11 @@
 
     <script type="text/javascript">
         VK.init({apiId: {{ VK_APP_ID }}, onlyWidgets: true});
+
+        // TODO: move it inside script
+        $(function(){
+            $('form.uniForm').uniform();
+        });
     </script>
 
     {% block head %}{% endblock %}
@@ -43,14 +48,30 @@
         <div class="ym-wrapper">
             <div class="ym-hlist">
                 <ul>
-                    <li><a {% if not name and not template %}class="on"{% endif %}href="{% url main %}">Главная</a></li>
+                    <li><a class="on" href="{% url main %}">Навигация</a></li>
+                    <li><a href="">Участники</a></li>
+                    <li><a href="">Инструменты</a></li>
                     <li><a {% if template == "static_pages/about/base.html" %}class="on"{% endif %} href="{% url about %}">О проекте</a></li>
                 </ul>
+
+                <div class="login_logout">
+                    {% if request.user.is_authenticated %}
+                        <div class="mt10">
+                            <a href="{% url my_profile %}">{{ request.profile.first_name }} {{ request.profile.last_name }}</a> |
+                            <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
+                        </div>
+                    {% else %}
+                        <span id="login_btn" class="clickable">Войти</span>
+                    {% endif %}
+                </div>
+                <div class="cl">&nbsp;</div>
             </div>
         </div>
     </nav>
 
     {% block breadcrumbs %}{% endblock %}
+
+    <br clear="all"/>
 
     <div id="main">
         <div class="ym-wrapper">
