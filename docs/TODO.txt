@@ -1,17 +1,41 @@
-* captchas
 * social registration
-* sending emails using mailgun.net
-* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
-* tests
-* reasons to register on registration page
 
-* organize css by files, add blocks, styling
+* create json file with passwords and settings, use it to generate site_settings.py
 
 * implement deployment and test on rackspace server
 
+* create page for LOGIN_ERROR_URL
+
+* configure django-social-auth
+* set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
+
+------------------------------
+
+* track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
+
+* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+
+* organize css by files, add blocks, styling
+
 * move password change views to users (from auth)
 
+* captchas
+
+* sending emails using mailgun.net or mailchimp.com (?)
+
+* new email address for sending emails
+
+* merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+
+* ability to remove account (send email to admin asking for that)
+
+* create google oauth2 app from grakon account
+
+* file with all passwords, social applications (where to get them)
+
 --------------------------------------
+
+* reasons to register on registration page
 
 * take only necessary parts of jquery-ui, compress
 * Reorganize classes in button and tabs templates, icons are not used in buttons anymore
@@ -52,7 +76,7 @@
 
 * stackoverflow-like ordering of news
 
-* search
+* search + autocompletion
 * sitemaps
 
 * show messages after post requests
@@ -60,3 +84,11 @@
 * include sqlite file with empty db ready for use
 
 * set proper page titles
+
+* configure nginx
+
+* предлагать друзей на площадке пользуясь списком друзей в соц сетях
+
+* tests and test coverage
+
+* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app)

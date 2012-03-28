@@ -10,6 +10,7 @@ mysql-python
 scrapy
 pygraphviz
 django-social-auth
+google-api-python-client
 #python-cloudfiles
 #PIL
 #django-simple-captcha

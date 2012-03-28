@@ -84,7 +84,7 @@ INSTALLED_APPS = (
 
     # Applications
     'users',
-    'auth',
+    'authentication',
     'grakon',
     'maintenance',
     'navigation',
@@ -122,6 +122,14 @@ LOGGING = {
 AUTH_PROFILE_MODULE = 'users.Profile'
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/profile'
+#LOGIN_ERROR_URL    = '/login-error/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+    'authentication.backend.EmailAuthenticationBackend',
+)
 
 from grakon.site_settings import *
 

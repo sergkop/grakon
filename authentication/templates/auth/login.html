@@ -1,0 +1,23 @@
+{% extends "auth/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block content %}
+    <h2 class="page-header">Вход в систему</h2>
+
+    <div class="page-content">
+        {% crispy form form.helper %}
+
+        <div class="center">
+            <br/>
+            <a href="{% url password_reset %}">Забыли пароль?</a>&nbsp;&nbsp;&nbsp;
+            <a href="{% url register %}">Регистрация</a>
+        </div>
+
+        <a href="{% url socialauth_begin 'facebook' %}">Facebook</a>
+
+        <a href="{% url socialauth_begin 'google-oauth2' %}">Google</a>
+    </div>
+{% endblock %}

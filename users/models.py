@@ -4,6 +4,7 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
+# TODO: sex (gender) field
 class Profile(models.Model):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30)
