@@ -1,0 +1,17 @@
+Пользователь <a href="{{ profile.get_absolute_url }}">
+{{ profile.first_name }} {{ profile.last_name }} ({{ profile.username }})</a>
+хочет удалить свой аккаунт.
+
+Чтобы удалить аккаунт, перейдите по этой
+<a href="{{ URL_PREFIX }}/{{ ADMIN_PREFIX }}/auth/user/{{ profile.user.id }}/delete/" target="_blank">ссылке</a>.<br>
+<b>Внимание!</b> Если на этой странице вы увидите длинный список объектов, среди которых
+есть чиновники, новости, мероприятия и пр. - остановитесь и оставьте это письмо непрочитанным.
+Его обработает Сергей.<br><br>
+
+Отправьте пользователю уведомление об удалении аккаунта,
+перенаправив окончание этого письма (Forward) на адрес {{ profile.user.email }}.<br><br>
+
+{{ profile.first_name }},<br><br>
+Ваш аккаунт на сайте <a href="{{ URL_PREFIX }}" target="_blank">Гракон</a> успешно удален.<br><br>
+Команда Гракона,<br>
+<a href="{{ URL_PREFIX }}">{{ URL_PREFIX }}</a>

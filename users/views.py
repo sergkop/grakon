@@ -1,10 +1,15 @@
 # -*- coding:utf-8 -*-
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.template.response import TemplateResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
+from grakon.context_processors import project_settings
+from services.email import send_email
 from users.forms import ProfileForm
 from users.models import Profile
 
@@ -56,3 +61,15 @@ class EditProfileView(BaseProfileView, UpdateView):
         return reverse('my_profile')
 
 edit_profile = login_required(EditProfileView.as_view())
+
+def remove_account(request):
+    if request.user.is_authenticated():
+        subject = u'[УДАЛЕНИЕ АККАУНТА] %s - %s %s' % (request.user.username,
+                request.profile.first_name, request.profile.last_name)
+
+        context = project_settings(request)
+        context.update({'profile': request.profile})
+        html = render_to_string('letters/remove_account.html', context)
+
+        send_email(subject, settings.ADMIN_EMAIL, html)
+    return TemplateResponse(u'Чтобы удалить аккаунт, необходимо войти в систему')

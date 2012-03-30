@@ -31,12 +31,14 @@ def media_files(request):
         'http://userapi.com/js/api/openapi.js?49', # VKontakte
         'libs/crispy-forms/uni-form.jquery.js',
         #'libs/tipsy/jquery.tipsy.js',
+        'js/main.js',
     )
     media.add_js(js)
     return {'media_files': media}
 
 def project_settings(request):
     context = {}
-    for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY', 'URL_PREFIX'):
+    for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY',
+            'URL_PREFIX', 'ADMIN_EMAIL', 'ADMIN_PREFIX'):
         context[setting] = getattr(settings, setting)
     return context

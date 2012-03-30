@@ -1,0 +1,3 @@
+Templates:
+    * use {{ ADMIN_EMAIL }} instead of admin@grakon.org as our contact email
+    * use {{ URL_PREFIX }} instead of http://grakon.org

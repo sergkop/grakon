@@ -308,6 +308,10 @@
 		margin: 0;
 	}
 
+    .hidden {
+        display: none;
+    }
+	
 	/* Generic classes for table-width and design definition */
 
 	table {

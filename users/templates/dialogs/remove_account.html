@@ -1,0 +1,15 @@
+<div id="remove_account_dialog" class="hidden">
+    <p>Вы действительно хотите удалить свой аккаунт?</p>
+</div>
+
+<script type="text/javascript">
+    function remove_account_dialog_init(){
+        $("#remove_account_dialog").dialog("open");
+    }
+
+    create_dialog("remove_account_dialog", 625, 400, "Удаление аккаунта", "Отмена", {
+        "Удалить": dialog_post_shortcut("remove_account_dialog", "{% url remove_account %}", {}, function(){
+            alert("Ваш аккаунт будет удален в ближайшее время. Мы вышлем уведомление на ваш email.");
+        })
+    });
+</script>

@@ -1,3 +1,25 @@
+* check that remove account works
+
+* show post messages
+
+* move password change views to users (from auth)
+
+* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.)
+* Use ADMIN_EMAIL in all templates
+
+* sitemaps
+
+* show messages after post requests
+
+* tests and test coverage
+
+* shortcut to prevent using enter in dialog forms
+
+* conventions file for front-end developer
+
+-------------------------
+* local copy of vkontakte script (for offline development)
+
 * social registration
 
 * create json file with passwords and settings, use it to generate site_settings.py
@@ -11,44 +33,42 @@
 
 ------------------------------
 
+* sign emails with "Администрация Гракона" or smth. else
+
 * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
 
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 
 * organize css by files, add blocks, styling
 
-* move password change views to users (from auth)
-
 * captchas
-
-* sending emails using mailgun.net or mailchimp.com (?)
 
 * new email address for sending emails
 
 * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
 
-* ability to remove account (send email to admin asking for that)
-
-* create google oauth2 app from grakon account
+* create google oauth2 app from grakon account (?)
 
 * file with all passwords, social applications (where to get them)
 
 --------------------------------------
+
+* add russian language to tinymce (for all plugins)
+
+* sending emails using mailgun.net or mailchimp.com (?)
 
 * reasons to register on registration page
 
 * take only necessary parts of jquery-ui, compress
 * Reorganize classes in button and tabs templates, icons are not used in buttons anymore
 * share and share_horizontal are overlap a lot
-
-* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.)
+* when two buttons are close to each other (e.g. profile edit) - line appears between them
 
 * describe complete deployment process - file access rights, running services,
      directories and users to create, creating database, etc.
 * database backups
 
 * configure virtualenv inside settings properly
-* move postfix to a separate server
 * update path to jquery 1.7.2 when google publishes it
 
 * add google+ page to list of services (Юля)
@@ -57,7 +77,7 @@
 * configure logging
 * analyze access logs, use google analytics api; regularly build and analyze statistics of visits
 * use yandex targets (?) to monitor pressing buttons, registration and other activities
-* Webmaster Tools
+* Webmaster Tools, seo
 
 * perform testing and code testing before commit
 * http://sass-lang.com/
@@ -77,9 +97,6 @@
 * stackoverflow-like ordering of news
 
 * search + autocompletion
-* sitemaps
-
-* show messages after post requests
 
 * include sqlite file with empty db ready for use
 
@@ -89,6 +106,6 @@
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 
-* tests and test coverage
+* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60)
 
-* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app)
+* how to deal with large sitemaps?
