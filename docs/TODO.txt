@@ -1,30 +1,35 @@
+* conventions file for front-end developer
+
+* create json file with passwords and settings, use it to generate site_settings.py
+
+* implement deployment and test on rackspace server
+
+--------------------------------------
+
+* organize css by files, add blocks, styling
+
+* add russian language to tinymce (for all plugins)
+
 * check that remove account works
 
 * show post messages
 
-* move password change views to users (from auth)
-
-* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.)
-* Use ADMIN_EMAIL in all templates
+* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.) - to conventions
 
 * sitemaps
-
-* show messages after post requests
 
 * tests and test coverage
 
 * shortcut to prevent using enter in dialog forms
 
-* conventions file for front-end developer
-
 -------------------------
+
+* move password change views to users (from auth)
+* reasons to register on registration page
+
 * local copy of vkontakte script (for offline development)
 
 * social registration
-
-* create json file with passwords and settings, use it to generate site_settings.py
-
-* implement deployment and test on rackspace server
 
 * create page for LOGIN_ERROR_URL
 
@@ -39,8 +44,6 @@
 
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 
-* organize css by files, add blocks, styling
-
 * captchas
 
 * new email address for sending emails
@@ -53,41 +56,36 @@
 
 --------------------------------------
 
-* add russian language to tinymce (for all plugins)
+Front-end
+    * take only necessary parts of jquery-ui, compress
+    * Reorganize classes in button and tabs templates, icons are not used in buttons anymore
+    * share and share_horizontal are overlap a lot
+    * when two buttons are close to each other (e.g. profile edit) - line appears between them
+    * add google+ page to list of services
+    * http://sass-lang.com/
+    * http://www.modernizr.com/
 
-* sending emails using mailgun.net or mailchimp.com (?)
+Analytics:
+    * analyze when user visited site/logged in last time
+    * start using celery
+    * configure logging, sentry
+    * analyze access logs, use google analytics api; regularly build and analyze statistics of visits
+    * use yandex targets (?) to monitor pressing buttons, registration and other activities
 
-* reasons to register on registration page
+SEO:
+    * Webmaster Tools, seo
+    * how to deal with large sitemaps?
 
-* take only necessary parts of jquery-ui, compress
-* Reorganize classes in button and tabs templates, icons are not used in buttons anymore
-* share and share_horizontal are overlap a lot
-* when two buttons are close to each other (e.g. profile edit) - line appears between them
+Testing:
+    * perform testing and code testing before commit
+    * testing in browsers, selenium, http://www.browserstack.com
 
-* describe complete deployment process - file access rights, running services,
-     directories and users to create, creating database, etc.
-* database backups
+Emails:
+    * sending emails using mailgun.net or mailchimp.com (?)
 
-* configure virtualenv inside settings properly
-* update path to jquery 1.7.2 when google publishes it
-
-* add google+ page to list of services (Юля)
-
-* start using celery
-* configure logging
-* analyze access logs, use google analytics api; regularly build and analyze statistics of visits
-* use yandex targets (?) to monitor pressing buttons, registration and other activities
-* Webmaster Tools, seo
-
-* perform testing and code testing before commit
-* http://sass-lang.com/
-* testing in browsers, selenium, http://www.browserstack.com
-* http://www.modernizr.com/
-
-* activate compression for tinymce
-* use debug toolbar, page speed to optimize page load
-
-* analyze when user visited site/logged in last time
+Performance:
+    * activate compression for tinymce
+    * use debug toolbar, page speed to optimize page load
 
 * user pictures
 * replace disqus?
@@ -98,14 +96,17 @@
 
 * search + autocompletion
 
-* include sqlite file with empty db ready for use
+Deployment:
+    * include sqlite file with empty db ready for use
+    * configure nginx
+    * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
+    * database backups
+    * configure virtualenv inside settings properly
+    * generate server.sh as well
+
 
 * set proper page titles
-
-* configure nginx
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 
 * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60)
-
-* how to deal with large sitemaps?

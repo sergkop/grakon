@@ -24,7 +24,7 @@ def media_files(request):
     if settings.DEBUG:
         js = ('libs/jquery.js', 'libs/jquery-ui/jquery-ui.js')
     else:
-        js = ('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+        js = ('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
                 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js')
 
     js += (

@@ -4,34 +4,65 @@ import os.path
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+DEBUG = %(DEBUG)s
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = ()
-
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': '%(database.ENGINE)s',
+        'NAME': '%(database.NAME)s',                  # Or path to database file if using sqlite3.
+        'USER': '%(database.USER)s',                  # Not used with sqlite3.
+        'PASSWORD': '%(database.PASSWORD)s',          # Not used with sqlite3.
+        'HOST': '%(database.HOST)s',                  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '%(database.PORT)s',                  # Set to empty string for default. Not used with sqlite3.
     }
 }
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'grakon',
-        'TIMEOUT': 60,
-        'KEY_PREFIX': '',
+        'BACKEND': '%(cache.BACKEND)s',
+        'LOCATION': '%(cache.LOCATION)s',
+        'TIMEOUT': %(cache.TIMEOUT)i,
+        'KEY_PREFIX': '%(cache.KEY_PREFIX)s',
     }
 }
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = ''
+SECRET_KEY = '%(SECRET_KEY)s'
 
-URL_PREFIX = 'http://127.0.0.1:8000'
+URL_PREFIX = '%(URL_PREFIX)s'
+
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'grakon', 'static') # TODO: fix it
+
+VK_APP_ID = %(VK_APP_ID)i
+
+GOOGLE_ANALYTICS_ID = '%(GOOGLE_ANALYTICS_ID)s'
+
+YA_METRIKA_ID = %(YA_METRIKA_ID)i
+
+ADMIN_PREFIX = '%(ADMIN_PREFIX)s'
+
+YANDEX_MAPS_KEY = '%(YANDEX_MAPS_KEY)s'
+
+# Emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '%(from_email)s'
+EMAIL_HOST_PASSWORD = 'K3_c4!=-0,dh,.de32n8q1._'
+
+DEFAULT_FROM_EMAIL = '%(from_email)s'
+SERVER_EMAIL = '%(from_email)s'
+ADMIN_EMAIL = '%(ADMIN_EMAIL)s' # emails from users and notifications should be delivered here
+
+# Authentication
+FACEBOOK_APP_ID = '%(FACEBOOK_APP_ID)s'
+FACEBOOK_API_SECRET = '%(FACEBOOK_API_SECRET)s'
+
+GOOGLE_OAUTH2_CLIENT_ID = '%(GOOGLE_OAUTH2_CLIENT_ID)s'
+GOOGLE_OAUTH2_CLIENT_SECRET = '%(GOOGLE_OAUTH2_CLIENT_SECRET)s'
+GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.google.com/m8/feeds'] # used to get user's contacts
