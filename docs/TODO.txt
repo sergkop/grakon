@@ -1,14 +1,10 @@
 * conventions file for front-end developer
 
-* create json file with passwords and settings, use it to generate site_settings.py
-
 * implement deployment and test on rackspace server
 
 --------------------------------------
 
 * organize css by files, add blocks, styling
-
-* add russian language to tinymce (for all plugins)
 
 * check that remove account works
 
@@ -77,7 +73,7 @@ SEO:
     * how to deal with large sitemaps?
 
 Testing:
-    * perform testing and code testing before commit
+    * perform testing and code testing after commit (github hooks)
     * testing in browsers, selenium, http://www.browserstack.com
 
 Emails:
@@ -103,10 +99,12 @@ Deployment:
     * database backups
     * configure virtualenv inside settings properly
     * generate server.sh as well
-
+    * separate server for media files? (512 mb)
 
 * set proper page titles
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 
 * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60)
+
+* start writing documentation
