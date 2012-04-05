@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 
 def static_url(name, template, tabs=[]):
@@ -5,18 +6,22 @@ def static_url(name, template, tabs=[]):
             {'tab': name, 'template': template, 'tabs': tabs}, name=name)
 
 def static_tabs_urls(base_template, tabs_short):
-    """ tabs_short=[(name, template, css_class), ...] """
-    tabs = [(name, '/'+name, template, css_class)
-            for name, template, css_class in tabs_short]
+    """
+    tabs_short=[(name, title, temsplate, css_class), ...]
+    name here coincides with url slug.
+    """
+    tabs = [{'name': name, 'title': title, 'url': '/'+name,
+            'template': template, 'css_class': css_class}
+            for name, title, template, css_class in tabs_short]
 
-    return patterns('navigation.views',
-            *[static_url(name, base_template, tabs) \
-            for name, template, css_class in tabs_short])
+    return [static_url(name, base_template, tabs)
+            for name, title, template, css_class in tabs_short]
 
 urlpatterns = patterns('navigation.views',
     url(r'^$', 'main', name='main'),
-)
 
-urlpatterns += static_tabs_urls('static_pages/about/base.html', [
-    ('about', 'static_pages/about/about.html', ''),
-])
+    *static_tabs_urls('static_pages/about/base.html', [
+        ('about', u'Описание', 'static_pages/about/about.html', ''),
+        ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', ''),
+    ])
+)
