@@ -157,7 +157,7 @@
     }
 
 	/* -------- search form -------------------------------------- */
-	.ym-searchform {
+	/*.ym-searchform {
 		float:right;
 		display: inline;
 		line-height: 2em;
@@ -194,5 +194,5 @@
 
 		background: #5f5f5f;
 		background: rgba(255,255,255,.2);
-	}
+	}*/
 }

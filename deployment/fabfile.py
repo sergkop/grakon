@@ -87,4 +87,5 @@ def prepare_code():
     # Create virtualenv
     run('virtualenv --no-site-packages %s' % conf['env_path'])
 
+    # TODO: problems setting up pygraphviz (need to specify proper include paths)
     virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'))

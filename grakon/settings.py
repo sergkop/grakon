@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'users',
     'authentication',
     'grakon',
+    'locations',
     'maintenance',
     'navigation',
 )

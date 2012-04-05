@@ -1,3 +1,5 @@
 Templates:
     * use {{ ADMIN_EMAIL }} instead of admin@grakon.org as our contact email
     * use {{ URL_PREFIX }} instead of http://grakon.org
+    * {{ SLOGAN }} - "Гражданский контроль за работой властей"
+    * {{ STATIC_URL }} instead of /static/

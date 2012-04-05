@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load elements %}
+
+{% block title %}{{ location.name }} - Гракон{% endblock %}
+
+{% block left_column %}
+    <h3 class="column_header column_header_icon"><span class="contacts">Инструменты</span></h3>
+    <div class="ym-clearfix">
+        <div class="side_block_header">
+            <h4>Чиновники</h4>
+        </div>
+
+        <div class="content_block">
+            <ul id="" class="side_list">
+                <li>
+                    <a href="aa">Иванов Иван</a> (Депутат)
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h2 class="page-header">{{ location.name }}</h2>
+
+    {% tabs "tabs" location_view "" "" "Стена" "wall" "locations/wall.html" "" "Карта" "map" "locations/map.html" "" %}
+
+{% endblock %}

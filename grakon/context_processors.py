@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.conf import settings
 from django.forms.widgets import Media
 
@@ -41,4 +42,6 @@ def project_settings(request):
     for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY',
             'URL_PREFIX', 'ADMIN_EMAIL', 'ADMIN_PREFIX'):
         context[setting] = getattr(settings, setting)
+
+    context['SLOGAN'] = u'Гражданский контроль за работой властей'
     return context

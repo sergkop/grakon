@@ -6,6 +6,8 @@ from django.views.generic.simple import direct_to_template
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^location/', include('locations.urls')),
+
     url(r'^', include('authentication.urls')),
     url(r'^', include('navigation.urls')),
     url(r'^', include('users.urls')),

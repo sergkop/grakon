@@ -25,7 +25,7 @@ def tabs_tag(parser, token):
 class TabsNode(template.Node):
     def __init__(self, *args):
         """
-        args is a sequence of 'id', 'active_url_or_template', 'param_name', 'param_value' and tripples (title, url, include_path) (a 1-dimensional list).
+        args is a sequence of 'id', 'active_url', 'param_name', 'param_value' and tripples (title, url, include_path, css_class) (a 1-dimensional list).
         All urls must either start with '/' or be view names.
         param_name and param_value serve to pass extra parameter to the view.
         """

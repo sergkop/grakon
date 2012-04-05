@@ -1,50 +1,45 @@
-* conventions file for front-end developer
+* conventions file for front-end developer (docs about tabs and buttons, page layout)
 
 * implement deployment and test on rackspace server
 
---------------------------------------
+* shortcut to prevent using enter in dialog forms
+
+* change reformal settings
 
 * organize css by files, add blocks, styling
 
 * check that remove account works
 
-* show post messages
-
-* Introduce 1 sentence description of project and use in different templates (share, base.html, etc.) - to conventions
-
 * sitemaps
-
-* tests and test coverage
-
-* shortcut to prevent using enter in dialog forms
-
--------------------------
-
-* move password change views to users (from auth)
-* reasons to register on registration page
-
-* local copy of vkontakte script (for offline development)
 
 * social registration
 
 * create page for LOGIN_ERROR_URL
 
 * configure django-social-auth
+
+* merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+
+--------------------------------------
+
+
+* show post messages
+* tests and test coverage
+
+* move password change views to users (from auth)
+* reasons to register on registration page
+
+* local copy of vkontakte script (for offline development)
+
 * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
 
 ------------------------------
-
-* sign emails with "Администрация Гракона" or smth. else
-
-* track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
 
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 
 * captchas
 
 * new email address for sending emails
-
-* merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
 
 * create google oauth2 app from grakon account (?)
 
@@ -63,9 +58,9 @@ Front-end
 
 Analytics:
     * analyze when user visited site/logged in last time
-    * start using celery
     * configure logging, sentry
-    * analyze access logs, use google analytics api; regularly build and analyze statistics of visits
+    * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
+      which pages are visited
     * use yandex targets (?) to monitor pressing buttons, registration and other activities
 
 SEO:
@@ -77,6 +72,8 @@ Testing:
     * testing in browsers, selenium, http://www.browserstack.com
 
 Emails:
+    * sign emails with "Администрация Гракона" or smth. else
+    * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
     * sending emails using mailgun.net or mailchimp.com (?)
 
 Performance:
@@ -108,3 +105,19 @@ Deployment:
 * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60)
 
 * start writing documentation
+
+* project news page - store in db, rss + ability to post to social networks automatically
+
+* send email when someone adds you to contacts
+
+* don't use cache for anonymous users on the dev server (for convinience)
+
+* switch to postgres?
+
+* start using celery
+
+* use twisted inside scrapy to download pages with several parallel processes
+
+* start using gunicorn (?)
+
+* написать текст на страницах 404 и 500
