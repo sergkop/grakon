@@ -10,12 +10,8 @@ from grakon.utils import print_progress, read_url
 
 URL = 'http://www.mosclassific.ru/mClass/okato_view.php?filter=100&type=1&zone='
 
-# TODO: temporary
-import os
-os.environ['http_proxy'] = 'http://wwwcache.lancs.ac.uk:8080'
-
 class Command(BaseCommand):
-    help = "Download locations data from OKATO"
+    help = "Download locations data from OKATO. Save result to data/locations.json"
 
     def handle(self, *args, **options):
         print "Downloading second level ids"

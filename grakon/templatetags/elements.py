@@ -26,20 +26,20 @@ class TabsNode(template.Node):
     def __init__(self, *args):
         """
         args is a sequence of id, tabs, active_tab.
-        tabs is a dict with keys 'name', 'title', 'url', 'template', 'css_class'.
+        tabs is a list of tuples (name, title, url, template, css_class).
         """
         self.args = [template.Variable(arg) for arg in args]
 
     def render(self, context):
         id, tabs, active = self.args = [arg.resolve(context) for arg in self.args]
 
-        active_tabs = filter(lambda tab: tab['name']==active, tabs)
+        active_tabs = filter(lambda tab: tab[0]==active, tabs)
         assert len(active_tabs)==1, "Active tab must be uniquely identified"
 
         context.update({
             'id': id,
             'tabs': tabs,
-            'template_path': active_tabs[0]['template'],
+            'template_path': active_tabs[0][3],
             'active': active
         })
         return render_to_string('elements/tabs.html', context)

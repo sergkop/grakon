@@ -8,7 +8,7 @@ class Location(models.Model):
     region = models.ForeignKey('self', null=True, blank=True, related_name='region_related')
     district = models.ForeignKey('self', null=True, blank=True, related_name='district_related')
 
-    okata_id = models.CharField(u'Идентификатор ОКАТА', max_length=11, db_index=True)
+    okato_id = models.CharField(u'Идентификатор ОКАТО', max_length=11, db_index=True)
 
     name = models.CharField(max_length=150, db_index=True)
 

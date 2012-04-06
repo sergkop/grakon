@@ -19,13 +19,18 @@ class LocationView(TemplateView):
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 
-        view = self.request.GET.get('view', '')
+        tab = self.request.GET.get('tab', '')
         # TODO: add list of view types (as class variable)
         
+        
+        tabs = {
+            "Стена" "wall" "locations/wall.html" ""
+            "Карта" "map" "locations/map.html" ""
+        }
             
         ctx.update({
             'loc_id': kwargs['loc_id'],
-            'view': view,
+            'tab': view,
             'location': location,
         })
 

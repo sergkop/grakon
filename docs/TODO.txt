@@ -62,6 +62,7 @@ Analytics:
     * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
       which pages are visited
     * use yandex targets (?) to monitor pressing buttons, registration and other activities
+    * use page visits analytics to determine optimal caching times
 
 SEO:
     * Webmaster Tools, seo
@@ -121,3 +122,7 @@ Deployment:
 * start using gunicorn (?)
 
 * написать текст на страницах 404 и 500
+
+* automatically disable discus at dev server
+
+* switch to cached_db session engine

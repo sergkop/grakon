@@ -1,8 +1,8 @@
 <div id="{{ id }}" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
     <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
         {% for tab in tabs %}
-            <li class="ui-state-default ui-corner-top{% if tab.name == active %} ui-tabs-selected ui-state-active{% endif %} {{ tab.css_class }}">
-                <a href="{{ tab.url }}">{{ tab.title }}<i></i></a>
+            <li class="ui-state-default ui-corner-top{% if tab.0 == active %} ui-tabs-selected ui-state-active{% endif %} {{ tab.4 }}">
+                <a href="{{ tab.2 }}">{{ tab.1 }}<i></i></a>
             </li>
         {% endfor %}
     </ul>
