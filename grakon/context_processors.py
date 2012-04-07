@@ -23,13 +23,15 @@ def media_files(request):
     })
 
     if settings.DEBUG:
-        js = ('libs/jquery.js', 'libs/jquery-ui/jquery-ui.js')
+        js = ('libs/jquery.js', 'libs/jquery-ui/jquery-ui.js', 'libs/openapi.js')
     else:
-        js = ('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
-                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js')
+        js = (
+            'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
+            'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js',
+            'http://userapi.com/js/api/openapi.js?49', # VKontakte
+        )
 
     js += (
-        'http://userapi.com/js/api/openapi.js?49', # VKontakte
         'libs/crispy-forms/uni-form.jquery.js',
         #'libs/tipsy/jquery.tipsy.js',
         'js/main.js',
@@ -40,7 +42,7 @@ def media_files(request):
 def project_settings(request):
     context = {}
     for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY',
-            'URL_PREFIX', 'ADMIN_EMAIL', 'ADMIN_PREFIX'):
+            'URL_PREFIX', 'ADMIN_EMAIL', 'ADMIN_PREFIX', 'DEBUG'):
         context[setting] = getattr(settings, setting)
 
     context['SLOGAN'] = u'Гражданский контроль за работой властей'

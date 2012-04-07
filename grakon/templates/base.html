@@ -46,7 +46,7 @@
             <div class="ym-hlist">
                 <ul>
                     <li><a class="on" href="{% url main %}">Навигация</a></li>
-                    <li><a href="">Участники</a></li>
+                    <li><a {% if template == "profiles/base.html" %}class="on"{% endif %} href="">Участники</a></li>
                     <li><a href="">Инструменты</a></li>
                     <li><a {% if template == "static_pages/about/base.html" %}class="on"{% endif %} href="{% url about %}">О проекте</a></li>
                 </ul>
@@ -54,7 +54,7 @@
                 <div class="login_logout">
                     {% if request.user.is_authenticated %}
                         <div class="mt10">
-                            <a href="{% url my_profile %}">{{ request.profile.first_name }} {{ request.profile.last_name }}</a> |
+                            <a href="{{ request.profile.get_absolute_url }}">{{ request.profile.first_name }} {{ request.profile.last_name }}</a> |
                             <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                         </div>
                     {% else %}
@@ -113,9 +113,11 @@
         </div>
     </footer>
 
-{% include "services/google-plus.html" %}
+{% if not DEBUG %}
+    {% include "services/google-plus.html" %}
 
-{% include "services/yandex-metrika.html" %}
+    {% include "services/yandex-metrika.html" %}
+{% endif %}
 
 {% include "services/reformal.html" %}
 

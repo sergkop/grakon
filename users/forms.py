@@ -9,7 +9,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         exclude = ('user', 'username')
 
-    helper = form_helper('edit_profile', u'Сохранить')
+    helper = form_helper('', u'Сохранить')
 
     def clean_about(self):
         return clean_html(self.cleaned_data['about'])

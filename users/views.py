@@ -11,54 +11,59 @@ from django.views.generic.edit import UpdateView
 from grakon.context_processors import project_settings
 from services.email import send_email
 from users.forms import ProfileForm
-from users.models import Profile
+from users.models import PersonResource, PERSON_RESOURCE_DICT, Profile
 
 class BaseProfileView(object):
     template_name = 'profiles/base.html'
-    profile_view = None # 'my_profile' or 'edit_profile'
+    tab = None # 'view' or 'edit'
 
-    def get_profile(self):
-        raise NotImplemented
-
-    def get_context_data(self, **kwargs):
-        ctx = super(BaseProfileView, self).get_context_data(**kwargs)
-        profile = self.get_profile()
-
-        ctx.update({
-            'profile': profile,
-            'profile_view': self.profile_view,
-            'own_profile': profile==self.request.profile,
-        })
-        return ctx
-
-class ProfileView(BaseProfileView, TemplateView):
-    profile_view = 'my_profile'
+    def update_context(self):
+        return {}
 
     def get_profile(self):
         return get_object_or_404(Profile, username=self.kwargs.get('username'))
 
+    def get_context_data(self, **kwargs):
+        ctx = super(BaseProfileView, self).get_context_data(**kwargs)
+        self.profile = self.get_profile()
+
+        own_profile = (self.profile==self.request.profile)
+
+        # TODO: take edit url using urlresolvers
+        tabs = [
+            ('view', u'Профиль', self.profile.get_absolute_url(), 'profiles/view.html', ''),
+        ]
+
+        if own_profile:
+            tabs.append(('edit', u'Редактировать',
+                    reverse('edit_profile', kwargs={'username': self.profile.username}),
+                    'profiles/edit.html', ''))
+
+        ctx.update({
+            'profile': self.profile,
+            'tab': self.tab,
+            'tabs': tabs,
+            'own_profile': own_profile,
+            'info': self.profile.get_related_info(),
+        })
+        ctx.update(self.update_context())
+        return ctx
+
+class ProfileView(BaseProfileView, TemplateView):
+    tab = 'view'
+
 view_profile = ProfileView.as_view()
 
-class MyProfileView(BaseProfileView, TemplateView):
-    profile_view = 'my_profile'
-
-    def get_profile(self):
-        return self.request.profile
-
-my_profile = login_required(MyProfileView.as_view())
-
+# TODO: test that only user can edit his own profile
 class EditProfileView(BaseProfileView, UpdateView):
     form_class = ProfileForm
-    profile_view = 'edit_profile'
-
-    def get_profile(self):
-        return self.request.profile
+    tab = 'edit'
 
     def get_object(self):
         return self.request.profile
 
     def get_success_url(self):
-        return reverse('my_profile')
+        return reverse('profile', kwargs={'username': self.request.profile.username})
 
 edit_profile = login_required(EditProfileView.as_view())
 

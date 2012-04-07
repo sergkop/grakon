@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 
-# TODO: cache db queries
+# TODO: method for caching related data (like in profile)
 # TODO: add wiki_url
 class Location(models.Model):
     country = models.ForeignKey('self', null=True, blank=True, related_name='country_related')

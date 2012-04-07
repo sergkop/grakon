@@ -1,69 +1,30 @@
 {% load elements %}
 
 <div class="page-content">
-    <h4 style="margin-top: 10px;">О себе</h4>
+    <h4>О себе</h4>
     <div>
         {% if profile_user.profile.about %}
             {{ profile_user.profile.about|safe }}
         {% else %}
             {% if own_profile %}
-                <i><a href="{% url edit_profile %}">Добавьте</a> информацию о себе.</i>
+                <i><a href="{% url edit_profile profile.username %}">Добавьте</a> информацию о себе.</i>
             {% else %}
                 <i>Пользователь еще не добавил информацию о себе.</i>
             {% endif %}
         {% endif %}
     </div>
 
-    {% if own_profile %}
-        <div id="in_contacts"><i>Добавлен в контакты</i></div>
-        <div id="is_reported" {% if not is_reported %}style="display:none;"{% endif %}><b>Вы пожаловались на этого пользователя</b></div>
+    <h4>Ресурсы</h4>
+    <div>
+        {% for resource in info.resources %}
+            <span>{{ resource.title }}</span>{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    </div>
 
-        <div class="user_actions">
-            {% button "mail-closed" "Отправить сообщение" "send_message" "" "" %}&nbsp; 
-            {% button "circle-plus" "Добавить в контакты" "add_to_contacts" "" "" %}&nbsp; 
-            {% button "circle-minus" "Удалить из контактов" "remove_from_contacts" "" "" %}
-            {% button "alert" "Пожаловаться" "report_user" "" "" %}
-        </div>
-
-        <script type="text/javascript">
-            // Create buttons
-            $("#report_user").click(function(){
-                report_dialog_init("user", {username: "{{ profile_user.username }}"});
-            });
-
-            if (!in_contacts("{{ profile_user.username }}")){
-                $("#in_contacts").hide();
-                $("#remove_from_contacts").hide();
-            } else
-                $("#add_to_contacts").hide();
-
-            // Send message
-            $("#send_message").click(function(){
-                send_message_dialog_init("{{ profile_user.username }}", "{{ profile_user.pk }}");
-            });
-
-            // Add to contacts
-            $("#add_to_contacts").click(function(){
-                add_to_contacts_dialog_init("{{ profile_user.username }}");
-            });
-
-            // Remove from contacts
-            $("#remove_from_contacts").click(function(){
-                remove_from_contacts_init("{{ profile_user.username }}");
-            });
-        </script>
-
-        {% if user.is_authenticated %}
-            <script type="text/javascript">
-                $("#report_dialog").on("report_dialog_event", function(event, username){
-                    // TODO: check that this is profile user
-                    $("#is_reported").show();
-                    $("#report_user").hide();
-                });
-
-                if ($.inArray("{{ profile_user.username }}", REPORTS["user"])!=-1)
-                    $("#report_user").hide();
-            </script>
-        {% endif %}
-    {% endif %}
+    <h4>Участие</h4>
+    <ul>
+        {% for location in info.locations.values %}
+            <li><a href="{{ location.get_absolute_url }}">{{ location.name }}</a></li>
+        {% endfor %}
+    </ul>
 </div>

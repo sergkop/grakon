@@ -3,7 +3,10 @@
 {% load elements %}
 
 {% block left_column %}
-    <h3 class="column_header column_header_icon"><span class="contacts">Контакты</span></h3>
+{% endblock %}
+
+{% block right_column %}
+<h3 class="column_header column_header_icon"><span class="contacts">Контакты</span></h3>
     <div class="ym-clearfix">
         <div class="content_block">
             <ul id="contacts_ul" class="side_list">
@@ -35,17 +38,7 @@
     </div>
 {% endblock %}
 
-{% block right_column %}{% endblock %}
-
 {% block content %}
     <h2 class="page-header">{{ profile.first_name }} {{ profile.last_name }} ({{ profile.username }})</h2>
-
-    {% if own_profile %}
-        {% tabs "tabs" profile_view "" "" "Профиль" "my_profile" "profiles/view.html" "" "Редактировать" "edit_profile" "profiles/edit.html" "" %}
-    {% else %}
-        <div class="page-content">
-            {% include "profiles/view.html" %}
-        </div>
-    {% endif %}
+    {% tabs "tabs" tabs tab %}
 {% endblock %}
-

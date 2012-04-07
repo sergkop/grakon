@@ -1,24 +1,24 @@
-* conventions file for front-end developer (docs about tabs and buttons, page layout)
+* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
-* implement deployment and test on rackspace server
+* provide js file with code-dependant data like PERSON_RESOURCE_DICT (generate static file
+  on deployment and serve dynamic view in dev)
+
+* in-place editing of user's resources and other
+
+
+
 
 * shortcut to prevent using enter in dialog forms
-
-* change reformal settings
-
-* organize css by files, add blocks, styling
 
 * check that remove account works
 
 * sitemaps
 
-* social registration
-
-* create page for LOGIN_ERROR_URL
-
-* configure django-social-auth
-
-* merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+Registration
+    * social registration
+    * create page for LOGIN_ERROR_URL
+    * configure django-social-auth
+    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
 
 --------------------------------------
 
@@ -48,11 +48,14 @@
 --------------------------------------
 
 Front-end
+    * conventions file for front-end developer (docs about tabs and buttons, page layout)
     * take only necessary parts of jquery-ui, compress
     * Reorganize classes in button and tabs templates, icons are not used in buttons anymore
     * share and share_horizontal are overlap a lot
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * add google+ page to list of services
+    * organize css by files, add blocks, styling
+
     * http://sass-lang.com/
     * http://www.modernizr.com/
 
@@ -63,9 +66,11 @@ Analytics:
       which pages are visited
     * use yandex targets (?) to monitor pressing buttons, registration and other activities
     * use page visits analytics to determine optimal caching times
+    * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
+    * count how often people click on buttons in side bars (with google analytics)
 
 SEO:
-    * Webmaster Tools, seo
+    * Webmaster Tools, seo, https://www.google.com/webmasters/
     * how to deal with large sitemaps?
 
 Testing:
@@ -80,6 +85,9 @@ Emails:
 Performance:
     * activate compression for tinymce
     * use debug toolbar, page speed to optimize page load
+
+Cache:
+    * cache all frequently used info about users (as one big dict)
 
 * user pictures
 * replace disqus?
@@ -119,10 +127,6 @@ Deployment:
 
 * use twisted inside scrapy to download pages with several parallel processes
 
-* start using gunicorn (?)
-
 * написать текст на страницах 404 и 500
 
 * automatically disable discus at dev server
-
-* switch to cached_db session engine

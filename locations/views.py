@@ -7,7 +7,7 @@ class LocationView(TemplateView):
     template_name = 'locations/base.html'
 
     def update_context(self):
-        """ Override in child classed to add context variables """
+        """ Override in child classes to add context variables """
         return {}
 
     def get_context_data(self, **kwargs):
@@ -20,17 +20,19 @@ class LocationView(TemplateView):
             raise Http404(u'Район не найден')
 
         tab = self.request.GET.get('tab', '')
-        # TODO: add list of view types (as class variable)
-        
-        
-        tabs = {
-            "Стена" "wall" "locations/wall.html" ""
-            "Карта" "map" "locations/map.html" ""
-        }
-            
+        if tab not in ('wall', 'map'):
+            tab = 'wall'
+
+        # TODO: automate generating it + move it to class attributes (?)
+        tabs = [
+            ('wall', u'Стена', location.get_absolute_url()+'?tab=wall', 'locations/wall.html', ''),
+            ('map', u'Карта', location.get_absolute_url()+'?tab=map', 'locations/map.html', ''),
+        ]
+
         ctx.update({
             'loc_id': kwargs['loc_id'],
-            'tab': view,
+            'tab': tab,
+            'tabs': tabs,
             'location': location,
         })
 
