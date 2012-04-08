@@ -16,8 +16,10 @@
     {{ form.media }}
 
     <!--[if IE]>
-        <link href="{{ STATIC_URL }}libs/yaml/iehacks.css" rel="stylesheet" type="text/css"/>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <link href="{{ STATIC_URL }}libs/yaml/iehacks.min.css" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+    <!--[if lt IE 9]>
+        <script src="{{ STATIC_URL }}libs/html5shiv.js"></script>
     <![endif]-->
 
     <script type="text/javascript">

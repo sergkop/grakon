@@ -12,6 +12,7 @@ def media_files(request):
             'libs/jquery-ui/jquery-ui.css',
             'libs/crispy-forms/uni-form.css',
             'libs/crispy-forms/default.uni-form.css',
+            'libs/chosen/chosen.css',
             #'libs/tipsy/tipsy.css',
 
             'css/layout.css',
@@ -32,7 +33,11 @@ def media_files(request):
         )
 
     js += (
+        'libs/underscore.js',
+        'libs/json2.js',
+        'libs/backbone.js',
         'libs/crispy-forms/uni-form.jquery.js',
+        'libs/chosen/chosen.jquery.min.js',
         #'libs/tipsy/jquery.tipsy.js',
         'js/main.js',
     )

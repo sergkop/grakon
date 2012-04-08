@@ -1,11 +1,11 @@
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
-* provide js file with code-dependant data like PERSON_RESOURCE_DICT (generate static file
-  on deployment and serve dynamic view in dev)
+* provide js file with code-dependant data like PERSON_RESOURCE_DICT, GET_SUBREGIONS_URL
+  (generate static file on deployment and serve dynamic view in dev)
 
 * in-place editing of user's resources and other
 
-
+* add foreign countries
 
 
 * shortcut to prevent using enter in dialog forms
@@ -56,8 +56,11 @@ Front-end
     * add google+ page to list of services
     * organize css by files, add blocks, styling
 
-    * http://sass-lang.com/
+    * http://sass-lang.com/, http://www.bigjason.com/blog/using-sass-django/,
+      http://compass-style.org/blog/2011/05/09/compass-django/
+    * https://github.com/dziegler/django-css
     * http://www.modernizr.com/
+    * use sprites to extract images from one file (especially icons)
 
 Analytics:
     * analyze when user visited site/logged in last time
@@ -88,6 +91,11 @@ Performance:
 
 Cache:
     * cache all frequently used info about users (as one big dict)
+
+AB testing:
+    * https://github.com/johnboxall/django-ab
+    * https://bitbucket.org/akoha/django-lean/wiki/Home
+    * http://visualwebsiteoptimizer.com/feature-list.php
 
 * user pictures
 * replace disqus?

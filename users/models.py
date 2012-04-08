@@ -4,6 +4,7 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
+from elements.models import BaseEntityProperty, EntityLocation, EntityResource, RESOURCE_DICT
 from locations.models import Location
 from services.cache import cache_function
 
@@ -19,7 +20,7 @@ class Profile(models.Model):
 
     about = HTMLField(u'О себе', default='', blank=True)
 
-    main_location = models.ForeignKey('PersonLocation', blank=True, null=True, related_name='profiles')
+    main_location = models.ForeignKey(EntityLocation, blank=True, null=True, related_name='profiles')
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
@@ -30,21 +31,17 @@ class Profile(models.Model):
         Return {'profile': profile, 'locations': {person_location_id: location},
                 'resources': [dict('id', 'resource', 'title', 'descr')]
         """
-        data = {'profile': self}
+        data = {
+            'profile': self,
+            'resources': list(EntityResource.objects.for_entity(self)),
+            'locations': EntityLocation.objects.for_entity(self),
+        }
 
-        data['resources'] = [
-                {'id': pr.id, 'resource': pr.resource,
-                'title': PERSON_RESOURCE_DICT[pr.resource][0],
-                'descr': PERSON_RESOURCE_DICT[pr.resource][1]}
-                for pr in PersonResource.objects.filter(profile=self)
-        ]
+        # Follows
+        follows = FollowedEntity.objects.filter(follower=self)
 
-        # Prepare locations data 
-        person_locations = PersonLocation.objects.filter(profile=self).values_list('id', 'location')
-        loc_ids = [loc_id for id, loc_id in person_locations]
-        locations_by_id = dict((loc.id, loc) for loc in Location.objects.filter(id__in=loc_ids))
-
-        data['locations'] = dict((id, locations_by_id[loc_id]) for id, loc_id in person_locations)
+        # Followers
+        followers = FollowedEntity.objects.for_entity(self)
 
         return data
 
@@ -67,46 +64,11 @@ def create_profile(sender, **kwargs):
 
 models.signals.post_save.connect(create_profile, sender=User)
 
-# TODO: add subcategories
-# (name, title, description)
-PERSON_RESOURCES = (
-    ('money', u'Деньги', u'Возможность оказать финансовую помощь'),
-    ('transport', u'Транспорт', u'Возможность предоставить автомобиль, автобус, ...'),
-    ('time', u'Время', u'Возможность самому принять активное участие'),
-    ('printing', u'Печать', u'Наличие принтера, доступ к типографии, ...'),
-    ('premises', u'Помещение', u'Ресторан, клуб, спортзал, ...'),
-    ('food', u'Общественное питание', u'Поставка продуктов, обслуживание обедов'),
-    ('auditory', u'Аудитория', u'Распространение информации среди своих друзей и читателей'),
-    ('people', u'Человеческие ресурсы', u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
-    ('organization', u'Представительство в организации', u'Руководитель общественного движения, ...'),
-    ('authority', u'Представительство во власти', u'Муниципальный депутат, полицейский, ...'),
-    ('other', u'Другое', u''),
-)
-
-PERSON_RESOURCE_CHOICES = [(name, title) for name, title, descr in PERSON_RESOURCES]
-PERSON_RESOURCE_DICT = dict((name, (title, descr)) for name, title, descr in PERSON_RESOURCES)
-
-# TODO: ability to add text, describing resources
-class PersonResource(models.Model):
-    profile = models.ForeignKey(Profile, related_name='resources')
-    resource = models.CharField(u'Ресурс', max_length=20, choices=PERSON_RESOURCE_CHOICES, db_index=True)
-
-    time = models.DateTimeField(auto_now=True, null=True, db_index=True)
+class FollowedEntity(BaseEntityProperty):
+    follower = models.ForeignKey(Profile, related_name='followed_entities')
 
     class Meta:
-        unique_together = ('profile', 'resource')
+        unique_together = ('content_type', 'entity_id', 'follower')
 
     def __unicode__(self):
-        return unicode(self.profile) + ': ' + unicode(self.resource)
-
-class PersonLocation(models.Model):
-    profile = models.ForeignKey(Profile, related_name='locations')
-    location = models.ForeignKey(Location, related_name='users')
-
-    time = models.DateTimeField(auto_now=True, null=True, db_index=True)
-
-    class Meta:
-        unique_together = ('profile', 'location')
-
-    def __unicode__(self):
-        return unicode(self.profile) + ': ' + unicode(self.location)
+        return unicode(self.follower) + ' follows ' + unicode(self.entity)

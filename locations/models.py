@@ -3,6 +3,7 @@ from django.db import models
 
 # TODO: method for caching related data (like in profile)
 # TODO: add wiki_url
+# TODO: determine type of location (part of a city, city, district, etc. and use for autocompletion title)
 class Location(models.Model):
     country = models.ForeignKey('self', null=True, blank=True, related_name='country_related')
     region = models.ForeignKey('self', null=True, blank=True, related_name='region_related')

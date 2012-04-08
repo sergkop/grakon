@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     # Applications
     'users',
     'authentication',
+    'elements',
     'grakon',
     'locations',
     'maintenance',

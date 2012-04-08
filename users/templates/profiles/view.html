@@ -28,3 +28,12 @@
         {% endfor %}
     </ul>
 </div>
+
+
+<div id="edit_test">
+    {% include "elements/select_location.html" %}
+</div>
+
+<script type="text/javascript">
+    (new SelectLocation({el: $("#edit_test"), path: [1]})).render();
+</script>

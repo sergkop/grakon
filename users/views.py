@@ -11,7 +11,7 @@ from django.views.generic.edit import UpdateView
 from grakon.context_processors import project_settings
 from services.email import send_email
 from users.forms import ProfileForm
-from users.models import PersonResource, PERSON_RESOURCE_DICT, Profile
+from users.models import Profile
 
 class BaseProfileView(object):
     template_name = 'profiles/base.html'
@@ -44,7 +44,7 @@ class BaseProfileView(object):
             'tab': self.tab,
             'tabs': tabs,
             'own_profile': own_profile,
-            'info': self.profile.get_related_info(),
+            'info': self.profile.get_related_info(), # TODO: move it to middleware
         })
         ctx.update(self.update_context())
         return ctx
