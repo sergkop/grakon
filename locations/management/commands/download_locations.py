@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 id = option.select("@value").extract()[0]
 
                 for option1 in HtmlXPathSelector(text=read_url(URL+id)) \
-                        .select("//table[@width='100%' and @cellspacing='2' and @cellpadding='5']//tr[2]//option"):
+                        .select("//table[@width='100%' and @cellspacing='2' and @cellpadding='5']//tr[3]//option"):
                     ids.append(option1.select("@value").extract()[0])
 
             i += 1

@@ -1,3 +1,5 @@
+* lots of locations data is not downloaded and hierarchy is built incorrectly
+
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
 * provide js file with code-dependant data like PERSON_RESOURCE_DICT, GET_SUBREGIONS_URL
