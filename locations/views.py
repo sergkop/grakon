@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 import json
 
-from django.http import HttpResponse
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.base import TemplateView
 
 from locations.models import Location
@@ -38,6 +39,7 @@ class LocationView(TemplateView):
             'tab': tab,
             'tabs': tabs,
             'location': location,
+            'subregions': subregion_list(location),
         })
 
         ctx.update(self.update_context())
@@ -58,3 +60,15 @@ def get_subregions(request):
         location = None
 
     return HttpResponse(json.dumps(subregion_list(location), ensure_ascii=False))
+
+# TODO: take tab as a parameter
+def goto_location(request):
+    loc_id = request.GET.get('loc_id', '')
+
+    try:
+        int(loc_id)
+    except ValueError:
+        return HttpResponseRedirect(reverse('main')) # TODO: redirect to country page?
+
+    url = reverse('location', args=[loc_id])
+    return HttpResponseRedirect(url)

@@ -44,7 +44,7 @@ class BaseProfileView(object):
             'tab': self.tab,
             'tabs': tabs,
             'own_profile': own_profile,
-            'info': self.profile.get_related_info(), # TODO: move it to middleware
+            'info': self.profile.get_related_info(),
         })
         ctx.update(self.update_context())
         return ctx

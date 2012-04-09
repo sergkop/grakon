@@ -4,6 +4,10 @@
 
 {% block title %}{{ location.name }} - Гракон{% endblock %}
 
+{% block breadcrumbs %}
+    {% include "locations/breadcrumbs.html" %}
+{% endblock %}
+
 {% block left_column %}
     <h3 class="column_header column_header_icon"><span class="contacts">Инструменты</span></h3>
     <div class="ym-clearfix">

@@ -23,8 +23,12 @@
 
     <h4>Участие</h4>
     <ul>
-        {% for location in info.locations.values %}
-            <li><a href="{{ location.get_absolute_url }}">{{ location.name }}</a></li>
+        {% for entity_location in info.locations %}
+            <li>
+                {% with location=entity_location.location %}
+                    {% include "elements/location_path.html" %}
+                {% endwith %}
+            </li>
         {% endfor %}
     </ul>
 </div>

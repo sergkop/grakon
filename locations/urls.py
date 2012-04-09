@@ -6,4 +6,5 @@ urlpatterns = patterns('locations.views',
     url(r'^(?P<loc_id>\d+)$', LocationView.as_view(), name='location'),
 
     url(r'^get_subregions$', 'get_subregions', name='get_subregions'),
+    url(r'^goto_location$', 'goto_location', name='goto_location'),
 )

@@ -64,7 +64,8 @@ class EntityLocationManager(models.Manager):
         entity_locations = list(self.filter(content_type=content_type, entity_id=entity.id))
 
         loc_ids = [el.location_id for el in entity_locations]
-        locations_by_id = dict((loc.id, loc) for loc in Location.objects.filter(id__in=loc_ids))
+        locations = Location.objects.filter(id__in=loc_ids).select_related('region', 'district')
+        locations_by_id = dict((loc.id, loc) for loc in locations)
 
         for el in entity_locations:
             el.location = locations_by_id[el.location_id]
