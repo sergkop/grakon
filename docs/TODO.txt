@@ -2,13 +2,11 @@
 
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
-* provide js file with code-dependant data like PERSON_RESOURCE_DICT, GET_SUBREGIONS_URL
-  (generate static file on deployment and serve dynamic view in dev)
-
 * in-place editing of user's resources and other
 
 * add foreign countries
 
+* move fb:admins meta tag value out of template
 
 * shortcut to prevent using enter in dialog forms
 
@@ -16,11 +14,14 @@
 
 * sitemaps
 
+* table for saving all user's points, where they come from
+
 Registration
     * social registration
     * create page for LOGIN_ERROR_URL
     * configure django-social-auth
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+    * allow user to start working without confirmation of his email, but limit his functionality
 
 --------------------------------------
 
@@ -57,6 +58,7 @@ Front-end
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * add google+ page to list of services
     * organize css by files, add blocks, styling
+    * show g+ and vk buttons in dev mode
 
     * http://sass-lang.com/, http://www.bigjason.com/blog/using-sass-django/,
       http://compass-style.org/blog/2011/05/09/compass-django/
@@ -116,6 +118,7 @@ Deployment:
     * configure virtualenv inside settings properly
     * generate server.sh as well
     * separate server for media files? (512 mb)
+    * generate js/code_data.js on deployment
 
 * set proper page titles
 
@@ -140,3 +143,5 @@ Deployment:
 * написать текст на страницах 404 и 500
 
 * automatically disable discus at dev server
+
+* client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378

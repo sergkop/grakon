@@ -22,38 +22,29 @@ class BaseEntityProperty(models.Model):
     class Meta:
         abstract = True
 
-# TODO: add subcategories
-# (name, title, description)
-RESOURCES = (
-    ('money', u'Деньги', u'Возможность оказать финансовую помощь'),
-    ('transport', u'Транспорт', u'Возможность предоставить автомобиль, автобус, ...'),
-    ('time', u'Время', u'Возможность самому принять активное участие'),
-    ('printing', u'Печать', u'Наличие принтера, доступ к типографии, ...'),
-    ('premises', u'Помещение', u'Ресторан, клуб, спортзал, ...'),
-    ('food', u'Общественное питание', u'Поставка продуктов, обслуживание обедов'),
-    ('auditory', u'Аудитория', u'Распространение информации среди своих друзей и читателей'),
-    ('people', u'Человеческие ресурсы', u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
-    ('organization', u'Представительство в организации', u'Руководитель общественного движения, ...'),
-    ('authority', u'Представительство во власти', u'Муниципальный депутат, полицейский, ...'),
-    ('other', u'Другое', u''),
+# TODO: add subcategories (?)
+# (name, title)
+RESOURCE_CHOICES = (
+    ('money', u'Деньги'), #u'Возможность оказать финансовую помощь'),
+    ('transport', u'Транспорт'), #u'Возможность предоставить автомобиль, автобус, ...'),
+    ('time', u'Время'), #u'Возможность самому принять активное участие'),
+    ('printing', u'Печать'), #u'Наличие принтера, доступ к типографии, ...'),
+    ('premises', u'Помещение'), #u'Ресторан, клуб, спортзал, ...'),
+    ('food', u'Общественное питание'), #u'Поставка продуктов, обслуживание обедов'),
+    ('auditory', u'Аудитория'), #u'Распространение информации среди своих друзей и читателей'),
+    ('people', u'Человеческие ресурсы'), #u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
+    ('organization', u'Представительство в организации'), #u'Руководитель общественного движения, ...'),
+    ('authority', u'Представительство во власти'), #u'Муниципальный депутат, полицейский, ...'),
+    #('other', u'Другое', u''),
 )
-
-RESOURCE_CHOICES = [(name, title) for name, title, descr in RESOURCES]
-RESOURCE_DICT = dict((name, (title, descr)) for name, title, descr in RESOURCES)
 
 # TODO: ability to add text, describing resources + custom resources (in case of other)
 class EntityResource(BaseEntityProperty):
     resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
-    text = models.CharField(max_length=200, blank=True)
+    text = models.CharField(max_length=200, blank=True) # TODO: depricate
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'resource')
-
-    def title(self):
-        return RESOURCE_DICT[self.resource][0]
-
-    def descr(self):
-        return RESOURCE_DICT[self.resource][1]
 
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)

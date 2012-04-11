@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.forms.widgets import Media
 
 # TODO: add IE-specific styles here
@@ -39,6 +40,7 @@ def media_files(request):
         'libs/crispy-forms/uni-form.jquery.js',
         'libs/chosen/chosen.jquery.min.js',
         #'libs/tipsy/jquery.tipsy.js',
+        reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
         'js/main.js',
     )
     media.add_js(js)

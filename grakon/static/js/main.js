@@ -1,6 +1,3 @@
-// TODO: move it to generated script with python code data
-GET_SUBREGIONS_URL = "/location/get_subregions";
-
 $(function(){
     $("form.uniForm").uniform();
 });
@@ -51,6 +48,7 @@ function dialog_post_shortcut(id, url, params, on_success){
     }
 }
 
+// Widget for choosing location path using several select elements
 // Usage: (new SelectLocation({el: $("#edit_test"), path: []})).render();
 var SelectLocation = Backbone.View.extend({
     selectors: ['[name="region"]', '[name="district"]', '[name="location"]'],
@@ -154,4 +152,74 @@ var SelectLocation = Backbone.View.extend({
 
         this.update_empty_select(i);
     }
+});
+
+// TODO: bug with styling of edit field
+var TagsView = Backbone.View.extend({
+    events: {
+        "click .add-tag-btn": "edit",
+        "click .edit-tag-btn": "edit",
+        "click .save-tag-btn": "save"
+    },
+
+    initialize: function(){
+        this.choices = this.options.choices;
+        this.save_url = this.options.save_url;
+        this.select = this.$el.find(".tag-edit select")
+    },
+
+    edit: function(){
+        var el = this.$el;
+        var select = this.select;
+
+        el.children(".tag-view").hide();
+        el.children(".tag-edit").show();
+
+        select.children().remove();
+
+        // Init select options
+        _.each(this.choices, function(tag_data){
+            select.append($("<option/>").attr("value", tag_data[0]).html(tag_data[1]));
+        });
+
+        // Mark selected options
+        el.find("span[data-name]").each(function(i){
+            select.children('option[value="'+$(this).attr("data-name")+'"]').attr("selected", "");
+        });
+
+        if (!select.hasClass("chzn-done"))
+                select.chosen({
+                    no_results_text: "Ни один вариант не соответствует"
+                });
+        select.trigger("liszt:updated");
+    },
+
+    save: function(){
+        var el = this.$el;
+        var select = el.find(".tag-edit select");
+
+        el.children(".tag-view").show();
+        el.children(".tag-edit").hide();
+
+        el.find("span[data-name]").remove();
+
+        if (select.val()){
+            _.each(select.val().reverse(), function(resource, i){
+                var title = RESOURCES_DICT[resource];
+                if (i>0)
+                    title += ", ";
+
+                var span = $("<span/>").attr("data-name", resource).html(title);
+                el.children(".tag-view").prepend(span);
+            });
+
+            $(".add-tag-btn").hide();
+            $(".edit-tag-btn").show();
+        } else {
+            $(".add-tag-btn").show();
+            $(".edit-tag-btn").hide();
+        }
+    },
+
+    render: function(){}
 });

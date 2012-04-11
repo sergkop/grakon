@@ -45,6 +45,9 @@ class BaseProfileView(object):
             'tabs': tabs,
             'own_profile': own_profile,
             'info': self.profile.get_related_info(),
+
+            'resources': [{'name': r.resource, 'title': r.get_resource_display()}
+                    for r in self.profile.get_related_info()['resources']],
         })
         ctx.update(self.update_context())
         return ctx

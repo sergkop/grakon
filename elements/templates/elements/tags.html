@@ -1,0 +1,14 @@
+<div class="tag-view">
+    {% for tag in tags %}
+        <span data-name="{{ tag.name }}">{{ tag.title }}</span>
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
+
+    <span class="add-tag-btn clickable {% if tags %}hidden{% endif %}">Добавить</span>
+    <span class="edit-tag-btn clickable {% if not tags %}hidden{% endif %}">Изменить</span>
+</div>
+
+<div class="tag-edit hidden">
+    <select class="tag-select" multiple="" data-placeholder=""></select>
+    <span class="save-tag-btn clickable">Сохранить</span>
+</div>

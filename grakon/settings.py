@@ -90,7 +90,6 @@ INSTALLED_APPS = (
     'elements',
     'grakon',
     'locations',
-    'maintenance',
     'navigation',
 )
 

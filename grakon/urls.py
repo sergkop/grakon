@@ -19,3 +19,8 @@ urlpatterns = patterns('',
 
     url(r'^%s/' % settings.ADMIN_PREFIX, include(admin.site.urls)),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^code_data$', 'grakon.views.code_data', name='code_data'),
+    )

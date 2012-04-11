@@ -32,6 +32,8 @@ class Command(BaseCommand):
         endings2 = (u'ая',)
         endings3 = (u'ое',)
 
+        # TODO: detect location type it and save it in model
+        # TODO: drop сельсоветы and other small districts
         location_types = {
             u'Районы': (u'район', endings1),
             u'Волости': (u'волость', endings2),

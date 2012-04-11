@@ -4,7 +4,7 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
-from elements.models import BaseEntityProperty, EntityLocation, EntityResource, RESOURCE_DICT
+from elements.models import BaseEntityProperty, EntityLocation, EntityResource
 from locations.models import Location
 from services.cache import cache_function
 
@@ -29,7 +29,7 @@ class Profile(models.Model):
     def get_related_info(self):
         """
         Return {'profile': profile, 'locations': {person_location_id: location},
-                'resources': [dict('id', 'resource', 'title', 'descr')]
+                'resources': resources}
         """
         data = {
             'profile': self,

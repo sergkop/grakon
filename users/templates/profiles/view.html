@@ -15,11 +15,20 @@
     </div>
 
     <h4>Ресурсы</h4>
-    <div>
+    <div id="resources">
+        {% with tags=resources %}
+            {% include "elements/tags.html" %}
+        {% endwith %}
+    </div>
+    <!--div>
         {% for resource in info.resources %}
             <span>{{ resource.title }}</span>{% if not forloop.last %},{% endif %}
         {% endfor %}
-    </div>
+        
+        
+        resources
+        
+    </div-->
 
     <h4>Участие</h4>
     <ul>
@@ -32,3 +41,11 @@
         {% endfor %}
     </ul>
 </div>
+
+<br/><br/>
+
+
+
+<script type="text/javascript">
+    (new TagsView({el: $("#resources"), choices: RESOURCES})).render();
+</script>
