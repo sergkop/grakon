@@ -98,13 +98,11 @@ class ActivationProfile(models.Model):
 
 
 
-from social_auth.signals import pre_update
-from social_auth.backends.google import GoogleOAuth2
+#from social_auth.signals import pre_update
+#from social_auth.backends.google import GoogleOAuth2
 
-def google_extra_values(sender, user, response, details, **kwargs):
-    print response.get('gender')
-    print response.__dict__
-    return True
+#def google_extra_values(sender, user, response, details, **kwargs):
+#    return True
 
-pre_update.connect(google_extra_values, sender=GoogleOAuth2)
+#pre_update.connect(google_extra_values, sender=GoogleOAuth2)
 

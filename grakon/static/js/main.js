@@ -49,7 +49,7 @@ function dialog_post_shortcut(id, url, params, on_success){
 }
 
 // Widget for choosing location path using several select elements
-// Usage: (new SelectLocation({el: $("#edit_test"), path: []})).render();
+// Usage: (new SelectLocation({el: $(div), path: []})).render();
 var SelectLocation = Backbone.View.extend({
     selectors: ['[name="region"]', '[name="district"]', '[name="location"]'],
 

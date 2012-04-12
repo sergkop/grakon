@@ -124,7 +124,7 @@ LOGGING = {
 
 AUTH_PROFILE_MODULE = 'users.Profile'
 LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/profile'
+#LOGIN_REDIRECT_URL is set in users.views
 #LOGIN_ERROR_URL    = '/login-error/'
 
 AUTHENTICATION_BACKENDS = (

@@ -22,10 +22,9 @@ password_letter_re = re.compile(r'[a-zA-Z]')
 
 class BaseRegistrationForm(forms.ModelForm):
     username = forms.RegexField(label=u'Имя пользователя (логин)', max_length=20, min_length=4, regex=r'^[\w\.]+$',
-            help_text=u'Имя пользователя может содержать от 4 до 20 символов (латинские буквы, цифры, подчеркивания и точки).<br/>' \
-                    u'<b>Под этим именем вас будут видеть другие пользователи.</b>')
+            help_text=u'4-20 символов (латинские буквы, цифры, подчеркивания и точки). Регистр не учитывается.')
 
-    email = forms.EmailField(label=u'Электронная почта',
+    email = forms.EmailField(label=u'Электронная почта (email)',
             help_text=u'<b>На ваш электронный адрес будет выслано письмо со ссылкой для активации аккаунта</b>')
 
     class Meta:
@@ -33,6 +32,7 @@ class BaseRegistrationForm(forms.ModelForm):
         fields = ('username', 'last_name', 'first_name')
 
     def save(self):
+        # TODO: no password in the base class
         username, email, password = self.cleaned_data['username'], \
                 self.cleaned_data['email'], self.cleaned_data.get('password1', '')
 
@@ -50,6 +50,7 @@ class BaseRegistrationForm(forms.ModelForm):
 
         return user
 
+# TODO: explicitly generate layout to use specifics for locations
 class RegistrationForm(BaseRegistrationForm):
     password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
             help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну латинскую букву и одну цифру')
@@ -106,7 +107,7 @@ class LoginForm(auth_forms.AuthenticationForm):
                 raise forms.ValidationError(u'Пожалуйста, введите корретное имя пользователя или адрес электронной почты и пароль.')
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(u'Эта учётная запись неактивна')
-        self.check_for_test_cookie()
+        self.check_for_test_cookie() # TODO: what is it for?
         return self.cleaned_data
 
 class ProfileForm(forms.ModelForm):

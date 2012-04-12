@@ -60,7 +60,7 @@
                             <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                         </div>
                     {% else %}
-                        <span id="login_btn" class="clickable">Войти</span>
+                        <span id="login_btn" class="clickable"><a href="{% url login %}">Войти</a></span>
                     {% endif %}
                 </div>
                 <div class="cl">&nbsp;</div>

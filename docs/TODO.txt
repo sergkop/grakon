@@ -1,64 +1,79 @@
-* lots of locations data is not downloaded and hierarchy is built incorrectly
-
-* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
-
-* in-place editing of user's resources and other
-
-* add foreign countries
-
-* move fb:admins meta tag value out of template
-
-* shortcut to prevent using enter in dialog forms
-
-* check that remove account works
-
-* sitemaps
-
-* table for saving all user's points, where they come from
-
 Registration
-    * social registration
+    * configure registration with fb, vk, google
     * create page for LOGIN_ERROR_URL
     * configure django-social-auth
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
     * allow user to start working without confirmation of his email, but limit his functionality
+    * captchas
+
+Locations:
+    * Fix location names, filter out small districts
+    * add foreign countries
+    * update select widget in breadcrumbs with chosen (?)
+
+Front-end
+    * Add new design
+    * show g+ and vk buttons in dev mode
+
+Cache:
+    * cache all frequently used info about users (as one big dict)
+
+Deployment:
+    * start using south and run migrate
+    * configure nginx
+    * generate server.sh as well
+    * generate js/code_data.js on deployment
+    * static files deployment, minification, caching time
+    * switch to wsgi
+
+* file with all passwords, social applications (where to get them)
+* sitemaps
+
+* use celery to send emails
 
 --------------------------------------
 
+* create element forms for resources and skills (like for location)
 
-* show post messages
-* tests and test coverage
+* write Profile manager method which gets multiple profiles info (get from cache at once,
+  get missing from db)
+
+* generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
+
+* develop template for letters
+* fix texts of the letters
 
 * move password change views to users (from auth)
-* reasons to register on registration page
-
-* local copy of vkontakte script (for offline development)
+* reasons to register on registration page (merge with landing page)
 
 * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
 
 ------------------------------
 
-* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
-* captchas
-
-* new email address for sending emails
+* table for saving all user's points, where they come from
 
 * create google oauth2 app from grakon account (?)
 
-* file with all passwords, social applications (where to get them)
+* show post messages
+
+* check that remove account works
+
+* move fb:admins meta tag value out of template
+
+* shortcut to prevent using enter in dialog forms
 
 --------------------------------------
 
 Front-end
     * conventions file for front-end developer (docs about tabs and buttons, page layout)
     * take only necessary parts of jquery-ui, compress
-    * Reorganize classes in button and tabs templates, icons are not used in buttons anymore
     * share and share_horizontal are overlap a lot
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * add google+ page to list of services
     * organize css by files, add blocks, styling
-    * show g+ and vk buttons in dev mode
+    * reorganize button tag (do we need it?)
 
     * http://sass-lang.com/, http://www.bigjason.com/blog/using-sass-django/,
       http://compass-style.org/blog/2011/05/09/compass-django/
@@ -67,6 +82,7 @@ Front-end
     * use sprites to extract images from one file (especially icons)
 
 Analytics:
+    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * analyze when user visited site/logged in last time
     * configure logging, sentry
     * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
@@ -75,14 +91,17 @@ Analytics:
     * use page visits analytics to determine optimal caching times
     * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
     * count how often people click on buttons in side bars (with google analytics)
+    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
+    * get statistics on db usage
 
 SEO:
     * Webmaster Tools, seo, https://www.google.com/webmasters/
     * how to deal with large sitemaps?
 
 Testing:
-    * perform testing and code testing after commit (github hooks)
+    * perform code testing after commit (github hooks)
     * testing in browsers, selenium, http://www.browserstack.com
+    * tests and test coverage
 
 Emails:
     * sign emails with "Администрация Гракона" or smth. else
@@ -94,7 +113,7 @@ Performance:
     * use debug toolbar, page speed to optimize page load
 
 Cache:
-    * cache all frequently used info about users (as one big dict)
+    * ...
 
 AB testing:
     * https://github.com/johnboxall/django-ab
@@ -102,7 +121,9 @@ AB testing:
     * http://visualwebsiteoptimizer.com/feature-list.php
 
 * user pictures
+
 * replace disqus?
+* automatically disable discus at dev server
 
 * analyze email postfixes, detect sending problems, configure properly
 
@@ -112,19 +133,18 @@ AB testing:
 
 Deployment:
     * include sqlite file with empty db ready for use
-    * configure nginx
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * database backups
     * configure virtualenv inside settings properly
-    * generate server.sh as well
     * separate server for media files? (512 mb)
-    * generate js/code_data.js on deployment
+    * switch to postgres?
 
 * set proper page titles
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 
-* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60)
+* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
+  move logo url to settings
 
 * start writing documentation
 
@@ -134,14 +154,10 @@ Deployment:
 
 * don't use cache for anonymous users on the dev server (for convinience)
 
-* switch to postgres?
-
 * start using celery
 
 * use twisted inside scrapy to download pages with several parallel processes
 
 * написать текст на страницах 404 и 500
 
-* automatically disable discus at dev server
-
-* client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
+* new email address for sending emails

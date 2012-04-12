@@ -6,9 +6,9 @@ from django.template.response import TemplateResponse
 
 from authentication.forms import LoginForm, RegistrationForm
 from authentication.models import ActivationProfile
-from authentication.utils import authenticated_redirect
+from authentication.utils import authenticated_profile_redirect
 
-@authenticated_redirect('edit_profile')
+@authenticated_profile_redirect
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -22,7 +22,7 @@ def register(request):
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def activate(request, activation_key):
     account = ActivationProfile.objects.activate_user(activation_key)
     if account:
@@ -30,15 +30,15 @@ def activate(request, activation_key):
     return TemplateResponse(request, 'auth/activation_fail.html')
 
 # TODO: introduce shortcut for it or write it shorter
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def registration_completed(request):
     return TemplateResponse(request, 'auth/registration_completed.html')
 
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def email_not_sent(request):
     return TemplateResponse(request, 'auth/email_not_sent.html')
 
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def activation_completed(request):
     return TemplateResponse(request, 'auth/activation_completed.html')
 
@@ -48,7 +48,7 @@ def password_change(request, **kwargs):
         return redirect('password_change_forbidden')
     return auth_views.password_change(request, **kwargs)
 
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def login(request):
     return auth_views.login(request, 'auth/login.html', 'next', LoginForm)
 
@@ -56,7 +56,7 @@ def logout(request):
     next_page = reverse('main') if 'next' in request.REQUEST else None
     return auth_views.logout(request, next_page)
 
-@authenticated_redirect('my_profile')
+@authenticated_profile_redirect
 def password_reset_done(request):
     return TemplateResponse(request, 'auth/password_reset_done.html')
 

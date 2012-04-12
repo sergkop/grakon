@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.views.generic.base import TemplateView
@@ -81,3 +81,10 @@ def remove_account(request):
 
         send_email(subject, settings.ADMIN_EMAIL, html)
     return TemplateResponse(u'Чтобы удалить аккаунт, необходимо войти в систему')
+
+@login_required
+def profile(request):
+    """ Redirects user to profile page after logging in (used to overcome django limitation) """
+    return redirect(request.profile.get_absolute_url())
+
+settings.LOGIN_REDIRECT_URL = reverse('profile')
