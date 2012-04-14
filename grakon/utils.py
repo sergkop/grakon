@@ -8,7 +8,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 def form_helper(action_name, button_name):
-    """ Shortcut to generate django-uniform helper """
+    """ Shortcut to generate django-crispy-forms helper """
     helper = FormHelper()
     helper.form_action = action_name
     helper.form_method = 'POST'

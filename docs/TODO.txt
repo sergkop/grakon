@@ -3,8 +3,8 @@ Registration
     * create page for LOGIN_ERROR_URL
     * configure django-social-auth
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
-    * allow user to start working without confirmation of his email, but limit his functionality
     * captchas
+    * restore location on error in form
 
 Locations:
     * Fix location names, filter out small districts
@@ -16,7 +16,7 @@ Front-end
     * show g+ and vk buttons in dev mode
 
 Cache:
-    * cache all frequently used info about users (as one big dict)
+    * cache all frequently used info about users (as one big dict) and locations
 
 Deployment:
     * start using south and run migrate
@@ -29,7 +29,7 @@ Deployment:
 * file with all passwords, social applications (where to get them)
 * sitemaps
 
-* use celery to send emails
+* use celery to send emails (method for delayed sending of email)
 
 --------------------------------------
 
@@ -64,6 +64,7 @@ Deployment:
 
 * shortcut to prevent using enter in dialog forms
 
+* allow user to start working without confirmation of his email, but limit his functionality (?)
 --------------------------------------
 
 Front-end
@@ -113,7 +114,7 @@ Performance:
     * use debug toolbar, page speed to optimize page load
 
 Cache:
-    * ...
+    * use template caching
 
 AB testing:
     * https://github.com/johnboxall/django-ab

@@ -1,59 +1,89 @@
 # -*- coding:utf-8 -*-
+import json
+
 from django import forms
+from django.forms.widgets import Widget
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from crispy_forms.layout import HTML
 
 from locations.models import Location
 
-# TODO: set path
-LocationHTML = HTML(
-    '<div id="location_select">'+render_to_string('elements/select_location.html')+'</div>' \
-    '<script type="text/javascript">' \
-        '$().ready(function(){' \
-                '(new SelectLocation({el: $("#location_select"), path: []})).render();' \
-            '});' \
-    '</script>'
-)
+class LocationSelectWidget(Widget):
+    def render(self, name, value, attrs=None):
+        """ value is a location path - the list [tegion_id, district_id, location_id] """
 
-class LocationForm(forms.Form):
-    def __init__(self, required, label):
-        """ If required then the lowest possible level must be chosen """
-        super(LocationForm, self).__init__()
-        self.required = required
+        #print "value", value, attrs
 
-        self.fields.update({
-            'region': forms.CharField(label=label, required=False),
-            'district': forms.CharField(required=False),
-            'location': forms.CharField(required=False),
-        )
+        value = value or []
 
-        # TODO: set path on errors
+        html = '<div id="%s">%s</div>' % (name, render_to_string('elements/select_location.html'))
+        html += '<script type="text/javascript">' \
+                    '$().ready(function(){' \
+                        '(new SelectLocation({el: $("#%s"), path: %s})).render();' \
+                    '});' \
+                '</script>' % (name, json.dumps(value))
+        html += '<input type="text" name="%s" style="display:none;" value="test" />' % name
 
-    def clean(self):
-        msg = u'Необходимо выбрать нижний уровень географической иерархии'
+        return mark_safe(html)
 
+def location_init(form, required, label):
+    """ If required then the lowest possible level must be chosen """
+    form.required = required
+
+    form.fields.update({
+        'location_select': forms.CharField(label=label, required=True, initial=[],
+                widget=LocationSelectWidget),
+        'region': forms.CharField(required=False),
+        'district': forms.CharField(required=False),
+        'location': forms.CharField(required=False),
+    })
+
+def form_location_path(form):
+    path = []
+    if getattr(form, 'location', None):
+        for attr in ('region_id', 'district_id', 'id'):
+            if getattr(form.location, attr) is not None:
+                path.append(getattr(form.location, attr))
+
+    # TODO: pass path to location_select on errors
+    #form.fields['location_select'].initial = path
+    #form.fields['location_select'].widget.attrs['dat'] = path
+    #form.initial['location_select'] = path
+    #form.cleaned_data['location_select'] = path
+    #print "path", path
+
+def location_clean(form):
+    msg = u'Необходимо выбрать нижний уровень географической иерархии'
+
+    print form.cleaned_data
+    try:
+        form.location = Location.objects.get(id=int(form.cleaned_data.get('location', '')))
+    except (ValueError, Location.DoesNotExist):
         try:
-            self.location = Location.objects.get(id=int(self.cleaned_data.get('location', '')))
+            form.location = Location.objects.get(id=int(form.cleaned_data.get('district', '')))
         except (ValueError, Location.DoesNotExist):
             try:
-                self.location = Location.objects.get(id=int(self.cleaned_data.get('district', '')))
+                form.location = Location.objects.get(id=int(form.cleaned_data.get('region', '')))
             except (ValueError, Location.DoesNotExist):
-                try:
-                    self.location = Location.objects.get(id=int(self.cleaned_data.get('region', '')))
-                except (ValueError, Location.DoesNotExist):
-                    if self.required:
-                        raise forms.ValidationError(msg)
-                    else:
-                        self.location = Location.objects.country()
+                if form.required:
+                    form_location_path(form)
+                    raise forms.ValidationError(msg)
+                else:
+                    form.location = Location.objects.country()
 
-        if self.required:
-            if self.location.region_id is None:
+    if form.required:
+        if form.location.region_id is None:
+            form_location_path(form)
+            raise forms.ValidationError(msg)
+
+        # Check that this is the lowest possible level
+        if form.location.is_district():
+            if Location.objects.filter(district=form.location).count() == 0:
+                form_location_path(form)
                 raise forms.ValidationError(msg)
 
-            # Check that this is the lowest possible level
-            if self.location.is_district():
-                if Location.objects.filter(district=self.location).count() == 0:
-                    raise forms.ValidationError(msg)
-
-        return self.cleaned_data
+    print form.location
+    form_location_path(form)
+    return form.cleaned_data

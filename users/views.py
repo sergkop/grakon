@@ -86,5 +86,3 @@ def remove_account(request):
 def profile(request):
     """ Redirects user to profile page after logging in (used to overcome django limitation) """
     return redirect(request.profile.get_absolute_url())
-
-settings.LOGIN_REDIRECT_URL = reverse('profile')

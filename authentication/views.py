@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from authentication.forms import LoginForm, RegistrationForm
+from authentication.forms import LoginForm, RegistrationForm, SocialRegistrationForm
 from authentication.models import ActivationProfile
 from authentication.utils import authenticated_profile_redirect
 
@@ -14,11 +14,24 @@ def register(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            # TODO: crashes on registering user with the same username
             user = form.save()
             return redirect('registration_completed')
     else:
         form = RegistrationForm()
+
+    return TemplateResponse(request, 'auth/register.html', {'form': form})
+
+# TODO: @authenticated_profile_redirect ?
+def social_registration(request):
+    if request.method == 'POST':
+        form = SocialRegistrationForm(request.POST)
+
+        if form.is_valid():
+            # TODO: crashes on registering user with the same username
+            user = form.save()
+            return redirect('registration_completed')
+    else:
+        form = SocialRegistrationForm()
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 

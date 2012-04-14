@@ -67,7 +67,7 @@ class EntityLocation(BaseEntityProperty):
     location = models.ForeignKey(Location, related_name='entities')
 
     objects = EntityLocationManager()
-    
+
     class Meta:
         unique_together = ('content_type', 'entity_id', 'location')
 

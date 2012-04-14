@@ -19,10 +19,6 @@ def subregion_list(location=None):
                 res.append((loc_id, name))
         return res
     elif location.is_region():
-        print location.id, location
-
-        print list(Location.objects.filter(region=location, district=None).order_by('name').values_list('id', 'name'))
-
         return [('', u'Выбрать район')]+list(Location.objects.filter(region=location, district=None)
                 .order_by('name').values_list('id', 'name'))
     elif location.is_district():

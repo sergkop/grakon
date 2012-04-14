@@ -124,8 +124,20 @@ LOGGING = {
 
 AUTH_PROFILE_MODULE = 'users.Profile'
 LOGIN_URL = '/login'
-#LOGIN_REDIRECT_URL is set in users.views
+LOGIN_REDIRECT_URL = '/profile' # must be the same as reverse('profile')
 #LOGIN_ERROR_URL    = '/login-error/'
+
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/social_registration' # the same as reverse('social_registration')
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details'
+)
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
@@ -150,6 +162,7 @@ TINYMCE_COMPRESSOR = False # TODO: compression doesn't work at the moment
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
+# TODO: remove it when switched to uwsgi
 # force removal of mysite.fcgi from URL:
 # http://docs.djangoproject.com/en/dev/howto/deployment/fastcgi/#forcing-the-url-prefix-to-a-particular-value
 FORCE_SCRIPT_NAME = ''
