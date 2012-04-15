@@ -21,17 +21,71 @@ def register(request):
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 
+def social_registration_pipeline(request, *args, **kwargs):
+    # TODO: don't show this form if kwargs['user']
+    if kwargs['user']:
+        return None
+    return redirect('social_registration')
+
 # TODO: @authenticated_profile_redirect ?
 def social_registration(request):
+    # TODO: if user is logged in - redirect
+
+    from social_auth.utils import setting
+    name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
+    data = request.session.get(name)
+
+    if not data:
+        return redirect('login')
+
+    from pprint import pprint
+    pprint(data)#['kwargs'])
+
+    details = data['kwargs']['details']
+
+    # TODO: data from google
+    #data['kwargs']['response']['link']
+    #data['kwargs']['response']['picture']
+    #data['kwargs']['response']['verified_email']
+
+    # TODO: data['kwargs']['is_new'] - what is it?
+
+    email_verified = False
+    if data['backend']=='google-oauth2' and data['kwargs']['response']['verified_email']:
+        email_verified = True
+
+    form_params = {'email_verified': email_verified}
+    if email_verified:
+        form_params['email'] = details['email']
+
     if request.method == 'POST':
-        form = SocialRegistrationForm(request.POST)
+        form = SocialRegistrationForm(request.POST, **form_params)
 
         if form.is_valid():
-            # TODO: crashes on registering user with the same username
             user = form.save()
+
+            if email_verified:
+                from django.conf import settings
+                name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
+                data[name] = 5 # TODO: fix it; start with settings.SOCIAL_AUTH_PIPELINE_RESUME_ENTRY
+                data['kwargs']['user'] = user
+                data['kwargs']['is_new'] = True
+                request.session[name] = data
+
+                return redirect('socialauth_complete', backend=data['backend'])
+
+            # TODO: if email needs to be confirmed, redirect to registration_completed or /complete/<backend>/,
+            #       else - profile
             return redirect('registration_completed')
     else:
-        form = SocialRegistrationForm()
+        form = SocialRegistrationForm(**form_params)
+
+    form.initial['first_name'] = details['first_name']
+    form.initial['last_name'] = details['last_name']
+    form.initial['username'] = details['username']
+
+    if not email_verified:
+        form.initial['email'] = details['email']
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 

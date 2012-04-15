@@ -77,7 +77,7 @@ class RegistrationForm(BaseRegistrationForm):
             # No user with such username exists
             return self.cleaned_data['username']
 
-        self.account_exists_error(u'Пользователь с этим именем уже существует.', user)
+        self.account_exists_error(u'Пользователь с этим именем уже <a href="%s" target="_blank">существует</a>.' % user.get_absolute_url(), user)
 
     def clean_email(self):
         try:
@@ -125,19 +125,82 @@ class RegistrationForm(BaseRegistrationForm):
 
         ActivationProfile.objects.init_activation(user)
 
-        EntityLocation.objects.create(entity=user, location=self.location)
+        EntityLocation.objects.create(entity=profile, location=self.location)
 
         return user
 
+# TODO: add next hidden field
 class SocialRegistrationForm(BaseRegistrationForm):
-    helper = form_helper('register', u'Зарегистрироваться')
+    helper = form_helper('social_registration', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
-    helper.layout = Layout(
-        Fieldset('', 'last_name', 'first_name', 'email', 'location_select', 'username'),
-    )
 
     def __init__(self, *args, **kwargs):
+        self.email_verified = kwargs.pop('email_verified')
+        self.email = kwargs.pop('email', None)
+
         super(SocialRegistrationForm, self).__init__(*args, **kwargs)
+
+        fields = ['last_name', 'first_name', 'email', 'location_select', 'username']
+
+        if self.email_verified:
+            del self.fields['email']
+            fields.remove('email')
+
+        self.helper.layout = Layout(Fieldset('', *fields))
+
+    def account_exists_error(self, msg, user):
+        """ Raise username or email field error if corresponding user already exists """
+        # TODO: fix it (offer to merge accounts)
+        raise forms.ValidationError(mark_safe(msg+
+                u'<br/>Если вы зарегистрировались ранее, то можете <a href="%s">войти в систему</a> '
+                u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
+                ))
+
+    def clean_username(self):
+        # TODO: check if self.email_verified
+        try:
+            user = User.objects.get(username=self.cleaned_data['username'])
+        except User.DoesNotExist:
+            # No user with such username exists
+            return self.cleaned_data['username']
+
+        self.account_exists_error(u'Пользователь с этим именем уже <a href="%s" target="_blank">существует</a>.' % user.get_absolute_url(), user)
+
+    def clean_email(self):
+        try:
+            user = User.objects.get(email=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data['email']
+        except User.MultipleObjectsReturned:
+            # TODO: report to admin
+            user = User.objects.filter(email=self.cleaned_data['email'])[0]
+
+        self.account_exists_error(u'Пользователь с этим адресом электронной почты уже зарегистрирован', user)
+
+    def save(self):
+        # TODO: consider both values of self.email_verified
+
+        if not self.email_verified:
+            self.email = self.cleaned_data['email']
+
+        # TODO: make sure email is still unique (use transaction)
+        user = User.objects.create_user(self.cleaned_data['username'], self.email)
+
+        profile = user.get_profile()
+        for field in self.Meta.fields:
+            setattr(profile, field, self.cleaned_data[field])
+        profile.save()
+
+        if self.email_verified:
+            pass # TODO: send email notifying registration
+        else:
+            user.is_active = False
+            user.save()
+            ActivationProfile.objects.init_activation(user)
+
+        EntityLocation.objects.create(entity=profile, location=self.location)
+
+        return user
 
 class LoginForm(auth_forms.AuthenticationForm):
     helper = form_helper('login', u'Войти')

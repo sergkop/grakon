@@ -1,5 +1,6 @@
 Registration
     * configure registration with fb, vk, google
+    * consider case when user refuses to give rights to application
     * create page for LOGIN_ERROR_URL
     * configure django-social-auth
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
@@ -32,6 +33,7 @@ Deployment:
 * use celery to send emails (method for delayed sending of email)
 
 --------------------------------------
+* Disallow paths in robots.txt (see django-social-auth example)
 
 * create element forms for resources and skills (like for location)
 

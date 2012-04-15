@@ -57,7 +57,6 @@ def form_location_path(form):
 def location_clean(form):
     msg = u'Необходимо выбрать нижний уровень географической иерархии'
 
-    print form.cleaned_data
     try:
         form.location = Location.objects.get(id=int(form.cleaned_data.get('location', '')))
     except (ValueError, Location.DoesNotExist):
@@ -79,6 +78,7 @@ def location_clean(form):
             raise forms.ValidationError(msg)
 
         # Check that this is the lowest possible level
+        # TODO: doesn't work with 2 level depth (Адыгея->Адыгейск)
         if form.location.is_district():
             if Location.objects.filter(district=form.location).count() == 0:
                 form_location_path(form)
