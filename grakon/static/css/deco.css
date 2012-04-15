@@ -1,0 +1,119 @@
+header {
+	background: #222223;	
+	background: -moz-linear-gradient(#3e3e3e, #222223);
+	background: -ms-linear-gradient(#3e3e3e, #222223);
+	background: -o-linear-gradient(#3e3e3e, #222223);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#3e3e3e), to(#222223));
+	background: -webkit-linear-gradient(#3e3e3e, #222223);
+	background: linear-gradient(#3e3e3e, #222223);
+}
+
+footer {
+	background: #ccc9c9;
+	background: -moz-linear-gradient(#edeaea, #ccc9c9);
+	background: -ms-linear-gradient(#edeaea, #ccc9c9);
+	background: -o-linear-gradient(#edeaea, #ccc9c9);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#edeaea), to(#ccc9c9));
+	background: -webkit-linear-gradient(#edeaea, #ccc9c9);
+	background: linear-gradient(#edeaea, #ccc9c9);
+}
+
+th {
+	background: #4b4b4b;	
+	background: -moz-linear-gradient(#5d5d5d, #4b4b4b);
+	background: -ms-linear-gradient(#5d5d5d, #4b4b4b);
+	background: -o-linear-gradient(#5d5d5d, #4b4b4b);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#5d5d5d), to(#4b4b4b));
+	background: -webkit-linear-gradient(#5d5d5d, #4b4b4b);
+	background: linear-gradient(#5d5d5d, #4b4b4b);
+}
+
+.gr-activity {background: url(../images/icons/activity.png) 0 0 no-repeat;}
+.gr-web-activity {background: url(../images/icons/web-activity.png) 0 0 no-repeat;}
+.gr-leadership {background: url(../images/icons/rating.png) 0 0 no-repeat;}
+.gr-icon-state {background: url(../images/icons/state.png) 0 0 no-repeat;}
+.gr-select-arrow {background: url(../images/icons/blue-arrow-down.png) 0 0 no-repeat;}
+
+.ym-hlist ul li strong, .ym-hlist ul li a:hover, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
+	box-shadow: inset 0 -1px 0 #ecede5, 0 2px 2px #cfcfcf;
+	background-color: #e8eae0;
+	background: -moz-linear-gradient(#ffffff, #e8eae0);
+	background: -ms-linear-gradient(#ffffff, #e8eae0);
+	background: -o-linear-gradient(#ffffff, #e8eae0);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e8eae0));
+	background: -webkit-linear-gradient(#ffffff, #e8eae0);
+	background: linear-gradient(#ffffff, #e8eae0);	
+}
+
+.gr-breadcrumbs, .ym-hlist .gr-breadcrumbs ul li strong {
+	box-shadow: none;
+	box-shadow: 0 2px 2px #cfcfcf;
+}
+
+.gr-blue-button {
+	box-shadow: none;
+	box-shadow: 0 2px 2px #97bccf;	
+}
+
+.ym-hlist .gr-breadcrumbs ul li strong, .gr-blue-button {
+	color: #fff !important;
+	background-color: #2e8cbb;
+	background: -moz-linear-gradient(#60bfed, #2e8cbb);
+	background: -ms-linear-gradient(#60bfed, #2e8cbb);
+	background: -o-linear-gradient(#60bfed, #2e8cbb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#60bfed), to(#2e8cbb));
+	background: -webkit-linear-gradient(#60bfed, #2e8cbb);
+	background: linear-gradient(#60bfed, #2e8cbb);
+}
+
+.ym-col2 h3, .ym-col3 h3  {
+	background-color: #96bc2c;	
+	background: -moz-linear-gradient(#b0ce45, #96bc2c);
+	background: -ms-linear-gradient(#b0ce45, #96bc2c);
+	background: -o-linear-gradient(#b0ce45, #96bc2c);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#b0ce45), to(#96bc2c));
+	background: -webkit-linear-gradient(#b0ce45, #96bc2c);
+	background: linear-gradient(#b0ce45, #96bc2c);
+	
+}
+
+.gr-chart-back{
+	background-color: #e1dedc;	
+	background: -moz-linear-gradient(#e1dedc, #f5f5f5);
+	background: -ms-linear-gradient(#e1dedc, #f5f5f5);
+	background: -o-linear-gradient(#e1dedc, #f5f5f5);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#e1dedc), to(#f5f5f5));
+	background: -webkit-linear-gradient(#e1dedc, #f5f5f5);
+	background: linear-gradient(#e1dedc, #f5f5f5);	
+}
+
+.gr-leadership .gr-chart-back span {
+	background-color: #d5b54b;	
+	background: -moz-linear-gradient(#edc623, #d5b54b);
+	background: -ms-linear-gradient(#edc623, #d5b54b);
+	background: -o-linear-gradient(#edc623, #d5b54b);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#edc623), to(#d5b54b));
+	background: -webkit-linear-gradient(#edc623, #d5b54b);
+	background: linear-gradient(#edc623, #d5b54b);		
+}
+
+.gr-offline-activity .gr-chart-back span {
+	background-color: #cc7548;	
+	background: -moz-linear-gradient(#e78939, #cc7548);
+	background: -ms-linear-gradient(#e78939, #cc7548);
+	background: -o-linear-gradient(#e78939, #cc7548);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#e78939), to(#cc7548));
+	background: -webkit-linear-gradient(#e78939, #cc7548);
+	background: linear-gradient(#e78939, #cc7548);		
+}
+
+.gr-online-activity .gr-chart-back span {
+	background-color: #94713d;	
+	background: -moz-linear-gradient(#9f7237, #94713d);
+	background: -ms-linear-gradient(#9f7237, #94713d);
+	background: -o-linear-gradient(#9f7237, #94713d);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#9f7237), to(#94713d));
+	background: -webkit-linear-gradient(#9f7237, #94713d);
+	background: linear-gradient(#9f7237, #94713d);		
+}
+

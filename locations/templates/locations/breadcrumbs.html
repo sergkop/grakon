@@ -1,45 +1,44 @@
-<div class="ym-wrapper">
-    <div class="breadcrumbs">
-        <ul>
-            <li class="first">
-               {% if location.country %}
-                    <a href="{% url location location.country_id %}">Россия<i></i><b></b></a>
-               {% else %}
-                    <strong>Россия<i></i><b></b></strong>
-               {% endif %}
+<div class="gr-breadcrumbs">
+    <ul>
+        <li>
+            {% if location.country %}
+                <a href="{% url location location.country_id %}">Россия<i></i><b></b></a>
+            {% else %}
+                <strong>Россия</strong>
+            {% endif %}
+        </li>
+
+        {% if location.region %}
+            <li>
+                <a href="{% url location location.region_id %}">{{ location.region }}</a>
             </li>
+        {% endif %}
 
-            {% if location.region %}
-                <li>
-                    <a href="{% url location location.region_id %}">{{ location.region }}<i></i><b></b></a> 
-                </li>
-            {% endif %}
+        {% if location.district %}
+            <li>
+                <a href="{% url location location.district_id %}">{{ location.district }}</a>
+            </li>
+        {% endif %}
 
-            {% if location.district %}
-                <li>
-                    <a href="{% url location location.district_id %}">{{ location.district }}<i></i><b></b></a>
-                </li>
-            {% endif %}
+        {% if location.country_id %}
+            <li>
+                <strong>{{ location }}</strong>
+            </li>
+        {% endif %}
 
-            {% if location.country_id %}
-                <li>
-                    <strong>{{ location }}<i></i><b></b></strong>
-                </li>
-            {% endif %}
-
-            {% if subregions %}
-                <li>
-                    <form id="goto_subregion_form" action="{% url goto_location %}" method="get" style="display:inline; margin:0; padding:0;">
-                        <select id="goto_subregion" name="loc_id">
-                            {% for id, name in subregions %}
-                                <option value="{{ id }}">{{ name }}</option>
-                            {% endfor %}
-                        </select>
-                    </form>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
+        {% if subregions %}
+            <li>
+                <form id="goto_subregion_form" action="{% url goto_location %}" method="get" style="display:inline; margin:0; padding:0;">
+                    <select id="goto_subregion" name="loc_id">
+                        {% for id, name in subregions %}
+                            <option value="{{ id }}">{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="ym-clearfix">&nbsp;</div>
 </div>
 
 <script type="text/javascript">

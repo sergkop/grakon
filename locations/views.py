@@ -25,13 +25,15 @@ class LocationView(TemplateView):
             raise Http404(u'Район не найден')
 
         tab = self.request.GET.get('tab', '')
-        if tab not in ('wall', 'map'):
+        if tab not in ('wall', 'map', 'tools'):
             tab = 'wall'
 
         # TODO: automate generating it + move it to class attributes (?)
+        # TODO: come back to several views
         tabs = [
             ('wall', u'Стена', location.get_absolute_url()+'?tab=wall', 'locations/wall.html', ''),
             ('map', u'Карта', location.get_absolute_url()+'?tab=map', 'locations/map.html', ''),
+            ('tools', u'Инструменты', location.get_absolute_url()+'?tab=tools', 'locations/tools.html', ''),
         ]
 
         ctx.update({

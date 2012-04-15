@@ -25,7 +25,7 @@
 
 	/* (en) Global reset of paddings and margins for all HTML elements */
 	/* (de) Globales Zurücksetzen der Innen- und Außenabstände für alle HTML-Elemente */
-	* { margin:0; padding:0; }
+	* { margin:0; padding:0; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;  }
 
 	/* (en) Correction:margin/padding reset caused too small select boxes. */
 	/* (de) Korrektur:Das Zurücksetzen der Abstände verursacht zu kleine Selectboxen. */
@@ -41,6 +41,8 @@
 	* @css-for    IE 5.x/Win, IE6
 	* @valid      yes
 	*/
+	html, body {height: 100%;}
+	
 	* html body * { overflow:visible; }
 
 	body {
@@ -50,7 +52,7 @@
 
 		/* (en) Standard values for colors and text alignment */
 		/* (de) Vorgabe der Standardfarben und Textausrichtung */
-		background:#fff;
+		background:#f3f3f3;
 		color:#000;
 		text-align:left; /* LTR */
 	}
@@ -65,7 +67,16 @@
 	footer,header,hgroup,nav,section {
 		display:block;
 	}
-
+	
+	header, footer, nav, .ym-column {text-align:center;}
+	
+	nav {margin-bottom: 0.8em; padding-top: 2.5em}
+	
+	footer {height: 2em; position: relative; padding: 0.5em 0}
+		footer a {margin-right: 0.7em;}
+	
+	header {padding: 0.1em 0; position: fixed; width: 100%; z-index:1000;}
+	
 	/* (en) HTML5 - default media element styles */
 	/* (de) HTML5 - Standard Eigenschaften für Media-Elemente */
 	audio,
@@ -103,7 +114,6 @@
 	/* (de) Neue Standardwerte für Listen, Zitate und Tabellen */
 	ul, ol, dl { margin:0 0 1em 1em; } /* LTR */
 	li {
-		line-height:1.5em;
 		margin-left:0.8em; /* LTR */
 	}
 
@@ -124,6 +134,8 @@
  	/**
 	* @section Float Handling Module
 	*/
+	
+	.ym-wrapper {min-width: 960px; max-width: 1200px; text-align:left; margin: 0 auto;}
 
 	/* (en) clearfix method for clearing floats */
 	/* (de) Clearfix-Methode zum Clearen der Float-Umgebungen */
@@ -133,7 +145,7 @@
 	}
 	.ym-clearfix:after {
 		clear:both;
-		content:".";
+		content:"."; 
 		display:block;
 		font-size:0;
 		height:0;
@@ -191,6 +203,9 @@
 		position:absolute;
 		width:100%;
 	}
+	
+	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -1.7em 0; padding: 0;}
+	.gr-footer {height: 4em;}
 }
 
 @media screen, projection {
@@ -204,12 +219,18 @@
 	* | 20%     | flexible  | 20%     |
 	* |-------------------------------|
 	*/
+	
+	
 
-	.ym-column { display:table; width:100%; }
+	.ym-column { display:table; width:100%; font-size: 0.9em;}
 
-	.ym-col1 { float:left; width:20%; }
-	.ym-col2 { float:right; width:20%; }
-	.ym-col3 { width:auto; margin:0 20%; }
+	.ym-col1 { width: 60%; float:left; margin-left: 20%; padding: 1em 1em 0 0} /* center column */
+	.ym-col2 { width: 20%; float:left;  margin-left: -80%; padding: 1em 1em 0 0} /* left column */
+	.ym-col3 {  float:right; width: 20%; margin-left: -5px; margin-right: 0%; padding: 1em 0 0 1em} /* right column */
+	
+	.gr-left-sidebar .ym-col1 {margin-right: 0; width: 75%}
+	.gr-left-sidebar .ym-col2 {margin-left: -100%;}
+	.gr-right-sidebar .ym-col1 {margin-left: 0; width: 75%}
 
 	.ym-cbox { padding: 0 10px }
 	.ym-cbox-left { padding: 0 10px 0 0 }
@@ -438,6 +459,8 @@
 	.ym-fbox-select select { width:60%; }
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
+	
+	.gr-content {background-color: #fff; padding: 20px; margin: 0 0 1em; font-size: 0.9em;}
 }
 
 @media print {

@@ -3,42 +3,73 @@
 {% load elements %}
 
 {% block left_column %}
-{% endblock %}
-
-{% block right_column %}
-<h3 class="column_header column_header_icon"><span class="contacts">Контакты</span></h3>
-    <div class="ym-clearfix">
-        <div class="content_block">
-            <ul id="contacts_ul" class="side_list">
-                {% for contact in contacts %}
-                    <li>
-                        {% with person=contact.contact %}
-                            {% include "elements/person.html" %}
-                        {% endwith %}
-                    </li>
-                {% endfor %}
-            </ul>
+    <h3>Инструменты<i>&nbsp;</i></h3>
+    <div class="gr-side-item">
+        <h4>Чиновники <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
+            <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
+            <li><i class="highlight">1</i><a href="">Иванов Иван</a> (полицейский)</li>
+            <li><a href="">Все</a></li>
+        </ul>
+        <div align="center">
+            <a href="" class="ym-button">Добавить инфоповод</a>
         </div>
-
-        <div class="side_block_header">
-            <h4>Добавлен в контакты</h4>
+    </div>
+    <div class="gr-side-item">
+        <h4 class="gr-long-title">Добрая машина Правды <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="">Мэр поднимет зарплаты госслужащим</a> (72)</li>
+            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Мер посетил лицей</a> (72)</li>
+            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Городской суд обновится</a> (2)</li>
+            <li><a href="">Все</a></li>
+        </ul>
+        <div align="center">
+            <a href="" class="ym-button">Добавить мероприятие</a>
         </div>
-
-        <div class="content_block">
-            <ul id="have_in_contacts_ul" class="side_list">
-                {% for contact in have_in_contacts %}
-                    <li>
-                        {% with person=contact.user %}
-                            {% include "elements/person.html" %}
-                        {% endwith %}
-                    </li>
-                {% endfor %}
-            </ul>
+    </div>
+    <div class="gr-side-item">
+        <h4>Мероприятия <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
+            <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
+            <li><i class="highlight">1/12</i><a href="">Встреча активистов</a> (12)</li>
+            <li><a href="">Все</a></li>
+        </ul>
+        <div align="center">
+            <a href="" class="ym-button">Добавить мероприятие</a>
         </div>
     </div>
 {% endblock %}
 
+{% block right_column %}
+    <div class="gr-side-item">
+        <h4>Контакты <i>&nbsp;</i></h4>
+        <table width="100%" class="gr-side-table">
+            {% for contact in contacts %}
+                <tr>
+                    {% with person=contact.contact %}
+                        {% include "elements/person.html" %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="gr-side-item">
+        <h4>Добавлен в&nbsp;контакты <i>&nbsp;</i></h4>
+        <table width="100%" class="gr-side-table">
+            {% for contact in have_in_contacts %}
+                <tr>
+                    {% with person=contact.user %}
+                        {% include "elements/person.html" %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h2 class="page-header">{{ profile.first_name }} {{ profile.last_name }} ({{ profile.username }})</h2>
-    {% tabs "tabs" tabs tab %}
+    <h1>{{ profile.first_name }} {{ profile.last_name }} ({{ profile.username }})</h1>
+    {% tabs tabs tab %}
 {% endblock %}

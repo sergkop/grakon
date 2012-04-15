@@ -1,19 +1,21 @@
-<div id="{{ id }}" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+<div class="jquery_tabs">
+    <ul class="clearfix tabs-list">
         {% for tab in tabs %}
             {% if tab.0 == active %}
-                <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active {{ tab.4 }}">
-                    <a>{{ tab.1 }}<i></i></a>
+                <li class="current" {{ tab.4 }}>
+                    <a>{{ tab.1 }}</a>
                 </li>
             {% else %}
-                <li class="ui-state-default ui-corner-top {{ tab.4 }}">
-                    <a href="{{ tab.2 }}">{{ tab.1 }}<i></i></a>
+                <li class="{{ tab.4 }}">
+                    <a href="{{ tab.2 }}">{{ tab.1 }}</a>
                 </li>
             {% endif %}
         {% endfor %}
     </ul>
 
-    <div id="main_tab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-        {% include template_path %}
+    <div class="content">
+        <div class="tabbody" style="display: block;">
+            {% include template_path %}
+        </div>
     </div>
 </div>

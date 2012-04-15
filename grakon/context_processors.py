@@ -9,18 +9,19 @@ def media_files(request):
     media = Media()
     media.add_css({
         'all': (
-            'libs/yaml/base.min.css',
+            'libs/yaml/base.css',
             'libs/jquery-ui/jquery-ui.css',
             'libs/crispy-forms/uni-form.css',
             'libs/crispy-forms/default.uni-form.css',
             'libs/chosen/chosen.css',
             #'libs/tipsy/tipsy.css',
 
-            'css/layout.css',
-            'css/typography.css',
             'css/hlist.css',
+            'css/tabs.css',
+            'css/gray-theme.css',
+            'css/typography.css',
+            'css/deco.css',
             'css/style.css',
-            'css/julia_style.css',
         ),
     })
 

@@ -9,23 +9,59 @@
 {% endblock %}
 
 {% block left_column %}
-    <h3 class="column_header column_header_icon"><span class="contacts">Инструменты</span></h3>
-    <div class="ym-clearfix">
-        <div class="side_block_header">
-            <h4>Чиновники</h4>
+    <h3>Инструменты<i>&nbsp;</i></h3>
+    <div class="gr-side-item">
+        <h4>Чиновники <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
+            <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
+            <li><i class="highlight">1</i><a href="">Иванов Иван</a> (полицейский)</li>
+        </ul>
+        <div align="center">
+            <a href="" class="ym-button">Добавить инфоповод</a>
         </div>
+    </div>
+    <div class="gr-side-item">
+        <h4 class="gr-long-title">Добрая машина Правды <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="">Мэр поднимет зарплаты госслужащим</a> (72)</li>
+            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Мер посетил лицей</a> (72)</li>
+            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Городской суд обновится</a> (2)</li>
+        </ul>   
+        <div align="center">
+            <a href="" class="ym-button">Добавить мероприятие</a>
+        </div>
+    </div>
+    <div class="gr-side-item">
+        <h4>Мероприятия <i>&nbsp;</i></h4>
+        <ul>
+            <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
+            <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
+            <li><i class="highlight">1/12</i><a href="">Встреча активистов</a> (12)</li>
+        </ul>
+        <div align="center">
+            <a href="" class="ym-button">Добавить мероприятие</a>
+        </div>
+    </div>
+{% endblock %}
 
-        <div class="content_block">
-            <ul id="" class="side_list">
-                <li>
-                    <a href="aa">Иванов Иван</a> (Депутат)
-                </li>
-            </ul>
+{% block right_column %}
+    <h3>Участники<i>&nbsp;</i><i class="gr-question">&nbsp;</i><i class="gr-user">&nbsp;</i></h3>
+    <div class="gr-side-item gr-light-back">
+        <table width="100%" class="gr-side-table">
+            {% for person in participants %}
+                <tr>
+                    {% include "elements/person.html" %}
+                </tr>
+            {% endfor %}
+        </table>
+        <div align="center">
+            <a href="" class="ym-button">Стать участником</a>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <h2 class="page-header">{{ location.name }}</h2>
-    {% tabs "tabs" tabs tab %}
+    <h1>{{ location.name }}</h1>
+    {% tabs tabs tab %}
 {% endblock %}

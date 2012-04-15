@@ -1,7 +1,7 @@
 {% if location.region %}
-    <a href="{{ location.region.get_absolute_url }}">{{ location.region }}</a> &rarr;
+    <a href="{{ location.region.get_absolute_url }}">{{ location.region }}</a><span class="gr-next-arrow">&nbsp;</span>
 {% endif %}
 {% if location.district %}
-    <a href="{{ location.district.get_absolute_url }}">{{ location.district }}</a> &rarr;
+    <a href="{{ location.district.get_absolute_url }}">{{ location.district }}</a><span class="gr-next-arrow">&nbsp;</span>
 {% endif %}
 <a href="{{ location.get_absolute_url }}">{{ location }}</a>
