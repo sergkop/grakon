@@ -6,7 +6,6 @@ bleach
 django-debug-toolbar
 pylibmc
 scrapy
-pygraphviz
 django-social-auth
 google-api-python-client
 #mysql-python

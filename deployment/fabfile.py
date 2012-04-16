@@ -12,12 +12,12 @@ REPOSITORY = 'git@github.com:sergkop/grakon.git'
 
 # TODO: start using roles
 
-# TODO: separate root access settings and non-root
-USERNAME = 'serg' # TODO: move it to settings, use paths relative to home dir
-
 CONFIG_FILE_PATH = '/home/serg/data/grakon/passwords/config.json' # TODO: take it as an argument
 
 conf = json.load(open(CONFIG_FILE_PATH))
+
+# TODO: separate root access settings and non-root
+USERNAME = conf['username']
 
 env.hosts = conf['servers'].keys()
 env.passwords = conf['servers'] # set passwords for accessing servers
@@ -58,7 +58,7 @@ def init_system():
         'nginx',
 
         # Libraries
-        'libxslt-dev', 'graphviz-dev', 'python-dev', # 'libmysqlclient-dev',
+        'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',# 'libmysqlclient-dev',
     ]
 
     sudo('aptitude -y update')
@@ -81,7 +81,7 @@ def init_system():
     cmd('ssh-keygen -t rsa -f /home/%s/.ssh/id_rsa -N %s -C "%s"' % (
             USERNAME, conf['SSH_KEY_PASSPHRASE'], conf['GITHUB_EMAIL']))
 
-    # TODO: automate it
+    # TODO: automate it (or change text color)
     print "Copy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)"
     cmd('cat /home/%s/.ssh/id_rsa.pub' % USERNAME)
 
@@ -92,6 +92,8 @@ def init_system():
     cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), USERNAME))
 
 def prepare_code():
+    env.user = USERNAME
+
     code_path = os.path.join('/home/%s' % USERNAME, conf['code_path'])
     env_path = os.path.join('/home/%s' % USERNAME, conf['env_path'])
     static_path = os.path.join('/home/%s' % USERNAME, conf['static_path'])
@@ -104,12 +106,8 @@ def prepare_code():
     # Create settings file
     settings_content = StringIO.StringIO()
     get(os.path.join(code_path, 'grakon', 'site_settings.py.example'), settings_content)
-
-    put(StringIO.StringIO(settings_content.read() % conf),
+    put(StringIO.StringIO(settings_content.getvalue() % conf),
             os.path.join(code_path, 'grakon', 'site_settings.py'))
-
-    #with open(os.path.join(code_path, 'grakon', 'site_settings.py'), 'w') as f:
-    #    f.write(settings_code % conf)
 
     # Create virtualenv
     run('virtualenv --no-site-packages %s' % env_path)
