@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 
 from locations.models import Location
 from locations.utils import subregion_list
+from users.models import Profile
 
 class LocationView(TemplateView):
     template_name = 'locations/base.html'
@@ -28,6 +29,17 @@ class LocationView(TemplateView):
         if tab not in ('wall', 'map', 'tools'):
             tab = 'wall'
 
+        from elements.models import EntityLocation
+        from django.contrib.contenttypes.models import ContentType
+        entities_by_ct = EntityLocation.objects.for_location(loc_id)
+        profile_ct_id = ContentType.objects.get_for_model(Profile).id
+
+        # TODO: get related info instead
+        # TODO: get top 3 instances (using points to sort?)
+        profiles = []
+        if entities_by_ct.get(profile_ct_id):
+            profiles = list(Profile.objects.filter(id__in=entities_by_ct[profile_ct_id]))
+
         # TODO: automate generating it + move it to class attributes (?)
         # TODO: come back to several views
         tabs = [
@@ -42,6 +54,7 @@ class LocationView(TemplateView):
             'tabs': tabs,
             'location': location,
             'subregions': subregion_list(location),
+            'participants': profiles,
         })
 
         ctx.update(self.update_context())

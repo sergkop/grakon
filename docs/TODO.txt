@@ -6,6 +6,7 @@ Registration
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
     * captchas
     * restore location on error in form
+    * fix redirect after logging in
 
 Locations:
     * Fix location names, filter out small districts

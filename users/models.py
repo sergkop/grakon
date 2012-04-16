@@ -23,6 +23,7 @@ class Profile(models.Model):
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
+    # TODO: move this method to the manager and allow getting several profiles at once
     # TODO: reset cache key on changing any of related data
     @cache_function(lambda args, kwargs: 'user_info/'+args[0].username, 60)
     def get_related_info(self):

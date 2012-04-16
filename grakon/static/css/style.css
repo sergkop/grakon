@@ -30,9 +30,10 @@
 		
 nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5;}
 
-.gr-add span, .gr-mail span, .gr-complaint span {background: url(../images/icons/add.gif) 0 center no-repeat; padding-left: 1.3em;}	
-	.gr-mail span {background-image: url(../images/icons/mail.png);}
-	.gr-complaint  span {background-image: url(../images/icons/complaint.png);}
+/* Button icons */
+.gr-add span, .gr-mail span, .gr-complaint span {background: url(../images/icons/btn-add.gif) 0 center no-repeat; padding-left: 1.3em;}	
+	.gr-mail span {background-image: url(../images/icons/btn-mail.png);}
+	.gr-complaint  span {background-image: url(../images/icons/btn-complaint.png);}
 
 .gr-location-tool {background-color: #b1ddf3; border-radius: 0.2em; box-shadow: 0 0 1px #f5f5f5;  height: 62px; overflow: hidden;}
 	.gr-location-tool h3 {float: left; margin: 0 20px 0 0; font-size: 1.1em; font-weight: bold; font-style:italic; background: #fff url(../images/bg_location_tool.png) right 0 no-repeat; height: 62px; overflow: hidden; padding: 15px 65px 0 20px; position: relative;}
@@ -72,7 +73,8 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5;}
 	.gr-side-table .gr-leader, .gr-side-table .gr-activity, .gr-side-table .gr-web-activity {background-image: url(../images/icons/users.png); background-position: 0 center; background-repeat: no-repeat;}	
 		.gr-side-table .gr-activity {background-position: center center;}
 		.gr-side-table .gr-web-activity {background-position: right center;}
-		
+
+/* Profile page */
 .gr-user-photo {margin: 2em 1em 1em 0; float: left;}	
 .gr-next-arrow {background:url(../images/icons/right-arrow-blue.gif) 0 5px no-repeat; width: 5px; margin: 0 5px;}	
 .gr-skype  {background:url(../images/icons/phone.png) 0 2px no-repeat; width: 18px; margin: 0 3px; display: inline-block; text-decoration: none;}	

@@ -1,8 +1,3 @@
-<a href="{{ person.get_absolute_url }}">
-    {{ person.username }}
-    {% if person.show_name %}({{ person.first_name }} {{ person.last_name }}){% endif %}
-</a>
-
 <td width="65%"><a href="{{ person.get_absolute_url }}">
     {{ person.username }}
     {% if person.show_name %}({{ person.first_name }} {{ person.last_name }}){% endif %}
