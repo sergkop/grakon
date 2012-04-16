@@ -26,13 +26,32 @@ env.passwords = conf['servers'] # set passwords for accessing servers
 
 def virtualenv(command):
     with prefix('source %s' % os.path.join('/home/%s' % USERNAME, conf['env_path'], 'bin', 'activate')):
-        run(command)
+        cmd(command)
 
+# TODO: run it on the server with another role
+# Use 'dropdb %s' and 'dropuser %s' to clean db
 def init_data_server():
     ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
 
     sudo('aptitude -y install %s' % ' '.join(ubuntu_packages))
-    # TODO: configure psql and memcached, init database
+
+    sudo('createuser -l -E -S -D -R %s' % conf['database.USER'], user='postgres')
+    sudo('createdb -O %s %s' % (conf['database.USER'], conf['database.NAME']), user='postgres')
+
+    postgres_conf = {
+        'client_encoding': "'UTF8'",
+        'default_transaction_isolation': "'read committed'",
+        'timezone': "'UTC'",
+    }
+
+    for param, value in postgres_conf.iteritems():
+        sudo('echo "ALTER ROLE %s in DATABASE %s SET %s = %s;" | psql' % (
+                conf['database.USER'], conf['database.NAME'], param, value), user='postgres')
+
+    sudo("echo \"ALTER ROLE %s WITH PASSWORD '%s';\" | psql" % (
+            conf['database.USER'], conf['database.PASSWORD']), user='postgres')
+
+    # TODO: init database
 
 def cmd(command):
     # TODO: solve 'mesg: /dev/pts/1: Operation not permitted'
@@ -58,7 +77,8 @@ def init_system():
         'nginx',
 
         # Libraries
-        'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',# 'libmysqlclient-dev',
+        'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',
+        'libmemcached-dev', 'postgresql-server-dev-all', # 'libmysqlclient-dev',
     ]
 
     sudo('aptitude -y update')
@@ -91,14 +111,17 @@ def init_system():
     # Add developers ssh keys to access account
     cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), USERNAME))
 
+def restart_web_server():
+    pass
+
 def prepare_code():
-    env.user = USERNAME
+    env.user = USERNAME # TODO: do we need it?
 
     code_path = os.path.join('/home/%s' % USERNAME, conf['code_path'])
     env_path = os.path.join('/home/%s' % USERNAME, conf['env_path'])
     static_path = os.path.join('/home/%s' % USERNAME, conf['static_path'])
 
-    cmd('mkdir -p %s %s %s' % (code_path, env_path, static_path))
+    """cmd('mkdir -p %s %s %s' % (code_path, env_path, static_path))
 
     # TODO: if code is already there - make git pull and update it
     cmd('git clone %s %s' % (REPOSITORY, code_path))
@@ -110,7 +133,7 @@ def prepare_code():
             os.path.join(code_path, 'grakon', 'site_settings.py'))
 
     # Create virtualenv
-    run('virtualenv --no-site-packages %s' % env_path)
+    run('virtualenv --no-site-packages %s' % env_path)"""
 
     # TODO: problems setting up pygraphviz (need to specify proper include paths)
     virtualenv('pip install -r %s' % os.path.join(code_path, 'deployment', 'requirements.txt'))

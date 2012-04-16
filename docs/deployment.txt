@@ -25,3 +25,6 @@ Running development server:
 
     * 'python manage.py runserver' to run server
     * project is accessible at http://127.0.0.1:8000, admin interface - http://127.0.0.1:8000/admin/
+
+Postgres:
+    * To enter command line: 'su postgres', 'psql'
