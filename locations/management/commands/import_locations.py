@@ -122,5 +122,5 @@ class Command(BaseCommand):
                 Location.objects.bulk_create(locations)
 
         # TODO: drop it
-        with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:
-            f.write(json.dumps([end, hierarchy], indent=4, ensure_ascii=False).encode('utf8'))
+        #with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:
+        #    f.write(json.dumps([end, hierarchy], indent=4, ensure_ascii=False).encode('utf8'))

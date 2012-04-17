@@ -7,6 +7,7 @@ Registration
     * captchas
     * restore location on error in form
     * fix redirect after logging in
+    * google allows to login automatically if account with this email already exists (is it ok?)
 
 Locations:
     * Fix location names, filter out small districts
@@ -14,7 +15,6 @@ Locations:
     * update select widget in breadcrumbs with chosen (?)
 
 Front-end
-    * Add new design
     * show g+ and vk buttons in dev mode
 
 Cache:
@@ -22,7 +22,7 @@ Cache:
 
 Deployment:
     * start using south and run migrate
-    * configure nginx
+    * configure nginx (see config settings)
     * generate server.sh as well
     * generate js/code_data.js on deployment
     * static files deployment, minification (http://developer.yahoo.com/yui/compressor/), caching time

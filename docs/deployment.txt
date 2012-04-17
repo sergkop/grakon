@@ -28,3 +28,11 @@ Running development server:
 
 Postgres:
     * To enter command line: 'su postgres', 'psql'
+
+Using fabric:
+    Test server - everything is on a single server
+        * init_system
+        * init_data_server
+        * prepare_code
+        * init_db
+        * restart_web_server

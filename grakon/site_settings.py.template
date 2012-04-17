@@ -2,7 +2,7 @@ import os.path
 
 # Settings in this file must be edited before deployment
 
-PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 DEBUG = %(DEBUG)s
 TEMPLATE_DEBUG = DEBUG

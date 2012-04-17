@@ -1,22 +1,18 @@
-#!/bin/bash
-
-NAME=grakon_new
-
+!#/bin/bash
+NAME=grakon
 
 PIDFILE=/var/run/$NAME.pid
-SOCKET=/home/serg/sites/$NAME.sock
-DIR=/home/serg/sites/$NAME/
-ENV=/home/serg/env/$NAME/bin/activate
+SOCKET=%(path)s$NAME.sock
 
 METHOD="threaded" # "prefork"
 
 action=${1:-restart}
 
 start() {
-    cd ${DIR}
-    source ${ENV}
+    cd %(code_path)s
+    source %(env_path)bin/activate
     python manage.py runfcgi method=${METHOD} socket=${SOCKET} pidfile=${PIDFILE} && echo "fcgi started."
-    chown nginx:nginx ${SOCKET}
+    # TODO: chown nginx:nginx ${SOCKET}
 }
 
 stop() {
@@ -32,7 +28,7 @@ restart() {
 }
 
 usage() {
-echo "Arguments should be: start, stop, restart or None."
+    echo "Arguments should be: start, stop, restart or None."
 }
 
 case ${action} in
