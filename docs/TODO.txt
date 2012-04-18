@@ -27,7 +27,7 @@ Deployment:
     * static files deployment, minification (http://developer.yahoo.com/yui/compressor/), caching time
     * switch to wsgi
     * put config.json to repo
-    * implement fabric deployment for developers (settings in deployment/config.json)
+    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
 
 * file with all passwords, social applications (where to get them)
 * sitemaps

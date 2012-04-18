@@ -21,6 +21,9 @@ conf['path'] = os.path.join('/home/%s' % USERNAME, conf['path']+'/')
 conf['code_path'] = os.path.join(conf['path'], 'source/')
 conf['env_path'] = os.path.join(conf['path'], 'env/')
 conf['static_path'] = os.path.join(conf['path'], 'static/')
+conf['STATIC_ROOT'] = os.path.join(conf['static_path'], 'static/')
+
+manage_path = os.path.join(conf['code_path'], 'manage.py')
 
 def virtualenv(command):
     with prefix('source %s' % os.path.join(conf['env_path'], 'bin', 'activate')):
@@ -37,7 +40,7 @@ def file_from_template(template_path, dest_path):
     put(StringIO.StringIO(template.getvalue() % conf), dest_path)
 
 # TODO: run it on the server with another role
-# Use 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
+# Use 'su postgres', 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
 def init_data_server():
     ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
 
@@ -53,7 +56,7 @@ def init_data_server():
     }
 
     for param, value in postgres_conf.iteritems():
-        sudo('echo "ALTER USER %s in DATABASE %s SET %s = %s;" | psql' % (
+        sudo('echo "ALTER ROLE %s in DATABASE %s SET %s = %s;" | psql' % (
                 conf['database.USER'], conf['database.NAME'], param, value), user='postgres')
 
     sudo("echo \"ALTER USER %s WITH PASSWORD '%s';\" | psql" % (
@@ -111,11 +114,6 @@ def init_system():
     # Add developers ssh keys to access account
     cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), USERNAME))
 
-    # Nginx configuration
-    sudo('cp /etc/nginx/nginx.conf /etc/nginx/nginx-prev.conf')
-    file_from_template(os.path.join(code_path, 'deployment', 'nginx.conf.template'),
-            '/etc/nginx/nginx.conf')
-
 def restart_web_server():
     sudo('/etc/init.d/nginx restart')
     sudo(os.path.join(conf['code_path'], 'deployment', 'server.sh'))
@@ -125,7 +123,6 @@ def restart_web_server():
     # sudo('/etc/init.d/memcached restart')
 
 def init_db():
-    manage_path = os.path.join(code_path, 'manage.py')
     cmd('python %s syncdb' % manage_path)
     cmd('python %s migrate --fake' % manage_path)
     cmd('python %s import_locations' % manage_path)
@@ -133,9 +130,11 @@ def init_db():
 def prepare_code():
     env.user = USERNAME # TODO: do we need it?
 
-    cmd('mkdir -p %s %s %s' % (conf['code_path'], conf['env_path'], conf['static_path']))
+    """
+    cmd('mkdir -p %s %s %s' % (conf['code_path'], conf['env_path'], conf['STATIC_ROOT']))
 
     cmd('git clone %s %s' % (REPOSITORY, conf['code_path']))
+    # TODO: how to pass ssh-key password?
 
     # TODO: move updating settings to separate method + do backup
     # Create settings file
@@ -149,6 +148,7 @@ def prepare_code():
     # TODO: pygraphviz may require creating soft link to be used in virtualenv
     virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'))
 
+    """
     # fcgi starting script
     file_from_template(os.path.join(conf['code_path'], 'deployment', 'server.sh.template'),
             os.path.join(conf['code_path'], 'deployment', 'server.sh'))
@@ -158,11 +158,21 @@ def prepare_code():
 
     # TODO: wsgi deployment
 
+    # Nginx configuration
+    sudo('cp /etc/nginx/nginx.conf /etc/nginx/nginx-prev.conf')
+    file_from_template(os.path.join(conf['code_path'], 'deployment', 'nginx.conf.template'),
+            '/etc/nginx/nginx.conf')
+
+    deploy_static_files()
+
+# TODO: all static files must be hosted on one server
+def deploy_static_files():
+    # TODO: delete old files (?), minify static files
+    cmd('python %s collectstatic migrate' % manage_path)
+    cmd('python %s collectstatic -c --noinput' % manage_path)
+    cmd('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
+
 def update_code():
     # TODO: make git pull
-    # TODO: python manage.py migrate
-    # TODO: delete old files, minify static files, move them to proper dir
-    #       (use django command) (static/static), admin files
-    # TODO: favicon
-
+    deploy_static_files()
     restart_web_server()

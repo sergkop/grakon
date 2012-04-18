@@ -5,6 +5,7 @@ from django.forms.widgets import Media
 
 # TODO: add IE-specific styles here
 # TODO: take extra media files from request - ability to add them per-view (variable in class-based views?)
+# TODO: cache it or part of template
 def media_files(request):
     media = Media()
     media.add_css({
