@@ -8,7 +8,32 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        pass
+        # Adding model 'EntityResource'
+        db.create_table('elements_entityresource', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
+            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
+            ('resource', self.gf('django.db.models.fields.CharField')(max_length=20, db_index=True)),
+            ('text', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+        ))
+        db.send_create_signal('elements', ['EntityResource'])
+
+        # Adding unique constraint on 'EntityResource', fields ['content_type', 'entity_id', 'resource']
+        db.create_unique('elements_entityresource', ['content_type_id', 'entity_id', 'resource'])
+
+        # Adding model 'EntityLocation'
+        db.create_table('elements_entitylocation', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
+            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
+            ('location', self.gf('django.db.models.fields.related.ForeignKey')(related_name='entities', to=orm['locations.Location'])),
+        ))
+        db.send_create_signal('elements', ['EntityLocation'])
+
+        # Adding unique constraint on 'EntityLocation', fields ['content_type', 'entity_id', 'location']
+        db.create_unique('elements_entitylocation', ['content_type_id', 'entity_id', 'location_id'])
 
     def backwards(self, orm):
         # Removing unique constraint on 'EntityLocation', fields ['content_type', 'entity_id', 'location']

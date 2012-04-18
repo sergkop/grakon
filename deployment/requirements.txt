@@ -9,8 +9,8 @@ scrapy
 django-social-auth
 google-api-python-client
 psycopg2
+flup
 #mysql-python
-#flup
 #python-cloudfiles
 #PIL
 #django-simple-captcha

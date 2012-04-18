@@ -123,14 +123,13 @@ def restart_web_server():
     # sudo('/etc/init.d/memcached restart')
 
 def init_db():
-    cmd('python %s syncdb' % manage_path)
-    cmd('python %s migrate --fake' % manage_path)
-    cmd('python %s import_locations' % manage_path)
+    virtualenv('python %s syncdb' % manage_path)
+    virtualenv('python %s migrate' % manage_path)
+    virtualenv('python %s import_locations' % manage_path)
 
 def prepare_code():
     env.user = USERNAME # TODO: do we need it?
 
-    """
     cmd('mkdir -p %s %s %s' % (conf['code_path'], conf['env_path'], conf['STATIC_ROOT']))
 
     cmd('git clone %s %s' % (REPOSITORY, conf['code_path']))
@@ -148,13 +147,12 @@ def prepare_code():
     # TODO: pygraphviz may require creating soft link to be used in virtualenv
     virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'))
 
-    """
     # fcgi starting script
     file_from_template(os.path.join(conf['code_path'], 'deployment', 'server.sh.template'),
             os.path.join(conf['code_path'], 'deployment', 'server.sh'))
     # TODO: make it executable?
 
-    # TODO: configure socket file (?)
+    # TODO: change socket file owner to nginx user (www-data)
 
     # TODO: wsgi deployment
 
@@ -168,11 +166,11 @@ def prepare_code():
 # TODO: all static files must be hosted on one server
 def deploy_static_files():
     # TODO: delete old files (?), minify static files
-    cmd('python %s collectstatic migrate' % manage_path)
-    cmd('python %s collectstatic -c --noinput' % manage_path)
-    cmd('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
+    virtualenv('python %s collectstatic -c --noinput' % manage_path)
+    virtualenv('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
 
 def update_code():
     # TODO: make git pull
+    virtualenv('python %s migrate' % manage_path)
     deploy_static_files()
     restart_web_server()
