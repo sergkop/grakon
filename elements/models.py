@@ -39,16 +39,68 @@ RESOURCE_CHOICES = (
     #('other', u'Другое', u''),
 )
 
+class EntityResourceManager(BaseEntityPropertyManager):
+    def update_entity_resources(self, entity, resources):
+        content_type = ContentType.objects.get_for_model(type(entity))
+
+        entity_resources = list(self.filter(content_type=content_type, entity_id=entity.id))
+
+        new_resources = set(resources) - set(er.resource for er in entity_resources)
+        for er in entity_resources:
+            if er.resource not in resources:
+                er.delete()
+
+        self.bulk_create([EntityResource(entity=entity, resource=resource) for resource in new_resources])
+
 # TODO: ability to add text, describing resources + custom resources (in case of other)
 class EntityResource(BaseEntityProperty):
     resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
-    text = models.CharField(max_length=200, blank=True) # TODO: depricate
+
+    objects = EntityResourceManager()
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'resource')
 
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)
+
+SKILL_CHOICES = (
+    ('lawyer', u'Юридическая помощь'),
+    ('programmer', u'Программирование'),
+    ('design', u'Дизайн'),
+    ('copywriting', u'Написание текстов'),
+    #('creative', u'Креатив'), # TODO: improve
+    ('organizator', u'Организаторские навыки'),
+    #('', u'Физическая сила'), # TODO: improve
+    ('musician', u'Музыкальные навыки'),
+    ('photographer', u'Фотография'),
+    ('journalist', u'Журналистские навыки'),
+    ('observer', u'опыт наблюдения на выборах'),
+)
+
+class EntitySkillManager(BaseEntityPropertyManager):
+    def update_entity_resources(self, entity, skills):
+        content_type = ContentType.objects.get_for_model(type(entity))
+
+        entity_skills = list(self.filter(content_type=content_type, entity_id=entity.id))
+
+        new_skills = set(skills) - set(es.skill for es in entity_skills)
+        for es in entity_skills:
+            if es.skill not in skills:
+                es.delete()
+
+        self.bulk_create([EntitySkill(entity=entity, skill=skill) for skill in new_skills])
+
+class EntitySkill(BaseEntityProperty):
+    skill = models.CharField(u'Навык', max_length=20, choices=SKILL_CHOICES, db_index=True)
+
+    objects = EntitySkillManager()
+
+    class Meta:
+        unique_together = ('content_type', 'entity_id', 'skill')
+
+    def __unicode__(self):
+        return unicode(self.entity) + ': ' + unicode(self.skill)
 
 class EntityLocationManager(models.Manager):
     # TODO: cache it

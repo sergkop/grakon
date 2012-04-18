@@ -163,7 +163,7 @@ var TagsView = Backbone.View.extend({
     },
 
     initialize: function(){
-        this.choices = this.options.choices;
+        this.choices_dict = this.options.choices_dict;
         this.save_url = this.options.save_url;
         this.select = this.$el.find(".tag-edit select")
     },
@@ -178,8 +178,8 @@ var TagsView = Backbone.View.extend({
         select.children().remove();
 
         // Init select options
-        _.each(this.choices, function(tag_data){
-            select.append($("<option/>").attr("value", tag_data[0]).html(tag_data[1]));
+        _.each(this.choices_dict, function(title, name){
+            select.append($("<option/>").attr("value", name).html(title));
         });
 
         // Mark selected options
@@ -197,28 +197,39 @@ var TagsView = Backbone.View.extend({
     save: function(){
         var el = this.$el;
         var select = el.find(".tag-edit select");
+        var choices_dict = this.choices_dict;
 
-        el.children(".tag-view").show();
-        el.children(".tag-edit").hide();
+        params = {
+            "csrfmiddlewaretoken": get_cookie("csrftoken"),
+            "value": select.val()
+        };
+        $.post(this.save_url, params, function(data){
+            if (data!="ok")
+                alert(data);
+            else {
+                el.children(".tag-view").show();
+                el.children(".tag-edit").hide();
 
-        el.find("span[data-name]").remove();
+                el.find("span[data-name]").remove();
 
-        if (select.val()){
-            _.each(select.val().reverse(), function(resource, i){
-                var title = RESOURCES_DICT[resource];
-                if (i>0)
-                    title += ", ";
+                if (select.val()){
+                    _.each(select.val().reverse(), function(tag, i){
+                        var title = choices_dict[tag];
+                        if (i>0)
+                            title += ", ";
 
-                var span = $("<span/>").attr("data-name", resource).html(title);
-                el.children(".tag-view").prepend(span);
-            });
+                        var span = $("<span/>").attr("data-name", tag).html(title);
+                        el.children(".tag-view").prepend(span);
+                    });
 
-            $(".add-tag-btn").hide();
-            $(".edit-tag-btn").show();
-        } else {
-            $(".add-tag-btn").show();
-            $(".edit-tag-btn").hide();
-        }
+                    $(".add-tag-btn").hide();
+                    $(".edit-tag-btn").show();
+                } else {
+                    $(".add-tag-btn").show();
+                    $(".edit-tag-btn").hide();
+                }
+            }
+        });
     },
 
     render: function(){}

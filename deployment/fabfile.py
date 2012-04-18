@@ -156,10 +156,13 @@ def prepare_code():
 
     # TODO: configure socket file (?)
 
+    # TODO: wsgi deployment
+
 def update_code():
     # TODO: make git pull
     # TODO: python manage.py migrate
-    # TODO: delete old files, minify static files, move them to proper dir (use django command) (static/static)
+    # TODO: delete old files, minify static files, move them to proper dir
+    #       (use django command) (static/static), admin files
     # TODO: favicon
 
     restart_web_server()

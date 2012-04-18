@@ -1,0 +1,3 @@
+{% for tag in tags %}
+    <span data-name="{{ tag.name }}">{{ tag.title }}{% if not forloop.last %},{% endif %}</span>
+{% endfor %}

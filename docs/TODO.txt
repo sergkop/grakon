@@ -23,10 +23,11 @@ Cache:
 Deployment:
     * start using south and run migrate
     * configure nginx (see config settings)
-    * generate server.sh as well
     * generate js/code_data.js on deployment
     * static files deployment, minification (http://developer.yahoo.com/yui/compressor/), caching time
     * switch to wsgi
+    * put config.json to repo
+    * implement fabric deployment for developers (settings in deployment/config.json)
 
 * file with all passwords, social applications (where to get them)
 * sitemaps

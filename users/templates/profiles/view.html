@@ -30,7 +30,7 @@
         <div class="gr-chart-back">
             <span style="width: 56%">&nbsp;</span>
         </div> 
-        <small>Онлайн активист</small>  
+        <small>Онлайн активист</small>
         <i>&nbsp;</i></div>
     </div>
 
@@ -55,13 +55,39 @@
     </p>
 
     <h5>Навыки</h5>
-    <p>Программирование, рисование</p>
+    <div id="skills">
+        {% if own_profile %}
+            {% with tags=skills %}
+                {% include "elements/tags.html" %}
+            {% endwith %}
+
+            <script type="text/javascript">
+                (new TagsView({el: $("#skills"), choices_dict: SKILLS_DICT,
+                        save_url: "{{ URL_PREFIX }}{% url update_skills %}"})).render();
+            </script>
+        {% else %}
+            {% with tags=skills %}
+                {% include "elements/tags_view.html" %}
+            {% endwith %}
+        {% endif %}
+    </div>
 
     <h5>Ресурсы</h5>
     <div id="resources">
-        {% with tags=resources %}
-            {% include "elements/tags.html" %}
-        {% endwith %}
+        {% if own_profile %}
+            {% with tags=resources %}
+                {% include "elements/tags.html" %}
+            {% endwith %}
+
+            <script type="text/javascript">
+                (new TagsView({el: $("#resources"), choices_dict: RESOURCES_DICT,
+                        save_url: "{{ URL_PREFIX }}{% url update_resources %}"})).render();
+            </script>
+        {% else %}
+            {% with tags=resources %}
+                {% include "elements/tags_view.html" %}
+            {% endwith %}
+        {% endif %}
     </div>
 
     <h5>География участия</h5>
@@ -76,6 +102,4 @@
     </ul>
 </div>
 
-<script type="text/javascript">
-    (new TagsView({el: $("#resources"), choices: RESOURCES})).render();
-</script>
+

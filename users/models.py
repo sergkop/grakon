@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.db import models
 
 from tinymce.models import HTMLField
 
-from elements.models import BaseEntityProperty, EntityLocation, EntityResource
+from elements.models import BaseEntityProperty, EntityLocation, EntityResource, EntitySkill
 from locations.models import Location
 from services.cache import cache_function
 
@@ -23,9 +24,12 @@ class Profile(models.Model):
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
+    def cache_key(self):
+        return 'user_info/' + self.username
+
     # TODO: move this method to the manager and allow getting several profiles at once
     # TODO: reset cache key on changing any of related data
-    @cache_function(lambda args, kwargs: 'user_info/'+args[0].username, 60)
+    @cache_function(lambda args, kwargs: args[0].cache_key(), 60)
     def get_related_info(self):
         """
         Return {'profile': profile, 'locations': {person_location_id: location},
@@ -34,16 +38,21 @@ class Profile(models.Model):
         data = {
             'profile': self,
             'resources': list(EntityResource.objects.for_entity(self)),
+            'skills': list(EntitySkill.objects.for_entity(self)),
             'locations': EntityLocation.objects.for_entity(self),
+            'follows': list(FollowedEntity.objects.filter(follower=self).values_list('id', flat=True)),
+            'followers': list(FollowedEntity.objects.for_entity(self).values_list('id', flat=True)),
         }
 
-        # Follows
-        follows = FollowedEntity.objects.filter(follower=self)
-
-        # Followers
-        followers = FollowedEntity.objects.for_entity(self)
-
         return data
+
+    def update_resources(self, resources):
+        EntityResource.objects.update_entity_resources(self, resources)
+        cache.delete(self.cache_key())
+
+    def update_skills(self, skills):
+        EntitySkill.objects.update_entity_resources(self, skills)
+        cache.delete(self.cache_key())
 
     @models.permalink
     def get_absolute_url(self):
