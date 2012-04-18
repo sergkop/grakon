@@ -21,10 +21,9 @@ Cache:
     * cache all frequently used info about users (as one big dict) and locations
 
 Deployment:
-    * start using south and run migrate
     * configure nginx (see config settings)
     * generate js/code_data.js on deployment
-    * static files deployment, minification (http://developer.yahoo.com/yui/compressor/), caching time
+    * minification of static files (http://developer.yahoo.com/yui/compressor/), caching times
     * switch to wsgi
     * put config.json to repo
     * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv

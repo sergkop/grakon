@@ -12,7 +12,7 @@ start() {
     cd %(code_path)s
     source %(env_path)sbin/activate
     python manage.py runfcgi method=${METHOD} socket=${SOCKET} pidfile=${PIDFILE} && echo "fcgi started."
-    # TODO: chown nginx:nginx ${SOCKET}
+    chown www-data:www-data ${SOCKET}
 }
 
 stop() {

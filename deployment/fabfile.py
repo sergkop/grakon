@@ -150,7 +150,7 @@ def prepare_code():
     # fcgi starting script
     file_from_template(os.path.join(conf['code_path'], 'deployment', 'server.sh.template'),
             os.path.join(conf['code_path'], 'deployment', 'server.sh'))
-    # TODO: make it executable?
+    # TODO: make it executable
 
     # TODO: change socket file owner to nginx user (www-data)
 
