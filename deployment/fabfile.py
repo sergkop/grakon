@@ -39,7 +39,9 @@ def file_from_template(template_path, dest_path):
     get(template_path, template)
     put(StringIO.StringIO(template.getvalue() % conf), dest_path)
 
+
 # TODO: run it on the server with another role
+# TODO: configure db backups
 # Use 'su postgres', 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
 def init_data_server():
     ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
@@ -123,6 +125,7 @@ def restart_web_server():
     # sudo('/etc/init.d/memcached restart')
 
 def init_db():
+    # TODO: do we need to use '--all'?
     virtualenv('python %s syncdb' % manage_path)
     virtualenv('python %s migrate' % manage_path)
     virtualenv('python %s import_locations' % manage_path)

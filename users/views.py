@@ -40,17 +40,19 @@ class BaseProfileView(object):
                     reverse('edit_profile', kwargs={'username': self.profile.username}),
                     'profiles/edit.html', ''))
 
+        profile_info = self.profile.info()
+
         ctx.update({
             'profile': self.profile,
             'tab': self.tab,
             'tabs': tabs,
             'own_profile': own_profile,
-            'info': self.profile.get_related_info(),
+            'info': profile_info,
 
             'resources': [{'name': r.resource, 'title': r.get_resource_display()}
-                    for r in self.profile.get_related_info()['resources']],
+                    for r in profile_info['resources']],
             'skills': [{'name': r.skill, 'title': r.get_skill_display()}
-                    for r in self.profile.get_related_info()['skills']],
+                    for r in profile_info['skills']],
         })
         ctx.update(self.update_context())
         return ctx

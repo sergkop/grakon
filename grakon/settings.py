@@ -168,7 +168,9 @@ TINYMCE_COMPRESSOR = False # TODO: compression doesn't work at the moment
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
-# TODO: remove it when switched to uwsgi
-# force removal of mysite.fcgi from URL:
+# force removal of mysite.fcgi from URL (needed for fastcgi deployment)
 # http://docs.djangoproject.com/en/dev/howto/deployment/fastcgi/#forcing-the-url-prefix-to-a-particular-value
 FORCE_SCRIPT_NAME = ''
+
+# Numbers of entries shown in the side blocks for tools and participants
+TOP_FOLLOWERS_COUNT = 3

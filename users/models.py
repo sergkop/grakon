@@ -5,11 +5,30 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
-from elements.models import BaseEntityProperty, EntityLocation, EntityResource, EntitySkill
+from elements.models import BaseEntityManager, entity_class, EntityLocation
+from elements.utils import reset_cache
 from locations.models import Location
 from services.cache import cache_function
 
-class Profile(models.Model):
+class ProfileManager(BaseEntityManager):
+    def get_info(self, data):
+        ids = data.keys()
+
+        # TODO: 'locations': EntityLocation.objects.for_entity(self),
+        # TODO: 'follows': list(self.followed_entities.values_list('id', flat=True)),
+
+        profiles_by_id = dict((p.id, p) for p in Profile.objects.filter(id__in=ids))
+        for id in ids:
+            if id in profiles_by_id:
+                data[id]['profile'] = profiles_by_id[id]
+            else:
+                del data[id] # TODO: do we need it?
+
+    def for_location(self, location, start=0, limit=None, sort_by='points'):
+        pass # TODO: write it
+
+BaseProfile = entity_class('Profile', ['resources', 'skills', 'followers'])
+class Profile(BaseProfile):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30)
 
@@ -22,37 +41,12 @@ class Profile(models.Model):
 
     main_location = models.ForeignKey(EntityLocation, blank=True, null=True, related_name='profiles')
 
-    time = models.DateTimeField(auto_now=True, null=True, db_index=True)
+    objects = ProfileManager()
 
-    def cache_key(self):
-        return 'user_info/' + self.username
+    cache_prefix = 'user_info/'
 
-    # TODO: move this method to the manager and allow getting several profiles at once
-    # TODO: reset cache key on changing any of related data
-    @cache_function(lambda args, kwargs: args[0].cache_key(), 60)
-    def get_related_info(self):
-        """
-        Return {'profile': profile, 'locations': {person_location_id: location},
-                'resources': resources}
-        """
-        data = {
-            'profile': self,
-            'resources': list(EntityResource.objects.for_entity(self)),
-            'skills': list(EntitySkill.objects.for_entity(self)),
-            'locations': EntityLocation.objects.for_entity(self),
-            'follows': list(FollowedEntity.objects.filter(follower=self).values_list('id', flat=True)),
-            'followers': list(FollowedEntity.objects.for_entity(self).values_list('id', flat=True)),
-        }
-
-        return data
-
-    def update_resources(self, resources):
-        EntityResource.objects.update_entity_resources(self, resources)
-        cache.delete(self.cache_key())
-
-    def update_skills(self, skills):
-        EntitySkill.objects.update_entity_resources(self, skills)
-        cache.delete(self.cache_key())
+    def calc_points(self):
+        pass # TODO: implement it
 
     @models.permalink
     def get_absolute_url(self):
@@ -72,12 +66,3 @@ def create_profile(sender, **kwargs):
         profile.save()
 
 models.signals.post_save.connect(create_profile, sender=User)
-
-class FollowedEntity(BaseEntityProperty):
-    follower = models.ForeignKey(Profile, related_name='followed_entities')
-
-    class Meta:
-        unique_together = ('content_type', 'entity_id', 'follower')
-
-    def __unicode__(self):
-        return unicode(self.follower) + ' follows ' + unicode(self.entity)

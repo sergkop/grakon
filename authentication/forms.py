@@ -18,7 +18,7 @@ from crispy_forms.layout import ButtonHolder, Fieldset, HTML, Layout, Submit
 from authentication.models import ActivationProfile
 from elements.forms import location_clean, location_init
 from elements.models import EntityLocation
-from grakon.utils import clean_html, form_helper
+from elements.utils import clean_html, form_helper
 from users.models import Profile
 
 password_digit_re = re.compile(r'\d')

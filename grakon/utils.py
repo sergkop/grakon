@@ -3,18 +3,7 @@ from random import choice
 import sys
 import urllib2
 
-import bleach
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-
-def form_helper(action_name, button_name):
-    """ Shortcut to generate django-crispy-forms helper """
-    helper = FormHelper()
-    helper.form_action = action_name
-    helper.form_method = 'POST'
-    helper.add_input(Submit('', button_name, css_class='ui-button ui-state-default'))
-    return helper
-
+# TODO: add ie and chrome
 USER_AGENTS = [
     'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091114 Gentoo Firefox/3.5.5',
     'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.0',
@@ -25,7 +14,6 @@ USER_AGENTS = [
 
 def read_url(url, encoding='windows-1251'):
     """ Set encoding=None to skip decoding """
-    #print url
     proxy_handler = urllib2.ProxyHandler()
     cj = cookielib.CookieJar()
     opener = urllib2.build_opener(proxy_handler, urllib2.HTTPCookieProcessor(cj))
@@ -47,15 +35,3 @@ def print_progress(i, count):
     else:
         sys.stdout.write("\r")
         sys.stdout.flush()
-
-# TODO: sync it with tinymce and test
-def clean_html(html):
-    """ Clean html fields edited by tinymce """
-    tags = ['a', 'address', 'b', 'big', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'li', 
-                'ol', 'p', 'pre', 's', 'span', 'strike', 'strong', 'sub', 'sup', 'u', 'ul']
-
-    attributes = ['align', 'alt', 'border', 'class', 'dir', 'data', 'height', 'href', 'id', 'lang', 'longdesc', 'media', 'multiple',
-                'nowrap', 'rel', 'rev', 'span', 'src', 'style', 'target', 'title', 'type', 'valign', 'vspace', 'width']
-
-    styles = ['text-decoration', 'font-size', 'font-family', 'text-align', 'padding-left', 'color', 'background-color', ]
-    return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)

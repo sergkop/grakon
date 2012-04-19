@@ -110,7 +110,7 @@ Testing:
 Emails:
     * sign emails with "Администрация Гракона" or smth. else
     * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
-    * sending emails using mailgun.net or mailchimp.com (?)
+    * sending emails using mailgun.net or mailchimp.com (?) or amazon ses
 
 Performance:
     * activate compression for tinymce
@@ -122,6 +122,7 @@ Performance:
     * use pngcrush (pngcrush -rem alla -reduce -brute image.png result.png) to compress pngs; gif->png?
     * use jpegtran (jpegtran -copy none -optimize -perfect image.jpg > res.jpg) to compress jpegs
     * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
+    * multi-key indices in db
 
 Cache:
     * use template caching
@@ -130,6 +131,9 @@ AB testing:
     * https://github.com/johnboxall/django-ab
     * https://bitbucket.org/akoha/django-lean/wiki/Home
     * http://visualwebsiteoptimizer.com/feature-list.php
+
+Celery:
+    * recalculate entities points (once a day)
 
 * user pictures
 

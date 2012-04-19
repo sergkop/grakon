@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from grakon.utils import clean_html, form_helper
+from elements.utils import clean_html, form_helper
 from users.models import Profile
 
 class ProfileForm(forms.ModelForm):
