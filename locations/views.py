@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import json
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
@@ -29,16 +30,9 @@ class LocationView(TemplateView):
         if tab not in ('wall', 'map', 'tools'):
             tab = 'wall'
 
-        from elements.models import EntityLocation
-        from django.contrib.contenttypes.models import ContentType
-        entities_by_ct = EntityLocation.objects.for_location(loc_id)
-        profile_ct_id = ContentType.objects.get_for_model(Profile).id
-
-        # TODO: get related info instead
-        # TODO: get top 3 instances (using points to sort?)
-        profiles = []
-        if entities_by_ct.get(profile_ct_id):
-            profiles = list(Profile.objects.filter(id__in=entities_by_ct[profile_ct_id]))
+        profile_ids = Profile.objects.for_location(location, limit=settings.TOP_PARTICIPANTS_COUNT)
+        participants = Profile.objects.info_for(profile_ids).values()
+        print participants
 
         # TODO: automate generating it + move it to class attributes (?)
         # TODO: come back to several views
@@ -54,7 +48,7 @@ class LocationView(TemplateView):
             'tabs': tabs,
             'location': location,
             'subregions': subregion_list(location),
-            'participants': profiles,
+            'participants': participants,
         })
 
         ctx.update(self.update_context())

@@ -1,0 +1,53 @@
+{
+    "DEBUG": true,
+
+    "servers": {
+        "localhost": "password"
+    },
+
+    "username": "serg",
+
+    "developers_ssh_pubkey": [],
+
+    "database.ENGINE": "django.db.backends.sqlite3",
+    "database.NAME": "database.sqlite",
+    "database.USER": "",
+    "database.PASSWORD": "",
+    "database.HOST": "",
+    "database.PORT": "",
+
+    "cache.BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    "cache.LOCATION": "grakon-cache",
+    "cache.TIMEOUT": 60,
+    "cache.KEY_PREFIX": "",
+
+    "path": "sites/grakon",
+
+    "SSH_KEY_PASSPHRASE": "",
+    "GITHUB_EMAIL": "",
+
+    "gmail_password": "",
+
+    "SECRET_KEY": ")#f8s=iur+$2!aj1wer43e_234r3(m@1)75z9yty#1(1@73)2w(+t",
+
+    "FACEBOOK_APP_ID": "166963263423796",
+    "FACEBOOK_API_SECRET": "",
+
+    "GOOGLE_OAUTH2_CLIENT_ID": "721058376103.apps.googleusercontent.com",
+    "GOOGLE_OAUTH2_CLIENT_SECRET": "",
+
+    "DOMAIN": "127.0.0.1:8000",
+    "URL_PREFIX": "http://127.0.0.1:8000",
+
+    "from_email": "admin@grakon.org",
+    "ADMIN_EMAIL": "admin@grakon.org",
+
+    "ADMIN_PREFIX": "admin",
+
+    "GOOGLE_ANALYTICS_ID": "UA-28992589-1",
+    "YA_METRIKA_ID": 12237667,
+
+    "YANDEX_MAPS_KEY": "ADSyKU8BAAAAD-VBCwIA5ak5VGynqt5xp2tzedBMfAmF8-kAAAAAAAAAAAD_nM6wtAPq97uJHRvkF_aJL3gRVQ==",
+
+    "VK_APP_ID": 2798211
+}

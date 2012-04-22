@@ -44,6 +44,11 @@ class Location(models.Model):
     def is_location(self):
         return self.district_id is not None
 
+    def children_query_field(self):
+        """ Return name of of Location field to construct db query filtering children """
+        i = self.level() - 1
+        return ['country', 'region', 'district'][i] if i<3 else None
+
     def __unicode__(self, full_path=False):
         name = self.name
 

@@ -1,6 +1,6 @@
-<td width="65%"><a href="{{ person.get_absolute_url }}">
-    {{ person.username }}
-    {% if person.show_name %}({{ person.first_name }} {{ person.last_name }}){% endif %}
+<td width="65%"><a href="{{ person.profile.get_absolute_url }}">
+    {{ person.profile.username }}
+    {% if person.profile.show_name %}({{ person.profile.first_name }} {{ person.profile.last_name }}){% endif %}
 </a></td>
 <td class="gr-leader" width="7%">&nbsp;</td>
 <td class="gr-activity" width="7%">&nbsp;</td>

@@ -85,9 +85,10 @@ class Command(BaseCommand):
         locations = list(Location.objects.all())
         locations_by_okato = dict((loc.okato_id, loc) for loc in locations if loc.okato_id!='')
 
-        # TODO: get or create Russia
+        # Get or create Russia
         country, created = Location.objects.get_or_create(country=None, defaults={'name': u'Россия'})
 
+        # TODO: show progress
         for region_id, region_data in hierarchy.iteritems():
             if region_id in locations_by_okato:
                 region = locations_by_okato[region_id]
@@ -105,6 +106,10 @@ class Command(BaseCommand):
                         # TODO: ask user what to do
                         print "Mismatch:", district.name, '!=', district_data[0]
                 else:
+                    # Manual hack because name is too long
+                    if u'Таймырский Долгано-Ненецкий район' in district_data[0]:
+                        district_data[0] = u'Таймырский Долгано-Ненецкий район'
+
                     district = Location.objects.create(country=country, region=region,
                             okato_id=district_id, name=district_data[0])
 

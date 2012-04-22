@@ -174,3 +174,4 @@ FORCE_SCRIPT_NAME = ''
 
 # Numbers of entries shown in the side blocks for tools and participants
 TOP_FOLLOWERS_COUNT = 3
+TOP_PARTICIPANTS_COUNT = 7 # number of participants displayed on location page

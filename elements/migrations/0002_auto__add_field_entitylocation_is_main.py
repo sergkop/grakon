@@ -8,82 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'EntityResource'
-        db.create_table('elements_entityresource', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
-            ('resource', self.gf('django.db.models.fields.CharField')(max_length=20, db_index=True)),
-        ))
-        db.send_create_signal('elements', ['EntityResource'])
-
-        # Adding unique constraint on 'EntityResource', fields ['content_type', 'entity_id', 'resource']
-        db.create_unique('elements_entityresource', ['content_type_id', 'entity_id', 'resource'])
-
-        # Adding model 'EntitySkill'
-        db.create_table('elements_entityskill', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
-            ('skill', self.gf('django.db.models.fields.CharField')(max_length=20, db_index=True)),
-        ))
-        db.send_create_signal('elements', ['EntitySkill'])
-
-        # Adding unique constraint on 'EntitySkill', fields ['content_type', 'entity_id', 'skill']
-        db.create_unique('elements_entityskill', ['content_type_id', 'entity_id', 'skill'])
-
-        # Adding model 'EntityLocation'
-        db.create_table('elements_entitylocation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
-            ('location', self.gf('django.db.models.fields.related.ForeignKey')(related_name='entities', to=orm['locations.Location'])),
-        ))
-        db.send_create_signal('elements', ['EntityLocation'])
-
-        # Adding unique constraint on 'EntityLocation', fields ['content_type', 'entity_id', 'location']
-        db.create_unique('elements_entitylocation', ['content_type_id', 'entity_id', 'location_id'])
-
-        # Adding model 'EntityFollower'
-        db.create_table('elements_entityfollower', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('entity_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, db_index=True, blank=True)),
-            ('follower', self.gf('django.db.models.fields.related.ForeignKey')(related_name='followed_entities', to=orm['users.Profile'])),
-        ))
-        db.send_create_signal('elements', ['EntityFollower'])
-
-        # Adding unique constraint on 'EntityFollower', fields ['content_type', 'entity_id', 'follower']
-        db.create_unique('elements_entityfollower', ['content_type_id', 'entity_id', 'follower_id'])
+        # Adding field 'EntityLocation.is_main'
+        db.add_column('elements_entitylocation', 'is_main',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
     def backwards(self, orm):
-        # Removing unique constraint on 'EntityFollower', fields ['content_type', 'entity_id', 'follower']
-        db.delete_unique('elements_entityfollower', ['content_type_id', 'entity_id', 'follower_id'])
-
-        # Removing unique constraint on 'EntityLocation', fields ['content_type', 'entity_id', 'location']
-        db.delete_unique('elements_entitylocation', ['content_type_id', 'entity_id', 'location_id'])
-
-        # Removing unique constraint on 'EntitySkill', fields ['content_type', 'entity_id', 'skill']
-        db.delete_unique('elements_entityskill', ['content_type_id', 'entity_id', 'skill'])
-
-        # Removing unique constraint on 'EntityResource', fields ['content_type', 'entity_id', 'resource']
-        db.delete_unique('elements_entityresource', ['content_type_id', 'entity_id', 'resource'])
-
-        # Deleting model 'EntityResource'
-        db.delete_table('elements_entityresource')
-
-        # Deleting model 'EntitySkill'
-        db.delete_table('elements_entityskill')
-
-        # Deleting model 'EntityLocation'
-        db.delete_table('elements_entitylocation')
-
-        # Deleting model 'EntityFollower'
-        db.delete_table('elements_entityfollower')
+        # Deleting field 'EntityLocation.is_main'
+        db.delete_column('elements_entitylocation', 'is_main')
 
     models = {
         'auth.group': {
@@ -135,6 +67,7 @@ class Migration(SchemaMigration):
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
             'entity_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_main': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'location': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'entities'", 'to': "orm['locations.Location']"}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'db_index': 'True', 'blank': 'True'})
         },
@@ -170,7 +103,6 @@ class Migration(SchemaMigration):
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'main_location': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'profiles'", 'null': 'True', 'to': "orm['elements.EntityLocation']"}),
             'points': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'show_name': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),

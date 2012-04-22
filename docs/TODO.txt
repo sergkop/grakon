@@ -123,6 +123,7 @@ Performance:
     * use jpegtran (jpegtran -copy none -optimize -perfect image.jpg > res.jpg) to compress jpegs
     * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
     * multi-key indices in db
+    * postgres configuration
 
 Cache:
     * use template caching
