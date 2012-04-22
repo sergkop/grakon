@@ -32,7 +32,6 @@ class LocationView(TemplateView):
 
         profile_ids = Profile.objects.for_location(location, limit=settings.TOP_PARTICIPANTS_COUNT)
         participants = Profile.objects.info_for(profile_ids).values()
-        print participants
 
         # TODO: automate generating it + move it to class attributes (?)
         # TODO: come back to several views

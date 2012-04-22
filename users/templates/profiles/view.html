@@ -1,37 +1,41 @@
 <div class="gr-content">
     {% if not own_profile %}
-        <a href="" class="ym-button gr-blue-button gr-mail"><span>Отправить сообщение</span></a>
-        <a href="" class="ym-button gr-blue-button gr-add"><span>Добавить в контакты</span></a>
-        <a href="" class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a>
+        <div class="gr-mb20">
+            <a class="ym-button gr-blue-button gr-mail" href=""><span>Отправить сообщение</span></a>
+            <a class="ym-button gr-blue-button gr-add" href=""><span>Добавить в контакты</span></a>
+            <a class="ym-button gr-blue-button gr-complaint" href=""><span>Пожаловаться</span></a>
+        </div>
     {% endif %}
 
-    <div class="gr-user-photo">
-        <img src="i/photo.jpg" />
+    <div class="gr-fl gr-photo">
+        <img src="{{ STATIC_URL }}images/icons/nophoto.jpg">
     </div>
 
     <div class="gr-user-charts">
-    <div class="gr-user-chart gr-leadership">
-        <strong><big>83</big>/100</strong>  
-        <div class="gr-chart-back">
-            <span style="width: 83%">&nbsp;</span>
-        </div>  
-        <small>Лидер</small>                            
-        <i>&nbsp;</i>
-    </div>
-    <div class="gr-user-chart gr-offline-activity">
-        <strong><big>12</big>/100</strong>
-        <div class="gr-chart-back">
-            <span style="width: 12%">&nbsp;</span>
-        </div> 
-        <small>Оффлайн активист</small>  
-        <i>&nbsp;</i></div>
-    <div class="gr-user-chart gr-online-activity">
-        <strong><big>56</big>/100</strong>
-        <div class="gr-chart-back">
-            <span style="width: 56%">&nbsp;</span>
-        </div> 
-        <small>Онлайн активист</small>
-        <i>&nbsp;</i></div>
+        <div class="gr-user-chart gr-leader">
+            <strong><big>83</big>/100</strong>
+            <div class="gr-chart-back">
+                <span style="width: 83%">&nbsp;</span>
+            </div>
+            <small>Лидер</small>
+            <i>&nbsp;</i>
+        </div>
+        <div class="gr-user-chart gr-offline-activity">
+            <strong><big>12</big>/100</strong>
+            <div class="gr-chart-back">
+                <span style="width: 12%">&nbsp;</span>
+            </div> 
+            <small>Оффлайн активист</small>  
+            <i>&nbsp;</i>
+        </div>
+        <div class="gr-user-chart gr-online-activity">
+            <strong><big>56</big>/100</strong>
+            <div class="gr-chart-back">
+                <span style="width: 56%">&nbsp;</span>
+            </div> 
+            <small>Онлайн активист</small>  
+            <i>&nbsp;</i>
+        </div>
     </div>
 
     <div class="ym-clearfix">&nbsp;</div>
@@ -54,7 +58,7 @@
         <span class="dimmed">Skype:</span> MPanko <a href="" class="gr-skype">&nbsp;</a>
     </p>
 
-    <h5>Навыки</h5>
+    <h5>Навыки <span class="gr-skills">&nbsp;</span></h5>
     <div id="skills">
         {% if own_profile %}
             {% with tags=skills %}
@@ -72,7 +76,7 @@
         {% endif %}
     </div>
 
-    <h5>Ресурсы</h5>
+    <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
     <div id="resources">
         {% if own_profile %}
             {% with tags=resources %}
@@ -90,7 +94,7 @@
         {% endif %}
     </div>
 
-    <h5>География участия</h5>
+    <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
     <ul>
         {% for entity_location in info.locations %}
             <li>

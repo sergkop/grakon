@@ -27,7 +27,7 @@
 
 	.ym-hlist ul {
 		margin:0;
-		padding: 1em 0 0.5em;
+		font-size: 1.15em;
 		/* (en|de) Bugfix:IE - Doubled Float Margin Bug */
 		display:inline;
 		float:left; /* LTR */
@@ -42,7 +42,6 @@
 		/* (en|de) Bugfix:IE - Doubled Float Margin Bug */
 		display:inline;
 		float:left; /* LTR */
-		font-size:0.9em;
 		line-height:1em;
 		list-style-type:none;
 		margin: 0 0.1em 0 0;

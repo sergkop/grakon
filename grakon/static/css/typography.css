@@ -44,17 +44,15 @@
 	samp,
 	var,
 	tt {
-		font-family:Consolas, "Lucida Console", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier;
+		font-family: Tahoma, Geneva, sans-serif;
 	}
 
 	/* (en) base layout gets standard font size 14px */
 	/* (de) Basis-Layout erhält Standardschriftgröße von 14 Pixeln */
 	body {
-		font-family: Arial, Georgia, "Times New Roman", Times, serif;
-		/*font-size:87.50%;*/ /* base: 14px */
-		font-size:100%;
+		font-family: Tahoma, Geneva, sans-serif;
+		font-size: 75%; /* base: 12px */
 		color:#000;
-
 		/* (en) Prevent auto-scaling of text in mobile webkit browsers */
 		/* (de) Automatische Schriftvergrößerung in mobilen Webkit-Browsern vermeiden */
 		-webkit-text-size-adjust:100%;
@@ -68,21 +66,17 @@
 	h4,
 	h5,
 	h6 {
-		font-family: Arial, Helvetica, sans-serif;
-		font-weight: 400;
 		color:#161e21;
 		margin:0;
 	}
 
 	h1 {
-		font-size:1.5em;
-		font-style:italic;
+		font-size:2em;
 		font-weight: bold;
-		margin: 1em 0 .5em;
+		margin: 0 0 .5em;
 	}
 	
 	h1 small {
-		font-size: .8em;
 		font-weight: normal;
 		display: block;
 	}
@@ -94,13 +88,10 @@
 	}
 
 	h3 {
-		font-size:175%;
-		line-height: 0.8571em;
-		margin:0.8571em 0 0 0;
+		font-size: 1.15em;
 	}
 		
 	.ym-col2 h3, .ym-col3 h3 {
-		font-size: 1em;
 		margin: 0 0 5px;
 		text-align:center;	
 		color: #fff;				
@@ -115,7 +106,6 @@
 	.ym-col2 h4, .ym-col3 h4  {
 		margin: 0;
 		font-size: 1em;
-		font-style: italic;
 		text-transform: uppercase;
 		font-weight: bold;
 		color: #5a4e4e;		
@@ -168,7 +158,6 @@
 	}
 
 	li {
-		font-size:1em;
 		margin-left:0.8em;
 	}
 
@@ -185,7 +174,7 @@
 	}
 
 	blockquote, cite, q {
-		font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+		font-family: Tahoma, Geneva, sans-serif;
 		font-style:italic;
 	}
 
@@ -203,7 +192,7 @@
 	}
 
 	small {
-		font-size:85.71%;
+		font-size: .75em;
 	}
 
 	pre,
@@ -268,6 +257,7 @@
 	a {
 		color:#4D87C7;
 		background:transparent;
+		text-decoration: none;
 	}
 
 	a:active { outline: none; }
@@ -276,14 +266,13 @@
 	/* (en) Maximaler Kontrast für Tab Focus - Ändern Sie diese Regel mit Bedacht */
 	a:hover,
 	a:focus {
-		text-decoration:none;
+		text-decoration:underline
 	}
 	
 	header a {color: #fff;}
 	.ym-hlist ul li a {color: #000;}
 	
-	footer {font-size: 0.8em;}
-		footer a {color: #000; text-decoration: none;}
+	footer a {color: #000; text-decoration: none;}
 
 	/* --- images ------------------ */
 
@@ -353,7 +342,6 @@
 	}
 
 	.label {
-		font-family:Tahoma, Verdana, Geneva, sans-serif;
 		padding: 1px 6px 2px;
 		display: inline-block;
 		vertical-align:middle;
@@ -495,19 +483,19 @@
 	
 	/*grakon styles*/
 	
-	.gr-login-info {font-size: 0.75em;}
+	.gr-login-info {font-size: 0.9em;}
 	.gr-user-chart strong {color: #e1dfdd;}
 	.gr-user-chart big {font-size: 1.5em;}
-	.gr-leadership big {color: #c69f1e;}
+	.gr-leader big {color: #c69f1e;}
 	.gr-offline-activity big {color: #c75e20;}
 	.gr-online-activity big {color: #815414;}
-
-	/* from old grakon */
-	.clickable {
-        color: #1C94C4;
-        cursor: pointer;
-        text-decoration: underline;
-    }
+	.gr-icons {color: #8b8787; font-size: .95em;}
+	.gr-icons big {font-weight: bold; font-size: 1.8em; color: #85ac14;}
+	.gr-side-item ul {font-size: .9em;}
+	.gr-source-list-slider {font-size: .95em;}
+	.gr-icon-link { color: #85ac14;}
+	.gr-user-chart small {font-size: 0.9em;}
+	
     .clickable:hover {
         color: #c77405;
     }

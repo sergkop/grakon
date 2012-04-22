@@ -222,15 +222,15 @@
 	
 	
 
-	.ym-column { display:table; width:100%; font-size: 0.9em;}
+	.ym-column { display:table; width:100%;}
 
 	.ym-col1 { width: 60%; float:left; margin-left: 20%; padding: 1em 1em 0 0} /* center column */
 	.ym-col2 { width: 20%; float:left;  margin-left: -80%; padding: 1em 1em 0 0} /* left column */
 	.ym-col3 {  float:right; width: 20%; margin-left: -5px; margin-right: 0%; padding: 1em 0 0 1em} /* right column */
 	
-	.gr-left-sidebar .ym-col1 {margin-right: 0; width: 75%}
+	.gr-left-sidebar .ym-col1 {margin-right: 0; width: 80%}
 	.gr-left-sidebar .ym-col2 {margin-left: -100%;}
-	.gr-right-sidebar .ym-col1 {margin-left: 0; width: 75%}
+	.gr-right-sidebar .ym-col1 {margin-left: 0; width: 80%}
 
 	.ym-cbox { padding: 0 10px }
 	.ym-cbox-left { padding: 0 10px 0 0 }
@@ -460,7 +460,7 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content {background-color: #fff; padding: 20px; margin: 0 0 1em; font-size: 0.9em;}
+	.gr-content {background-color: #fff; padding: 20px; margin: 0 0 1em;}
 }
 
 @media print {

@@ -85,6 +85,8 @@ Front-end
     * https://github.com/dziegler/django-css
     * http://www.modernizr.com/
 
+    * automate search for unused and missing images, style classes
+
 Analytics:
     * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * analyze when user visited site/logged in last time
