@@ -36,7 +36,7 @@ Deployment:
 --------------------------------------
 * Disallow paths in robots.txt (see django-social-auth example)
 
-* create element forms for resources and skills (like for location)
+* create element forms for resources (like for location)
 
 * write Profile manager method which gets multiple profiles info (get from cache at once,
   get missing from db)
@@ -118,7 +118,7 @@ Performance:
     * activate compression for tinymce
     * use debug toolbar, page speed to optimize page load
     * add all mime types to gzip list of nginx configuration
-    * move scripts loading at the bottom of html (or use defer)
+    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
     * cache ajax (json) queries, gzip it, don't make authentication db queries for public ajax queries
     * move static content to sub-domain (?), keep it cookie-free (how?)
     * use pngcrush (pngcrush -rem alla -reduce -brute image.png result.png) to compress pngs; gif->png?

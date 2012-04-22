@@ -40,19 +40,17 @@ class BaseProfileView(object):
                     reverse('edit_profile', kwargs={'username': self.profile.username}),
                     'profiles/edit.html', ''))
 
-        profile_info = self.profile.info()
+        info = self.profile.info()
 
         ctx.update({
             'profile': self.profile,
             'tab': self.tab,
             'tabs': tabs,
             'own_profile': own_profile,
-            'info': profile_info,
+            'info': info,
 
             'resources': [{'name': r.resource, 'title': r.get_resource_display()}
-                    for r in profile_info['resources']],
-            'skills': [{'name': r.skill, 'title': r.get_skill_display()}
-                    for r in profile_info['skills']],
+                    for r in info['resources']],
         })
         ctx.update(self.update_context())
         return ctx
@@ -97,11 +95,4 @@ def update_resources(request):
         return HttpResponse(u'Вам необходимо войти в систему')
 
     request.profile.update_resources(request.POST.getlist('value[]', None))
-    return HttpResponse('ok')
-
-def update_skills(request):
-    if not (request.is_ajax() and request.user.is_authenticated()):
-        return HttpResponse(u'Вам необходимо войти в систему')
-
-    request.profile.update_skills(request.POST.getlist('value[]', None))
     return HttpResponse('ok')

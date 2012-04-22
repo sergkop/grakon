@@ -3,7 +3,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 
-from elements.models import RESOURCE_CHOICES, SKILL_CHOICES
+from elements.models import RESOURCE_CHOICES
 
 class CodeDataView(TemplateView):
     template_name = 'code_data.js'
@@ -14,7 +14,6 @@ class CodeDataView(TemplateView):
 
         ctx.update({
             'resources': json.dumps(RESOURCE_CHOICES, ensure_ascii=False),
-            'skills': json.dumps(SKILL_CHOICES, ensure_ascii=False),
             'get_subregions_url': reverse('get_subregions'),
         })
         return ctx

@@ -25,7 +25,7 @@
             <div class="gr-chart-back">
                 <span style="width: 12%">&nbsp;</span>
             </div> 
-            <small>Оффлайн активист</small>  
+            <small>Оффлайн активист</small>
             <i>&nbsp;</i>
         </div>
         <div class="gr-user-chart gr-online-activity">
@@ -40,9 +40,9 @@
 
     <div class="ym-clearfix">&nbsp;</div>
 
-    <p>
-        {% if profile_user.profile.about %}
-            {{ profile_user.profile.about|safe }}
+    <div>
+        {% if profile.about %}
+            {{ profile.about|safe }}
         {% else %}
             {% if own_profile %}
                 <i><a href="{% url edit_profile profile.username %}">Добавьте</a> информацию о себе.</i>
@@ -50,31 +50,13 @@
                 <i>Пользователь еще не добавил информацию о себе.</i>
             {% endif %}
         {% endif %}
-    </p>
+    </div>
 
     <p>
         <span class="dimmed">Сайт:</span> <a href="">http://www.wix.com/html5/now-on-wix</a><br />
         <span class="dimmed">E-mail:</span> <a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a><br />
         <span class="dimmed">Skype:</span> MPanko <a href="" class="gr-skype">&nbsp;</a>
     </p>
-
-    <h5>Навыки <span class="gr-skills">&nbsp;</span></h5>
-    <div id="skills">
-        {% if own_profile %}
-            {% with tags=skills %}
-                {% include "elements/tags.html" %}
-            {% endwith %}
-
-            <script type="text/javascript">
-                (new TagsView({el: $("#skills"), choices_dict: SKILLS_DICT,
-                        save_url: "{{ URL_PREFIX }}{% url update_skills %}"})).render();
-            </script>
-        {% else %}
-            {% with tags=skills %}
-                {% include "elements/tags_view.html" %}
-            {% endwith %}
-        {% endif %}
-    </div>
 
     <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
     <div id="resources">
@@ -96,14 +78,12 @@
 
     <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
     <ul>
-        {% for entity_location in info.locations %}
+        {% for location_data in info.locations %}
             <li>
-                {% with location=entity_location.location %}
+                {% with location=location_data.location %}
                     {% include "elements/location_path.html" %}
                 {% endwith %}
             </li>
         {% endfor %}
     </ul>
 </div>
-
-

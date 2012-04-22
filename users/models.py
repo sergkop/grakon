@@ -50,7 +50,7 @@ class Profile(BaseEntityModel):
             return u'%s %s (%s)' % (self.first_name, self.last_name, self.username)
         return self.username
 
-entity_class(Profile, ['resources', 'skills', 'followers', 'locations'])
+entity_class(Profile, ['resources', 'followers', 'locations'])
 
 def create_profile(sender, **kwargs):
     if kwargs.get('created', False):

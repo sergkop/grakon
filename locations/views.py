@@ -30,8 +30,7 @@ class LocationView(TemplateView):
         if tab not in ('wall', 'map', 'tools'):
             tab = 'wall'
 
-        profile_ids = Profile.objects.for_location(location, limit=settings.TOP_PARTICIPANTS_COUNT)
-        participants = Profile.objects.info_for(profile_ids).values()
+        info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
 
         # TODO: automate generating it + move it to class attributes (?)
         # TODO: come back to several views
@@ -47,7 +46,7 @@ class LocationView(TemplateView):
             'tabs': tabs,
             'location': location,
             'subregions': subregion_list(location),
-            'participants': participants,
+            'info': info,
         })
 
         ctx.update(self.update_context())

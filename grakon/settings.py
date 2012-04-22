@@ -161,7 +161,9 @@ TINYMCE_DEFAULT_CONFIG = {
     'relative_urls': False,
     'width': '100%',
     'height': 300,
-    'theme_advanced_buttons3': ",fontselect,fontsizeselect,forecolor,backcolor,|,sub,sup,|,charmap,",
+    'theme_advanced_buttons1': "bold,italic,underline,strikethrough,|,formatselect",
+    'theme_advanced_buttons2': "bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,code",
+    'theme_advanced_buttons3': ",fontselect,fontsizeselect,forecolor,|,charmap,",
     'extended_valid_elements': "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],",
 }
 TINYMCE_COMPRESSOR = False # TODO: compression doesn't work at the moment

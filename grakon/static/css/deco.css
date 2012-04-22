@@ -28,14 +28,12 @@ th {
 	background: linear-gradient(#5d5d5d, #4b4b4b);
 }
 
-.gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-skills, .gr-resources, .gr-skype, .gr-geography {background-image:url(../images/icons/badges.png); background-repeat: no-repeat;}
+.gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-skype, .gr-geography {background-image:url(../images/icons/badges.png); background-repeat: no-repeat;}
 .gr-activity {background-position: right 1px;}
 .gr-web-activity {background-position: right -16px;}
 .gr-leader {background-position: right -35px;}
 .gr-icon-state {background: url(../images/icons/state.png) 0 0 no-repeat;}
 .gr-select-arrow {background: url(../images/icons/blue-arrow-down.png) 0 0 no-repeat;}
-.gr-skills {background-position: right -53px;}
-	h5 .gr-skills {background-position: 0 -92px;}
 .gr-resources {background-position: -2px -73px;}
 	h5 .gr-resources {background-position: 0 -118px;}
 .gr-skype {background-position: -2px -171px;}

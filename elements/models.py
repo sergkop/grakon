@@ -33,13 +33,23 @@ RESOURCE_CHOICES = (
     ('organization', u'Представительство в организации'), #u'Руководитель общественного движения, ...'),
     ('authority', u'Представительство во власти'), #u'Муниципальный депутат, полицейский, ...'),
     #('other', u'Другое', u''),
+
+    # Skills
+    ('lawyer', u'Юридическая помощь'),
+    ('programmer', u'Программирование'),
+    ('design', u'Дизайн'),
+    ('copywriting', u'Написание текстов'),
+    #('creative', u'Креатив'), # TODO: improve
+    ('organizator', u'Организаторские навыки'),
+    #('', u'Физическая сила'), # TODO: improve
+    ('musician', u'Музыкальные навыки'),
+    ('photographer', u'Фотография'),
+    ('journalist', u'Журналистские навыки'),
+    ('observer', u'Опыт наблюдения на выборах'),
 )
 
 class EntityResourceManager(models.Manager):
     def update_entity_resources(self, entity, resources):
-        # TODO: drop it
-        #content_type = ContentType.objects.get_for_model(type(entity))
-        #entity_resources = list(self.filter(content_type=content_type, entity_id=entity.id))
         entity_resources = list(entity.resources.all())
 
         new_resources = set(resources) - set(er.resource for er in entity_resources)
@@ -69,50 +79,6 @@ class EntityResource(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)
 
-SKILL_CHOICES = (
-    ('lawyer', u'Юридическая помощь'),
-    ('programmer', u'Программирование'),
-    ('design', u'Дизайн'),
-    ('copywriting', u'Написание текстов'),
-    #('creative', u'Креатив'), # TODO: improve
-    ('organizator', u'Организаторские навыки'),
-    #('', u'Физическая сила'), # TODO: improve
-    ('musician', u'Музыкальные навыки'),
-    ('photographer', u'Фотография'),
-    ('journalist', u'Журналистские навыки'),
-    ('observer', u'Опыт наблюдения на выборах'),
-)
-
-class EntitySkillManager(models.Manager):
-    def update_entity_skills(self, entity, skills):
-        entity_skills = list(entity.skills.all())
-
-        new_skills = set(skills) - set(es.skill for es in entity_skills)
-        for es in entity_skills:
-            if es.skill not in skills:
-                es.delete()
-
-        self.bulk_create([EntitySkill(entity=entity, skill=skill) for skill in new_skills])
-
-    def get_for(self, model, ids):
-        """ Return {id: [skills]} """
-        res = {}
-        for id, skill in self.filter(content_type=ContentType.objects.get_for_model(model),
-                entity_id__in=ids).values_list('entity_id', 'skill'):
-            res.setdefault(id, []).append(skill)
-        return res
-
-class EntitySkill(BaseEntityProperty):
-    skill = models.CharField(u'Навык', max_length=20, choices=SKILL_CHOICES, db_index=True)
-
-    objects = EntitySkillManager()
-
-    class Meta:
-        unique_together = ('content_type', 'entity_id', 'skill')
-
-    def __unicode__(self):
-        return unicode(self.entity) + ': ' + unicode(self.skill)
-
 class EntityLocationManager(models.Manager):
     def get_for(self, model, ids):
         """ Return {id: {'locations': loc_ids, 'main_location': loc_id_or_None}} """
@@ -126,61 +92,6 @@ class EntityLocationManager(models.Manager):
 
             main_locations = filter(lambda el: el[2], entity_locations)
             res[id]['main_location'] = main_locations[0][1] if main_locations else None
-        return res
-
-    # TODO: include data from lower levels
-    def for_location(self, loc_id):
-        res = {} # {ct_id: [entity_ids]}
-        for ct_id, entity_id in self.filter(location__id=loc_id).values_list('content_type', 'entity_id'):
-            res.setdefault(ct_id, []).append(entity_id)
-        return res
-
-    # TODO: do we need it?
-    # TODO: shortcut method for it in Location
-    # TODO: don't cache if entity_type is given? simplify result?
-    def for_locations(self, loc_ids, entity_type=None):
-        """ Get all entities of given type (all if not given) at the given location """
-        cached_entities = cache.get_many(['loc_entities/'+str(loc_id) for loc_id in loc_ids])
-
-        cached_loc_ids = [int(key.split('/')[1]) for key in cached_entities.keys()]
-        res = dict((int(key.split('/')[1]), entity) for key, entity in cached_entities.iteritems())
-
-        other_loc_ids = set(loc_ids) - set(cached_loc_ids)
-        if len(other_loc_ids) > 0:
-            queryset = self.filter(location__in=other_loc_ids)
-            if entity_type:
-                content_type = ContentType.objects.get_for_model(entity_type)
-                queryset = queryset.filter(content_type=content_type)
-
-            # Get entities content types and ids
-            entity_locations = {} # {loc_id: {ct_id: [entity_ids]}}
-            for ct_id, entity_id, loc_id in queryset.values_list('content_type', 'entity_id', 'location'):
-                entity_locations.setdefault(loc_id, {}).setdefault(ct_id, []).append(entity_id)
-
-            # Get all entities ids by content type
-            entity_ids_by_ct = {} # {ct_id: [entity_ids]}
-            for el in entity_locations.values():
-                for ct_id, entity_ids in el.iteritems():
-                    entity_ids_by_ct.setdefault(ct_id, []).extend(entity_ids)
-
-            # Retrieve data from db
-            entities_by_ct = {} # {ct_id: [entities]}
-            for ct_id, entity_ids in entity_ids_by_ct.iteritems():
-                model = ContentType.objects.get_for_id(ct_id).model_class()
-                entities_by_ct[ct_id] = dict(
-                        (entity.id, entity) for entity in model.objects.filter(id__in=entity_ids))
-
-            cache_res = {}
-            for loc_id in entity_locations:
-                for ct_id in entity_locations[loc_id]:
-                    for entity_id in entity_locations[loc_id][ct_id]:
-                        res.setdefault(loc_id, {}).setdefault(ct_id, {})[entity_id] = \
-                                entities_by_ct[ct_id][entity_id]
-                        cache_res.setdefault('loc_entities/'+str(loc_id), {}).setdefault(ct_id, {})[entity_id] = \
-                                entities_by_ct[ct_id][entity_id]
-
-            cache.set_many(cache_res, 30) # TODO: no cache time here
-
         return res
 
 # TODO: reset cache on save()/delete() (here and in other models)
@@ -198,7 +109,7 @@ class EntityLocation(BaseEntityProperty):
 
 class EntityFollowerManager(models.Manager):
     def get_for(self, model, ids):
-        """ Return {id: {'count': count, 'top_followers': [top_n_followers]}} """
+        """ Return {id: {'count': count, 'top_followers': [top_followers_ids]}} """
         followers_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'follower'))
 
@@ -230,8 +141,11 @@ class EntityFollower(BaseEntityProperty):
 
 # TODO: add search method
 class BaseEntityManager(models.Manager):
-    def info_for(self, ids):
-        """ Get dict {id: info} for model. Use and update cache if needed. """
+    def info_for(self, ids, related=True):
+        """
+        Get dict {id: info} for model. Use and update cache if needed.
+        If related is True, list of info is returned instead of ids.
+        """
         cache_prefix = self.model.cache_prefix
         cached_entities = cache.get_many([cache_prefix+str(id) for id in ids])
 
@@ -251,22 +165,31 @@ class BaseEntityManager(models.Manager):
                 for id in other_ids:
                     other_res[id]['resources'] = resources_data.get(id, [])
 
-            if 'skills' in self.model.features:
-                skills_data = EntitySkill.objects.get_for(self.model, other_ids)
-                for id in other_ids:
-                    other_res[id]['skills'] = skills_data.get(id, [])
-
             if 'followers' in self.model.features:
+                from users.models import Profile
                 followers_data = EntityFollower.objects.get_for(self.model, other_ids)
                 for id in other_ids:
-                    other_res[id]['followers'] = followers_data[id]['top_followers']
+                    followers_ids = followers_data[id]['top_followers']
+                    if related:
+                        other_res[id]['followers'] = Profile.objects.info_for(followers_ids, related=False)
+                    else:
+                        other_res[id]['followers'] = followers_ids
+
                     other_res[id]['followers_count'] = followers_data[id]['count']
 
             if 'locations' in self.model.features:
                 locations_data = EntityLocation.objects.get_for(self.model, other_ids)
                 for id in other_ids:
-                    other_res[id]['locations'] = locations_data[id]['locations']
-                    other_res[id]['main_location'] = locations_data[id]['main_location']
+                    loc_ids = locations_data[id]['locations']
+                    main_loc_id = locations_data[id]['main_location']
+
+                    if related:
+                        locations_data = Location.objects.info_for(loc_ids, related=False)
+                        other_res[id]['locations'] = [locations_data[loc_id] for loc_id in loc_ids]
+                        other_res[id]['main_location'] = locations_data[main_loc_id]
+                    else:
+                        other_res[id]['locations'] = loc_ids
+                        other_res[id]['main_location'] = main_loc_id
 
             self.get_info(other_res)
 
@@ -324,7 +247,7 @@ class BaseEntityModel(models.Model):
     objects = BaseEntityManager()
 
     cache_prefix = ''
-    features = [] # 'skills', 'resources', 'followers', # TODO: 'location' (?),  'complaints', 'admins'
+    features = [] # 'resources', 'followers', # TODO: 'location' (?),  'complaints', 'admins'
 
     class Meta:
         abstract = True
@@ -332,7 +255,7 @@ class BaseEntityModel(models.Model):
     def cache_key(self):
         return self.cache_prefix + str(self.id)
 
-    def info(self):
+    def info(self, related=True):
         return type(self).objects.info_for([self.id])[self.id]
 
     # TODO: recalculate these points on save or in celery (?)
@@ -352,10 +275,6 @@ class BaseEntityModel(models.Model):
 def update_resources(self, resources):
     EntityResource.objects.update_entity_resources(self, resources)
 
-@reset_cache
-def update_skills(self, skills):
-    EntitySkill.objects.update_entity_resources(self, skills)
-
 def entity_class(model, features):
     """ Call it right after model definition """
     attrs = {'features': features}
@@ -363,10 +282,6 @@ def entity_class(model, features):
     if 'resources' in features:
         attrs['resources'] = generic.GenericRelation(EntityResource, object_id_field='entity_id')
         attrs['update_resources'] = update_resources
-
-    if 'skills' in features:
-        attrs['skills'] = generic.GenericRelation(EntitySkill, object_id_field='entity_id')
-        attrs['update_skills'] = update_skills
 
     if 'followers' in features:
         attrs['followers'] = generic.GenericRelation(EntityFollower, object_id_field='entity_id')
