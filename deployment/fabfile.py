@@ -124,9 +124,8 @@ def restart_web_server():
     # sudo('/etc/init.d/memcached restart')
 
 def init_db():
-    # TODO: do we need to use '--all'?
-    virtualenv('python %s syncdb' % manage_path) # TODO: don't create superuser before migrate
-    virtualenv('python %s migrate' % manage_path)
+    virtualenv('python %s syncdb --all' % manage_path) # TODO: don't create superuser before migrate
+    virtualenv('python %s migrate --fake' % manage_path)
     virtualenv('python %s import_locations' % manage_path)
 
 def prepare_code():

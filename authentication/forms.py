@@ -125,7 +125,7 @@ class RegistrationForm(BaseRegistrationForm):
 
         ActivationProfile.objects.init_activation(user)
 
-        EntityLocation.objects.create(entity=profile, location=self.location)
+        EntityLocation.objects.create(entity=profile, location=self.location, is_main=True)
 
         return user
 
