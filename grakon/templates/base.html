@@ -43,7 +43,7 @@
                         <a href=""><strong class="gr-activity">+123</strong></a>
                         <a href=""><strong class="gr-web-activity">+123</strong></a>
                         <a href=""><strong class="gr-leader">+123</strong></a>
-                        <a href="{% url location request.profile_info.main_location %}">Мой район</a>
+                        {% if request.profile_info.main_location %}<a href="{% url location request.profile_info.main_location %}">Мой район</a>{% endif %}
                         <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                     {% else %}
                         <a href="{% url login %}">Войти</a>
@@ -66,7 +66,6 @@
                 {% block breadcrumbs %}{% endblock %}
             </div>
         </nav>
-
 
     <div class="ym-column">
         <div class="ym-wrapper">

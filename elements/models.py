@@ -205,7 +205,7 @@ class BaseEntityManager(models.Manager):
 
                 for id in ids:
                     res[id]['locations'] = [locs_info[loc_id] for loc_id in res[id]['locations']]
-                    res[id]['main_location'] = locs_info[res[id]['main_location']]
+                    res[id]['main_location'] = locs_info[res[id]['main_location']] if res[id]['main_location'] else None
 
         return res
 
