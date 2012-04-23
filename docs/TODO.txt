@@ -13,6 +13,7 @@ Locations:
     * Fix location names, filter out small districts
     * add foreign countries
     * update select widget in breadcrumbs with chosen (?)
+    * Show list my locations in top panel (if there are more than 1)
 
 Front-end
     * show g+ and vk buttons in dev mode

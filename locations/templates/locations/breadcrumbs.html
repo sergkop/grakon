@@ -2,7 +2,7 @@
     <ul>
         <li>
             {% if location.country %}
-                <a href="{% url location location.country_id %}">Россия<i></i><b></b></a>
+                <a href="{{ location.country.get_absolute_url }}">Россия<i></i><b></b></a>
             {% else %}
                 <strong>Россия</strong>
             {% endif %}
@@ -10,17 +10,17 @@
 
         {% if location.region %}
             <li>
-                <a href="{% url location location.region_id %}">{{ location.region }}</a>
+                <a href="{{ location.region.get_absolute_url }}">{{ location.region }}</a>
             </li>
         {% endif %}
 
         {% if location.district %}
             <li>
-                <a href="{% url location location.district_id %}">{{ location.district }}</a>
+                <a href="{{ location.district.get_absolute_url }}">{{ location.district }}</a>
             </li>
         {% endif %}
 
-        {% if location.country_id %}
+        {% if not location.is_country %}
             <li>
                 <strong>{{ location }}</strong>
             </li>

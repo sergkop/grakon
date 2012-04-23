@@ -9,7 +9,6 @@ class LocationManager(models.Manager):
     def country(self):
         return self.get(country=None)
 
-    # TODO: this method is similar to BaseEntityManager.info_for
     def info_for(self, ids, related=True):
         """
         Return {id: {'location': location, entities_keys: entities_data}}.
@@ -25,38 +24,33 @@ class LocationManager(models.Manager):
             cached_ids.append(id)
             res[id] = entity
 
+        from users.models import Profile
+        entities_models = {'participants': Profile} # TODO: make it global dict?
+
         other_ids = set(ids) - set(cached_ids)
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
 
-            from users.models import Profile
-            entities_models = {'participants': Profile} # TODO: make it global dict?
-
-            locations = list(self.filter(id__in=ids).select_related())
-            for location in locations:
-                other_res[location.id] = {
-                    'location': location,
-                    #'name': location.name,
-                    #'path': location.path(),
-                }
+            locations = self.filter(id__in=other_ids).select_related()
+            for loc in locations:
+                other_res[loc.id] = {'location': loc}
 
                 for name, model in entities_models.iteritems():
                     # TODO: limit should be taken from settings per entity model
-                    entities_ids = model.objects.for_location(location, limit=3)
-                    if related:
-                        entities_data = model.objects.info_for(entities_ids, related=False)
-                        other_res[location.id][name] = [entities_data[id] for id in entities_ids]
-                    else:
-                        other_res[location.id][name] = entities_ids
-
-            # TODO: the cached values should contain only list of entities ids
-            cache_res = {}
-            for id, info in other_res.iteritems():
-                cache_res[cache_prefix+str(id)] = info
-
-            cache.set_many(cache_res, 60) # TODO: specify time outside of this method
+                    other_res[loc.id][name] = model.objects.for_location(loc, limit=3)
 
             res.update(other_res)
+
+            cache_res = dict((cache_prefix+str(id), other_res[id]) for id in other_res)
+            cache.set_many(cache_res, 60) # TODO: specify time outside of this method
+
+        if related:
+            for name, model in entities_models.iteritems():
+                e_ids = set(e_id for id in ids for e_id in res[id][name])
+                e_info = model.objects.info_for(e_ids, related=False)
+
+                for id in ids:
+                    res[id][name] = [e_info[e_id] for e_id in res[id][name] if e_id in e_info]
 
         return res
 
@@ -103,16 +97,6 @@ class Location(models.Model):
     def info(self, related=True):
         return Location.objects.info_for([self.id], related)[self.id]
 
-    #def path(self):
-    #    """ Return [(id, name)]. It uses instances of parent locations. """
-    #    res = []
-    #    if self.region_id:
-    #        res.append((self.region_id, self.region.name))
-    #    if self.district_id:
-    #        res.append((self.district_id, self.district.name))
-    #    res.append((self.id, self.name))
-    #    return res
-
     def __unicode__(self, full_path=False):
         name = self.name
 
@@ -125,4 +109,7 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('location', (), {'loc_id': str(self.id)})
+        if self.is_country():
+            return ('main', (), {})
+        else:
+            return ('location', (), {'loc_id': str(self.id)})

@@ -61,7 +61,7 @@
     <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
     <div id="resources">
         {% if own_profile %}
-            {% with tags=resources %}
+            {% with tags=info.resources %}
                 {% include "elements/tags.html" %}
             {% endwith %}
 

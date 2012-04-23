@@ -22,7 +22,7 @@ class LocationView(TemplateView):
 
         loc_id = int(kwargs['loc_id'])
         try:
-            self.location = location = Location.objects.select_related().get(id=loc_id)
+            self.location = location = Location.objects.select_related('region', 'district').get(id=loc_id)
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 

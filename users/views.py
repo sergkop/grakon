@@ -21,36 +21,28 @@ class BaseProfileView(object):
     def update_context(self):
         return {}
 
-    def get_profile(self):
-        return get_object_or_404(Profile, username=self.kwargs.get('username'))
-
     def get_context_data(self, **kwargs):
         ctx = super(BaseProfileView, self).get_context_data(**kwargs)
-        self.profile = self.get_profile()
+        profile = self.profile = get_object_or_404(Profile, username=self.kwargs.get('username'))
 
-        own_profile = (self.profile==self.request.profile)
+        own_profile = (profile==self.request.profile)
 
-        # TODO: take edit url using urlresolvers
         tabs = [
-            ('view', u'Профиль', self.profile.get_absolute_url(), 'profiles/view.html', ''),
+            ('view', u'Профиль', profile.get_absolute_url(), 'profiles/view.html', ''),
         ]
 
         if own_profile:
-            tabs.append(('edit', u'Редактировать',
-                    reverse('edit_profile', kwargs={'username': self.profile.username}),
+            tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
                     'profiles/edit.html', ''))
 
-        info = self.profile.info()
+        info = profile.info()
 
         ctx.update({
-            'profile': self.profile,
             'tab': self.tab,
             'tabs': tabs,
+            'profile': profile,
             'own_profile': own_profile,
             'info': info,
-
-            'resources': [{'name': r.resource, 'title': r.get_resource_display()}
-                    for r in info['resources']],
         })
         ctx.update(self.update_context())
         return ctx

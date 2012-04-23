@@ -50,6 +50,7 @@ RESOURCE_CHOICES = (
 
 class EntityResourceManager(models.Manager):
     def update_entity_resources(self, entity, resources):
+        # TODO: this code doesn't work any more
         entity_resources = list(entity.resources.all())
 
         new_resources = set(resources) - set(er.resource for er in entity_resources)
@@ -146,6 +147,7 @@ class BaseEntityManager(models.Manager):
         Get dict {id: info} for model. Use and update cache if needed.
         If related is True, list of info is returned instead of ids.
         """
+        features = self.model.features
         cache_prefix = self.model.cache_prefix
         cached_entities = cache.get_many([cache_prefix+str(id) for id in ids])
 
@@ -160,46 +162,48 @@ class BaseEntityManager(models.Manager):
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
 
-            if 'resources' in self.model.features:
+            if 'resources' in features:
                 resources_data = EntityResource.objects.get_for(self.model, other_ids)
                 for id in other_ids:
                     other_res[id]['resources'] = resources_data.get(id, [])
 
-            if 'followers' in self.model.features:
-                from users.models import Profile
+            if 'followers' in features:
                 followers_data = EntityFollower.objects.get_for(self.model, other_ids)
                 for id in other_ids:
-                    followers_ids = followers_data[id]['top_followers']
-                    if related:
-                        other_res[id]['followers'] = Profile.objects.info_for(followers_ids, related=False)
-                    else:
-                        other_res[id]['followers'] = followers_ids
-
+                    other_res[id]['followers'] = followers_data[id]['top_followers']
                     other_res[id]['followers_count'] = followers_data[id]['count']
 
-            if 'locations' in self.model.features:
+            if 'locations' in features:
                 locations_data = EntityLocation.objects.get_for(self.model, other_ids)
                 for id in other_ids:
-                    loc_ids = locations_data[id]['locations']
-                    main_loc_id = locations_data[id]['main_location']
+                    other_res[id]['locations'] = locations_data[id]['locations']
+                    other_res[id]['main_location'] = locations_data[id]['main_location']
 
-                    if related:
-                        locations_data = Location.objects.info_for(loc_ids, related=False)
-                        other_res[id]['locations'] = [locations_data[loc_id] for loc_id in loc_ids]
-                        other_res[id]['main_location'] = locations_data[main_loc_id]
-                    else:
-                        other_res[id]['locations'] = loc_ids
-                        other_res[id]['main_location'] = main_loc_id
-
+            # Add custom model info
             self.get_info(other_res)
 
-            cache_res = {}
-            for id, info in other_res.iteritems():
-                cache_res[cache_prefix+str(id)] = info
-
+            cache_res = dict((cache_prefix+str(id), other_res[id]) for id in other_res)
             cache.set_many(cache_res, 60) # TODO: specify time as a model attribute
 
             res.update(other_res)
+
+        if related:
+            if 'followers' in features:
+                from users.models import Profile
+                followers_ids = set(f_id for id in ids for f_id in res[id]['followers'])
+                followers_info = Profile.objects.info_for(followers_ids, related=False)
+
+                for id in ids:
+                    res[id]['followers'] = [followers_info[f_id] for f_id in res[id]['followers']
+                            if f_id in followers_info]
+
+            if 'locations' in features:
+                loc_ids = set(loc_id for id in ids for loc_id in res[id]['locations'])
+                locs_info = Location.objects.info_for(loc_ids, related=False)
+
+                for id in ids:
+                    res[id]['locations'] = [locs_info[loc_id] for loc_id in res[id]['locations']]
+                    res[id]['main_location'] = locs_info[res[id]['main_location']]
 
         return res
 
@@ -256,7 +260,7 @@ class BaseEntityModel(models.Model):
         return self.cache_prefix + str(self.id)
 
     def info(self, related=True):
-        return type(self).objects.info_for([self.id])[self.id]
+        return type(self).objects.info_for([self.id], related)[self.id]
 
     # TODO: recalculate these points on save or in celery (?)
     def calc_points(self):
