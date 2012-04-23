@@ -5,4 +5,4 @@
 *.bak
 *.kate-swp
 grakon/site_settings.py
-grakon/database.sqlite
+database.sqlite
