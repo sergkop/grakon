@@ -1,11 +1,11 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from locations.views import LocationView
+from locations.views import WallLocationView
 from services.cache import cache_view
 
 def main(request):
-    return LocationView.as_view()(request, loc_id=1)
+    return WallLocationView.as_view()(request, loc_id=1)
 
 # TODO: how to utilise caching for logged in users?
 @cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)

@@ -1,0 +1,29 @@
+<table width="100%" class="narrow">
+    <tr>
+        <th width="40%">
+            <div class="gr-sort">Участник<span class="gr-up-active">&nbsp;</span><span class="gr-down-active">&nbsp;</span></div>
+        </th>
+        <th width="40%">
+            <div class="gr-sort">Ресурсы<span class="gr-up">&nbsp;</span><span class="gr-down">&nbsp;</span></div>
+        </th>
+        <th width="20%" align="center">
+            <div class="gr-sort">Рейтинг<span class="gr-up">&nbsp;</span><span class="gr-down">&nbsp;</span></div>
+        </th>
+    </tr>
+
+    {% for participant in participants %}
+        <tr>
+            <td>
+                <a href="{{ participant.profile.get_absolute_url }}">
+                    {{ participant.profile }}
+                </a>
+            </td>
+            <td>
+                {% for tag in participant.resources %}
+                    <span>{{ tag.title }}{% if not forloop.last %},{% endif %}</span>
+                {% endfor %}
+            </td>
+            <td align="center">{{ participant.profile.points }}</td>
+        </tr>
+    {% endfor %}
+</table>

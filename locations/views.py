@@ -10,15 +10,16 @@ from locations.models import Location
 from locations.utils import subregion_list
 from users.models import Profile
 
-class LocationView(TemplateView):
+class BaseLocationView(object):
     template_name = 'locations/base.html'
+    tab = None # 'wall', 'map', 'tools', 'participants'
 
     def update_context(self):
         """ Override in child classes to add context variables """
         return {}
 
     def get_context_data(self, **kwargs):
-        ctx = super(LocationView, self).get_context_data(**kwargs)
+        ctx = super(BaseLocationView, self).get_context_data(**kwargs)
 
         loc_id = int(kwargs['loc_id'])
         try:
@@ -26,23 +27,18 @@ class LocationView(TemplateView):
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 
-        tab = self.request.GET.get('tab', '')
-        if tab not in ('wall', 'map', 'tools'):
-            tab = 'wall'
-
         info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
 
-        # TODO: automate generating it + move it to class attributes (?)
-        # TODO: come back to several views
         tabs = [
-            ('wall', u'Стена', location.get_absolute_url()+'?tab=wall', 'locations/wall.html', ''),
-            ('map', u'Карта', location.get_absolute_url()+'?tab=map', 'locations/map.html', ''),
-            ('tools', u'Инструменты', location.get_absolute_url()+'?tab=tools', 'locations/tools.html', ''),
+            ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
+            ('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
+            ('tools', u'Инструменты', reverse('location_tools', args=[location.id]), 'locations/tools.html', ''),
+            ('participants', u'Участники', reverse('location_participants', args=[location.id]), 'locations/participants.html', ''),
         ]
 
         ctx.update({
-            'loc_id': kwargs['loc_id'],
-            'tab': tab,
+            'loc_id': kwargs['loc_id'], # TODO: what is it for?
+            'tab': self.tab,
             'tabs': tabs,
             'location': location,
             'subregions': subregion_list(location),
@@ -50,6 +46,36 @@ class LocationView(TemplateView):
         })
 
         ctx.update(self.update_context())
+        return ctx
+
+class WallLocationView(BaseLocationView, TemplateView):
+    tab = 'wall'
+
+class MapLocationView(BaseLocationView, TemplateView):
+    tab = 'map'
+
+class ToolsLocationView(BaseLocationView, TemplateView):
+    tab = 'tools'
+
+class ParticipantsLocationView(BaseLocationView, TemplateView):
+    tab = 'participants'
+
+    def update_context(self):
+        try:
+            start = int(self.request.GET.get('start', 0))
+        except ValueError:
+            start = 0
+
+        # TODO: allow to choose limit (?)
+        # TODO: accept sorting field
+
+        profile_ids = Profile.objects.for_location(self.location, start, limit=20)
+        participants_info = Profile.objects.info_for(profile_ids, related=False)
+        participants = [participants_info[id] for id in profile_ids if id in participants_info]
+
+        ctx = {
+            'participants': participants,
+        }
         return ctx
 
 def get_subregions(request):

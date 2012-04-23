@@ -48,6 +48,8 @@ RESOURCE_CHOICES = (
     ('observer', u'Опыт наблюдения на выборах'),
 )
 
+RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
+
 class EntityResourceManager(models.Manager):
     def update_entity_resources(self, entity, resources):
         # TODO: this code doesn't work any more
@@ -65,7 +67,7 @@ class EntityResourceManager(models.Manager):
         res = {}
         for id, resource in self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'resource'):
-            res.setdefault(id, []).append(resource)
+            res.setdefault(id, []).append({'name': resource, 'title': RESOURCE_DICT[resource]})
         return res
 
 # TODO: ability to add text, describing resources + custom resources (in case of other)

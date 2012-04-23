@@ -45,9 +45,8 @@ class Profile(BaseEntityModel):
         return ('profile', [self.username])
 
     def __unicode__(self):
-        # TODO: fix it
-        if self.show_name and self.first_name and self.last_name:
-            return u'%s %s (%s)' % (self.first_name, self.last_name, self.username)
+        if self.show_name:
+            return self.first_name + u' ' + self.last_name
         return self.username
 
 entity_class(Profile, ['resources', 'followers', 'locations'])

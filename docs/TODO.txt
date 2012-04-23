@@ -4,7 +4,6 @@ Registration
     * create page for LOGIN_ERROR_URL
     * configure django-social-auth
     * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
-    * captchas
     * restore location on error in form
     * fix redirect after logging in
     * google allows to login automatically if account with this email already exists (is it ok?)
@@ -39,9 +38,6 @@ Deployment:
 
 * create element forms for resources (like for location)
 
-* write Profile manager method which gets multiple profiles info (get from cache at once,
-  get missing from db)
-
 * generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
 
 * develop template for letters
@@ -69,6 +65,8 @@ Deployment:
 * shortcut to prevent using enter in dialog forms
 
 * allow user to start working without confirmation of his email, but limit his functionality (?)
+
+* captchas
 --------------------------------------
 
 Front-end

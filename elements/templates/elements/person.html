@@ -1,7 +1,4 @@
-<td width="45%"><a href="{{ person.profile.get_absolute_url }}">
-    {{ person.profile.username }}
-    {% if person.profile.show_name %}({{ person.profile.first_name }} {{ person.profile.last_name }}){% endif %}
-</a></td>
+<td width="45%"><a href="{{ person.profile.get_absolute_url }}">{{ person.profile }}</a></td>
 <td width="14%"><span class="gr-leader">&nbsp;</span></td>
 <td width="14%"><span class="gr-activity">&nbsp;</span></td>
 <td width="14%"><span class="gr-web-activity">&nbsp;</span></td>
