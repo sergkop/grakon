@@ -262,6 +262,7 @@ class BaseEntityModel(models.Model):
         return self.cache_prefix + str(self.id)
 
     def info(self, related=True):
+        # TODO: this code can fail
         return type(self).objects.info_for([self.id], related)[self.id]
 
     # TODO: recalculate these points on save or in celery (?)
