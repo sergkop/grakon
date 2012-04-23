@@ -22,7 +22,7 @@
 	*
 	* vertical rhythm settings (based on em-unit)
 	* -------------------------------------------
-	* basefont-size: 14px (87.5%)
+	* basefont-size: 12px (75%)
 	* line-height  : 21px (factor: 1.5)
 	*/
 
@@ -114,8 +114,7 @@
 	h5 {
 		font-size:1em;
 		font-weight: bold;
-		line-height: 1.2857em;
-		margin: 1.2857em 0 0 0;
+		margin: 1em 0 .7em;
 	}
 
 	h6 {
@@ -128,8 +127,7 @@
 	/* --- Lists | Listen  -------------------------------------------------------------------------------- */
 
 	ul,
-	ol,
-	dl {
+	ol{
 		font-size:1em;
 		margin: 1.5em 0 0 1em;
 	}
@@ -161,9 +159,7 @@
 		margin-left:0.8em;
 	}
 
-	dt { font-weight:bold; }
-
-	dd { margin:0 0 1.5em 0.8em; }
+	dd { margin:0 0 .3em 0.5em; }
 
 	/* --- general text formatting | Allgemeine Textauszeichnung ------------------------------------------ */
 
@@ -486,9 +482,8 @@
 	.gr-login-info {font-size: 0.9em;}
 	.gr-user-chart strong {color: #e1dfdd;}
 	.gr-user-chart big {font-size: 1.5em;}
-	.gr-leader big {color: #c69f1e;}
-	.gr-offline-activity big {color: #c75e20;}
-	.gr-online-activity big {color: #815414;}
+	.gr-leader big {color: #85ac14;}
+	.gr-offline-activity big, .gr-online-activity big {color: #3290bf;}
 	.gr-icons {color: #8b8787; font-size: .95em;}
 	.gr-icons big {font-weight: bold; font-size: 1.8em; color: #85ac14;}
 	.gr-side-item ul {font-size: .9em;}

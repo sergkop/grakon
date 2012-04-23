@@ -1,89 +1,90 @@
-<div class="gr-content">
-    {% if not own_profile %}
-        <div class="gr-mb20">
-            <a class="ym-button gr-blue-button gr-mail" href=""><span>Отправить сообщение</span></a>
-            <a class="ym-button gr-blue-button gr-add" href=""><span>Добавить в контакты</span></a>
-            <a class="ym-button gr-blue-button gr-complaint" href=""><span>Пожаловаться</span></a>
-        </div>
-    {% endif %}
-
-    <div class="gr-fl gr-photo">
-        <img src="{{ STATIC_URL }}images/icons/nophoto.jpg">
+{% if not own_profile %}
+    <div class="gr-mb20">
+        <a class="ym-button gr-blue-button gr-mail" href=""><span>Отправить сообщение</span></a>
+        <a class="ym-button gr-blue-button gr-add" href=""><span>Добавить в контакты</span></a>
+        <a class="ym-button gr-blue-button gr-complaint" href=""><span>Пожаловаться</span></a>
     </div>
+{% endif %}
 
-    <div class="gr-user-charts">
-        <div class="gr-user-chart gr-leader">
-            <strong><big>83</big>/100</strong>
-            <div class="gr-chart-back">
-                <span style="width: 83%">&nbsp;</span>
-            </div>
-            <small>Лидер</small>
-            <i>&nbsp;</i>
-        </div>
-        <div class="gr-user-chart gr-offline-activity">
-            <strong><big>12</big>/100</strong>
-            <div class="gr-chart-back">
-                <span style="width: 12%">&nbsp;</span>
-            </div> 
-            <small>Оффлайн активист</small>
-            <i>&nbsp;</i>
-        </div>
-        <div class="gr-user-chart gr-online-activity">
-            <strong><big>56</big>/100</strong>
-            <div class="gr-chart-back">
-                <span style="width: 56%">&nbsp;</span>
-            </div> 
-            <small>Онлайн активист</small>  
-            <i>&nbsp;</i>
-        </div>
-    </div>
-
-    <div class="ym-clearfix">&nbsp;</div>
-
-    <div>
-        {% if profile.about %}
-            {{ profile.about|safe }}
-        {% else %}
-            {% if own_profile %}
-                <i><a href="{% url edit_profile profile.username %}">Добавьте</a> информацию о себе.</i>
-            {% else %}
-                <i>Пользователь еще не добавил информацию о себе.</i>
-            {% endif %}
-        {% endif %}
-    </div>
-
-    <p>
-        <span class="dimmed">Сайт:</span> <a href="">http://www.wix.com/html5/now-on-wix</a><br />
-        <span class="dimmed">E-mail:</span> <a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a><br />
-        <span class="dimmed">Skype:</span> MPanko <a href="" class="gr-skype">&nbsp;</a>
-    </p>
-
-    <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
-    <div id="resources">
-        {% if own_profile %}
-            {% with tags=info.resources %}
-                {% include "elements/tags.html" %}
-            {% endwith %}
-
-            <script type="text/javascript">
-                (new TagsView({el: $("#resources"), choices_dict: RESOURCES_DICT,
-                        save_url: "{{ URL_PREFIX }}{% url update_resources %}"})).render();
-            </script>
-        {% else %}
-            {% with tags=resources %}
-                {% include "elements/tags_view.html" %}
-            {% endwith %}
-        {% endif %}
-    </div>
-
-    <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
-    <ul>
-        {% for location_data in info.locations %}
-            <li>
-                {% with location=location_data.location %}
-                    {% include "elements/location_path.html" %}
-                {% endwith %}
-            </li>
-        {% endfor %}
-    </ul>
+<div class="gr-fl gr-photo">
+    <img src="{{ STATIC_URL }}images/icons/nophoto.jpg">
 </div>
+
+<div class="gr-user-charts">
+    <div class="gr-user-chart gr-leader">
+        <strong><big>83</big>/100</strong>
+        <div class="gr-chart-back">
+            <span style="width: 83%">&nbsp;</span>
+        </div>
+        <small>Лидер</small>
+        <i>&nbsp;</i>
+    </div>
+    <div class="gr-user-chart gr-offline-activity">
+        <strong><big>12</big>/100</strong>
+        <div class="gr-chart-back">
+            <span style="width: 12%">&nbsp;</span>
+        </div> 
+        <small>Оффлайн активист</small>
+        <i>&nbsp;</i>
+    </div>
+    <div class="gr-user-chart gr-online-activity">
+        <strong><big>56</big>/100</strong>
+        <div class="gr-chart-back">
+            <span style="width: 56%">&nbsp;</span>
+        </div> 
+        <small>Онлайн активист</small>  
+        <i>&nbsp;</i>
+    </div>
+</div>
+
+<div class="ym-clearfix">&nbsp;</div>
+
+{% if profile.about %}
+    {{ profile.about|safe }}
+{% else %}
+    {% if own_profile %}
+        <p><i><a href="{% url edit_profile profile.username %}">Добавьте</a> информацию о себе.</i></p>
+    {% else %}
+        <p><i>Пользователь еще не добавил информацию о себе.</i></p>
+    {% endif %}
+{% endif %}
+
+<dl class="gr-inline-dl">
+    <dt class="dimmed">Сайт:</dt>
+    <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
+    
+    <dt class="dimmed">E-mail:</dt>
+    <dd><a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a></dd>
+    
+    <dt class="dimmed">Skype:</dt>
+    <dd>MPanko <a href="" class="gr-skype">&nbsp;</a></dd>
+</dl>
+
+<h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
+<div id="resources">
+    {% if own_profile %}
+        {% with tags=info.resources %}
+            {% include "elements/tags.html" %}
+        {% endwith %}
+
+        <script type="text/javascript">
+            (new TagsView({el: $("#resources"), choices_dict: RESOURCES_DICT,
+                    save_url: "{{ URL_PREFIX }}{% url update_resources %}"})).render();
+        </script>
+    {% else %}
+        {% with tags=resources %}
+            {% include "elements/tags_view.html" %}
+        {% endwith %}
+    {% endif %}
+</div>
+
+<h5>География участия <span class="gr-geography">&nbsp;</span></h5>
+<ul>
+    {% for location_data in info.locations %}
+        <li>
+            {% with location=location_data.location %}
+                {% include "elements/location_path.html" %}
+            {% endwith %}
+        </li>
+    {% endfor %}
+</ul>

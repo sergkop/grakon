@@ -112,12 +112,11 @@
 
 	/* (en) new standard values for lists, blockquote, cite and tables */
 	/* (de) Neue Standardwerte für Listen, Zitate und Tabellen */
-	ul, ol, dl { margin:0 0 1em 1em; } /* LTR */
+	ul, ol { margin:0 0 1em 1em; } /* LTR */
 	li {
 		margin-left:0.8em; /* LTR */
 	}
 
-	dt { font-weight:bold; }
 	dd { margin:0 0 1em 0.8em; } /* LTR */
 
 	blockquote { margin:0 0 1em 0.8em; } /* LTR */
