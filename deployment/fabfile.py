@@ -125,7 +125,7 @@ def restart_web_server():
 
 def init_db():
     # TODO: do we need to use '--all'?
-    virtualenv('python %s syncdb' % manage_path)
+    virtualenv('python %s syncdb' % manage_path) # TODO: don't create superuser before migrate
     virtualenv('python %s migrate' % manage_path)
     virtualenv('python %s import_locations' % manage_path)
 

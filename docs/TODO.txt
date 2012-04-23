@@ -7,62 +7,85 @@ Registration
     * restore location on error in form
     * fix redirect after logging in
     * google allows to login automatically if account with this email already exists (is it ok?)
+    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
+    * create google oauth2 app from grakon account (?)
+    * file with all passwords, social applications (where to get them)
 
 Locations:
     * Fix location names, filter out small districts
     * add foreign countries
-    * update select widget in breadcrumbs with chosen (?)
     * Show list my locations in top panel (if there are more than 1)
 
 Front-end
     * show g+ and vk buttons in dev mode
 
-Cache:
-    * cache all frequently used info about users (as one big dict) and locations
-
 Deployment:
-    * configure nginx (see config settings)
     * generate js/code_data.js on deployment
     * minification of static files (http://developer.yahoo.com/yui/compressor/), caching times
-    * switch to wsgi
-    * put config.json to repo
-    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
 
-* file with all passwords, social applications (where to get them)
-* sitemaps
+Elements:
+    * create element forms for resources (like for location)
 
-* use celery to send emails (method for delayed sending of email)
+Emails:
+    * develop template for letters
+    * fix texts of the letters
+    * sign emails with "Администрация Гракона" or smth. else
+    * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
+    * new email address for sending emails
+
+Profile:
+    * user's picture
+    * table for saving all user's points, where they come from
+
+Misc:
+    * shortcut to prevent using enter in dialog forms
+    * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
+        move logo url to settings
+    * add tips to buttons and ? signs to get help on features of the system
+    * pagination + sorting by columns
+    * only activated users should be displayed in lists
+
+Front-end:
+    * share and share_horizontal are overlap a lot
+    * when two buttons are close to each other (e.g. profile edit) - line appears between them
+    * add google+ page to list of services
+
+Analytics:
+    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+    * recieve error notifications on developer's email
+    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
+
+SEO:
+    * Webmaster Tools, seo, https://www.google.com/webmasters/
+    * sitemaps
+    * Disallow paths in robots.txt (see django-social-auth example)
+    * set proper page titles
+
+Performance:
+    * use debug toolbar, page speed to optimize page load
+    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+    * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
+
+Wall:
+    * replace disqus?
+    * automatically disable discus at dev server
 
 --------------------------------------
-* Disallow paths in robots.txt (see django-social-auth example)
-
-* create element forms for resources (like for location)
 
 * generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
-
-* develop template for letters
-* fix texts of the letters
 
 * move password change views to users (from auth)
 * reasons to register on registration page (merge with landing page)
 
-* set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
-
-------------------------------
+* use celery to send emails (method for delayed sending of email)
 
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
-
-* table for saving all user's points, where they come from
-
-* create google oauth2 app from grakon account (?)
 
 * show post messages
 
 * check that remove account works
 
 * move fb:admins meta tag value out of template
-
-* shortcut to prevent using enter in dialog forms
 
 * allow user to start working without confirmation of his email, but limit his functionality (?)
 
@@ -72,11 +95,6 @@ Deployment:
 Front-end
     * conventions file for front-end developer (docs about tabs and buttons, page layout)
     * take only necessary parts of jquery-ui, compress
-    * share and share_horizontal are overlap a lot
-    * when two buttons are close to each other (e.g. profile edit) - line appears between them
-    * add google+ page to list of services
-    * organize css by files, add blocks, styling
-    * reorganize button tag (do we need it?)
     * use sprites to extract images from one file (especially icons) (https://github.com/jorgebastida/glue)
 
     * http://sass-lang.com/, http://www.bigjason.com/blog/using-sass-django/,
@@ -87,7 +105,6 @@ Front-end
     * automate search for unused and missing images, style classes
 
 Analytics:
-    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * analyze when user visited site/logged in last time
     * configure logging, sentry
     * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
@@ -96,11 +113,9 @@ Analytics:
     * use page visits analytics to determine optimal caching times
     * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
     * count how often people click on buttons in side bars (with google analytics)
-    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
     * get statistics on db usage
 
 SEO:
-    * Webmaster Tools, seo, https://www.google.com/webmasters/
     * how to deal with large sitemaps?
 
 Testing:
@@ -109,20 +124,15 @@ Testing:
     * tests and test coverage
 
 Emails:
-    * sign emails with "Администрация Гракона" or smth. else
-    * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
     * sending emails using mailgun.net or mailchimp.com (?) or amazon ses
 
 Performance:
     * activate compression for tinymce
-    * use debug toolbar, page speed to optimize page load
     * add all mime types to gzip list of nginx configuration
-    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
     * cache ajax (json) queries, gzip it, don't make authentication db queries for public ajax queries
     * move static content to sub-domain (?), keep it cookie-free (how?)
     * use pngcrush (pngcrush -rem alla -reduce -brute image.png result.png) to compress pngs; gif->png?
     * use jpegtran (jpegtran -copy none -optimize -perfect image.jpg > res.jpg) to compress jpegs
-    * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
     * multi-key indices in db
     * postgres configuration
 
@@ -137,10 +147,7 @@ AB testing:
 Celery:
     * recalculate entities points (once a day)
 
-* user pictures
-
-* replace disqus?
-* automatically disable discus at dev server
+* update select widget in breadcrumbs with chosen (?)
 
 * analyze email postfixes, detect sending problems, configure properly
 
@@ -149,19 +156,17 @@ Celery:
 * search + autocompletion
 
 Deployment:
+    * configure nginx (see config settings)
+    * switch to wsgi
+    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
+
     * include sqlite file with empty db ready for use
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * database backups
     * configure virtualenv inside settings properly
     * separate server for media files? (512 mb)
-    * switch to postgres?
-
-* set proper page titles
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
-
-* replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
-  move logo url to settings
 
 * start writing documentation
 
@@ -177,4 +182,4 @@ Deployment:
 
 * написать текст на страницах 404 и 500
 
-* new email address for sending emails
+* highlight buttons in the menu
