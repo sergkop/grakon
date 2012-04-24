@@ -5,11 +5,11 @@
 <hr/>
 <div class="center">
     {% button "pencil" "Сменить пароль" "password_change" "password_change" "" %}
-    {% button "pencil" "Удалить аккаунт" "remove_account" "" "" %}
+    {% button "pencil" "Удалить аккаунт" "remove_account_btn" "" "" %}
 </div>
 
 {% include "dialogs/remove_account.html" %}
 
 <script type="text/javascript">
-    $("#remove_account").click(remove_account_dialog_init);
+    $("#remove_account_btn").click(remove_account_dialog_init);
 </script>

@@ -16,9 +16,6 @@ Locations:
     * add foreign countries
     * Show list my locations in top panel (if there are more than 1)
 
-Front-end
-    * show g+ and vk buttons in dev mode
-
 Deployment:
     * generate js/code_data.js on deployment
     * minification of static files (http://developer.yahoo.com/yui/compressor/), caching times
@@ -49,6 +46,11 @@ Front-end:
     * share and share_horizontal are overlap a lot
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * add google+ page to list of services
+    * show g+ and vk buttons in dev mode; add these buttons to pages
+    * share buttons
+    * do we need button tag?
+    * icon for remove from contacts button
+    * unused skill icon in icons/badges.png
 
 Analytics:
     * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits

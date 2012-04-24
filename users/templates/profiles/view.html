@@ -1,9 +1,5 @@
 {% if not own_profile %}
-    <div class="gr-mb20">
-        <a class="ym-button gr-blue-button gr-mail" href=""><span>Отправить сообщение</span></a>
-        <a class="ym-button gr-blue-button gr-add" href=""><span>Добавить в контакты</span></a>
-        <a class="ym-button gr-blue-button gr-complaint" href=""><span>Пожаловаться</span></a>
-    </div>
+    {% include "profiles/view_buttons_panel.html" %}
 {% endif %}
 
 <div class="gr-fl gr-photo">
@@ -52,10 +48,10 @@
 <dl class="gr-inline-dl">
     <dt class="dimmed">Сайт:</dt>
     <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
-    
+
     <dt class="dimmed">E-mail:</dt>
     <dd><a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a></dd>
-    
+
     <dt class="dimmed">Skype:</dt>
     <dd>MPanko <a href="" class="gr-skype">&nbsp;</a></dd>
 </dl>

@@ -32,6 +32,7 @@ function create_dialog(id, width, height, title, cancel_btn_title, buttons){
     });
 }
 
+// TODO: what if response is not successful?
 // Shortcut used to send post requests from dialogs.
 // If post response is "ok", provided function is performed and dialog is closed.
 // Otherwise alert with error message appears.

@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^location/', include('locations.urls')),
 
     url(r'^', include('authentication.urls')),
+    url(r'^', include('elements.urls')),
     url(r'^', include('navigation.urls')),
     url(r'^', include('users.urls')),
 

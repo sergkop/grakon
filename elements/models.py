@@ -15,7 +15,7 @@ class BaseEntityManager(models.Manager):
 
 class BaseEntityProperty(models.Model):
     content_type = models.ForeignKey(ContentType)
-    entity_id = models.PositiveIntegerField()
+    entity_id = models.PositiveIntegerField(db_index=True)
     entity = generic.GenericForeignKey('content_type', 'entity_id')
 
     time = models.DateTimeField(auto_now=True, db_index=True)
@@ -57,6 +57,8 @@ RESOURCE_CHOICES = (
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
 
 class EntityResourceManager(BaseEntityManager):
+    # TODO: reset cache
+    # TODO: check if entity model has resources feature
     def update_entity_resources(self, entity, resources):
         # TODO: this code doesn't work any more
         entity_resources = list(entity.resources.all())
@@ -111,7 +113,6 @@ class EntityLocationManager(BaseEntityManager):
             data[id]['locations']['locations'] = [locs_info[loc_id] for loc_id in data[id]['locations']['ids']]
             data[id]['locations']['main'] = locs_info[data[id]['locations']['main_id']] \
                     if data[id]['locations']['main_id'] else None
-
 
 # TODO: reset cache on save()/delete() (here and in other models)
 class EntityLocation(BaseEntityProperty):
@@ -175,6 +176,32 @@ class EntityFollowerManager(BaseEntityManager):
             }
         return res
 
+    def is_followed(self, entity, profile):
+        if 'followers' not in type(entity).features:
+            return False
+
+        return self.filter(content_type=ContentType.objects.get_for_model(entity),
+                entity_id=entity.id, follower=profile).exists()
+
+    def add_follower(self, entity, profile):
+        # TODO: user should not follow himself
+        if 'followers' not in type(entity).features:
+            return
+
+        self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
+                entity_id=entity.id, follower=profile)
+        profile.clear_cache()
+        entity.clear_cache()
+
+    def remove_follower(self, entity, profile):
+        if 'followers' not in type(entity).features:
+            return
+
+        self.filter(content_type=ContentType.objects.get_for_model(entity),
+                entity_id=entity.id, follower=profile).delete()
+        profile.clear_cache()
+        entity.clear_cache()
+
 class EntityFollower(BaseEntityProperty):
     follower = models.ForeignKey('users.Profile', related_name='followed_entities')
 
@@ -212,7 +239,8 @@ class BaseEntityManager(models.Manager):
         if len(other_ids) > 0:
             # TODO: what if some ids are not available anymore (here or in one of get_for)?
             #       (drop id if data for at least one feature is missing? - here and in get_info())
-            other_res = dict((id, {}) for id in other_ids)
+            content_type_id = ContentType.objects.get_for_model(self.model).id
+            other_res = dict((id, {'ct': content_type_id}) for id in other_ids)
 
             for feature in features:
                 feature_data = features_models[feature].objects.get_for(self.model, other_ids)
@@ -292,6 +320,9 @@ class BaseEntityModel(models.Model):
 
     def cache_key(self):
         return self.cache_prefix + str(self.id)
+
+    def clear_cache(self):
+        cache.delete(self.cache_key())
 
     def info(self, related=True):
         # TODO: this code can fail

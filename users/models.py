@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tinymce.models import HTMLField
@@ -48,6 +47,9 @@ class Profile(BaseEntityModel):
 
     def calc_points(self):
         pass # TODO: implement it
+
+    def has_contact(self, profile):
+        return EntityFollower.objects.is_followed(profile, self)
 
     @models.permalink
     def get_absolute_url(self):

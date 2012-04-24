@@ -16,7 +16,7 @@ def reset_cache(func):
     """ Decorator for model methods to reset cache key """
     def new_func(self, *args, **kwargs):
         res = func(self, *args, **kwargs)
-        cache.delete(self.cache_key())
+        self.clear_cache()
         return res
     return new_func
 

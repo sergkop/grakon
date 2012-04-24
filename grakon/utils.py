@@ -1,7 +1,10 @@
+# -*- coding:utf-8 -*-
 import cookielib
 from random import choice
 import sys
 import urllib2
+
+from django.http import HttpResponse
 
 # TODO: add ie and chrome
 USER_AGENTS = [
@@ -24,7 +27,7 @@ def read_url(url, encoding='windows-1251'):
             data = data.decode('windows-1251')
         return data
     except urllib2.URLError, e:
-        raise e
+        raise e # TODO: what to do here?
         return ''
 
 def print_progress(i, count):
@@ -35,3 +38,10 @@ def print_progress(i, count):
     else:
         sys.stdout.write("\r")
         sys.stdout.flush()
+
+def authenticated_ajax_post(func):
+    def new_func(request):
+        if not (request.method=='POST' and request.is_ajax() and request.user.is_authenticated()):
+            return HttpResponse(u'Вам необходимо войти в систему')
+        return func(request)
+    return new_func

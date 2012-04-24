@@ -2,7 +2,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -34,6 +33,9 @@ class BaseProfileView(object):
         if own_profile:
             tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
                     'profiles/edit.html', ''))
+            in_contacts = False
+        else:
+            in_contacts = self.request.profile.has_contact(profile)
 
         self.info = profile.info()
 
@@ -42,6 +44,7 @@ class BaseProfileView(object):
             'tabs': tabs,
             'profile': profile,
             'own_profile': own_profile,
+            'in_contacts': in_contacts,
             'info': self.info,
         })
         ctx.update(self.update_context())
@@ -81,10 +84,3 @@ def remove_account(request):
 def profile(request):
     """ Redirects user to profile page after logging in (used to overcome django limitation) """
     return redirect(request.profile.get_absolute_url())
-
-def update_resources(request):
-    if not (request.is_ajax() and request.user.is_authenticated()):
-        return HttpResponse(u'Вам необходимо войти в систему')
-
-    request.profile.update_resources(request.POST.getlist('value[]', None))
-    return HttpResponse('ok')
