@@ -40,7 +40,7 @@ th {
 .gr-geography {background-position: 0 -143px;}
 
 
-.ym-hlist ul li strong, .ym-hlist ul li a:hover, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
+.ym-hlist ul li strong, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
 	box-shadow: inset 0 -1px 0 #ecede5, 0 2px 2px #cfcfcf;
 	background-color: #e8eae0;
 	background: -moz-linear-gradient(#ffffff, #e8eae0);
@@ -72,9 +72,10 @@ th {
 	background: linear-gradient(#60bfed, #2e8cbb);
 }
 
-.gr-breadcrumbs ul li strong {
-	background-image:url(../images/bg-breadcrumbs.png);	
-}
+.gr-breadcrumbs strong i {background-position: 0 -39px;} 
+.gr-breadcrumbs a:hover i {background-position: 0 -133px;}
+.gr-breadcrumbs a:hover {background-color: #c9c9c9;}
+.gr-breadcrumbs i {background:url(../images/bg-breadcrumbs.png) 0 -83px no-repeat;}
 
 .ym-col2 h3, .ym-col3 h3  {
 	background-color: #96bc2c;	

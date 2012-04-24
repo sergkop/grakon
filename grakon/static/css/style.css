@@ -1,4 +1,5 @@
 .gr-breadcrumbs {margin: 1em 0 0; clear: both;}
+    .gr-breadcrumbs i {position: absolute; top:0; right: -15px; width: 16px; height: 35px; overflow: hidden; z-index:1;}
 
 
 /*Общие стили для постоянного использования*/
@@ -73,7 +74,7 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
 .gr-next-arrow {background:url(../images/icons/right-arrow-blue.gif) 0 5px no-repeat; width: 5px; margin: 0 5px;}	
 .gr-skype  {width: 20px; line-height:1.6em; display: inline-block; text-decoration: none;}	
 
-.gr-user-charts {margin: 2em 1em 1em 210px;}
+.gr-user-charts {margin: 2em 1em 1em 310px;}
 .gr-user-chart {position: relative; margin: 0 0 1.5em; padding-right: 11.5em; height: 44px; text-align:center; background: none;}  
     .gr-user-chart i {position: absolute; top: -1.5em; right: 6em; width: 44px; height: 44px; background: url(../images/icons/profile.png) 0 0 no-repeat;}
     .gr-offline-activity i {background-position: 0 -65px;}

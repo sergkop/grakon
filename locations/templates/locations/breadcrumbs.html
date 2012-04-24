@@ -4,25 +4,25 @@
             {% if location.country %}
                 <a href="{{ location.country.get_absolute_url }}">Россия<i></i><b></b></a>
             {% else %}
-                <strong>Россия</strong>
+                <strong>Россия<i>&nbsp;</i></strong>
             {% endif %}
         </li>
 
         {% if location.region %}
             <li>
-                <a href="{{ location.region.get_absolute_url }}">{{ location.region }}</a>
+                <a href="{{ location.region.get_absolute_url }}">{{ location.region }}<i>&nbsp;</i></a>
             </li>
         {% endif %}
 
         {% if location.district %}
             <li>
-                <a href="{{ location.district.get_absolute_url }}">{{ location.district }}</a>
+                <a href="{{ location.district.get_absolute_url }}">{{ location.district }}<i>&nbsp;</i></a>
             </li>
         {% endif %}
 
         {% if not location.is_country %}
             <li>
-                <strong>{{ location }}</strong>
+                <strong>{{ location }}<i>&nbsp;</i></strong>
             </li>
         {% endif %}
 
