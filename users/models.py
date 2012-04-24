@@ -1,19 +1,15 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
-from django.core.cache import cache
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tinymce.models import HTMLField
 
-from elements.models import BaseEntityManager, BaseEntityModel, entity_class, EntityLocation
-from locations.models import Location
-from services.cache import cache_function
+from elements.models import BaseEntityManager, BaseEntityModel, entity_class, EntityFollower
 
 class ProfileManager(BaseEntityManager):
     def get_info(self, data):
         ids = data.keys()
-
-        # TODO: 'follows': list(self.followed_entities.values_list('id', flat=True)),
 
         profiles_by_id = dict((p.id, p) for p in self.filter(id__in=ids))
         for id in ids:
@@ -21,6 +17,19 @@ class ProfileManager(BaseEntityManager):
                 data[id]['profile'] = profiles_by_id[id]
             else:
                 del data[id] # TODO: do we need it?
+
+        # TODO: add info on non-profile entities followed by the user
+
+        contacts = EntityFollower.objects.followed(ids, Profile)
+        for id in ids:
+            data[id]['contacts'] = contacts[id]
+
+    def get_related_info(self, data, ids):
+        contacts_ids = set(c_id for id in ids for c_id in data[id]['contacts']['ids'])
+        contacts_info = Profile.objects.info_for(contacts_ids, related=False)
+        for id in ids:
+            data[id]['contacts']['entities'] = [contacts_info[c_id] for c_id in data[id]['contacts']['ids']
+                            if c_id in contacts_info]
 
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)

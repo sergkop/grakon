@@ -35,14 +35,14 @@ class BaseProfileView(object):
             tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
                     'profiles/edit.html', ''))
 
-        info = profile.info()
+        self.info = profile.info()
 
         ctx.update({
             'tab': self.tab,
             'tabs': tabs,
             'profile': profile,
             'own_profile': own_profile,
-            'info': info,
+            'info': self.info,
         })
         ctx.update(self.update_context())
         return ctx

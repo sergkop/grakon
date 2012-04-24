@@ -133,7 +133,7 @@ Performance:
     * move static content to sub-domain (?), keep it cookie-free (how?)
     * use pngcrush (pngcrush -rem alla -reduce -brute image.png result.png) to compress pngs; gif->png?
     * use jpegtran (jpegtran -copy none -optimize -perfect image.jpg > res.jpg) to compress jpegs
-    * multi-key indices in db
+    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * postgres configuration
 
 Cache:

@@ -9,12 +9,18 @@ from django.db.models import Q
 from elements.utils import reset_cache
 from locations.models import Location
 
+class BaseEntityManager(models.Manager):
+    def get_related_info(self, data, ids):
+        pass
+
 class BaseEntityProperty(models.Model):
     content_type = models.ForeignKey(ContentType)
     entity_id = models.PositiveIntegerField()
     entity = generic.GenericForeignKey('content_type', 'entity_id')
 
     time = models.DateTimeField(auto_now=True, db_index=True)
+
+    objects = BaseEntityManager()
 
     class Meta:
         abstract = True
@@ -50,7 +56,7 @@ RESOURCE_CHOICES = (
 
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
 
-class EntityResourceManager(models.Manager):
+class EntityResourceManager(BaseEntityManager):
     def update_entity_resources(self, entity, resources):
         # TODO: this code doesn't work any more
         entity_resources = list(entity.resources.all())
@@ -64,10 +70,10 @@ class EntityResourceManager(models.Manager):
 
     def get_for(self, model, ids):
         """ Return {id: [resources]} """
-        res = {}
+        res = dict((id, []) for id in ids)
         for id, resource in self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'resource'):
-            res.setdefault(id, []).append({'name': resource, 'title': RESOURCE_DICT[resource]})
+            res[id].append({'name': resource, 'title': RESOURCE_DICT[resource]})
         return res
 
 # TODO: ability to add text, describing resources + custom resources (in case of other)
@@ -82,20 +88,30 @@ class EntityResource(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)
 
-class EntityLocationManager(models.Manager):
+class EntityLocationManager(BaseEntityManager):
     def get_for(self, model, ids):
-        """ Return {id: {'locations': loc_ids, 'main_location': loc_id_or_None}} """
+        """ Return {id: {'ids': loc_ids, 'main_id': loc_id_or_None}} """
         locations_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'location', 'is_main'))
 
         res = {}
         for id in ids:
             entity_locations = filter(lambda el: el[0]==id, locations_data)
-            res[id] = {'locations': map(lambda el: el[1], entity_locations)}
+            res[id] = {'ids': map(lambda el: el[1], entity_locations)}
 
             main_locations = filter(lambda el: el[2], entity_locations)
-            res[id]['main_location'] = main_locations[0][1] if main_locations else None
+            res[id]['main_id'] = main_locations[0][1] if main_locations else None
         return res
+
+    def get_related_info(self, data, ids):
+        loc_ids = set(loc_id for id in ids for loc_id in data[id]['locations']['ids'])
+        locs_info = Location.objects.info_for(loc_ids, related=False)
+
+        for id in ids:
+            data[id]['locations']['locations'] = [locs_info[loc_id] for loc_id in data[id]['locations']['ids']]
+            data[id]['locations']['main'] = locs_info[data[id]['locations']['main_id']] \
+                    if data[id]['locations']['main_id'] else None
+
 
 # TODO: reset cache on save()/delete() (here and in other models)
 class EntityLocation(BaseEntityProperty):
@@ -110,24 +126,52 @@ class EntityLocation(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.location)
 
-class EntityFollowerManager(models.Manager):
+class EntityFollowerManager(BaseEntityManager):
     def get_for(self, model, ids):
-        """ Return {id: {'count': count, 'top_followers': [top_followers_ids]}} """
+        """ Return followers data {id: {'count': count, 'ids': [top_followers_ids]}} """
         followers_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'follower'))
 
         from users.models import Profile
-        followers_points = Profile.objects.filter(id__in=[f_id for id, f_id in followers_data]) \
+        followers_points = Profile.objects.filter(id__in=map(lambda f: f[1], followers_data)) \
                 .values_list('id', 'points')
 
         res = {}
         for id in ids:
-            entity_followers = filter(lambda f: f[0]==id, followers_data)
-            top_followers_points = sorted(entity_followers,
+            f_ids = map(lambda fd: fd[1], filter(lambda f: f[0]==id, followers_data))
+            top_followers_points = sorted(filter(lambda f: f[0] in f_ids, followers_points),
                     key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWERS_COUNT]
             res[id] = {
-                'count': len(entity_followers),
-                'top_followers': map(lambda f: f[0], top_followers_points),
+                'count': len(f_ids),
+                'ids': map(lambda f: f[0], top_followers_points),
+            }
+        return res
+
+    def get_related_info(self, data, ids):
+        from users.models import Profile
+        followers_ids = set(f_id for id in ids for f_id in data[id]['followers']['ids'])
+        f_info = Profile.objects.info_for(followers_ids, related=False)
+
+        for id in ids:
+            data[id]['followers']['entities'] = [f_info[f_id] for f_id in data[id]['followers']['ids']
+                    if f_id in f_info]
+
+    def followed(self, ids, entity_model):
+        """ Return entities followed by users {id: {'count': count, 'ids': [top_followed_ids]}} """
+        followed_data = list(self.filter(content_type=ContentType.objects.get_for_model(entity_model),
+                follower__id__in=ids).values_list('entity_id', 'follower'))
+
+        followed_points = entity_model.objects.filter(id__in=map(lambda f: f[0], followed_data)) \
+                .values_list('id', 'points')
+
+        res = {}
+        for id in ids:
+            e_ids = map(lambda fd: fd[0], filter(lambda f: f[1]==id, followed_data))
+            top_followed_points = sorted(filter(lambda f: f[0] in e_ids, followed_points),
+                    key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWED_COUNT]
+            res[id] = {
+                'count': len(e_ids),
+                'ids': map(lambda f: f[0], top_followed_points),
             }
         return res
 
@@ -153,6 +197,10 @@ class BaseEntityManager(models.Manager):
         cache_prefix = self.model.cache_prefix
         cached_entities = cache.get_many([cache_prefix+str(id) for id in ids])
 
+        # TODO: move it out of here (?)
+        features_models = {'resources': EntityResource, 'followers': EntityFollower,
+                'locations': EntityLocation}
+
         cached_ids = []
         res = {}
         for key, entity in cached_entities.iteritems():
@@ -162,24 +210,14 @@ class BaseEntityManager(models.Manager):
 
         other_ids = set(ids) - set(cached_ids)
         if len(other_ids) > 0:
+            # TODO: what if some ids are not available anymore (here or in one of get_for)?
+            #       (drop id if data for at least one feature is missing? - here and in get_info())
             other_res = dict((id, {}) for id in other_ids)
 
-            if 'resources' in features:
-                resources_data = EntityResource.objects.get_for(self.model, other_ids)
+            for feature in features:
+                feature_data = features_models[feature].objects.get_for(self.model, other_ids)
                 for id in other_ids:
-                    other_res[id]['resources'] = resources_data.get(id, [])
-
-            if 'followers' in features:
-                followers_data = EntityFollower.objects.get_for(self.model, other_ids)
-                for id in other_ids:
-                    other_res[id]['followers'] = followers_data[id]['top_followers']
-                    other_res[id]['followers_count'] = followers_data[id]['count']
-
-            if 'locations' in features:
-                locations_data = EntityLocation.objects.get_for(self.model, other_ids)
-                for id in other_ids:
-                    other_res[id]['locations'] = locations_data[id]['locations']
-                    other_res[id]['main_location'] = locations_data[id]['main_location']
+                    other_res[id][feature] = feature_data[id]
 
             # Add custom model info
             self.get_info(other_res)
@@ -190,22 +228,10 @@ class BaseEntityManager(models.Manager):
             res.update(other_res)
 
         if related:
-            if 'followers' in features:
-                from users.models import Profile
-                followers_ids = set(f_id for id in ids for f_id in res[id]['followers'])
-                followers_info = Profile.objects.info_for(followers_ids, related=False)
+            for feature in features:
+                features_models[feature].objects.get_related_info(res, ids)
 
-                for id in ids:
-                    res[id]['followers'] = [followers_info[f_id] for f_id in res[id]['followers']
-                            if f_id in followers_info]
-
-            if 'locations' in features:
-                loc_ids = set(loc_id for id in ids for loc_id in res[id]['locations'])
-                locs_info = Location.objects.info_for(loc_ids, related=False)
-
-                for id in ids:
-                    res[id]['locations'] = [locs_info[loc_id] for loc_id in res[id]['locations']]
-                    res[id]['main_location'] = locs_info[res[id]['main_location']] if res[id]['main_location'] else None
+            self.get_related_info(res, ids)
 
         return res
 
@@ -213,13 +239,20 @@ class BaseEntityManager(models.Manager):
         """ Take {id: info} filled with features data and add the rest information """
         raise NotImplemented
 
+    def get_related_info(self, data, ids):
+        """ Take {id: info} and add info from related features """
+        pass
+
+    # TODO: cache count separately?
     # TODO: take is_main into account
     # TODO: cache it (at least for data for side panels) - in Location
     def for_location(self, location, start=0, limit=None, sort_by=('-points',)):
-        """ Return sorted list of entities ids """
+        """ Return {'ids': sorted_entities_ids, 'count': total_count} """
+        res = {}
         if location.is_country():
             # Special processing to minify entity_query
             entity_query = Q()
+            res['count'] = self.count()
         else:
             loc_query = Q(location__id=location.id)
 
@@ -227,20 +260,19 @@ class BaseEntityManager(models.Manager):
             if field:
                 loc_query |= Q(**{'location__'+field: location.id})
 
-            entity_ids = list(EntityLocation.objects.filter(
+            entity_ids = set(EntityLocation.objects.filter(
                     content_type=ContentType.objects.get_for_model(self.model)) \
                     .filter(loc_query).values_list('entity_id', flat=True))
 
             # TODO: what happens when the list of ids is too long (for the next query)?
             entity_query = Q(id__in=entity_ids)
 
-        ids = self.filter(entity_query).order_by(*sort_by).values_list('id', flat=True)
-        if limit is None:
-            ids = ids[start:]
-        else:
-            ids = ids[start:start+limit]
+            res['count'] = len(entity_ids)
 
-        return ids
+        ids = self.filter(entity_query).order_by(*sort_by).values_list('id', flat=True)
+        res['ids'] = ids[slice(start, start+limit if limit else None)]
+
+        return res
 
 # TODO: add admins, complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
@@ -253,7 +285,7 @@ class BaseEntityModel(models.Model):
     objects = BaseEntityManager()
 
     cache_prefix = ''
-    features = [] # 'resources', 'followers', # TODO: 'location' (?),  'complaints', 'admins'
+    features = [] # 'resources', 'followers', 'locations',  # TODO: 'complaints', 'admins'
 
     class Meta:
         abstract = True

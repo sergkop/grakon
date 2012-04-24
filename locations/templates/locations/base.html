@@ -46,10 +46,10 @@
 {% endblock %}
 
 {% block right_column %}
-    <h3>Участники<i>&nbsp;</i><i class="gr-question">&nbsp;</i><i class="gr-user">&nbsp;</i></h3>
+    <h3>Участники ({{ info.participants.count }}) <i>&nbsp;</i><i class="gr-question">&nbsp;</i><i class="gr-user">&nbsp;</i></h3>
     <div class="gr-side-item gr-light-back">
         <table width="100%" class="gr-side-table">
-            {% for person in info.participants %}
+            {% for person in info.participants.entities %}
                 <tr>
                     {% include "elements/person.html" %}
                 </tr>

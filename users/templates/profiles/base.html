@@ -35,11 +35,11 @@
 
 {% block right_column %}
     <div class="gr-side-item">
-        <h4>Контакты <i>&nbsp;</i></h4>
+        <h4>Контакты ({{ info.contacts.count }}) <i>&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
-            {% for contact in contacts %}
+            {% for contact in info.contacts.entities %}
                 <tr>
-                    {% with person=contact.contact %}
+                    {% with person=contact %}
                         {% include "elements/person.html" %}
                     {% endwith %}
                 </tr>
@@ -47,11 +47,11 @@
         </table>
     </div>
     <div class="gr-side-item">
-        <h4>Добавлен в&nbsp;контакты <i>&nbsp;</i></h4>
+        <h4>Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i>&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
-            {% for contact in have_in_contacts %}
+            {% for follower in info.followers.entities %}
                 <tr>
-                    {% with person=contact.user %}
+                    {% with person=follower %}
                         {% include "elements/person.html" %}
                     {% endwith %}
                 </tr>

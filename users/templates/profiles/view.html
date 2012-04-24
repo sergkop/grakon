@@ -80,7 +80,7 @@
 
 <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
 <ul>
-    {% for location_data in info.locations %}
+    {% for location_data in info.locations.locations %}
         <li>
             {% with location=location_data.location %}
                 {% include "elements/location_path.html" %}

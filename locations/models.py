@@ -46,11 +46,12 @@ class LocationManager(models.Manager):
 
         if related:
             for name, model in entities_models.iteritems():
-                e_ids = set(e_id for id in ids for e_id in res[id][name])
+                e_ids = set(e_id for id in ids for e_id in res[id][name]['ids'])
                 e_info = model.objects.info_for(e_ids, related=False)
 
                 for id in ids:
-                    res[id][name] = [e_info[e_id] for e_id in res[id][name] if e_id in e_info]
+                    res[id][name]['entities'] = [e_info[e_id] for e_id in res[id][name]['ids']
+                            if e_id in e_info]
 
         return res
 

@@ -27,7 +27,7 @@ class BaseLocationView(object):
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 
-        info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
+        self.info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
 
         tabs = [
             ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
@@ -42,7 +42,7 @@ class BaseLocationView(object):
             'tabs': tabs,
             'location': location,
             'subregions': subregion_list(location),
-            'info': info,
+            'info': self.info,
         })
 
         ctx.update(self.update_context())
@@ -66,10 +66,10 @@ class ParticipantsLocationView(BaseLocationView, TemplateView):
         except ValueError:
             start = 0
 
-        # TODO: allow to choose limit (?)
+        # TODO: allow to choose limit (?), max allow value of it
         # TODO: accept sorting field
 
-        profile_ids = Profile.objects.for_location(self.location, start, limit=20)
+        profile_ids = Profile.objects.for_location(self.location, start, limit=20)['ids']
         participants_info = Profile.objects.info_for(profile_ids, related=False)
         participants = [participants_info[id] for id in profile_ids if id in participants_info]
 
