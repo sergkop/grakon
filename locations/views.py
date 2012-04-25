@@ -43,6 +43,8 @@ class BaseLocationView(object):
             'location': location,
             'subregions': subregion_list(location),
             'info': self.info,
+            'is_participant': self.request.user.is_authenticated() and \
+                    location.id in self.request.profile_info['locations']['ids'],
         })
 
         ctx.update(self.update_context())

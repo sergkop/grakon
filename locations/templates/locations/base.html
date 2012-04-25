@@ -55,9 +55,13 @@
                 </tr>
             {% endfor %}
         </table>
-        <div align="center">
-            <a href="" class="ym-button">Стать участником</a>
-        </div>
+        {% if not is_participant %}
+            <div align="center">
+                <a id="become_participant_btn" class="ym-button">Стать участником</a>
+            </div>
+
+            {% include "dialogs/become_participant.html" %}
+        {% endif %}
     </div>
 {% endblock %}
 

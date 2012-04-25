@@ -60,8 +60,7 @@ class EntityResourceManager(BaseEntityManager):
     # TODO: reset cache
     # TODO: check if entity model has resources feature
     def update_entity_resources(self, entity, resources):
-        # TODO: this code doesn't work any more
-        entity_resources = list(entity.resources.all())
+        entity_resources = list(type(entity).resources.all())
 
         new_resources = set(resources) - set(er.resource for er in entity_resources)
         for er in entity_resources:
@@ -114,6 +113,25 @@ class EntityLocationManager(BaseEntityManager):
             data[id]['locations']['main'] = locs_info[data[id]['locations']['main_id']] \
                     if data[id]['locations']['main_id'] else None
 
+    def add(self, entity, location, is_main=False):
+        if 'locations' not in type(entity).features:
+            return
+
+        self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
+                entity_id=entity.id, location=location, defaults={'is_main': is_main})
+        entity.clear_cache()
+        location.clear_cache()
+
+    def remove(self, entity, location):
+        if 'locations' not in type(entity).features:
+            return
+
+        self.filter(content_type=ContentType.objects.get_for_model(entity),
+                entity_id=entity.id, location=location).delete()
+        entity.clear_cache()
+        location.clear_cache()
+
+# TODO: some models may need only one location (?)
 # TODO: reset cache on save()/delete() (here and in other models)
 class EntityLocation(BaseEntityProperty):
     location = models.ForeignKey(Location, related_name='entities')
@@ -183,7 +201,7 @@ class EntityFollowerManager(BaseEntityManager):
         return self.filter(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, follower=profile).exists()
 
-    def add_follower(self, entity, profile):
+    def add(self, entity, profile):
         # TODO: user should not follow himself
         if 'followers' not in type(entity).features:
             return
@@ -193,7 +211,7 @@ class EntityFollowerManager(BaseEntityManager):
         profile.clear_cache()
         entity.clear_cache()
 
-    def remove_follower(self, entity, profile):
+    def remove(self, entity, profile):
         if 'followers' not in type(entity).features:
             return
 

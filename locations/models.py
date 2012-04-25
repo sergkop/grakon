@@ -14,7 +14,7 @@ class LocationManager(models.Manager):
         Return {id: {'location': location, entities_keys: entities_data}}.
         If related is True, return list of entities data, otherwise - only ids.
         """
-        cache_prefix = 'location_info'
+        cache_prefix = self.model.cache_prefix
         cached_locations = cache.get_many([cache_prefix+str(id) for id in ids])
 
         cached_ids = []
@@ -68,6 +68,8 @@ class Location(models.Model):
 
     objects = LocationManager()
 
+    cache_prefix = 'location_info'
+
     def level(self):
         if self.country_id is None:
             return 1
@@ -97,6 +99,12 @@ class Location(models.Model):
 
     def info(self, related=True):
         return Location.objects.info_for([self.id], related)[self.id]
+
+    def cache_key(self):
+        return self.cache_prefix + str(self.id)
+
+    def clear_cache(self):
+        cache.delete(self.cache_key())
 
     def __unicode__(self, full_path=False):
         name = self.name

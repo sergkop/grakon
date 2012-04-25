@@ -5,13 +5,15 @@
     <a class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a>
 </div>
 
-<div id="add_contact_dialog" class="hidden">
-    <p>Вы хотите добавить пользователя {{ profile }} в список контактов?</p>
-</div>
+{% if request.user.is_authenticated %}
+    <div id="add_contact_dialog" class="hidden">
+        <p>Вы хотите добавить пользователя {{ profile }} в список контактов?</p>
+    </div>
 
-<div id="remove_contact_dialog" class="hidden">
-    <p>Вы хотите удалить пользователя {{ profile }} из списка контактов?</p>
-</div>
+    <div id="remove_contact_dialog" class="hidden">
+        <p>Вы хотите удалить пользователя {{ profile }} из списка контактов?</p>
+    </div>
+{% endif %}
 
 <script type="text/javascript">
     {% if request.user.is_authenticated %}
