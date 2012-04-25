@@ -60,13 +60,14 @@ Analytics:
 SEO:
     * Webmaster Tools, seo, https://www.google.com/webmasters/
     * sitemaps
-    * Disallow paths in robots.txt (see django-social-auth example)
+    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
     * set proper page titles
 
 Performance:
     * use debug toolbar, page speed to optimize page load
     * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
     * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
+    * make lazy reformal loading
 
 Wall:
     * replace disqus?

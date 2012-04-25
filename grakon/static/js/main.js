@@ -49,6 +49,11 @@ function dialog_post_shortcut(id, url, params, on_success){
     }
 }
 
+function login_dialog_init(){
+    $("#login_dialog").dialog("open");
+    $('#login_form [name="csrfmiddlewaretoken"]').val(get_cookie("csrftoken"));
+}
+
 // Widget for choosing location path using several select elements
 // Usage: (new SelectLocation({el: $(div), path: []})).render();
 var SelectLocation = Backbone.View.extend({

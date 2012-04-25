@@ -46,7 +46,7 @@
                         {% if request.profile_info.main_location %}<a href="{% url location request.profile_info.main_location %}">Мой район</a>{% endif %}
                         <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                     {% else %}
-                        <a href="{% url login %}">Войти</a>
+                        <a id="menu_login_btn">Войти</a>
                     {% endif %}
                 </div>
             </div>
@@ -90,6 +90,10 @@
             <div class="gr-fr"><a href="{% url main %}">Гракон</a> ©2012. &ndash; Верстка выполнена с помощью <a href="http://www.yaml.de">YAML</a></div>
         </div>
     </footer>
+
+{% if not request.user.is_authenticated %}
+    {% include "dialogs/login.html" %}
+{% endif %}
 
 {% if not DEBUG %}
     {% include "services/google-plus.html" %}

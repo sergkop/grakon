@@ -32,13 +32,15 @@ class Command(BaseCommand):
         endings2 = (u'ая',)
         endings3 = (u'ое',)
 
-        # TODO: detect location type it and save it in model
+        # TODO: detect location type and save it in model
         # TODO: drop сельсоветы and other small districts
+        # TODO: is coverage of areas full (no partial lists at a level)
+        # {name_start: (name, endings, ignore)}
         location_types = {
-            u'Районы': (u'район', endings1),
-            u'Волости': (u'волость', endings2),
-            u'Сельсоветы': (u'сельсовет', endings1),
-            u'Округа': (u'округ', endings1),
+            u'Районы': (u'район', endings1, False),
+            u'Волости': (u'волость', endings2, True),
+            u'Сельсоветы': (u'сельсовет', endings1, True),
+            u'Округа': (u'округ', endings1, False), # TODO: not finished
             u'Сельские округа': (u'сельский округ', endings1),
             u'Сельские территории': (u'сельская территория', endings2),
             u'Наслеги': (u'наслег', endings1),

@@ -19,9 +19,15 @@ def subregion_list(location=None):
                 res.append((loc_id, name))
         return res
     elif location.is_region():
-        return [('', u'Выбрать район')]+list(Location.objects.filter(region=location, district=None)
+        res = list(Location.objects.filter(region=location, district=None)
                 .order_by('name').values_list('id', 'name'))
+        if res:
+            res.insert(0, ('', u'Выбрать район'))
+        return res
     elif location.is_district():
-        return [('', u'Выбрать город')]+list(Location.objects.filter(district=location).order_by('name').values_list('id', 'name'))
+        res = list(Location.objects.filter(district=location).order_by('name').values_list('id', 'name'))
+        if res:
+            res.insert(0, ('', u'Выбрать город'))
+        return res
     else:
         return []

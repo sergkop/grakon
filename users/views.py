@@ -33,8 +33,9 @@ class BaseProfileView(object):
         if own_profile:
             tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
                     'profiles/edit.html', ''))
-            in_contacts = False
-        else:
+
+        in_contacts = False
+        if self.request.user.is_authenticated():
             in_contacts = self.request.profile.has_contact(profile)
 
         self.info = profile.info()

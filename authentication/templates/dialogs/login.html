@@ -1,0 +1,25 @@
+<div id="login_dialog" class="hidden">
+    <form id="login_form" method="post" action="{% url login %}?next={{ request.get_full_path }}">
+        <input type="hidden" value="" name="csrfmiddlewaretoken"/>
+        <div>
+            <label for="id_username">Логин/email:</label>
+            <input id="id_username" type="text" name="username" />
+        </div>
+
+        <div>
+            <label for="id_password">Пароль:</label>
+            <input id="id_password" type="password" name="password" />
+        </div>
+
+        <div>
+            <input id="login_form_submit" type="submit" value="Войти" />
+            <a id="login_dialog_register" href="{% url register %}">Регистрация</a>
+            <a href="{% url password_reset %}">Забыли пароль?</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    create_dialog("login_dialog", 670, 450, "Войдите в систему", "Отмена", {});
+    $("#menu_login_btn").click(login_dialog_init);
+</script>
