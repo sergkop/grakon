@@ -2,6 +2,12 @@ $(function(){
     $("form.uniForm").uniform();
 });
 
+// Default tipsy settings
+$.fn.tipsy.defaults.delayIn = 150;
+$.fn.tipsy.defaults.delayOut = 200;
+$.fn.tipsy.defaults.fade = true;
+$.fn.tipsy.defaults.opacity = 0.6;
+
 function get_cookie(name){
     var cookieValue = null;
     if (document.cookie && document.cookie!="") {
@@ -240,3 +246,35 @@ var TagsView = Backbone.View.extend({
 
     render: function(){}
 });
+
+// TODO: add "add location" button
+// Takes ct_id and id of the entity, to which locations are related
+function locations_list_editing(ct_id, id){
+    $(".locations-ul li").each(function(index){
+        var li = $(this);
+
+        $("<span/>")
+                .attr("title", "Отказаться от участия")
+                .addClass("remove-li-btn ui-icon ui-icon-close")
+                .tipsy({gravity: 'n'})
+                .click(function(){
+                    li.css("background-color", "#D9BDFF");
+
+                    var confirmation = confirm("Вы действительно хотите отказаться от участия в этом районе?");
+                    li.css("background-color", "#FFFFFF");
+
+                    // TODO: use model dialog and dialog_post_shortcut here?
+                    if (confirmation){
+                        var params = {"loc_id": li.attr("loc_id"), "ct": ct_id, "id": id,
+                                "csrfmiddlewaretoken": get_cookie("csrftoken")};
+                        $.post(REMOVE_LOCATION_URL, params, function(data){
+                            if (data=="ok")
+                                li.remove();
+                            else
+                                alert(data);
+                        });
+                    }
+                })
+                .prependTo(li);
+    });
+}

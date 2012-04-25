@@ -75,12 +75,12 @@
 </div>
 
 <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
-<ul>
-    {% for location_data in info.locations.locations %}
-        <li>
-            {% with location=location_data.location %}
-                {% include "elements/location_path.html" %}
-            {% endwith %}
-        </li>
-    {% endfor %}
-</ul>
+{% with locations_data=info.locations.locations %}
+    {% include "elements/locations.html" %}
+{% endwith %}
+
+{% if own_profile %}
+    <script type="text/javascript">
+        locations_list_editing({{ info.ct }}, {{ request.profile.id }});
+    </script>
+{% endif %}

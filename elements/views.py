@@ -65,3 +65,15 @@ def add_location(request, entity):
     # TODO: check that user has rights for update (his profile or he is admin)
     EntityLocation.objects.add(entity, location, is_main=False)
     return HttpResponse('ok')
+
+@entity_post_method
+def remove_location(request, entity):
+    try:
+        loc_id = int(request.POST.get('loc_id', ''))
+        location = Location.objects.get(id=loc_id)
+    except ValueError, Location.DoesNotExist:
+        return HttpResponse(u'Местоположение указано неверно')
+
+    # TODO: check that user has rights for update (his profile or he is admin)
+    EntityLocation.objects.remove(entity, location)
+    return HttpResponse('ok')

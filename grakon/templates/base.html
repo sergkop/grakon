@@ -25,6 +25,8 @@
     <![endif]-->
 
     <script type="text/javascript">
+        var USERNAME = "{{ request.user.username }}";
+
         VK.init({apiId: {{ VK_APP_ID }}, onlyWidgets: true});
     </script>
 

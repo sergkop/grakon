@@ -15,7 +15,7 @@ def media_files(request):
             'libs/crispy-forms/uni-form.css',
             'libs/crispy-forms/default.uni-form.css',
             'libs/chosen/chosen.css',
-            #'libs/tipsy/tipsy.css',
+            'libs/tipsy/tipsy.css',
 
             'css/hlist.css',
             'css/tabs.css',
@@ -41,7 +41,7 @@ def media_files(request):
         'libs/backbone.js',
         'libs/crispy-forms/uni-form.jquery.js',
         'libs/chosen/chosen.jquery.min.js',
-        #'libs/tipsy/jquery.tipsy.js',
+        'libs/tipsy/jquery.tipsy.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
         'js/main.js',
     )

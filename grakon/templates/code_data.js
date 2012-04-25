@@ -5,4 +5,5 @@ _.each(RESOURCES, function(resource){
     RESOURCES_DICT[resource[0]] = resource[1];
 });
 
-GET_SUBREGIONS_URL = "{{ get_subregions_url|safe }}";
+GET_SUBREGIONS_URL = "{% url get_subregions %}";
+REMOVE_LOCATION_URL = "{% url remove_location %}";

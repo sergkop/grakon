@@ -1,0 +1,9 @@
+<ul class="locations-ul">
+    {% for location_data in info.locations.locations %}
+        <li loc_id="{{ location_data.location.id }}">
+            {% with location=location_data.location %}
+                {% include "elements/location_path.html" %}
+            {% endwith %}
+        </li>
+    {% endfor %}
+</ul>
