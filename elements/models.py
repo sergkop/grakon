@@ -57,18 +57,6 @@ RESOURCE_CHOICES = (
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
 
 class EntityResourceManager(BaseEntityManager):
-    # TODO: reset cache
-    # TODO: check if entity model has resources feature
-    def update_entity_resources(self, entity, resources):
-        entity_resources = list(type(entity).resources.all())
-
-        new_resources = set(resources) - set(er.resource for er in entity_resources)
-        for er in entity_resources:
-            if er.resource not in resources:
-                er.delete()
-
-        self.bulk_create([EntityResource(entity=entity, resource=resource) for resource in new_resources])
-
     def get_for(self, model, ids):
         """ Return {id: [resources]} """
         res = dict((id, []) for id in ids)
@@ -76,6 +64,22 @@ class EntityResourceManager(BaseEntityManager):
                 entity_id__in=ids).values_list('entity_id', 'resource'):
             res[id].append({'name': resource, 'title': RESOURCE_DICT[resource]})
         return res
+
+    def update(self, entity, resources):
+        if 'resources' not in type(entity).features:
+            return
+
+        entity_resources = list(self.filter(entity_id=entity.id,
+                content_type=ContentType.objects.get_for_model(type(entity))))
+        new_resources = set(resources) - set(er.resource for er in entity_resources)
+
+        for er in entity_resources:
+            if er.resource not in resources:
+                er.delete()
+
+        self.bulk_create([EntityResource(entity=entity, resource=resource) for resource in new_resources])
+
+        entity.clear_cache()
 
 # TODO: ability to add text, describing resources + custom resources (in case of other)
 class EntityResource(BaseEntityProperty):
@@ -367,6 +371,7 @@ def entity_class(model, features):
     """ Call it right after model definition """
     attrs = {'features': features}
 
+    # TODO: do we need generic relations?
     if 'resources' in features:
         attrs['resources'] = generic.GenericRelation(EntityResource, object_id_field='entity_id')
         attrs['update_resources'] = update_resources

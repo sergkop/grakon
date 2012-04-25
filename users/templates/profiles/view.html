@@ -65,7 +65,8 @@
 
         <script type="text/javascript">
             (new TagsView({el: $("#resources"), choices_dict: RESOURCES_DICT,
-                    save_url: "{{ URL_PREFIX }}{% url update_resources %}"})).render();
+                    save_url: "{{ URL_PREFIX }}{% url update_resources %}",
+                    ct_id: {{ info.ct }}, entity_id: {{ request.profile.id }} })).render();
         </script>
     {% else %}
         {% with tags=resources %}

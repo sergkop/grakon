@@ -4,8 +4,9 @@ from django.http import HttpResponse
 
 from grakon.utils import authenticated_ajax_post
 
-from elements.models import EntityFollower, EntityLocation
+from elements.models import EntityFollower, EntityLocation, EntityResource
 from locations.models import Location
+from users.models import Profile
 
 def get_entity(post_data):
     """ Shortcut returning entity or None for form data """
@@ -36,6 +37,21 @@ def entity_post_method(func):
         return func(request, entity)
     return new_func
 
+def check_permissions(func):
+    """ Check if user has permissions to modify entity """
+    def new_func(request, entity):
+        if type(entity) is Profile:
+            has_perm = (entity==request.profile)
+        else:
+            pass # TODO: check that model has admins feature and user is admin
+
+        if not has_perm:
+            return HttpResponse(u'У вас нет прав на выполнение этой операции')
+
+        return func(request, entity)
+
+    return new_func
+
 @entity_post_method
 def add_follower(request, entity):
     EntityFollower.objects.add(entity, request.profile)
@@ -48,13 +64,13 @@ def remove_follower(request, entity):
     return HttpResponse('ok')
 
 @entity_post_method
+@check_permissions
 def update_resources(request, entity):
-    # TODO: generalize for all entities
-    # TODO: check that user has rights for update (his profile or he is admin)
-    request.profile.update_resources(request.POST.getlist('value[]', None))
+    EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
     return HttpResponse('ok')
 
 @entity_post_method
+@check_permissions
 def add_location(request, entity):
     try:
         loc_id = int(request.POST.get('loc_id', ''))
@@ -62,11 +78,11 @@ def add_location(request, entity):
     except ValueError, Location.DoesNotExist:
         return HttpResponse(u'Местоположение указано неверно')
 
-    # TODO: check that user has rights for update (his profile or he is admin)
     EntityLocation.objects.add(entity, location, is_main=False)
     return HttpResponse('ok')
 
 @entity_post_method
+@check_permissions
 def remove_location(request, entity):
     try:
         loc_id = int(request.POST.get('loc_id', ''))
@@ -74,6 +90,5 @@ def remove_location(request, entity):
     except ValueError, Location.DoesNotExist:
         return HttpResponse(u'Местоположение указано неверно')
 
-    # TODO: check that user has rights for update (his profile or he is admin)
     EntityLocation.objects.remove(entity, location)
     return HttpResponse('ok')

@@ -174,10 +174,10 @@ var TagsView = Backbone.View.extend({
         "click .save-tag-btn": "save"
     },
 
+    // Takes parameters "choices_dict", save_url, ct_id, entity_id
     initialize: function(){
         this.choices_dict = this.options.choices_dict;
-        this.save_url = this.options.save_url;
-        this.select = this.$el.find(".tag-edit select")
+        this.select = this.$el.find(".tag-edit select");
     },
 
     edit: function(){
@@ -213,9 +213,11 @@ var TagsView = Backbone.View.extend({
 
         params = {
             "csrfmiddlewaretoken": get_cookie("csrftoken"),
-            "value": select.val()
+            "value": select.val(),
+            "ct": this.options.ct_id,
+            "id": this.options.entity_id
         };
-        $.post(this.save_url, params, function(data){
+        $.post(this.options.save_url, params, function(data){
             if (data!="ok")
                 alert(data);
             else {
