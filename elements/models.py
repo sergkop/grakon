@@ -69,6 +69,7 @@ class EntityResourceManager(BaseEntityManager):
         if 'resources' not in type(entity).features:
             return
 
+        # TODO: use generic relation
         entity_resources = list(self.filter(entity_id=entity.id,
                 content_type=ContentType.objects.get_for_model(type(entity))))
         new_resources = set(resources) - set(er.resource for er in entity_resources)
@@ -77,7 +78,12 @@ class EntityResourceManager(BaseEntityManager):
             if er.resource not in resources:
                 er.delete()
 
+        # TODO: this can cause IntegrityError
         self.bulk_create([EntityResource(entity=entity, resource=resource) for resource in new_resources])
+
+        from users.models import Profile
+        if type(entity) is Profile:
+            entity.update_source_points('resources')
 
         entity.clear_cache()
 
@@ -130,6 +136,7 @@ class EntityLocationManager(BaseEntityManager):
         if 'locations' not in type(entity).features:
             return
 
+        # TODO: use generic relation
         self.filter(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, location=location).delete()
         entity.clear_cache()
@@ -149,6 +156,7 @@ class EntityLocation(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.location)
 
+# TODO: avoid importing profile in many places
 class EntityFollowerManager(BaseEntityManager):
     def get_for(self, model, ids):
         """ Return followers data {id: {'count': count, 'ids': [top_followers_ids]}} """
@@ -156,17 +164,17 @@ class EntityFollowerManager(BaseEntityManager):
                 entity_id__in=ids).values_list('entity_id', 'follower'))
 
         from users.models import Profile
-        followers_points = Profile.objects.filter(id__in=map(lambda f: f[1], followers_data)) \
-                .values_list('id', 'points')
+        followers_rating = Profile.objects.filter(id__in=map(lambda f: f[1], followers_data)) \
+                .values_list('id', 'rating')
 
         res = {}
         for id in ids:
             f_ids = map(lambda fd: fd[1], filter(lambda f: f[0]==id, followers_data))
-            top_followers_points = sorted(filter(lambda f: f[0] in f_ids, followers_points),
+            top_followers_rating = sorted(filter(lambda f: f[0] in f_ids, followers_rating),
                     key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWERS_COUNT]
             res[id] = {
                 'count': len(f_ids),
-                'ids': map(lambda f: f[0], top_followers_points),
+                'ids': map(lambda f: f[0], top_followers_rating),
             }
         return res
 
@@ -184,17 +192,17 @@ class EntityFollowerManager(BaseEntityManager):
         followed_data = list(self.filter(content_type=ContentType.objects.get_for_model(entity_model),
                 follower__id__in=ids).values_list('entity_id', 'follower'))
 
-        followed_points = entity_model.objects.filter(id__in=map(lambda f: f[0], followed_data)) \
-                .values_list('id', 'points')
+        followed_rating = entity_model.objects.filter(id__in=map(lambda f: f[0], followed_data)) \
+                .values_list('id', 'rating')
 
         res = {}
         for id in ids:
             e_ids = map(lambda fd: fd[0], filter(lambda f: f[1]==id, followed_data))
-            top_followed_points = sorted(filter(lambda f: f[0] in e_ids, followed_points),
+            top_followed_rating = sorted(filter(lambda f: f[0] in e_ids, followed_rating),
                     key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWED_COUNT]
             res[id] = {
                 'count': len(e_ids),
-                'ids': map(lambda f: f[0], top_followed_points),
+                'ids': map(lambda f: f[0], top_followed_rating),
             }
         return res
 
@@ -202,6 +210,7 @@ class EntityFollowerManager(BaseEntityManager):
         if 'followers' not in type(entity).features:
             return False
 
+        # TODO: use generic relation
         return self.filter(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, follower=profile).exists()
 
@@ -212,6 +221,7 @@ class EntityFollowerManager(BaseEntityManager):
 
         self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, follower=profile)
+        profile.update_source_points('contacts')
         profile.clear_cache()
         entity.clear_cache()
 
@@ -219,8 +229,10 @@ class EntityFollowerManager(BaseEntityManager):
         if 'followers' not in type(entity).features:
             return
 
+        # TODO: use generic relation
         self.filter(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, follower=profile).delete()
+        profile.update_source_points('contacts')
         profile.clear_cache()
         entity.clear_cache()
 
@@ -270,7 +282,7 @@ class BaseEntityManager(models.Manager):
                     other_res[id][feature] = feature_data[id]
 
             # Add custom model info
-            self.get_info(other_res)
+            self.get_info(other_res, other_ids)
 
             cache_res = dict((cache_prefix+str(id), other_res[id]) for id in other_res)
             cache.set_many(cache_res, 60) # TODO: specify time as a model attribute
@@ -285,7 +297,7 @@ class BaseEntityManager(models.Manager):
 
         return res
 
-    def get_info(self, data):
+    def get_info(self, data, ids):
         """ Take {id: info} filled with features data and add the rest information """
         raise NotImplemented
 
@@ -296,7 +308,7 @@ class BaseEntityManager(models.Manager):
     # TODO: cache count separately?
     # TODO: take is_main into account
     # TODO: cache it (at least for data for side panels) - in Location
-    def for_location(self, location, start=0, limit=None, sort_by=('-points',)):
+    def for_location(self, location, start=0, limit=None, sort_by=('-rating',)):
         """ Return {'ids': sorted_entities_ids, 'count': total_count} """
         res = {}
         if location.is_country():
@@ -327,7 +339,7 @@ class BaseEntityManager(models.Manager):
 # TODO: add admins, complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
-    points = models.IntegerField(u'Очки', default=0) # used for sorting entities
+    rating = models.IntegerField(default=0) # used for sorting entities
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
     add_time = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
@@ -350,9 +362,9 @@ class BaseEntityModel(models.Model):
         # TODO: this code can fail
         return type(self).objects.info_for([self.id], related)[self.id]
 
-    # TODO: recalculate these points on save or in celery (?)
-    def calc_points(self):
-        """ Return points using entity info """
+    # TODO: recalculate rating on save or in celery (?) and reset cache
+    def calc_rating(self):
+        """ Return rating using entity info """
         raise NotImplemented
 
     @reset_cache
@@ -371,7 +383,7 @@ def entity_class(model, features):
     """ Call it right after model definition """
     attrs = {'features': features}
 
-    # TODO: do we need generic relations?
+    # TODO: generic relations don't work; start using them
     if 'resources' in features:
         attrs['resources'] = generic.GenericRelation(EntityResource, object_id_field='entity_id')
         attrs['update_resources'] = update_resources

@@ -1,27 +1,37 @@
 # -*- coding:utf-8 -*-
+import inspect
+
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tinymce.models import HTMLField
 
-from elements.models import BaseEntityManager, BaseEntityModel, entity_class, EntityFollower
+from elements.models import BaseEntityManager, BaseEntityModel, entity_class, \
+        EntityFollower, EntityResource
 
 class ProfileManager(BaseEntityManager):
-    def get_info(self, data):
-        ids = data.keys()
-
-        profiles_by_id = dict((p.id, p) for p in self.filter(id__in=ids))
+    def get_info(self, data, ids):
+        # Get profile instances
+        profiles_by_id = self.in_bulk(ids)
         for id in ids:
-            if id in profiles_by_id:
-                data[id]['profile'] = profiles_by_id[id]
-            else:
-                del data[id] # TODO: do we need it?
+            data[id]['profile'] = profiles_by_id[id]
 
         # TODO: add info on non-profile entities followed by the user
 
+        # Get contacts
         contacts = EntityFollower.objects.followed(ids, Profile)
         for id in ids:
             data[id]['contacts'] = contacts[id]
+
+        # Get user points
+        for id in ids:
+            data[id]['points'] = {'online': 0, 'offline': 0, 'leader': 0}
+
+        points_data = Points.objects.filter(profile__id__in=ids).values_list('profile', 'type', 'points')
+
+        for id, type, points in points_data:
+            data[id]['points'][type] += points
 
     def get_related_info(self, data, ids):
         contacts_ids = set(c_id for id in ids for c_id in data[id]['contacts']['ids'])
@@ -32,7 +42,7 @@ class ProfileManager(BaseEntityManager):
 
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30, db_index=True)
 
     first_name = models.CharField(u'Имя', max_length=40)
     last_name = models.CharField(u'Фамилия', max_length=40)
@@ -45,11 +55,24 @@ class Profile(BaseEntityModel):
 
     cache_prefix = 'user_info/'
 
-    def calc_points(self):
+    def calc_rating(self):
         pass # TODO: implement it
+
+    def update_points(self):
+        # TODO: create celery task
+        Points.objects.recalculate(self)
+
+    def update_source_points(self, source):
+        # TODO: create celery task
+        Points.objects.recalculate_source(self, source)
 
     def has_contact(self, profile):
         return EntityFollower.objects.is_followed(profile, self)
+
+    def save(self):
+        super(Profile, self).save()
+        self.update_source_points('show_name')
+        self.clear_cache()
 
     @models.permalink
     def get_absolute_url(self):
@@ -70,3 +93,111 @@ def create_profile(sender, **kwargs):
         profile.save()
 
 models.signals.post_save.connect(create_profile, sender=User)
+
+
+def points_type(type):
+    """ type is 'online', 'offline' or 'leader' """
+    def decorator(func):
+        func.type = type
+        return func
+    return decorator
+
+# Collection of methods for calculating profile points coming from different sources
+class PointsSources(object):
+    @points_type('online')
+    def registration(self, profile):
+        return 3
+
+    @points_type('online')
+    def show_name(self, profile):
+        return 3 if profile.show_name else 0
+
+    @points_type('online')
+    def resources(self, profile):
+        # TODO: generic relation should be used
+        has_resources = EntityResource.objects.filter(entity_id=profile.id,
+                content_type=ContentType.objects.get_for_model(Profile)).exists()
+        return 3 if has_resources else 0
+
+    @points_type('online')
+    def contacts(self, profile):
+        contacts_ids = list(EntityFollower.objects.filter(follower=profile,
+                content_type=ContentType.objects.get_for_model(Profile)).values_list('entity_id', flat=True))
+        followers_ids = list(EntityFollower.objects.filter(entity_id=profile.id,
+                content_type=ContentType.objects.get_for_model(Profile)).values_list('follower', flat=True))
+
+        # TODO: several levels (5 contacts, 10, 50) + count 2-sided connections
+        # TODO: distinguish the limit when a popular person is followed by many
+
+        if len(contacts_ids) > 0:
+            return 1
+        return 0
+
+points_methods = PointsSources()
+
+# [sources]
+POINTS_SOURCES = map(lambda m: m[0], inspect.getmembers(points_methods, inspect.ismethod))
+
+# {source: type}
+SOURCES_TYPES = dict((source, getattr(points_methods, source).type) for source in POINTS_SOURCES)
+
+POINTS_TYPES = (('online', u'Онлайн'), ('offline', u'Оффлайн'), ('leader', u'Лидерство'))
+
+class PointsManager(models.Manager):
+    def recalculate(self, profile):
+        points_by_source = dict((p.source, p) for p in self.filter(profile=profile))
+
+        to_delete = []
+        to_create = []
+        for source in POINTS_SOURCES:
+            points = getattr(points_methods, source)(profile)
+
+            if points != 0:
+                if source in points_by_source:
+                    if points_by_source[source].points != points:
+                        to_delete.append(points_by_source[source].id)
+                        to_create.append(Points(profile=profile, source=source, points=points))
+                else:
+                    to_create.append(Points(profile=profile, source=source, points=points,
+                            type=SOURCES_TYPES[source]))
+            else:
+                if source in points_by_source:
+                    to_delete.append(points_by_source[source].id)
+
+        self.filter(id__in=to_delete).delete()
+
+        # TODO: this can cause IntegrityError
+        self.bulk_create(to_create)
+
+        profile.clear_cache()
+
+    def recalculate_source(self, profile, source):
+        points = getattr(points_methods, source)(profile)
+
+        if points != 0:
+            p, created = Points.objects.get_or_create(profile=profile, source=source,
+                    defaults={'points': points})
+            if not created:
+                if p.points != points:
+                    p.points = points
+                    p.save()
+        else:
+            Points.objects.filter(profile=profile, source=source).delete()
+
+        profile.clear_cache()
+
+class Points(models.Model):
+    profile = models.ForeignKey(Profile)
+    source = models.CharField(max_length=15, db_index=True)
+    points = models.IntegerField(u'Очки', default=0)
+    type = models.CharField(max_length=7, choices=POINTS_TYPES)
+
+    objects = PointsManager()
+
+    class Meta:
+        unique_together = ('profile', 'source')
+
+def set_points_type(sender, instance, **kwargs):
+    instance.type = SOURCES_TYPES[instance.source]
+
+models.signals.pre_save.connect(set_points_type, sender=Points)

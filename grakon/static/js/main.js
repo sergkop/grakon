@@ -42,12 +42,11 @@ function create_dialog(id, width, height, title, cancel_btn_title, buttons){
 // Shortcut used to send post requests from dialogs.
 // If post response is "ok", provided function is performed and dialog is closed.
 // Otherwise alert with error message appears.
-function dialog_post_shortcut(id, url, params, on_success){
+function dialog_post_shortcut(url, params, on_success){
     return function(){
         params["csrfmiddlewaretoken"] = get_cookie("csrftoken");
         $.post(url, params, function(data){
             if (data=="ok"){
-                $("#"+id).dialog("close");
                 on_success();
             } else
                 alert(data);
@@ -265,17 +264,10 @@ function locations_list_editing(ct_id, id){
                     var confirmation = confirm("Вы действительно хотите отказаться от участия в этом районе?");
                     li.css("background-color", "#FFFFFF");
 
-                    // TODO: use model dialog and dialog_post_shortcut here?
-                    if (confirmation){
-                        var params = {"loc_id": li.attr("loc_id"), "ct": ct_id, "id": id,
-                                "csrfmiddlewaretoken": get_cookie("csrftoken")};
-                        $.post(REMOVE_LOCATION_URL, params, function(data){
-                            if (data=="ok")
-                                li.remove();
-                            else
-                                alert(data);
-                        });
-                    }
+                    // TODO: use model dialog here?
+                    if (confirmation)
+                        dialog_post_shortcut(REMOVE_LOCATION_URL, {"loc_id": li.attr("loc_id"), "ct": ct_id, "id": id,
+                                "csrfmiddlewaretoken": get_cookie("csrftoken")}, function(){li.remove();})
                 })
                 .prependTo(li);
     });

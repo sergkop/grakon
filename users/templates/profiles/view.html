@@ -8,25 +8,25 @@
 
 <div class="gr-user-charts">
     <div class="gr-user-chart gr-leader">
-        <strong><big>83</big>/100</strong>
+        <strong><big>{{ info.points.leader }}</big>/100</strong>
         <div class="gr-chart-back">
-            <span style="width: 83%">&nbsp;</span>
+            <span style="width: {{ info.points.leader }}%">&nbsp;</span>
         </div>
         <small>Лидер</small>
         <i>&nbsp;</i>
     </div>
     <div class="gr-user-chart gr-offline-activity">
-        <strong><big>12</big>/100</strong>
+        <strong><big>{{ info.points.offline }}</big>/100</strong>
         <div class="gr-chart-back">
-            <span style="width: 12%">&nbsp;</span>
+            <span style="width: {{ info.points.offline }}%">&nbsp;</span>
         </div> 
         <small>Оффлайн активист</small>
         <i>&nbsp;</i>
     </div>
     <div class="gr-user-chart gr-online-activity">
-        <strong><big>56</big>/100</strong>
+        <strong><big>{{ info.points.online }}</big>/100</strong>
         <div class="gr-chart-back">
-            <span style="width: 56%">&nbsp;</span>
+            <span style="width: {{ info.points.online }}%">&nbsp;</span>
         </div> 
         <small>Онлайн активист</small>  
         <i>&nbsp;</i>

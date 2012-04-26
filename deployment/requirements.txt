@@ -10,6 +10,7 @@ django-social-auth
 google-api-python-client
 psycopg2
 flup
+ipython
 #mysql-python
 #python-cloudfiles
 #PIL

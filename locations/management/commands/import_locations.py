@@ -87,6 +87,7 @@ class Command(BaseCommand):
         locations = list(Location.objects.all())
         locations_by_okato = dict((loc.okato_id, loc) for loc in locations if loc.okato_id!='')
 
+        """
         # Get or create Russia
         country, created = Location.objects.get_or_create(country=None, defaults={'name': u'Россия'})
 
@@ -127,7 +128,8 @@ class Command(BaseCommand):
                                 district=district, okato_id=loc_id, name=loc_data))
 
                 Location.objects.bulk_create(locations)
+        """
 
         # TODO: drop it
-        #with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:
-        #    f.write(json.dumps([end, hierarchy], indent=4, ensure_ascii=False).encode('utf8'))
+        with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:
+            f.write(json.dumps([end, hierarchy], indent=4, ensure_ascii=False).encode('utf8'))
