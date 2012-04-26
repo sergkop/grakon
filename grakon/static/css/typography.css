@@ -28,7 +28,7 @@
 
 	/* (en) reset font size for all elements to standard (16 Pixel) */
 	/* (de) Alle Schriftgrößen auf Standardgröße (16 Pixel) zurücksetzen */
-	html * { font-size:100%; }
+	html * { font-size:100%; outline: none; }
 
 	/**
 	* (en) reset monospaced elements to font size 16px in all browsers
@@ -404,6 +404,11 @@
 		color:#333;
 		border: 1px #f6f6f6 solid;
 	}
+	
+	footer table {
+        margin: 0;
+        border: none;            
+    }
 
 	table.narrow {
 		margin:  1.4286em 0 0 0;
@@ -416,6 +421,7 @@
 	table.narrow td {
 		padding: 1.2em;
 		line-height: 1.3em;
+        background-color: #fff;
 	}
 
 	table.bordertable {
@@ -429,12 +435,20 @@
 	tr:nth-child(2n+1) td {
 		background-color: #f6f6f6;	
 	}
+	
+	footer tr:nth-child(2n+1) td {
+        background: none;  
+    }
 
 	th, td {
 		line-height: 1.5em;
 		vertical-align: top;
 		padding: 0.7143em 0.5em;
 	}
+	
+	footer td {
+        padding: 0;
+    }
 
 	th *:first-child,
 	td *:first-child {

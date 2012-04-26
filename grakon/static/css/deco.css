@@ -40,7 +40,7 @@ th {
 .gr-geography {background-position: 0 -143px;}
 
 
-.ym-hlist ul li strong, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
+.ym-hlist ul li.active a, .ym-hlist ul li a:hover, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
 	box-shadow: inset 0 -1px 0 #ecede5, 0 2px 2px #cfcfcf;
 	background-color: #e8eae0;
 	background: -moz-linear-gradient(#ffffff, #e8eae0);
@@ -61,7 +61,24 @@ th {
 	box-shadow: 0 2px 2px #97bccf;	
 }
 
+    
+.gr-blue-button:hover {
+    box-shadow: 1px 1px 2px #b9b9b9;
+    background-color: #147fb5);
+    background-image: -webkit-linear-gradient(top, #60c0ee, #147fb5);
+    background-image: -moz-linear-gradient(top, #60c0ee, #147fb5);
+    background-image: -ms-linear-gradient(top, #60c0ee, #147fb5);
+    background-image: -o-linear-gradient(top, #60c0ee, #147fb5);
+    background-image: linear-gradient(top, #60c0ee, #147fb5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#60c0ee', EndColorStr='#147fb5)');         
+}
+
+.gr-location-tool .gr-blue-button:hover {
+    box-shadow: 1px 1px 2px #1d6f98;    
+}
+
 .ym-hlist .gr-breadcrumbs ul li strong, .gr-blue-button {
+    box-shadow: inset 0 -1px 0 #2e8cbb;
 	color: #fff !important;
 	background-color: #2e8cbb;
 	background: -moz-linear-gradient(#60bfed, #2e8cbb);
@@ -74,7 +91,7 @@ th {
 
 .gr-breadcrumbs strong i {background-position: 0 -39px;} 
 .gr-breadcrumbs a:hover i {background-position: 0 -133px;}
-.gr-breadcrumbs a:hover {background-color: #c9c9c9;}
+.ym-hlist  .gr-breadcrumbs a:hover {box-shadow: inset 0 -1px 0 #c9c9c9, 0 2px 2px #cfcfcf; background: none; background-color: #c9c9c9;}
 .gr-breadcrumbs i {background:url(../images/bg-breadcrumbs.png) 0 -83px no-repeat;}
 
 .ym-col2 h3, .ym-col3 h3  {

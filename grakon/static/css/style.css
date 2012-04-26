@@ -1,7 +1,6 @@
 .gr-breadcrumbs {margin: 1em 0 0; clear: both;}
     .gr-breadcrumbs i {position: absolute; top:0; right: -15px; width: 16px; height: 35px; overflow: hidden; z-index:1;}
 
-
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right;}
 .gr-fl {float: left;}
@@ -29,6 +28,7 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
         .gr-side-item ul, .gr-side-item li, .gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none;}           
             .gr-source-list-slider {border: 1px solid #f3f3f3;}
             .gr-side-item li, .gr-source-list-slider li {padding: .7em .5em .7em 3.5em; position: relative; color: #887a7a}
+                .gr-side-item .gr-nomargin li {padding-left: 1em;}
                 .gr-side-item li:nth-child(2n+1), .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
                 .gr-side-item li i, .gr-source-list-slider li i {position: absolute; top: .8em; left: 0; width: 3em; text-align: right; font-style: normal;}
                 .gr-source-list-slider li i {top: 1em;} 
@@ -40,6 +40,9 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
         .gr-side-item h4.gr-events {background-position: 0 -61px;}
         .gr-side-item h4.gr-agitators {background-position: 0 -118px;}
         .gr-side-item h4.gr-observers {background-position: 0 -240px;}
+        .gr-side-item h4.gr-participants{background-position: 0 -300px;}
+        .gr-side-item h4.gr-contacts{background-position: 0 -358px;}
+        .gr-side-item h4.gr-followers{background-position: 0 -406px;}
 
 .gr-orange-arrow-up, .gr-orange-arrow-down {background: url(../images/icons/sort-orange-arrows.png) right 0 no-repeat; width: 12px; height: 11px;}  
 .gr-orange-arrow-down {background-position: right bottom;}  

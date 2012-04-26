@@ -10,6 +10,7 @@
             <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
             <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
             <li><i class="highlight">1</i><a href="">Иванов Иван</a> (полицейский)</li>
+            <li><a href="">Все</a></li>
         </ul>
     </div>
     <div class="gr-side-item">
@@ -18,6 +19,7 @@
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="">Мэр поднимет зарплаты госслужащим</a> (72)</li>
             <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Мер посетил лицей</a> (72)</li>
             <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Городской суд обновится</a> (2)</li>
+            <li><a href="">Все</a></li>
         </ul>
     </div>
     <div class="gr-side-item">
@@ -26,13 +28,14 @@
             <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
             <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
             <li><i class="highlight">1/12</i><a href="">Встреча активистов</a> (12)</li>
+            <li><a href="">Все</a></li>
         </ul>
     </div>
 {% endblock %}
 
 {% block right_column %}
     <div class="gr-side-item">
-        <h4>Контакты ({{ info.contacts.count }}) <i>&nbsp;</i></h4>
+        <h4 class="gr-contacts">Контакты ({{ info.contacts.count }}) <i>&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for contact in info.contacts.entities %}
                 <tr>
@@ -44,7 +47,7 @@
         </table>
     </div>
     <div class="gr-side-item">
-        <h4>Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i>&nbsp;</i></h4>
+        <h4 class="gr-followers">Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i>&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for follower in info.followers.entities %}
                 <tr>
