@@ -37,10 +37,10 @@ class Command(BaseCommand):
         # TODO: is coverage of areas full (no partial lists at a level)
         # {name_start: (name, endings, ignore)}
         location_types = {
-            u'Районы': (u'район', endings1, False),
-            u'Волости': (u'волость', endings2, True),
-            u'Сельсоветы': (u'сельсовет', endings1, True),
-            u'Округа': (u'округ', endings1, False), # TODO: not finished
+            u'Районы': (u'район', endings1),
+            u'Волости': (u'волость', endings2),
+            u'Сельсоветы': (u'сельсовет', endings1),
+            u'Округа': (u'округ', endings1), # TODO: not finished
             u'Сельские округа': (u'сельский округ', endings1),
             u'Сельские территории': (u'сельская территория', endings2),
             u'Наслеги': (u'наслег', endings1),
@@ -87,7 +87,6 @@ class Command(BaseCommand):
         locations = list(Location.objects.all())
         locations_by_okato = dict((loc.okato_id, loc) for loc in locations if loc.okato_id!='')
 
-        """
         # Get or create Russia
         country, created = Location.objects.get_or_create(country=None, defaults={'name': u'Россия'})
 
@@ -128,7 +127,6 @@ class Command(BaseCommand):
                                 district=district, okato_id=loc_id, name=loc_data))
 
                 Location.objects.bulk_create(locations)
-        """
 
         # TODO: drop it
         with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:

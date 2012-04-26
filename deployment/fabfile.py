@@ -171,7 +171,8 @@ def deploy_static_files():
     virtualenv('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
 
 def update_code():
-    # TODO: make git pull
+    with cd(conf['code_path']):
+        cmd('git pull')
     virtualenv('python %s migrate' % manage_path)
     deploy_static_files()
     restart_web_server()
