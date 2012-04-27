@@ -78,8 +78,8 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
 .gr-skype  {width: 20px; line-height:1.6em; display: inline-block; text-decoration: none;}	
 
 .gr-user-charts {margin: 2em 1em 1em 210px;}
-.gr-user-chart {position: relative; margin: 0 0 1.5em; padding-right: 11.5em; height: 44px; text-align:center; background: none; width: 300px; float:right;}  
-    .gr-user-chart i {position: absolute; top: -1em; right: 6em; width: 44px; height: 44px; background: url(../images/icons/profile.png) 0 0 no-repeat;}
+.gr-user-chart {position: relative; margin: 0 0 1.5em; padding-right: 10em; height: 44px; text-align:center; background: none; width: 300px; float:right;}  
+    .gr-user-chart i {position: absolute; top: -1em; right: 4.5em; width: 44px; height: 44px; background: url(../images/icons/profile.png) 0 0 no-repeat;}
     .gr-offline-activity i {background-position: 0 -65px;}
     .gr-online-activity i {background-position: 0 -134px;}
     .gr-chart-back {height: 11px; overflow: hidden; border-radius: 1em; margin: .3em 0 0 0; padding: 1px 2px}   
