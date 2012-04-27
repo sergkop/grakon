@@ -245,6 +245,7 @@
 		display: inline-block;
 		white-space: nowrap;
 		border-radius: 1.2em;
+        border: none;
 		cursor: pointer;
 		font: normal 1em/2em Tahoma, Helvetica;
 		margin: 0 0.75em 0 0;

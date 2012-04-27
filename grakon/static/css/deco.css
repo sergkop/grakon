@@ -40,7 +40,7 @@ th {
 .gr-geography {background-position: 0 -143px;}
 
 
-.ym-hlist ul li.active a, .ym-hlist ul li a:hover, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"] {
+.ym-hlist ul li.active a, .ym-hlist ul li a:hover, .gr-breadcrumbs, .ym-button, .ym-form button, .ym-form input[type="button"], .ym-form input[type="reset"], .ym-form input[type="submit"], .ui-state-default {
 	box-shadow: inset 0 -1px 0 #ecede5, 0 2px 2px #cfcfcf;
 	background-color: #e8eae0;
 	background: -moz-linear-gradient(#ffffff, #e8eae0);
@@ -49,6 +49,16 @@ th {
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e8eae0));
 	background: -webkit-linear-gradient(#ffffff, #e8eae0);
 	background: linear-gradient(#ffffff, #e8eae0);	
+}
+
+.ui-state-default:hover {
+    background-color: #ddd;
+    background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
+    background-image: -moz-linear-gradient(top, #fafafa, #ddd);
+    background-image: -ms-linear-gradient(top, #fafafa, #ddd);
+    background-image: -o-linear-gradient(top, #fafafa, #ddd);
+    background-image: linear-gradient(top, #fafafa, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');
 }
 
 .gr-breadcrumbs, .ym-hlist .gr-breadcrumbs ul li strong {
@@ -74,7 +84,7 @@ th {
 }
 
 .gr-location-tool .gr-blue-button:hover {
-    box-shadow: 1px 1px 2px #1d6f98;    
+    box-shadow: 1px 1px 2px #1d6f98s;    
 }
 
 .ym-hlist .gr-breadcrumbs ul li strong, .gr-blue-button {

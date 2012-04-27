@@ -254,6 +254,7 @@
 		color:#4D87C7;
 		background:transparent;
 		text-decoration: none;
+        cursor: pointer;
 	}
 
 	a:active { outline: none; }
@@ -405,6 +406,10 @@
 		border: 1px #f6f6f6 solid;
 	}
 	
+	table.markup {
+        border: none;
+    }
+	
 	footer table {
         margin: 0;
         border: none;            
@@ -436,7 +441,7 @@
 		background-color: #f6f6f6;	
 	}
 	
-	footer tr:nth-child(2n+1) td {
+	footer tr:nth-child(2n+1) td, .markup tr:nth-child(2n+1) td {
         background: none;  
     }
 

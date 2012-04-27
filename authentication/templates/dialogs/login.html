@@ -1,25 +1,35 @@
 <div id="login_dialog" class="hidden">
     <form id="login_form" method="post" action="{% url login %}?next={{ request.get_full_path }}">
         <input type="hidden" value="" name="csrfmiddlewaretoken"/>
-        <div>
-            <label for="id_username">Логин/email:</label>
-            <input id="id_username" type="text" name="username" />
-        </div>
+        <table class="markup" width="300">
+            <tr>
+                <td><label for="id_username">Логин/email:</label></td>
+                <td><input id="id_username" type="text" name="username" width="40" /></td>
+            </tr>
+            <tr>
+                <td><label for="id_password">Пароль:</label></td>
+                <td><input id="id_password" type="password" name="password" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input id="login_form_submit" type="submit" value="Войти" class="ui-state-default " />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <a id="login_dialog_register" href="{% url register %}">Регистрация</a>&nbsp; &nbsp;<a href="{% url password_reset %}">Забыли пароль?</a>
+                </td>
+            </tr>
+        </table>
 
         <div>
-            <label for="id_password">Пароль:</label>
-            <input id="id_password" type="password" name="password" />
-        </div>
-
-        <div>
-            <input id="login_form_submit" type="submit" value="Войти" />
-            <a id="login_dialog_register" href="{% url register %}">Регистрация</a>
-            <a href="{% url password_reset %}">Забыли пароль?</a>
+            
+            
         </div>
     </form>
 </div>
 
 <script type="text/javascript">
-    create_dialog("login_dialog", 670, 450, "Войдите в систему", "Отмена", {});
+    create_dialog("login_dialog", 360, 240, "Войдите в систему", "", {});
     $("#menu_login_btn").click(login_dialog_init);
 </script>
