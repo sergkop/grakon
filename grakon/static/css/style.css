@@ -5,6 +5,7 @@
 .gr-fr {float: right;}
 .gr-fl {float: left;}
 .gr-mb20 {margin-bottom: 2em;}
+.gr-bb-grey {border-bottom: 1px dotted #a5a5a5;}
 
 /*Элементы header*/
 .gr-login-info {float: right; margin: 0.3em 0 0.2em;}
@@ -13,7 +14,7 @@
         .gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-geography {display: block; padding-right: 1.25em }
         header .gr-activity, header .gr-web-activity, header .gr-leader {padding-right: 1.7em; display: inline;}
 
-nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
+nav .ym-wrapper {padding: 1.8em 20px 1em;}
 
 /*Sidebars*/
 .ym-col2 h3, .ym-col3 h3 {border-radius: .2em; padding: .45em 0 .6em; margin-bottom: 5px; position: relative; border-top: 1px solid #cbdd8b;}

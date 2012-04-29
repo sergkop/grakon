@@ -54,7 +54,7 @@
             </div>
         </header>
         <nav class="ym-hlist">
-            <div class="ym-wrapper">  
+            <div class="ym-wrapper">                
                 <ul>
                     <li class="active" ><a href="{% url main %}">Навигация</a></li>
                     <li {% if template == "profiles/base.html" %}class="active"{% endif %}><a href="">Участники</a></li>
@@ -66,6 +66,8 @@
                 <div class="ym-clearfix">&nbsp;</div>
 
                 {% block breadcrumbs %}{% endblock %}
+                
+                <div class="ym-clearfix gr-bb-grey">&nbsp;</div>
             </div>
         </nav>
 
