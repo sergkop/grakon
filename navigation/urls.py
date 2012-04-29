@@ -19,8 +19,9 @@ def static_tabs_urls(base_template, tabs_short):
 urlpatterns = patterns('navigation.views',
     url(r'^$', 'main', name='main'),
 
-    *static_tabs_urls('static_pages/about/base.html', [
+    *static_tabs_urls('static_pages/officials/base.html', [
         ('about', u'Описание', 'static_pages/about/about.html', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', ''),
+        ('officials', u'Чиновники', 'static_pages/officials/officials.html', ''),
     ])
 )
