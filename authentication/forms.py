@@ -108,6 +108,7 @@ class RegistrationForm(BaseRegistrationForm):
 
         return self.cleaned_data['password2']
 
+    # TODO: check that email domain is correct (ping it) (?)
     def save(self):
         username, email, password = self.cleaned_data['username'], \
                 self.cleaned_data['email'], self.cleaned_data.get('password1', '')
@@ -126,6 +127,9 @@ class RegistrationForm(BaseRegistrationForm):
         ActivationProfile.objects.init_activation(user)
 
         EntityLocation.objects.create(entity=profile, location=self.location, is_main=True)
+
+        for source in ['registration', 'show_name', 'resources']:
+            profile.update_source_points(source)
 
         return user
 
@@ -199,6 +203,9 @@ class SocialRegistrationForm(BaseRegistrationForm):
             ActivationProfile.objects.init_activation(user)
 
         EntityLocation.objects.create(entity=profile, location=self.location)
+
+        for source in ['registration', 'show_name', 'resources']:
+            profile.update_source_points(source)
 
         return user
 

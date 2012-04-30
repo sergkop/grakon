@@ -4,6 +4,7 @@ from random import choice
 import sys
 import urllib2
 
+from django.conf import settings
 from django.http import HttpResponse
 
 # TODO: add ie and chrome
@@ -45,3 +46,10 @@ def authenticated_ajax_post(func):
             return HttpResponse(u'Вам необходимо войти в систему')
         return func(request)
     return new_func
+
+def project_settings():
+    res = {'SLOGAN': u'Гражданский контроль за работой властей'}
+    for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY',
+            'URL_PREFIX', 'ADMIN_EMAIL', 'ADMIN_PREFIX', 'DEBUG'):
+        res[setting] = getattr(settings, setting)
+    return res

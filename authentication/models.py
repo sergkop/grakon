@@ -96,8 +96,7 @@ class ActivationProfile(models.Model):
         except SMTPException:
             return 'error'
 
-
-
+# TODO: drop it
 #from social_auth.signals import pre_update
 #from social_auth.backends.google import GoogleOAuth2
 
@@ -105,4 +104,3 @@ class ActivationProfile(models.Model):
 #    return True
 
 #pre_update.connect(google_extra_values, sender=GoogleOAuth2)
-

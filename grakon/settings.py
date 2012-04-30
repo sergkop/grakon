@@ -39,7 +39,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'grakon.context_processors.media_files',
-    'grakon.context_processors.project_settings',
+    'grakon.context_processors.proj_settings',
 )
 
 TEMPLATE_LOADERS = (
@@ -91,6 +91,8 @@ INSTALLED_APPS = (
     'grakon',
     'locations',
     'navigation',
+    'tools.officials',
+    'services',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -175,6 +177,7 @@ CRISPY_TEMPLATE_PACK = 'uni_form'
 FORCE_SCRIPT_NAME = ''
 
 # Numbers of entries shown in the side blocks for tools and participants
-TOP_FOLLOWERS_COUNT = 3
-TOP_FOLLOWED_COUNT = 3
+TOP_FOLLOWERS_COUNT = 5
+TOP_FOLLOWED_COUNT = 5
 TOP_PARTICIPANTS_COUNT = 7 # number of participants displayed on location page
+TOP_ADMIN_COUNT = 5

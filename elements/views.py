@@ -78,7 +78,7 @@ def add_location(request, entity):
     except ValueError, Location.DoesNotExist:
         return HttpResponse(u'Местоположение указано неверно')
 
-    EntityLocation.objects.add(entity, location, is_main=False)
+    EntityLocation.objects.add(entity, location, {'is_main': False})
     return HttpResponse('ok')
 
 @entity_post_method

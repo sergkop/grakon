@@ -62,6 +62,7 @@ class Profile(BaseEntityModel):
         # TODO: create celery task
         Points.objects.recalculate(self)
 
+    # TODO: take bool parameter whether to run it in background
     def update_source_points(self, source):
         # TODO: create celery task
         Points.objects.recalculate_source(self, source)
@@ -102,6 +103,8 @@ def points_type(type):
         return func
     return decorator
 
+# TODO: give points for being admin
+# TODO: complaints related to user lower his points
 # Collection of methods for calculating profile points coming from different sources
 class PointsSources(object):
     @points_type('online')
@@ -201,3 +204,11 @@ def set_points_type(sender, instance, **kwargs):
     instance.type = SOURCES_TYPES[instance.source]
 
 models.signals.pre_save.connect(set_points_type, sender=Points)
+
+class Message(models.Model):
+    sender = models.ForeignKey(Profile, verbose_name=u'Отправитель', related_name='sent_messages')
+    receiver = models.ForeignKey(Profile, verbose_name=u'Получатель', related_name='received_messages')
+    title = models.CharField(u'Тема', max_length=100)
+    body = models.TextField(u'Сообщение')
+    show_email = models.BooleanField(u'Показать email получателю', default=False)
+    time = models.DateTimeField(auto_now=True)

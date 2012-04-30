@@ -84,6 +84,7 @@ class Command(BaseCommand):
         for p in end:
             end[p] = list(set(end[p]))
 
+        """
         locations = list(Location.objects.all())
         locations_by_okato = dict((loc.okato_id, loc) for loc in locations if loc.okato_id!='')
 
@@ -127,7 +128,28 @@ class Command(BaseCommand):
                                 district=district, okato_id=loc_id, name=loc_data))
 
                 Location.objects.bulk_create(locations)
+        """
 
         # TODO: drop it
         with open('/home/serg/data/grakon/hierarchy.txt', 'w') as f:
             f.write(json.dumps([end, hierarchy], indent=4, ensure_ascii=False).encode('utf8'))
+
+        txt = u''
+        for id in hierarchy:
+            txt += u'%s|%s\n' % (hierarchy[id][0], id)
+
+            for id1 in hierarchy[id][1]:
+                txt += u'    %s|%s\n' % (hierarchy[id][1][id1][0], id1)
+
+                if id1[2]=='2' and id1[:2] not in ['40', '45']: # Moscow and St.Petersburg are exceptions
+                    continue
+
+                for id2 in hierarchy[id][1][id1][1]:
+                    if id2[5] in ['8', '9']: # ignore сельсоветы
+                        continue
+                    if id2[2]=='4' and id2[5] in ['5', '6']: # ignore поселки городского типа
+                        continue
+                    txt += u'        %s|%s\n' % (hierarchy[id][1][id1][1][id2], id2)
+
+        with open('/home/serg/data/grakon/struct.txt', 'w') as f:
+            f.write(txt.encode('utf8'))

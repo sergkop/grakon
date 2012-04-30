@@ -1,45 +1,75 @@
 <div class="gr-mb20">
-    <a class="ym-button gr-blue-button gr-mail"><span>Отправить сообщение</span></a>
-    <a id="add_contact_btn" class="ym-button gr-blue-button gr-add {% if in_contacts %}hidden{% endif %}"><span>Добавить в контакты</span></a>
-    <a id="remove_contact_btn" class="ym-button gr-blue-button gr-add {% if not in_contacts %}hidden{% endif %}"><span>Удалить из контактов</span></a>
+    <a id="send_message_btn" class="ym-button gr-blue-button gr-mail"><span>Отправить сообщение</span></a>
+    {% if in_contacts %}
+        <a id="remove_contact_btn" class="ym-button gr-blue-button gr-add"><span>Удалить из контактов</span></a>
+    {% else %}
+        <a id="add_contact_btn" class="ym-button gr-blue-button gr-add"><span>Добавить в контакты</span></a>
+    {% endif %}
     <a class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a>
 </div>
 
 {% if request.user.is_authenticated %}
-    <div id="add_contact_dialog" class="hidden">
-        <p>Вы хотите добавить пользователя {{ profile }} в список контактов?</p>
+    <div id="send_message_dialog" class="hidden">
+        <p>Отправить сообщение пользователю {{ profile }}</p>
+
+        <form id="send_message_form" method="post">
+            <div><label for="title">Тема:</label></div>
+            <div><input type="text" name="title" value="" size="60" /></div>
+            <div><label for="body">Сообщение:</label></div>
+            <div><textarea name="body" rows="4" cols="60"></textarea></div>
+            <div>
+                <label for="show_name">Показать email получателю</label>
+                <input type="checkbox" name="show_email" checked="checked" />
+            </div>
+        </form>
     </div>
 
-    <div id="remove_contact_dialog" class="hidden">
-        <p>Вы хотите удалить пользователя {{ profile }} из списка контактов?</p>
-    </div>
-{% endif %}
-
-<script type="text/javascript">
-    {% if request.user.is_authenticated %}
-        create_dialog("add_contact_dialog", 625, 400, "Добавить в контакты", "Отмена", {
-            "Добавить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
+    <script type="text/javascript">
+        create_dialog("send_message_dialog", 625, 400, "Отправить сообщение", "Отмена", {
+            "Отправить": dialog_post_shortcut("{% url send_message %}", {"id": {{ profile.id }} },
                 function(){
-                    $("#add_contact_dialog").dialog("close");
-                    $("#add_contact_btn").addClass("hidden");
-                    $("#remove_contact_btn").removeClass("hidden");
+                    $("#send_message_dialog").dialog("close");
                 }
             )
         });
+        $("#send_message_btn").click(function(){$("#send_message_dialog").dialog("open");});
+    </script>
 
-        create_dialog("remove_contact_dialog", 625, 400, "Удалить из контактов", "Отмена", {
-            "Удалить": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
-                function(){
-                    $("#remove_contact_dialog").dialog("close");
-                    $("#add_contact_btn").removeClass("hidden");
-                    $("#remove_contact_btn").addClass("hidden");
-                }
-            )
-        });
+    {% if in_contacts %}
+        <div id="remove_contact_dialog" class="hidden">
+            <p>Вы хотите удалить пользователя {{ profile }} из списка контактов?</p>
+        </div>
 
-        $("#add_contact_btn").click(function(){$("#add_contact_dialog").dialog("open");});
-        $("#remove_contact_btn").click(function(){$("#remove_contact_dialog").dialog("open");});
+        <script type="text/javascript">
+            create_dialog("remove_contact_dialog", 625, 400, "Удалить из контактов", "Отмена", {
+                "Удалить": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
+                    function(){
+                        $("#remove_contact_dialog").dialog("close");
+                        window.location.reload();
+                    }
+                )
+            });
+            $("#remove_contact_btn").click(function(){$("#remove_contact_dialog").dialog("open");});
+        </script>
     {% else %}
-        $("#add_contact_btn, #remove_contact_btn").click(login_dialog_init);
+        <div id="add_contact_dialog" class="hidden">
+            <p>Вы хотите добавить пользователя {{ profile }} в список контактов?</p>
+        </div>
+
+        <script type="text/javascript">
+            create_dialog("add_contact_dialog", 625, 400, "Добавить в контакты", "Отмена", {
+                "Добавить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
+                    function(){
+                        $("#add_contact_dialog").dialog("close");
+                        window.location.reload();
+                    }
+                )
+            });
+            $("#add_contact_btn").click(function(){$("#add_contact_dialog").dialog("open");});
+        </script>
     {% endif %}
-</script>
+{% else %}
+    <script type="text/javascript">
+        $("#add_contact_btn, #send_message_btn").click(login_dialog_init);
+    </script>
+{% endif %}

@@ -169,7 +169,11 @@ def deploy_static_files():
     # TODO: delete old files (?), minify static files
     virtualenv('python %s collectstatic -c --noinput' % manage_path)
     virtualenv('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
+    virtualenv('cp %s %srobots.txt' % (
+            os.path.join(conf['code_path'], 'grakon', 'templates', 'robots.txt'), conf['static_path']))
+    # TODO: copy code_data.js
 
+# TODO: optionally run pip install -r requirements.txt (with upgrade?)
 def update_code():
     with cd(conf['code_path']):
         cmd('git pull')

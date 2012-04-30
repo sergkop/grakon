@@ -7,10 +7,13 @@ django-debug-toolbar
 pylibmc
 scrapy
 django-social-auth
-google-api-python-client
 psycopg2
-flup
 ipython
+dnspython
+pydkim
+boto
+flup
+google-api-python-client
 #mysql-python
 #python-cloudfiles
 #PIL

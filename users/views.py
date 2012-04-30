@@ -2,13 +2,14 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
-from django.template.response import TemplateResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
 from grakon.context_processors import project_settings
+from grakon.utils import authenticated_ajax_post
 from services.email import send_email
 from users.forms import ProfileForm
 from users.models import Profile
@@ -67,6 +68,7 @@ class EditProfileView(BaseProfileView, UpdateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'username': self.request.profile.username})
 
+# TODO: need more strict condition
 edit_profile = login_required(EditProfileView.as_view())
 
 def remove_account(request):
@@ -79,9 +81,54 @@ def remove_account(request):
         html = render_to_string('letters/remove_account.html', context)
 
         send_email(subject, settings.ADMIN_EMAIL, html)
-    return TemplateResponse(u'Чтобы удалить аккаунт, необходимо войти в систему')
+        return HttpResponse('ok')
+
+    return HttpResponse(u'Чтобы удалить аккаунт, необходимо войти в систему')
 
 @login_required
 def profile(request):
     """ Redirects user to profile page after logging in (used to overcome django limitation) """
     return redirect(request.profile.get_absolute_url())
+
+# TODO: limit the number of messages User can send daily (also depends on his points)
+# TODO: add points for sending message
+@authenticated_ajax_post
+def send_message(request):
+    title = request.POST.get('title', '')
+    body = request.POST.get('body', '')
+    if title == '':
+        return HttpResponse(u'Необходимо указать тему письма')
+    if body == '':
+        return HttpResponse(u'Сообщение не должно быть пустым')
+
+    try:
+        receiver_id = int(request.POST.get('id', ''))
+        receiver = Profile.objects.get(id=receiver_id)
+    except ValueError, Profile.DoesNotExist:
+        return HttpResponse(u'Получатель указан неверно')
+
+    
+
+    
+    ctx = { 
+        'title': title,
+        'body': body,
+        'show_email': 'show_email' in request.POST,
+        #'link': u'%s%s' % (settings.URL_PREFIX, reverse('profile', kwargs={'username': self.from_user.username})),
+    }
+    if show_email:
+        ctx['from_user'] = self.from_user
+    message = render_to_string('mail/notification.txt', ctx)
+    mail_title = u'Пользователь %s написал вам сообщение' % self.from_user.username 
+
+    try:
+        send_mail(mail_title, message, settings.DEFAULT_FROM_EMAIL, [to_user.email], fail_silently=False)
+    except SMTPException:
+        return u'Невозможно отправить сообщение'
+    else:
+        Message.objects.create(from_user=self.request.profile, to_user=to_user.get_profile(), title=title, body=body, show_email=show_email)
+
+    # TODO: clean body html (leave text only?)
+    # TODO: set reply to user's email if he gave permission or write not to answer email
+
+    return HttpResponse('ok')

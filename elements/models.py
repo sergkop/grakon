@@ -11,7 +11,49 @@ from locations.models import Location
 
 class BaseEntityManager(models.Manager):
     def get_related_info(self, data, ids):
-        pass
+        if not self.model.fk_field:
+            return
+
+        feature = self.model.feature
+        related_ids = set(r_id for id in ids for r_id in data[id][feature]['ids'])
+        related_model = self.model._meta.get_field(self.model.fk_field).rel.to
+        r_info = related_model.objects.info_for(related_ids, related=False)
+
+        for id in ids:
+            data[id][feature]['entities'] = [r_info[r_id] for r_id in data[id][feature]['ids']
+                    if r_id in r_info]
+
+    def _add_remove(self, entity, instance, add, params={}):
+        """ Instance corresponds to the only non-content_type foreign key of the model """
+        if not self.model.fk_field:
+            raise ValueError(self.model._meta.object_name+" model doesn't allow add() method")
+
+        if self.model.feature not in type(entity).features:
+            return
+
+        if add:
+            self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
+                    entity_id=entity.id, defaults=params, **{self.model.fk_field: instance})
+        else:
+            # TODO: use generic relation
+            self.filter(content_type=ContentType.objects.get_for_model(entity),
+                    entity_id=entity.id, **{self.model.fk_field: instance}).delete()
+
+        if self.model.points_sources:
+            from users.models import Profile
+            profiles = [x for x in [entity, instance] if type(x) is Profile]
+            for profile in profiles:
+                for source in self.model.points_sources:
+                    profile.update_source_points(source)
+
+        entity.clear_cache()
+        instance.clear_cache()
+
+    def add(self, entity, instance, params={}):
+        self._add_remove(entity, instance, True, params)
+
+    def remove(self, entity, instance):
+        self._add_remove(entity, instance, False)
 
 class BaseEntityProperty(models.Model):
     content_type = models.ForeignKey(ContentType)
@@ -19,6 +61,10 @@ class BaseEntityProperty(models.Model):
     entity = generic.GenericForeignKey('content_type', 'entity_id')
 
     time = models.DateTimeField(auto_now=True, db_index=True)
+
+    feature = None # name of corresponding feature
+    fk_field = None # specify if there is another foreign key field besides content_type
+    points_sources = []
 
     objects = BaseEntityManager()
 
@@ -66,7 +112,7 @@ class EntityResourceManager(BaseEntityManager):
         return res
 
     def update(self, entity, resources):
-        if 'resources' not in type(entity).features:
+        if self.model.feature not in type(entity).features:
             return
 
         # TODO: use generic relation
@@ -93,6 +139,9 @@ class EntityResource(BaseEntityProperty):
 
     objects = EntityResourceManager()
 
+    feature = 'resources'
+    points_sources = ['resources']
+
     class Meta:
         unique_together = ('content_type', 'entity_id', 'resource')
 
@@ -115,32 +164,12 @@ class EntityLocationManager(BaseEntityManager):
         return res
 
     def get_related_info(self, data, ids):
-        loc_ids = set(loc_id for id in ids for loc_id in data[id]['locations']['ids'])
-        locs_info = Location.objects.info_for(loc_ids, related=False)
+        super(EntityLocationManager, self).get_related_info(data, ids)
 
         for id in ids:
-            data[id]['locations']['locations'] = [locs_info[loc_id] for loc_id in data[id]['locations']['ids']]
-            data[id]['locations']['main'] = locs_info[data[id]['locations']['main_id']] \
-                    if data[id]['locations']['main_id'] else None
-
-    def add(self, entity, location, is_main=False):
-        if 'locations' not in type(entity).features:
-            return
-
-        self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
-                entity_id=entity.id, location=location, defaults={'is_main': is_main})
-        entity.clear_cache()
-        location.clear_cache()
-
-    def remove(self, entity, location):
-        if 'locations' not in type(entity).features:
-            return
-
-        # TODO: use generic relation
-        self.filter(content_type=ContentType.objects.get_for_model(entity),
-                entity_id=entity.id, location=location).delete()
-        entity.clear_cache()
-        location.clear_cache()
+            id_data = data[id][self.model.feature]
+            id_data['main'] = (filter(lambda d: d['location'].id==id_data['main_id'],
+                    id_data['entities']) or [None])[0]
 
 # TODO: some models may need only one location (?)
 # TODO: reset cache on save()/delete() (here and in other models)
@@ -150,6 +179,9 @@ class EntityLocation(BaseEntityProperty):
 
     objects = EntityLocationManager()
 
+    feature = 'locations'
+    fk_field = 'location'
+
     class Meta:
         unique_together = ('content_type', 'entity_id', 'location')
 
@@ -157,6 +189,7 @@ class EntityLocation(BaseEntityProperty):
         return unicode(self.entity) + ': ' + unicode(self.location)
 
 # TODO: avoid importing profile in many places
+# TODO: user should not follow himself
 class EntityFollowerManager(BaseEntityManager):
     def get_for(self, model, ids):
         """ Return followers data {id: {'count': count, 'ids': [top_followers_ids]}} """
@@ -178,15 +211,6 @@ class EntityFollowerManager(BaseEntityManager):
             }
         return res
 
-    def get_related_info(self, data, ids):
-        from users.models import Profile
-        followers_ids = set(f_id for id in ids for f_id in data[id]['followers']['ids'])
-        f_info = Profile.objects.info_for(followers_ids, related=False)
-
-        for id in ids:
-            data[id]['followers']['entities'] = [f_info[f_id] for f_id in data[id]['followers']['ids']
-                    if f_id in f_info]
-
     def followed(self, ids, entity_model):
         """ Return entities followed by users {id: {'count': count, 'ids': [top_followed_ids]}} """
         followed_data = list(self.filter(content_type=ContentType.objects.get_for_model(entity_model),
@@ -207,45 +231,63 @@ class EntityFollowerManager(BaseEntityManager):
         return res
 
     def is_followed(self, entity, profile):
-        if 'followers' not in type(entity).features:
+        if self.model.feature not in type(entity).features:
             return False
 
         # TODO: use generic relation
         return self.filter(content_type=ContentType.objects.get_for_model(entity),
                 entity_id=entity.id, follower=profile).exists()
 
-    def add(self, entity, profile):
-        # TODO: user should not follow himself
-        if 'followers' not in type(entity).features:
-            return
-
-        self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
-                entity_id=entity.id, follower=profile)
-        profile.update_source_points('contacts')
-        profile.clear_cache()
-        entity.clear_cache()
-
-    def remove(self, entity, profile):
-        if 'followers' not in type(entity).features:
-            return
-
-        # TODO: use generic relation
-        self.filter(content_type=ContentType.objects.get_for_model(entity),
-                entity_id=entity.id, follower=profile).delete()
-        profile.update_source_points('contacts')
-        profile.clear_cache()
-        entity.clear_cache()
-
 class EntityFollower(BaseEntityProperty):
     follower = models.ForeignKey('users.Profile', related_name='followed_entities')
 
     objects = EntityFollowerManager()
+
+    feature = 'followers'
+    fk_field = 'follower'
+    points_sources = ['contacts']
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'follower')
 
     def __unicode__(self):
         return unicode(self.follower) + ' follows ' + unicode(self.entity)
+
+class EntityAdminManager(BaseEntityManager):
+    # TODO: similar to follower model code
+    def get_for(self, model, ids):
+        """ Return admins data {id: {'count': count, 'ids': [ids]}} """
+        admins_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
+                entity_id__in=ids).values_list('entity_id', 'admin'))
+
+        from users.models import Profile
+        admins_rating = Profile.objects.filter(id__in=map(lambda a: a[1], admins_data)) \
+                .values_list('id', 'rating')
+
+        res = {}
+        for id in ids:
+            a_ids = map(lambda ad: ad[1], filter(lambda a: a[0]==id, admins_data))
+            top_admin_rating = sorted(filter(lambda a: a[0] in a_ids, admins_rating),
+                    key=lambda a: a[1], reverse=True)[:settings.TOP_ADMIN_COUNT]
+            res[id] = {
+                'count': len(a_ids),
+                'ids': map(lambda a: a[0], top_admin_rating),
+            }
+        return res
+
+class EntityAdmin(BaseEntityProperty):
+    admin = models.ForeignKey('users.Profile', related_name='admins')
+
+    objects = EntityAdminManager()
+
+    feature = 'admins'
+    fk_field  = 'admin'
+
+    class Meta:
+        unique_together = ('content_type', 'entity_id', 'admin')
+
+    def __unicode__(self):
+        return unicode(self.admin) + ' is admin of ' + unicode(self.entity)
 
 # TODO: add search method
 class BaseEntityManager(models.Manager):
@@ -258,9 +300,9 @@ class BaseEntityManager(models.Manager):
         cache_prefix = self.model.cache_prefix
         cached_entities = cache.get_many([cache_prefix+str(id) for id in ids])
 
-        # TODO: move it out of here (?)
+        # TODO: move it out of here (?), generate it
         features_models = {'resources': EntityResource, 'followers': EntityFollower,
-                'locations': EntityLocation}
+                'locations': EntityLocation, 'admins': EntityAdmin}
 
         cached_ids = []
         res = {}
@@ -336,7 +378,7 @@ class BaseEntityManager(models.Manager):
 
         return res
 
-# TODO: add admins, complaints, files/images
+# TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
     rating = models.IntegerField(default=0) # used for sorting entities
@@ -347,7 +389,7 @@ class BaseEntityModel(models.Model):
     objects = BaseEntityManager()
 
     cache_prefix = ''
-    features = [] # 'resources', 'followers', 'locations',  # TODO: 'complaints', 'admins'
+    features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
 
     class Meta:
         abstract = True

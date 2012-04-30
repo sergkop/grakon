@@ -20,7 +20,8 @@ Locations:
 Deployment:
     * generate js/code_data.js on deployment
     * minification of static files (http://developer.yahoo.com/yui/compressor/), caching times
-    * install ipython inside virtualenv
+    * put site_settings.py.example in repo (ready for developer)
+    * document dns configuration
 
 Elements:
     * create element forms for resources (like for location)
@@ -31,10 +32,10 @@ Emails:
     * sign emails with "Администрация Гракона" or smth. else
     * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
     * new email address for sending emails
+    * subscription configuration
 
 Profile:
     * user's picture
-    * table for saving all user's points, where they come from
 
 Misc:
     * shortcut to prevent using enter in dialog forms
@@ -44,6 +45,7 @@ Misc:
     * pagination + sorting by columns
     * only activated users should be displayed in lists
     * editing resources with comments
+    * page with form for writing messages (put link on it in emails)
 
 Front-end:
     * share and share_horizontal are overlap a lot
@@ -90,8 +92,6 @@ Wall:
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
 * show post messages
-
-* check that remove account works
 
 * move fb:admins meta tag value out of template
 
@@ -167,7 +167,6 @@ Deployment:
     * switch to wsgi
     * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
 
-    * include sqlite file with empty db ready for use
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * database backups
     * configure virtualenv inside settings properly
@@ -190,3 +189,5 @@ Deployment:
 * написать текст на страницах 404 и 500
 
 * highlight buttons in the menu
+
+* put all our media (video, presentations, logos, infographics, etc.) online in social networks

@@ -7,7 +7,7 @@ PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DEBUG = %(DEBUG)s
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = ()
+ADMINS = (('Sergey', 'sergkop@gmail.com'),)
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -33,6 +33,7 @@ CACHES = {
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '%(SECRET_KEY)s'
 
+DOMAIN = '%(DOMAIN)s'
 URL_PREFIX = '%(URL_PREFIX)s'
 
 STATIC_ROOT = '%(STATIC_ROOT)s'
