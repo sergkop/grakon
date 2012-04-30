@@ -2,15 +2,13 @@
 import datetime
 import random
 import re
-from smtplib import SMTPException
 
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
 from django.db import models
 from django.db import transaction
-from django.template.loader import render_to_string
 from django.utils.hashcompat import sha_constructor
+
+from services.email import send_email
 
 ACTIVATED = 'ALREADY_ACTIVATED'
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
@@ -82,19 +80,10 @@ class ActivationProfile(models.Model):
         expiration_date = (self.user.date_joined+datetime.timedelta(days=2)).replace(tzinfo=None)
         return self.activation_key==ACTIVATED or (expiration_date<=datetime.datetime.utcnow())
 
-    # TODO: use services.email to send mail
     def send_activation_email(self):
-        subject = u'Активация учетной записи на grakon.org'
-        profile = self.user.get_profile()
-        message = render_to_string('letters/activation_email.html', {
-            'activation_key': self.activation_key,
-            'URL_PREFIX': settings.URL_PREFIX,
-            'full_name': '%s %s' % (profile.first_name, profile.last_name),
-        })
-        try:
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.user.email], fail_silently=False)
-        except SMTPException:
-            return 'error'
+        send_email(self.user.get_profile(), u'Активация учетной записи на grakon.org', 'letters/activation_email.html',
+                {'activation_key': self.activation_key}, 'activation', 'noreply')
+
 
 # TODO: drop it
 #from social_auth.signals import pre_update

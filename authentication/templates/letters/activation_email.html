@@ -1,9 +1,9 @@
-Здравствуйте{% if full_name %}, {{ full_name }}{% endif %}!
+{% extends "letters/base.html" %}
 
-Чтобы активировать свой аккаунт на сайте Гракон,
-пожалуйста, перейдите по ссылке: {{ URL_PREFIX }}{% url activate_account activation_key %}
-Эта ссылка будет работать в течение двух дней.
+{% block content %}
+    Здравствуйте, {{ recipient }}!<br />
 
---
-С уважением, команда Гракон
-{{ URL_PREFIX }}
+    Чтобы активировать свой аккаунт на сайте Гракон,
+    пожалуйста, перейдите по ссылке: {{ URL_PREFIX }}{% url activate_account activation_key %}
+    Эта ссылка будет работать в течение двух дней.
+{% endblock %}

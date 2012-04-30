@@ -12,9 +12,7 @@ from locations.models import Location
 
 class LocationSelectWidget(Widget):
     def render(self, name, value, attrs=None):
-        """ value is a location path - the list [tegion_id, district_id, location_id] """
-
-        #print "value", value, attrs
+        """ value is a location path - the list [region_id, district_id, location_id] """
 
         value = value or []
 

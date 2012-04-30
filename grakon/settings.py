@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.ProfileMiddleware',
+    'services.middleware.FromEmailMiddleware',
 )
 
 ROOT_URLCONF = 'grakon.urls'

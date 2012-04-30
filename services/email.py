@@ -1,4 +1,6 @@
 from datetime import datetime
+import hashlib
+from urllib import urlencode
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -6,6 +8,8 @@ from django.template.loader import render_to_string
 
 import boto
 import dkim
+from lxml.etree import tostring
+from lxml.html.soupparser import fromstring
 
 from grakon.utils import project_settings
 from services.models import Email
@@ -13,24 +17,43 @@ from services.models import Email
 # TODO: ability to attach files
 # TODO: check user's subscription settings?
 def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None):
+    """ To send emails to admin account set recipient=None """
     # TODO: generate unsubscribe link with hash (page with confirmation); default place for it in base template
-
     context = project_settings()
     context.update(ctx)
+    context.update({
+        'recipient': recipient,
+    })
     html = render_to_string(template, context)
 
     # TODO: convert html to text, replace links by 'title (url)', no GA tracking in it
     text = html
 
-    # TODO: add GA tracking parameters to urls, starting with http://grakon.org (bool to turn it on).
-    #       Do it automatically by parsing html; use campaigns and url id inside messages
-    # TODO: minify html before sending
-    # TODO: add hash to links at grakon.org
+    hash = hashlib.md5(recipient.username+' '+str(datetime.now())).hexdigest()[:20]
+
+    xml = fromstring(html)
+    for a in xml.findall('.//a'):
+        url = a.get('href')
+        if url.startswith(settings.URL_PREFIX):
+            params = {
+                'mh': hash,
+                'utm_campaign': type,
+                'utm_medium': 'email',
+                'utm_source': 'main',
+            }
+            url += '&' if '?' in url else '?'
+            url += urlencode(params)
+
+        a.set('href', url)
+
+    html = tostring(xml)
+
     # TODO: append 1x1 px image to track opening
 
     # TODO: set reply_to
     from_str = u'%s <%s>' % settings.EMAILS[from_email]
-    msg = EmailMultiAlternatives(subject, text, from_str, [recipient.user.email])
+    to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
+    msg = EmailMultiAlternatives(subject, text, from_str, [to_email])
     msg.attach_alternative(html, "text/html")
     #msg.send()
 
@@ -48,10 +71,8 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     #        include_headers=['From', 'To', 'Cc', 'Subject', 'Reply-To'])
     #message = sig + message
 
-    hash = 'erger' # TODO: hash is a function of recipient id and timestamp
     # TODO: set priority
-    email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email,
-            read_time=datetime.now(), priority=0)
+    email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email, priority=0)
     email.save()
 
     send_email_task(email) # TODO: run it in celery (use select_related)
@@ -64,7 +85,8 @@ def send_email_task(email):
     try:
         # TODO: specify source
         # TODO: use select_related
-        response = conn.send_raw_email(destinations=email.recipient.user.email,
+        response = conn.send_raw_email(
+                destinations=email.recipient.user.email if email.recipient else settings.ADMIN_EMAIL,
                 raw_message=email.raw_msg)
     except SESConnection.ResponseError, err:
         error_keys = ['status', 'reason', 'body', 'request_id',

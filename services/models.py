@@ -17,16 +17,16 @@ EMAIL_STATUSES = (
 )
 
 class Email(models.Model):
-    recipient = models.ForeignKey(Profile)
+    recipient = models.ForeignKey(Profile, blank=True, null=True, default=None)
     hash = models.CharField(max_length=30, db_index=True)
-    type = models.CharField(max_length=10, db_index=True)
+    type = models.CharField(max_length=20, db_index=True)
     raw_msg = models.TextField()
     from_email = models.CharField(max_length=15, db_index=True) # key to get email from EMAILS
 
     time = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(max_length=9, choices=EMAIL_STATUSES, default='unsent', db_index=True)
     is_read = models.BooleanField(default=False)
-    read_time = models.DateTimeField(db_index=True)
+    read_time = models.DateTimeField(db_index=True, blank=True, null=True)
     error = models.TextField()
 
     priority = models.IntegerField(db_index=True) # Used by celery to prioritise tasks

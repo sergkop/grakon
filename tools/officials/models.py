@@ -30,6 +30,6 @@ class Official(BaseEntityModel):
         return ('official', [self.id])
 
     def __unicode__(self):
-        return u'%s %s %s' % (self.first_name, self.middle_name, self.last_name)
+        return u'%s %s %s' % (self.last_name, self.first_name, self.middle_name)
 
 entity_class(Official, ['followers', 'locations', 'admins'])

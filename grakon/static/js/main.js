@@ -42,9 +42,19 @@ function create_dialog(id, width, height, title, cancel_btn_title, buttons){
 // Shortcut used to send post requests from dialogs.
 // If post response is "ok", provided function is performed and dialog is closed.
 // Otherwise alert with error message appears.
-function dialog_post_shortcut(url, params, on_success){
+// If form_id is specified, params is updated with form data.
+function dialog_post_shortcut(url, params, on_success, form_id){
     return function(){
         params["csrfmiddlewaretoken"] = get_cookie("csrftoken");
+        if (form_id){
+            // TODO: this may not work with complex form fields
+            _.each($("#"+form_id).serializeArray(), function(field){
+                params[field.name] = field.value;
+            });
+            console.log(params);
+            //params = _.extend(params, $("#"+form_id).serialize());
+            //console.log(params);
+        }
         $.post(url, params, function(data){
             if (data=="ok"){
                 on_success();

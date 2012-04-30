@@ -5,6 +5,7 @@ django-crispy-forms
 bleach
 django-debug-toolbar
 pylibmc
+beautifulsoup
 scrapy
 django-social-auth
 psycopg2
