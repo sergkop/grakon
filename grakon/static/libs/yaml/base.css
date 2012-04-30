@@ -72,7 +72,7 @@
 	
 	nav {margin-bottom: 0.8em; padding-top: 2.5em}
 	
-	footer {height: 2em; position: relative; padding: 0.5em 0}
+	footer {height: 3.5em; position: relative; padding: .8em 0 1em; min-width: 1024px;}
 		footer a {margin-right: 0.7em;}
 	
 	header {padding: 0.1em 0; position: fixed; width: 100%; z-index:1000;}
@@ -134,7 +134,7 @@
 	* @section Float Handling Module
 	*/
 	
-	.ym-wrapper {min-width: 960px; max-width: 1200px; text-align:left; margin: 0 auto;}
+	.ym-wrapper {min-width: 960px; max-width: 1200px; text-align:left; margin: 0 auto; padding: 0 20px}
 
 	/* (en) clearfix method for clearing floats */
 	/* (de) Clearfix-Methode zum Clearen der Float-Umgebungen */
@@ -203,7 +203,7 @@
 		width:100%;
 	}
 	
-	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -1.7em 0; padding: 0;}
+	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -1.7em 0; padding: 0;  min-width: 1024px;}
 	.gr-footer {height: 4em;}
 }
 
@@ -223,7 +223,7 @@
 
 	.ym-column { display:table; width:100%;}
 
-	.ym-col1 { width: 60%; float:left; margin-left: 20%; padding: 1em 1em 0 0} /* center column */
+	.ym-col1 { width: 60%; float:left; margin-left: 20%; padding: 1em 0 0 0} /* center column */
 	.ym-col2 { width: 20%; float:left;  margin-left: -80%; padding: 1em 1em 0 0} /* left column */
 	.ym-col3 {  float:right; width: 20%; margin-left: -5px; margin-right: 0%; padding: 1em 0 0 1em} /* right column */
 	

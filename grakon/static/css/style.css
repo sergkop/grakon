@@ -4,16 +4,19 @@
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right;}
 .gr-fl {float: left;}
+.gr-dt {display: table;}
 .gr-mb20 {margin-bottom: 2em;}
+.gr-bb-grey {border-bottom: 1px dotted #a5a5a5;}
 
 /*Элементы header*/
-.gr-login-info {float: right; margin: 0.3em 0 0.2em;}
-    .gr-login-info a {border-right: 1px solid #242424; padding: 1.2em 1.4em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0;}
+.gr-login-info {float: right;}
+    .gr-login-info a {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em;; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0;}
+        .gr-login-info a:hover {text-decoration: none; background-color: rgba(100, 100, 100, .4)}
         .gr-login-info a:last-child {border: none; box-shadow: none;}
         .gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-geography {display: block; padding-right: 1.25em }
         header .gr-activity, header .gr-web-activity, header .gr-leader {padding-right: 1.7em; display: inline;}
 
-nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
+nav .ym-wrapper {padding: 1.8em 20px 1em;}
 
 /*Sidebars*/
 .ym-col2 h3, .ym-col3 h3 {border-radius: .2em; padding: .45em 0 .6em; margin-bottom: 5px; position: relative; border-top: 1px solid #cbdd8b;}
@@ -87,7 +90,7 @@ nav .ym-wrapper {border-bottom: 1px dotted #a5a5a5; padding: 1.3em 0 1em;}
     .gr-user-chart strong {position: absolute; top: -.4em; right: 0; width: 6em; text-align: right;}    
     .gr-user-chart small {float: right; color: #807270; margin-top: .2em;}
 
-.gr-inline-dl {overflow: hidden;}
+.gr-inline-dl {overflow: hidden; margin-bottom: 1em;}
     .gr-inline-dl dt {clear: left; float: left;}
         .gr-inline-dl dd {float: left;}
 
@@ -108,6 +111,13 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
     .gr-abuse {background-image:url(../images/icons/abuse-small.gif); padding-left: .9em; color: #769fb5;}
 
 .gr-aw-showcase_additional {font-size: .95em; margin-top: -1.3em; float: right; position: relative; z-index:1;}	
+
+
+/* Страница чиновника */
+
+.gr-tags {margin: .3em 0 1em 0;}
+    .gr-tags a {margin-left: 6px; margin-right: 1em; background-color: #d8edf8; padding: .3em .8em .4em .6em; text-transform: uppercase; font-weight: bold; text-shadow: 1px 1px 0 #fff; position: relative;}   
+    .gr-tags a:before { content: ""; position: absolute; width: 0; height: 0; border-top: 1em solid #fff; border-right: 6px solid #d8edf8; border-bottom: .95em solid #fff; top: 0; left: -6px;}
 
 /* ----- Переиспользуемые элементы ----- */
 
