@@ -58,10 +58,10 @@
         <nav class="ym-hlist">
             <div class="ym-wrapper">
                 <ul>
-                    <li class="active" ><a href="{% url main %}">Навигация</a></li>
-                    <li {% if template == "profiles/base.html" %}class="active"{% endif %}><a href="">Участники</a></li>
-                    <li><a href="">Инструменты</a></li>
-                    <li {% if template == "static_pages/about/base.html" %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
+                    <li {% if geography_menu_item %}class="active"{% endif %}><a href="{% url main %}">География</a></li>
+                    <li {% if participants_menu_item %}class="active"{% endif %}><a href="">Участники</a></li>
+                    <li {% if tools_menu_item %}class="active"{% endif %}><a href="">Инструменты</a></li>
+                    <li {% if about_menu_item %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
                     <li><a href="">Как помочь</a></li>
                     <li><a href="">FAQ</a></li>
                 </ul>

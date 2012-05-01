@@ -39,6 +39,7 @@ class BaseProfileView(object):
         self.info = profile.info()
 
         ctx.update({
+            'participants_menu_item': True,
             'tab': self.tab,
             'tabs': tabs,
             'profile': profile,

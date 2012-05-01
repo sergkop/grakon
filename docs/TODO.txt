@@ -1,38 +1,24 @@
-Registration
-    * configure registration with fb, vk, google
-    * consider case when user refuses to give rights to application
-    * create page for LOGIN_ERROR_URL
-    * configure django-social-auth
-    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+Registration:
     * restore location on error in form
     * fix redirect after logging in
-    * google allows to login automatically if account with this email already exists (is it ok?)
-    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
-    * create google oauth2 app from grakon account (?)
-    * file with all passwords, social applications (where to get them)
     * choosing resources
+    * block social registration
 
 Locations:
-    * Fix location names, filter out small districts
-    * add foreign countries
     * Show list my locations in top panel (if there are more than 1)
 
 Deployment:
     * generate js/code_data.js on deployment
-    * minification of static files (http://developer.yahoo.com/yui/compressor/), caching times
+    * caching media files in nginx
     * put site_settings.py.example in repo (ready for developer)
-    * document dns configuration
 
 Elements:
     * create element forms for resources (like for location)
 
 Emails:
-    * develop template for letters
     * fix texts of the letters
-    * sign emails with "Администрация Гракона" or smth. else
-    * track emails with http://cutroni.com/blog/2008/11/04/email-tracking-with-google-analytics/
-    * new email address for sending emails
     * subscription configuration
+    * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
 Profile:
     * user's picture
@@ -58,9 +44,7 @@ Front-end:
     * unused skill icon in icons/badges.png
 
 Analytics:
-    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * recieve error notifications on developer's email
-    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
 
 SEO:
     * Webmaster Tools, seo, https://www.google.com/webmasters/
@@ -69,7 +53,6 @@ SEO:
     * set proper page titles
 
 Performance:
-    * use debug toolbar, page speed to optimize page load
     * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
     * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
     * make lazy reformal loading
@@ -98,7 +81,24 @@ Wall:
 * allow user to start working without confirmation of his email, but limit his functionality (?)
 
 * captchas
+
+* dashboard with statistics (emails, users activities, traffic, etc.)
 --------------------------------------
+Emails:
+    * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+    * list-unsubscribe header
+    * messages, subscription @grakon.org
+
+Registration
+    * configure registration with fb, vk, google
+    * consider case when user refuses to give rights to application
+    * create page for LOGIN_ERROR_URL
+    * configure django-social-auth
+    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+    * google allows to login automatically if account with this email already exists (is it ok?)
+    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
+    * create google oauth2 app from grakon account (?)
+    * file with all passwords, social applications (where to get them)
 
 Front-end
     * conventions file for front-end developer (docs about tabs and buttons, page layout)
@@ -113,6 +113,8 @@ Front-end
     * automate search for unused and missing images, style classes
 
 Analytics:
+    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
+    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * analyze when user visited site/logged in last time
     * configure logging, sentry
     * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
@@ -135,6 +137,7 @@ Emails:
     * sending emails using mailgun.net or mailchimp.com (?) or amazon ses
 
 Performance:
+    * use debug toolbar, page speed to optimize page load
     * activate compression for tinymce
     * add all mime types to gzip list of nginx configuration
     * cache ajax (json) queries, gzip it, don't make authentication db queries for public ajax queries
@@ -163,6 +166,7 @@ Celery:
 * search + autocompletion
 
 Deployment:
+    * minification of static files (http://developer.yahoo.com/yui/compressor/)
     * configure nginx (see config settings)
     * switch to wsgi
     * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv

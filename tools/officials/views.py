@@ -30,6 +30,7 @@ class BaseOfficialView(object):
         self.info = official.info()
 
         ctx.update({
+            'tools_menu_item': True,
             'tab': self.tab,
             'tabs': tabs,
             'info': self.info,
