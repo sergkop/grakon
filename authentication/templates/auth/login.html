@@ -15,8 +15,9 @@
             <a href="{% url register %}">Регистрация</a>
         </div>
 
-        <a href="{% url socialauth_begin 'facebook' %}">Facebook</a>
-
-        <a href="{% url socialauth_begin 'google-oauth2' %}">Google</a>
+        {% comment %}
+            <a href="{% url socialauth_begin 'facebook' %}">Facebook</a>
+            <a href="{% url socialauth_begin 'google-oauth2' %}">Google</a>
+        {% endcomment %}
     </div>
 {% endblock %}

@@ -31,7 +31,7 @@ class BaseLocationView(object):
 
         tabs = [
             ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
-            ('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
+            #('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
             ('tools', u'Инструменты', reverse('location_tools', args=[location.id]), 'locations/tools.html', ''),
             ('participants', u'Участники', reverse('location_participants', args=[location.id]), 'locations/participants.html', ''),
         ]

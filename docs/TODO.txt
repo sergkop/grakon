@@ -1,68 +1,97 @@
+Analytics:
+    * recieve error notifications on developer's email
+
+* feedback form
+
+Emails:
+    * fix texts of the letters; test sending all emails
+    * subscription configuration
+    * link to feedback form (or our email), 'read us' buttons
+    * sending messages
+
+Misc:
+    * only activated users should be displayed in lists
+    * in forms limit lengths of strings that go into model's CharField
+
+Wall:
+    * configure disqus + authorization
+    * automatically disable discus at dev server
+
+-----------
+
+* Misha can log in to my account
+
+Resources:
+    * choosing resources in registration
+    * create element forms for resources (like for location)
+    * text fields for resources
+
+Officials:
+    * adding urls about officials + universal entity feature for it
+    * complaints
+    * lists of officials on location pages
+
+Misc:
+    * page with form for writing messages (put link on it in emails)
+    * Left column of profile - administration, participation, представитель организации, etc.
+    * generate forms using features
+    * hide/show icons of points and resources in the right panel list
+
+Front-end:
+    * add google+ page to list of services
+    * show g+ and vk buttons in dev mode; add these buttons to pages
+    * share buttons
+    * icon for remove from contacts button
+
+SEO:
+    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
+
+---------Before launch-----------------
+
 Registration:
     * restore location on error in form
     * fix redirect after logging in
-    * choosing resources
-    * block social registration
 
-Locations:
-    * Show list my locations in top panel (if there are more than 1)
+Performance:
+    * in chrome page reloads on tabs change
+    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
+    * make lazy reformal loading
 
-Deployment:
-    * generate js/code_data.js on deployment
-    * caching media files in nginx
-    * put site_settings.py.example in repo (ready for developer)
+SEO:
+    * Webmaster Tools, seo, https://www.google.com/webmasters/
+    * set proper page titles
+    * sitemaps
 
-Elements:
-    * create element forms for resources (like for location)
+Front-end:
+    * when two buttons are close to each other (e.g. profile edit) - line appears between them
+    * do we need button tag?
+    * unused skill icon in icons/badges.png
+    * shortcut to prevent using enter in dialog forms
+    * remove-after-launch
+    * aw-showcase
+    * share and share_horizontal are overlap a lot
 
-Emails:
-    * fix texts of the letters
-    * subscription configuration
-    * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+Misc:
+    * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
+        move logo url to settings
+    * pagination + sorting by columns
+    * reset cache on changes
+    * add tips to buttons and ? signs to get help on features of the system
+    * Prohibit to become participant at higher levels (hide button)?
 
 Profile:
     * user's picture
 
-Misc:
-    * shortcut to prevent using enter in dialog forms
-    * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
-        move logo url to settings
-    * add tips to buttons and ? signs to get help on features of the system
-    * pagination + sorting by columns
-    * only activated users should be displayed in lists
-    * editing resources with comments
-    * page with form for writing messages (put link on it in emails)
-
-Front-end:
-    * share and share_horizontal are overlap a lot
-    * when two buttons are close to each other (e.g. profile edit) - line appears between them
-    * add google+ page to list of services
-    * show g+ and vk buttons in dev mode; add these buttons to pages
-    * share buttons
-    * do we need button tag?
-    * icon for remove from contacts button
-    * unused skill icon in icons/badges.png
-
-Analytics:
-    * recieve error notifications on developer's email
-
-SEO:
-    * Webmaster Tools, seo, https://www.google.com/webmasters/
-    * sitemaps
-    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
-    * set proper page titles
-
-Performance:
-    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-    * compress favicon, enable gzip, serve directly from nginx at /favicon.ico, caching
-    * make lazy reformal loading
-    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
-
-Wall:
-    * replace disqus?
-    * automatically disable discus at dev server
-
+Emails:
+    * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 --------------------------------------
+* choosing main location
+
+* Show list my locations in top panel (if there are more than 1)
+
+* pages for tools and users (with search) + bring them back in main menu
+
 * friend invitation
 
 * generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
@@ -145,6 +174,7 @@ Performance:
     * use pngcrush (pngcrush -rem alla -reduce -brute image.png result.png) to compress pngs; gif->png?
     * use jpegtran (jpegtran -copy none -optimize -perfect image.jpg > res.jpg) to compress jpegs
     * postgres configuration
+    * compress favicon
 
 Cache:
     * use template caching
@@ -166,10 +196,12 @@ Celery:
 * search + autocompletion
 
 Deployment:
+    * far expires date in nginx
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
     * configure nginx (see config settings)
     * switch to wsgi
     * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
+    * put site_settings.py.example in repo (ready for developer)
 
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * database backups

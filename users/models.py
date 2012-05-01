@@ -58,6 +58,7 @@ class Profile(BaseEntityModel):
     def calc_rating(self):
         pass # TODO: implement it
 
+    # TODO: make it admin interface command
     def update_points(self):
         # TODO: create celery task
         Points.objects.recalculate(self)

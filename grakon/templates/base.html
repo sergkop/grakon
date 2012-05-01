@@ -47,7 +47,7 @@
                         <a href=""><strong class="gr-leader">{{ request.profile_info.points.leader }}</strong></a>
                         <a href=""><strong class="gr-activity">{{ request.profile_info.points.offline }}</strong></a>
                         <a href=""><strong class="gr-web-activity">{{ request.profile_info.points.online }}</strong></a>
-                        {% if request.profile_info.locations.main %}<a href="{% url location request.profile_info.locations.main %}">Мой район</a>{% endif %}
+                        {% if request.profile_info.locations.main_id %}<a href="{% url location request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                         <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                     {% else %}
                         <a id="menu_login_btn">Войти</a>
@@ -59,8 +59,8 @@
             <div class="ym-wrapper">
                 <ul>
                     <li {% if geography_menu_item %}class="active"{% endif %}><a href="{% url main %}">География</a></li>
-                    <li {% if participants_menu_item %}class="active"{% endif %}><a href="">Участники</a></li>
-                    <li {% if tools_menu_item %}class="active"{% endif %}><a href="">Инструменты</a></li>
+                    <!--li {% if participants_menu_item %}class="active"{% endif %}><a href="">Участники</a></li>
+                    <li {% if tools_menu_item %}class="active"{% endif %}><a href="">Инструменты</a></li-->
                     <li {% if about_menu_item %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
                     <li><a href="">Как помочь</a></li>
                     <li><a href="">FAQ</a></li>

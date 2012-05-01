@@ -45,6 +45,7 @@
     {% endif %}
 {% endif %}
 
+{% comment %}
 <dl class="gr-inline-dl">
     <dt class="dimmed">Сайт:</dt>
     <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
@@ -55,6 +56,7 @@
     <dt class="dimmed">Skype:</dt>
     <dd>MPanko <a href="" class="gr-skype">&nbsp;</a></dd>
 </dl>
+{% endcomment %}
 
 <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
 <div id="resources">
@@ -69,7 +71,7 @@
                     ct_id: {{ info.ct }}, entity_id: {{ request.profile.id }} })).render();
         </script>
     {% else %}
-        {% with tags=resources %}
+        {% with tags=info.resources %}
             {% include "elements/tags_view.html" %}
         {% endwith %}
     {% endif %}

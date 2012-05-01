@@ -171,7 +171,7 @@ def deploy_static_files():
     virtualenv('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
     virtualenv('cp %s %srobots.txt' % (
             os.path.join(conf['code_path'], 'grakon', 'templates', 'robots.txt'), conf['static_path']))
-    # TODO: copy code_data.js
+    virtualenv('python %s code_data %sjs/code_data.js' % (manage_path, conf['STATIC_ROOT']))
 
 # TODO: optionally run pip install -r requirements.txt (with upgrade?)
 def update_code():

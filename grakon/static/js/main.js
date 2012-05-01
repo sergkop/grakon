@@ -277,7 +277,7 @@ function locations_list_editing(ct_id, id){
                     // TODO: use model dialog here?
                     if (confirmation)
                         dialog_post_shortcut(REMOVE_LOCATION_URL, {"loc_id": li.attr("loc_id"), "ct": ct_id, "id": id,
-                                "csrfmiddlewaretoken": get_cookie("csrftoken")}, function(){li.remove();})
+                                "csrfmiddlewaretoken": get_cookie("csrftoken")}, function(){li.remove();})();
                 })
                 .prependTo(li);
     });

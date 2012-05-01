@@ -37,6 +37,7 @@ def location_init(form, required, label):
         'district': forms.CharField(required=False),
         'location': forms.CharField(required=False),
     })
+    form.Meta.exclude = ('region', 'district', 'location')
 
 def form_location_path(form):
     path = []
@@ -76,12 +77,10 @@ def location_clean(form):
             raise forms.ValidationError(msg)
 
         # Check that this is the lowest possible level
-        # TODO: doesn't work with 2 level depth (Адыгея->Адыгейск)
         if form.location.is_district():
-            if Location.objects.filter(district=form.location).count() == 0:
+            if Location.objects.filter(district=form.location).count() != 0:
                 form_location_path(form)
                 raise forms.ValidationError(msg)
 
-    print form.location
     form_location_path(form)
     return form.cleaned_data
