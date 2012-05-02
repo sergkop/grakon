@@ -11,6 +11,7 @@ class OfficialManager(BaseEntityManager):
 
 # TODO: url - for official website/page (maybe several) (element for that?)
 # TODO: introduce type
+@entity_class(['followers', 'locations', 'admins'])
 class Official(BaseEntityModel):
     first_name = models.CharField(u'Имя', max_length=50)
     middle_name = models.CharField(u'Отчество', max_length=50, blank=True)
@@ -31,5 +32,3 @@ class Official(BaseEntityModel):
 
     def __unicode__(self):
         return u'%s %s %s' % (self.last_name, self.first_name, self.middle_name)
-
-entity_class(Official, ['followers', 'locations', 'admins'])

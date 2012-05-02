@@ -26,7 +26,8 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     })
     html = render_to_string(template, context)
 
-    # TODO: convert html to text, replace links by 'title (url)', no GA tracking in it
+    # TODO: convert html to text
+    # TODO: replace <a href="url">text</a> with 'text url', no GA tracking in it
     text = html
 
     hash = hashlib.md5(recipient.username+' '+str(datetime.now())).hexdigest()[:20]

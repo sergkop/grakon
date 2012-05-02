@@ -8,12 +8,13 @@ from django.utils.safestring import mark_safe
 
 from crispy_forms.layout import HTML
 
+from elements.models import EntityLocation
+from elements.utils import class_decorator
 from locations.models import Location
 
 class LocationSelectWidget(Widget):
     def render(self, name, value, attrs=None):
         """ value is a location path - the list [region_id, district_id, location_id] """
-
         value = value or []
 
         html = '<div id="%s">%s</div>' % (name, render_to_string('elements/select_location.html'))
@@ -26,18 +27,43 @@ class LocationSelectWidget(Widget):
 
         return mark_safe(html)
 
-def location_init(form, required, label):
+# TODO: write one method taking a list of features (take params from models)
+# TODO: rename it
+def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
-    form.required = required
-
-    form.fields.update({
+    attrs = {
+        'required': required, # TODO: maybe assign it after form class is created
         'location_select': forms.CharField(label=label, required=True, initial=[],
                 widget=LocationSelectWidget),
         'region': forms.CharField(required=False),
         'district': forms.CharField(required=False),
         'location': forms.CharField(required=False),
-    })
-    form.Meta.exclude = ('region', 'district', 'location')
+    }
+
+    def decorator(cls):
+        new_cls = class_decorator(attrs)(cls)
+        new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
+
+        clean = new_cls.clean
+        def new_clean(form):
+            form.cleaned_data = location_clean(form)
+            return clean(form)
+        new_cls.clean = new_clean
+
+        save = new_cls.save
+        def new_save(form):
+            entity = save(form)
+
+            # TODO: what about is_main (take decorator params to control it)
+            # TODO: it can cause IntegrityError
+            EntityLocation.objects.create(entity=entity, location=form.location, is_main=True)
+
+            return entity
+        new_cls.save = new_save
+
+        return new_cls
+
+    return decorator
 
 def form_location_path(form):
     path = []

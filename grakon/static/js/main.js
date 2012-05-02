@@ -51,9 +51,6 @@ function dialog_post_shortcut(url, params, on_success, form_id){
             _.each($("#"+form_id).serializeArray(), function(field){
                 params[field.name] = field.value;
             });
-            console.log(params);
-            //params = _.extend(params, $("#"+form_id).serialize());
-            //console.log(params);
         }
         $.post(url, params, function(data){
             if (data=="ok"){

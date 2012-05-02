@@ -31,3 +31,19 @@ def clean_html(html):
 
     styles = ['text-decoration', 'font-size', 'font-family', 'text-align', 'padding-left', 'color', 'background-color', ]
     return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
+
+def class_decorator(attrs):
+    """
+    Return class decorator which extends class with provided attrs dict
+    before class creation (needed for Form and Model).
+    """
+    def decorator(cls):
+        class NewMetaclass(type):
+            def __new__(cls1, name, bases, attrs1):
+                attrs1.update(attrs)
+                new_class = cls.__metaclass__(name, bases, attrs1)
+                return new_class
+
+        return type(cls.__name__, (cls,), {'__metaclass__': NewMetaclass, '__module__': cls.__module__})
+
+    return decorator

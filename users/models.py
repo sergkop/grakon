@@ -40,6 +40,7 @@ class ProfileManager(BaseEntityManager):
             data[id]['contacts']['entities'] = [contacts_info[c_id] for c_id in data[id]['contacts']['ids']
                             if c_id in contacts_info]
 
+@entity_class(['resources', 'followers', 'locations'])
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30, db_index=True)
@@ -85,8 +86,6 @@ class Profile(BaseEntityModel):
             return self.first_name + u' ' + self.last_name
         return self.username
 
-entity_class(Profile, ['resources', 'followers', 'locations'])
-
 def create_profile(sender, **kwargs):
     if kwargs.get('created', False):
         profile = Profile()
@@ -95,7 +94,6 @@ def create_profile(sender, **kwargs):
         profile.save()
 
 models.signals.post_save.connect(create_profile, sender=User)
-
 
 def points_type(type):
     """ type is 'online', 'offline' or 'leader' """

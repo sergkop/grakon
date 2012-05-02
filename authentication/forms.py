@@ -16,8 +16,7 @@ from django.utils.safestring import mark_safe
 from crispy_forms.layout import ButtonHolder, Fieldset, HTML, Layout, Submit
 
 from authentication.models import ActivationProfile
-from elements.forms import location_clean, location_init
-from elements.models import EntityLocation
+from elements.forms import location_init
 from elements.utils import clean_html, form_helper
 from users.models import Profile
 
@@ -35,14 +34,7 @@ class BaseRegistrationForm(forms.ModelForm):
         model = Profile
         fields = ('username', 'last_name', 'first_name')
 
-    def __init__(self, *args, **kwargs):
-        super(BaseRegistrationForm, self).__init__(*args, **kwargs)
-        location_init(self, True, u'Место жительства')
-
-    # TODO: make it clean_location_select and move assignment to location_init
-    def clean(self):
-        return location_clean(self)
-
+@location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
     password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
             help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну латинскую букву и одну цифру')
@@ -109,6 +101,7 @@ class RegistrationForm(BaseRegistrationForm):
         return self.cleaned_data['password2']
 
     # TODO: check that email domain is correct (ping it) (?)
+    # TODO: collect domains from old users and warn if entered is not one of them
     def save(self):
         username, email, password = self.cleaned_data['username'], \
                 self.cleaned_data['email'], self.cleaned_data.get('password1', '')
@@ -126,14 +119,13 @@ class RegistrationForm(BaseRegistrationForm):
 
         ActivationProfile.objects.init_activation(user)
 
-        EntityLocation.objects.create(entity=profile, location=self.location, is_main=True)
-
         for source in ['registration', 'show_name', 'resources']:
             profile.update_source_points(source)
 
-        return user
+        return profile
 
 # TODO: add next hidden field
+@location_init(True, u'Место жительства')
 class SocialRegistrationForm(BaseRegistrationForm):
     helper = form_helper('social_registration', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
@@ -202,12 +194,10 @@ class SocialRegistrationForm(BaseRegistrationForm):
             user.save()
             ActivationProfile.objects.init_activation(user)
 
-        EntityLocation.objects.create(entity=profile, location=self.location)
-
         for source in ['registration', 'show_name', 'resources']:
             profile.update_source_points(source)
 
-        return user
+        return profile
 
 class LoginForm(auth_forms.AuthenticationForm):
     helper = form_helper('login', u'Войти')

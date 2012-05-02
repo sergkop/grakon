@@ -14,7 +14,7 @@ def register(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            user = form.save()
+            profile = form.save()
             return redirect('registration_completed')
     else:
         form = RegistrationForm()
@@ -62,13 +62,13 @@ def social_registration(request):
         form = SocialRegistrationForm(request.POST, **form_params)
 
         if form.is_valid():
-            user = form.save()
+            profile = form.save()
 
             if email_verified:
                 from django.conf import settings
                 name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
                 data[name] = 5 # TODO: fix it; start with settings.SOCIAL_AUTH_PIPELINE_RESUME_ENTRY
-                data['kwargs']['user'] = user
+                data['kwargs']['user'] = profile.user
                 data['kwargs']['is_new'] = True
                 request.session[name] = data
 

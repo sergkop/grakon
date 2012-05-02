@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models import Q
 
-from elements.utils import reset_cache
+from elements.utils import class_decorator, reset_cache
 from locations.models import Location
 
 class BaseEntityManager(models.Manager):
@@ -421,11 +421,11 @@ class BaseEntityModel(models.Model):
 def update_resources(self, resources):
     EntityResource.objects.update_entity_resources(self, resources)
 
-def entity_class(model, features):
-    """ Call it right after model definition """
-    attrs = {'features': features}
+def entity_class(features):
+    """ Return decorator for entity model """
+    attrs = {}
 
-    # TODO: generic relations don't work; start using them
+    # TODO: start using generic relations don't work
     if 'resources' in features:
         attrs['resources'] = generic.GenericRelation(EntityResource, object_id_field='entity_id')
         attrs['update_resources'] = update_resources
@@ -436,5 +436,9 @@ def entity_class(model, features):
     if 'locations' in features:
         attrs['locations'] = generic.GenericRelation(EntityLocation, object_id_field='entity_id')
 
-    for attr, value in attrs.iteritems():
-        setattr(model, attr, value)
+    def decorator(cls):
+        new_cls = class_decorator(attrs)(cls)
+        new_cls.features = features
+        return new_cls
+
+    return decorator
