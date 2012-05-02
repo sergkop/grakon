@@ -114,6 +114,10 @@
 		font-weight: bold;
 		color: #5a4e4e;		
 	}
+	
+	.ym-col2 h4 a, .ym-col3 h4 a{
+        color: #5A4E4E;        
+    }
 
 	h5 {
 		font-size:1em;

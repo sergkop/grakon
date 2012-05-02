@@ -11,7 +11,7 @@
 {% block left_column %}
     <h3>Инструменты<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials">Чиновники <i>&nbsp;</i></h4>
+        <h4 class="gr-officials"><a href="">Чиновники</a> <i title="контролируем их деятельность">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
             <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="gr-side-item">
-        <h4 class="gr-long-title">Добрая машина Правды <i>&nbsp;</i></h4>
+        <h4 class="gr-long-title"><a href="">Добрая машина Правды</a> <i title="разбираемся где правда, а где ложь">&nbsp;</i></h4>
         <ul>
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="">Мэр поднимет зарплаты госслужащим</a> (72)</li>
             <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Мер посетил лицей</a> (72)</li>
@@ -34,8 +34,8 @@
             <a href="" class="ym-button">Добавить мероприятие</a>
         </div>
     </div>
-    <div class="gr-side-item">
-        <h4 class="gr-events">Мероприятия <i>&nbsp;</i></h4>
+    <div class="gr-side-item gr-disableds">
+        <h4 class="gr-events"><a href="">Мероприятия</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
             <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
@@ -50,13 +50,16 @@
 
 {% block right_column %}
     <div class="gr-side-item gr-light-back">
-        <h4 class="gr-participants">Участники ({{ info.participants.count }}) <i>&nbsp;</i></h4>
+        <h4 class="gr-participants"><a href="">Участники ({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for person in info.participants.entities %}
                 <tr>
                     {% include "elements/person.html" %}
                 </tr>
             {% endfor %}
+                <tr>
+                    <td colspan="6"><a href="">Все</a></td>
+                </tr>
         </table>
         {% if not is_participant %}
             <div align="center">

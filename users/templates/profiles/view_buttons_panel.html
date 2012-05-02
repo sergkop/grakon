@@ -1,7 +1,7 @@
 <div class="gr-mb20">
     <a id="send_message_btn" class="ym-button gr-blue-button gr-mail"><span>Отправить сообщение</span></a>
     {% if in_contacts %}
-        <a id="remove_contact_btn" class="ym-button gr-blue-button gr-add"><span>Удалить из контактов</span></a>
+        <a id="remove_contact_btn" class="ym-button gr-blue-button gr-remove"><span>Удалить из контактов</span></a>
     {% else %}
         <a id="add_contact_btn" class="ym-button gr-blue-button gr-add"><span>Добавить в контакты</span></a>
     {% endif %}
@@ -10,13 +10,13 @@
 
 {% if request.user.is_authenticated %}
     <div id="send_message_dialog" class="hidden">
-        <p>Отправить сообщение пользователю {{ profile }}</p>
+        <p>Отправить сообщение пользователю <strong>{{ profile }}</strong>:</p>
 
         <form id="send_message_form" method="post">
             <div><label for="title">Тема:</label></div>
-            <div><input type="text" name="title" value="" size="60" /></div>
+            <div><input type="text" name="title" value="" size="30" /></div>
             <div><label for="body">Сообщение:</label></div>
-            <div><textarea name="body" rows="4" cols="60"></textarea></div>
+            <div><textarea name="body" rows="4" cols="30"></textarea></div>
             <div>
                 <label for="show_name">Показать email получателю</label>
                 <input type="checkbox" name="show_email" checked="checked" />
@@ -25,7 +25,7 @@
     </div>
 
     <script type="text/javascript">
-        create_dialog("send_message_dialog", 625, 400, "Отправить сообщение", "Отмена", {
+        create_dialog("send_message_dialog", 400, 350, "Отправить сообщение", "Отмена", {
             "Отправить": dialog_post_shortcut("{% url send_message %}", {"id": {{ profile.id }} },
                     function(){$("#send_message_dialog").dialog("close");}, "send_message_form")
         });
@@ -34,11 +34,11 @@
 
     {% if in_contacts %}
         <div id="remove_contact_dialog" class="hidden">
-            <p>Вы хотите удалить пользователя {{ profile }} из списка контактов?</p>
+            <p>Вы хотите удалить пользователя <strong>{{ profile }}</strong> из&nbsp;списка контактов?</p>
         </div>
 
         <script type="text/javascript">
-            create_dialog("remove_contact_dialog", 625, 400, "Удалить из контактов", "Отмена", {
+            create_dialog("remove_contact_dialog", 300, 200, "Удалить из контактов", "Отмена", {
                 "Удалить": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
                     function(){
                         $("#remove_contact_dialog").dialog("close");
@@ -50,11 +50,11 @@
         </script>
     {% else %}
         <div id="add_contact_dialog" class="hidden">
-            <p>Вы хотите добавить пользователя {{ profile }} в список контактов?</p>
+            <p>Вы хотите добавить пользователя <strong>{{ profile }}</strong> в&nbsp;список контактов?</p>
         </div>
 
         <script type="text/javascript">
-            create_dialog("add_contact_dialog", 625, 400, "Добавить в контакты", "Отмена", {
+            create_dialog("add_contact_dialog", 300, 200, "Добавить в контакты", "Отмена", {
                 "Добавить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
                     function(){
                         $("#add_contact_dialog").dialog("close");

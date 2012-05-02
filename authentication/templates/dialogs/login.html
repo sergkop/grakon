@@ -11,13 +11,14 @@
                 <td><input id="id_password" type="password" name="password" /></td>
             </tr>
             <tr>
-                <td colspan="2" align="center">
+                <td colspan="2" valign="middle" align="center">
                     <input id="login_form_submit" type="submit" value="Войти" class="ui-state-default " />
+                     <a id="login_dialog_register" class="ym-button" href="{% url register %}">Регистрация</a>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <a id="login_dialog_register" href="{% url register %}">Регистрация</a>&nbsp; &nbsp;<a href="{% url password_reset %}">Забыли пароль?</a>
+                    <a href="{% url password_reset %}">Забыли пароль?</a>
                 </td>
             </tr>
         </table>

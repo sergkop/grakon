@@ -1,11 +1,13 @@
-.gr-breadcrumbs {margin: 1em 0 0; clear: both;}
+.gr-breadcrumbs {margin: 1em 0 2em; clear: both;}
     .gr-breadcrumbs i {position: absolute; top:0; right: -15px; width: 16px; height: 35px; overflow: hidden; z-index:1;}
 
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right;}
 .gr-fl {float: left;}
 .gr-dt {display: table;}
-.gr-mb20 {margin-bottom: 2em;}
+.gr-mt10 {margin-top: 1em !important;}
+.gr-mb10 {margin-bottom: 1em !important;}
+.gr-mb20 {margin-bottom: 2em !important;}
 .gr-bb-grey {border-bottom: 1px dotted #a5a5a5;}
 
 /*Элементы header*/
@@ -23,7 +25,7 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
     .ym-col2 h3 i, .ym-col3 h3 i {position: absolute; bottom: -3px; left: 50%; margin-left: -4px; width: 7px; height: 3px; background: url(../images/bg-green-header.gif) 0 0 no-repeat;}
 
 
-.gr-side-item {border-radius: .2em; border: 1px solid #ded5d5; border-width: 1px 1px 0; box-shadow: inset 0 1px 0 #fff; background-color: #edeaea;} 
+.gr-side-item {border-radius: .2em; border: 1px solid #ded5d5; border-width: 0 1px 1px; box-shadow: inset 0 1px 0 #fff; background-color: #edeaea;} 
     .gr-side-item h4 {background: #dfd9d9 url(../images/icons/side-headers.png) 0 3px no-repeat; padding: 1.5em 1em 1.55em 58px; position: relative;}
         .gr-side-item h4.gr-long-title {padding-top: 1em; padding-bottom: 1.05em;}
         .gr-side-item h4 i, .ym-col3 h3 i.gr-question, .gr-question i {position: absolute; top: 5px; right: 5px; left:auto;  width: 18px; height: 20px; background: url(../images/icons/question.png) 0 0 no-repeat; cursor: pointer; padding-right: 0;}
@@ -36,7 +38,7 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
                 .gr-side-item li i, .gr-source-list-slider li i {position: absolute; top: .8em; left: 0; width: 3em; text-align: right; font-style: normal;}
                 .gr-source-list-slider li i {top: 1em;} 
                 .gr-orange-arrow-up, .gr-orange-arrow-down { top: .9em;}
-                .gr-side-item:last-child {border-bottom: 1px solid #ded5d5;}
+                .gr-side-item li:first-child {border-top: 1px solid #ded5d5;}
                 .gr-source-list-slider li .dimmed {padding-left: 1.3em; margin-left:.5em; background: url(../images/icons/back-dotted-arrow.gif) 0 .5em no-repeat;}
 
         .gr-side-item h4.gr-officials {background-position: 0 -182px;}
@@ -54,9 +56,10 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
     .gr-side-table td {padding: .4em .2em .4em .5em; background-color: #edeaea;}
 
 /*Оформление кнопок*/
-.gr-add span, .gr-mail span, .gr-complaint span, .gr-look span, .gr-agit span {background: url(../images/icons/btn-add.gif) 0 center no-repeat; padding-left: 1.3em;}	
-    .gr-mail span {background-image: url(../images/icons/btn-mail.png);}
-    .gr-complaint  span {background-image: url(../images/icons/btn-complaint.png);}
+.gr-add span, .gr-remove span, .gr-mail span, .gr-complaint span, .gr-look span, .gr-agit span {background: url(../images/icons/btns.png) 0 3px no-repeat; padding-left: 1.3em;}	
+    .gr-add span {background-position: -1px -19px;}
+    .gr-remove span {background-position: -1px -40px;}
+    .gr-complaint  span {background-position: -3px -64px; padding-left: 1.15em}
     .gr-look span {background-image: url(../images/icons/look.png); padding-left: 1.6em;}
     .gr-agit span {background-image: url(../images/icons/agit.png);}
 
@@ -118,6 +121,13 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 .gr-tags {margin: .3em 0 1em 0;}
     .gr-tags a {margin-left: 6px; margin-right: 1em; background-color: #d8edf8; padding: .3em .8em .4em .6em; text-transform: uppercase; font-weight: bold; text-shadow: 1px 1px 0 #fff; position: relative;}   
     .gr-tags a:before { content: ""; position: absolute; width: 0; height: 0; border-top: 1em solid #fff; border-right: 6px solid #d8edf8; border-bottom: .95em solid #fff; top: 0; left: -6px;}
+    
+/*Кнопки соцсетей*/
+.gr-twitter {width: 90px; overflow: hidden; margin-bottom: 9px; margin-right: .6em; float: right;} 
+.gr-gplusone {width:72px; overflow: hidden; float: right;}
+.gr-facebook {margin: 0 0 9px; float: right;}
+.gr-vk {margin: 0 0 9px; height: 22px; overflow: hidden; width: 170px; float: right;}
+
 
 /* ----- Переиспользуемые элементы ----- */
 

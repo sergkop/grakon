@@ -91,15 +91,15 @@ th {
 }
 
 .ym-hlist .gr-breadcrumbs ul li strong, .gr-blue-button {
-    box-shadow: inset 0 -1px 0 #2e8cbb;
+    box-shadow: inset 0 -1px 0 #2a88b8ss;
 	color: #fff !important;
-	background-color: #2e8cbb;
-	background: -moz-linear-gradient(#60bfed, #2e8cbb);
-	background: -ms-linear-gradient(#60bfed, #2e8cbb);
-	background: -o-linear-gradient(#60bfed, #2e8cbb);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#60bfed), to(#2e8cbb));
-	background: -webkit-linear-gradient(#60bfed, #2e8cbb);
-	background: linear-gradient(#60bfed, #2e8cbb);
+	background-color: #2a88b8;
+    background: -moz-linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);
+    background: -ms-linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);
+    background: -o-linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#62c0ee), color-stop(0.55, #45a3d2), to(#2a88b8));
+    background: -webkit-linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);
+    background: linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);
 }
 
 .gr-breadcrumbs strong i {background-position: 0 -39px;} 
