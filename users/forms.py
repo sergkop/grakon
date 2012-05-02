@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from elements.utils import clean_html, form_helper
+from elements.utils import form_helper
 from users.models import Profile
 
 class ProfileForm(forms.ModelForm):
@@ -10,6 +10,3 @@ class ProfileForm(forms.ModelForm):
         exclude = ('user', 'username', 'points', 'rating')
 
     helper = form_helper('', u'Сохранить')
-
-    def clean_about(self):
-        return clean_html(self.cleaned_data['about'])

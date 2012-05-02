@@ -6,6 +6,8 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models import Q
 
+from tinymce.models import HTMLField as TinyMCEHTMLField
+
 from elements.utils import class_decorator, reset_cache
 from locations.models import Location
 
@@ -115,10 +117,13 @@ class EntityResourceManager(BaseEntityManager):
         if self.model.feature not in type(entity).features:
             return
 
+        # Filter out resources not from the list
+        resources = set(RESOURCE_DICT.keys()) & set(resources)
+
         # TODO: use generic relation
         entity_resources = list(self.filter(entity_id=entity.id,
                 content_type=ContentType.objects.get_for_model(type(entity))))
-        new_resources = set(resources) - set(er.resource for er in entity_resources)
+        new_resources = resources - set(er.resource for er in entity_resources)
 
         for er in entity_resources:
             if er.resource not in resources:
@@ -442,3 +447,9 @@ def entity_class(features):
         return new_cls
 
     return decorator
+
+class HTMLField(TinyMCEHTMLField):
+    def formfield(self, **kwargs):
+        from elements.forms import HTMLCharField
+        kwargs['form_class'] = HTMLCharField
+        return super(HTMLField, self).formfield(**kwargs)

@@ -69,6 +69,7 @@ def update_resources(request, entity):
     EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
     return HttpResponse('ok')
 
+# TODO: allow to create main location
 @entity_post_method
 @check_permissions
 def add_location(request, entity):

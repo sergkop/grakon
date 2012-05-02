@@ -17,7 +17,7 @@ from crispy_forms.layout import ButtonHolder, Fieldset, HTML, Layout, Submit
 
 from authentication.models import ActivationProfile
 from elements.forms import location_init
-from elements.utils import clean_html, form_helper
+from elements.utils import form_helper
 from users.models import Profile
 
 password_digit_re = re.compile(r'\d')
@@ -223,16 +223,6 @@ class LoginForm(auth_forms.AuthenticationForm):
                 raise forms.ValidationError(u'Эта учётная запись неактивна')
         self.check_for_test_cookie() # TODO: what is it for?
         return self.cleaned_data
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        exclude = ('user', 'username')
-
-    helper = form_helper('edit_profile', u'Сохранить')
-
-    def clean_about(self):
-        return clean_html(self.cleaned_data['about'])
 
 # TODO: set minimum password complexity
 class SetPasswordForm(auth_forms.SetPasswordForm):

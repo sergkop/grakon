@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td colspan="2" valign="middle" align="center">
-                    <input id="login_form_submit" type="submit" value="Войти" class="ui-state-default " />
+                    <input id="login_form_submit" type="submit" value="Войти" class="ui-state-default" />
                      <a id="login_dialog_register" class="ym-button" href="{% url register %}">Регистрация</a>
                 </td>
             </tr>
@@ -22,15 +22,10 @@
                 </td>
             </tr>
         </table>
-
-        <div>
-            
-            
-        </div>
     </form>
 </div>
 
 <script type="text/javascript">
-    create_dialog("login_dialog", 360, 240, "Войдите в систему", "", {});
+    create_dialog("login_dialog", 360, 250, "Войдите в систему", "", {});
     $("#menu_login_btn").click(login_dialog_init);
 </script>

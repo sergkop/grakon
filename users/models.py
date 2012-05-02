@@ -5,10 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from tinymce.models import HTMLField
-
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, \
-        EntityFollower, EntityResource
+        EntityFollower, EntityResource, HTMLField
 
 class ProfileManager(BaseEntityManager):
     def get_info(self, data, ids):

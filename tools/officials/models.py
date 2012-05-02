@@ -1,9 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 
-from tinymce.models import HTMLField
-
-from elements.models import BaseEntityManager, BaseEntityModel, entity_class
+from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
 
 class OfficialManager(BaseEntityManager):
     def get_info(self, data, ids):

@@ -9,8 +9,13 @@ from django.utils.safestring import mark_safe
 from crispy_forms.layout import HTML
 
 from elements.models import EntityLocation
-from elements.utils import class_decorator
+from elements.utils import class_decorator, clean_html
 from locations.models import Location
+
+class HTMLCharField(forms.CharField):
+    def clean(self, value):
+        html = super(HTMLCharField, self).clean(value)
+        return clean_html(html)
 
 class LocationSelectWidget(Widget):
     def render(self, name, value, attrs=None):

@@ -76,7 +76,10 @@
             <div class="ym-wrapper {% block page_class %}{% endblock %}">
                 <div class="ym-col1">{% block content %}{% endblock %}</div>
                 <div class="ym-col2">{% block left_column %}{% endblock %}</div>
-                <div class="ym-col3">{% block right_column %}{% endblock %}{% include "../../elements/templates/elements/share.html" %}</div>
+                <div class="ym-col3">
+                    {% block right_column %}{% endblock %}
+                    {% include "elements/share.html" %}
+                </div>
             </div>
         </div>
         <div class="gr-footer">&nbsp;</div>
