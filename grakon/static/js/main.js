@@ -1,5 +1,6 @@
 $(function(){
     $("form.uniForm").uniform();
+    $(".gr-side-item h4 i").tipsy({gravity: 'n', opacity: .8});
 });
 
 // Default tipsy settings

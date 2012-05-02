@@ -71,7 +71,7 @@
 /* Interaction states
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; font-weight: normal;}
-.ui-state-default {display: inline-block; white-space: nowrap; border-radius: 1.2em; cursor: pointer; font: normal 1em/2em Tahoma, Helvetica; margin: 0 0.75em 0 0; padding: 0.2em 1.2em; overflow: visible; /* removes extra side spacing in IE */ text-decoration: none !important; position: relative;}
+.ui-state-default {display: inline-block; white-space: nowrap; border-radius: 1.2em; cursor: pointer; font: normal 1em/2em Tahoma, Helvetica; margin: 0 0.75em 0 0; padding: 0.3em 1.2em; overflow: visible; /* removes extra side spacing in IE */ text-decoration: none !important; position: relative;}
     
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #555555; text-decoration: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {}

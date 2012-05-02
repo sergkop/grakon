@@ -5,7 +5,7 @@
 {% block left_column %}
     <h3>Активность<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials">Чиновники <i>&nbsp;</i></h4>
+        <h4 class="gr-officials"><a href="">Чиновники</a> <i title="контролируем их деятельность">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
             <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
@@ -14,7 +14,7 @@
         </ul>
     </div>
     <div class="gr-side-item">
-        <h4 class="gr-long-title">Добрая машина Правды <i>&nbsp;</i></h4>
+        <h4 class="gr-long-title"><a href="">Добрая машина Правды</a> <i title="разбираемся где правда, а где ложь">&nbsp;</i></h4>
         <ul>
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="">Мэр поднимет зарплаты госслужащим</a> (72)</li>
             <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="">Мер посетил лицей</a> (72)</li>
@@ -23,7 +23,7 @@
         </ul>
     </div>
     <div class="gr-side-item">
-        <h4 class="gr-events">Мероприятия <i>&nbsp;</i></h4>
+        <h4 class="gr-events"><a href="">Мероприятия</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
             <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
@@ -35,7 +35,7 @@
 
 {% block right_column %}
     <div class="gr-side-item">
-        <h4 class="gr-contacts">Контакты ({{ info.contacts.count }}) <i>&nbsp;</i></h4>
+        <h4 class="gr-contacts">Контакты ({{ info.contacts.count }}) <i title="пользователь добавил в контакты">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for contact in info.contacts.entities %}
                 <tr>
@@ -47,7 +47,7 @@
         </table>
     </div>
     <div class="gr-side-item">
-        <h4 class="gr-followers">Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i>&nbsp;</i></h4>
+        <h4 class="gr-followers">Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i title="пользователя добавили в контакты">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for follower in info.followers.entities %}
                 <tr>
