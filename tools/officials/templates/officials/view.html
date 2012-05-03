@@ -2,7 +2,7 @@
     <h4>Информация</h4>
     <div class="tabbody">
     <div class="gr-fl gr-photo">
-        <img src=" /static/images/remove-after-launch/photo1.jpg" />
+        <img src="/static/images/remove-after-launch/photo1.jpg" />
     </div>
 
     <div class="gr-dt">
@@ -14,8 +14,9 @@
             <a href="">Депутат</a>
         </div>
         <h3>Горсовет Сыктывкара <a href="" class="gr-location">&nbsp;</a></h3>
-        <p><span class="dimmed">Рабочий адрес:</span> 121351, г. Москва, Ярцевская ул., д. 22.
-ЕИРЦ района Кунцево располагается на пересечении Ярцевской улицы и Партизанской улицы.</p>
+        <p><span class="dimmed">Рабочий адрес:</span> {{ official.address }}</p>
+
+        {% comment %}
         <dl class="gr-inline-dl">
             <dt class="dimmed">Сайт:</dt>
             <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
@@ -26,7 +27,10 @@
             <dt class="dimmed">Skype:</dt>
             <dd>MPanko <a class="gr-skype" href="">&nbsp;</a></dd>
         </dl>
-        <p>Депутат 4 созыва. Первое упоминание о земле, где располагается современный район Кунцево, относится Дьяковой культуре. Здесь находилось Кунцевское городище.</p>
+        {% endcomment %}
+
+        {{ official.about|safe }}
+
         <div class="gr-mb20">
             <a href="" class="ym-button gr-blue-button gr-look gr-question"><span>Следить</span><i>&nbsp;</i></a>
             <a href="" class="ym-button gr-blue-button gr-add gr-question"><span>Добавить информацию</span><i>&nbsp;</i></a>

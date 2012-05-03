@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from elements.models import EntityFollower, EntityLocation, EntityResource
+from elements.models import EntityAdmin, EntityFollower, EntityLocation, EntityResource
+
+class EntityAdminAdmin(admin.ModelAdmin):
+    list_display = ('entity', 'admin')
+    search_fields = ('entity__id', 'admin__username')
+    raw_id_fields = ('admin',)
 
 class EntityFollowerAdmin(admin.ModelAdmin):
     list_display = ('entity', 'follower')
@@ -15,6 +20,7 @@ class EntityResourceAdmin(admin.ModelAdmin):
     list_display = ('entity', 'resource')
     search_fields = ('entity__id', 'resource')
 
+admin.site.register(EntityAdmin, EntityAdminAdmin)
 admin.site.register(EntityFollower, EntityFollowerAdmin)
 admin.site.register(EntityLocation, EntityLocationAdmin)
 admin.site.register(EntityResource, EntityResourceAdmin)

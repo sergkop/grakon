@@ -37,7 +37,6 @@ class LocationSelectWidget(Widget):
 def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
     attrs = {
-        'required': required, # TODO: maybe assign it after form class is created
         'location_select': forms.CharField(label=label, required=True, initial=[],
                 widget=LocationSelectWidget),
         'region': forms.CharField(required=False),
@@ -65,6 +64,8 @@ def location_init(required, label):
 
             return entity
         new_cls.save = new_save
+
+        new_cls.required = required
 
         return new_cls
 

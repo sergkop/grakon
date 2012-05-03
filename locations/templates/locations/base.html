@@ -11,14 +11,17 @@
 {% block left_column %}
     <h3>Инструменты<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials"><a href="">Чиновники</a> <i title="контролируем их деятельность">&nbsp;</i></h4>
+        <h4 class="gr-officials"><a href="">Чиновники ({{ info.officials.count }})</a> <i title="контролируем их деятельность">&nbsp;</i></h4>
         <ul>
-            <li><i class="highlight">89</i><a href="">Иванов Иван</a> (работник адм...)</li>
-            <li><i class="highlight">2</i><a href="">Иванов Иван</a> (судья)</li>
-            <li><i class="highlight">1</i><a href="">Иванов Иван</a> (полицейский)</li>
+            {% for official in info.officials.entities %}
+                <li>
+                    <i class="highlight">89</i>
+                    <a href="{{ official.official.get_absolute_url }}">{{ official.official }}</a>
+                </li>
+            {% endfor %}
         </ul>
         <div align="center">
-            <a href="" class="ym-button">Добавить инфоповод</a>
+            <a href="" class="ym-button">Добавить чиновника</a>
         </div>
     </div>
     <div class="gr-side-item">
@@ -50,9 +53,7 @@
         <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники ({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for person in info.participants.entities %}
-                <tr>
-                    {% include "elements/person.html" %}
-                </tr>
+                {% include "elements/person.html" %}
             {% endfor %}
         </table>
         {% if not is_participant %}

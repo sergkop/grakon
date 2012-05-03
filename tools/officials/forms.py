@@ -1,5 +1,13 @@
+# -*- coding:utf-8 -*-
 from django import forms
 
-# TODO: generate it from features
-class OfficialForm(forms.Form):
-    pass
+from elements.forms import location_init
+from elements.utils import form_helper
+from tools.officials.models import Official
+
+@location_init(False, u'Место работы')
+class OfficialForm(forms.ModelForm):
+    class Meta:
+        model = Official
+
+    helper = form_helper('', u'Сохранить')

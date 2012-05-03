@@ -5,7 +5,6 @@ Wall:
 Officials:
     * adding urls about officials + universal entity feature for it
     * complaints
-    * lists of officials on location pages
 
 Emails:
     * feedback form
@@ -78,6 +77,8 @@ Profile:
 Emails:
     * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 --------------------------------------
+* exclude rating field from editing in admin
+
 * display entities assigned to higher levels of hierarchy on lower levels
 
 * choosing main location

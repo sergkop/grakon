@@ -1,8 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
+from elements.models import EntityAdmin
 from tools.officials.forms import OfficialForm
 from tools.officials.models import Official
 
@@ -15,29 +19,32 @@ class BaseOfficialView(object):
 
     def get_context_data(self, **kwargs):
         ctx = super(BaseOfficialView, self).get_context_data(**kwargs)
-        official = self.official = get_object_or_404(Official, id=self.kwargs.get('official_id'))
+        self.official = get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
 
-        is_admin = (profile==self.request.profile)
+        # TODO: use generic relation
+        is_admin = EntityAdmin.objects.filter(
+                content_type=ContentType.objects.get_for_model(type(self.official)),
+                entity_id=self.official.id, admin=self.request.profile).exists()
 
         tabs = [
-            ('view', u'Информация', profile.get_absolute_url(), 'officials/view.html', ''),
+            ('view', u'Информация', self.official.get_absolute_url(), 'officials/view.html', ''),
         ]
 
-        if own_profile:
-            tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
-                    'profiles/edit.html', ''))
+        if is_admin:
+            tabs.append(('edit', u'Редактировать', reverse('edit_official', args=[self.official.id]),
+                    'officials/edit.html', ''))
 
-        self.info = official.info()
+        self.info = self.official.info()
 
         ctx.update({
             'tools_menu_item': True,
             'tab': self.tab,
             'tabs': tabs,
             'info': self.info,
+            'official': self.official,
         })
         ctx.update(self.update_context())
         return ctx
-
 
 class OfficialView(BaseOfficialView, TemplateView):
     tab = 'view'
@@ -49,11 +56,11 @@ class EditOfficialView(BaseOfficialView, UpdateView):
     form_class = OfficialForm
     tab = 'edit'
 
-    #def get_object(self):
-    #    return self.request.profile
+    def get_object(self):
+        return get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
 
     def get_success_url(self):
-        return reverse('official', args=[])
+        return reverse('official', args=[self.official.id])
 
 # TODO: need more strict condition
 edit_official = login_required(EditOfficialView.as_view())

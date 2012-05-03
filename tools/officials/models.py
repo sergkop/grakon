@@ -5,7 +5,9 @@ from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HT
 
 class OfficialManager(BaseEntityManager):
     def get_info(self, data, ids):
-        pass # TODO: implement it
+        officials_by_id = self.in_bulk(ids)
+        for id in ids:
+            data[id]['official'] = officials_by_id[id]
 
 # TODO: url - for official website/page (maybe several) (element for that?)
 # TODO: introduce type

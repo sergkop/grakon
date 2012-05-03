@@ -47,6 +47,7 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
         })
+        print self.info
 
         ctx.update(self.update_context())
         return ctx

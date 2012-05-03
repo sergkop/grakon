@@ -34,11 +34,11 @@ class BaseEntityManager(models.Manager):
             return
 
         if add:
-            self.get_or_create(content_type=ContentType.objects.get_for_model(entity),
+            self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
                     entity_id=entity.id, defaults=params, **{self.model.fk_field: instance})
         else:
             # TODO: use generic relation
-            self.filter(content_type=ContentType.objects.get_for_model(entity),
+            self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
                     entity_id=entity.id, **{self.model.fk_field: instance}).delete()
 
         if self.model.points_sources:
@@ -240,7 +240,7 @@ class EntityFollowerManager(BaseEntityManager):
             return False
 
         # TODO: use generic relation
-        return self.filter(content_type=ContentType.objects.get_for_model(entity),
+        return self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
                 entity_id=entity.id, follower=profile).exists()
 
 class EntityFollower(BaseEntityProperty):
@@ -386,7 +386,7 @@ class BaseEntityManager(models.Manager):
 # TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
-    rating = models.IntegerField(default=0) # used for sorting entities
+    rating = models.IntegerField(default=0, editable=False) # used for sorting entities
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
     add_time = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
@@ -441,6 +441,9 @@ def entity_class(features):
     if 'locations' in features:
         attrs['locations'] = generic.GenericRelation(EntityLocation, object_id_field='entity_id')
 
+    if 'admins' in features:
+        attrs['admins'] = generic.GenericRelation(EntityAdmin, object_id_field='entity_id')
+
     def decorator(cls):
         new_cls = class_decorator(attrs)(cls)
         new_cls.features = features
@@ -453,3 +456,10 @@ class HTMLField(TinyMCEHTMLField):
         from elements.forms import HTMLCharField
         kwargs['form_class'] = HTMLCharField
         return super(HTMLField, self).formfield(**kwargs)
+
+    def south_field_triple(self):
+        """ Hack to deal with south migrations """
+        field_class = self.__class__.__module__ + '.' + self.__class__.__name__
+        from south.modelsinspector import introspector
+        args, kwargs = introspector(self)
+        return (field_class, args, kwargs)

@@ -37,24 +37,16 @@
     <div class="gr-side-item">
         <h4 class="gr-contacts">Контакты ({{ info.contacts.count }}) <i title="пользователь добавил в контакты">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
-            {% for contact in info.contacts.entities %}
-                <tr>
-                    {% with person=contact %}
-                        {% include "elements/person.html" %}
-                    {% endwith %}
-                </tr>
+            {% for person in info.contacts.entities %}
+                {% include "elements/person.html" %}
             {% endfor %}
         </table>
     </div>
     <div class="gr-side-item">
         <h4 class="gr-followers">Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i title="пользователя добавили в контакты">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
-            {% for follower in info.followers.entities %}
-                <tr>
-                    {% with person=follower %}
-                        {% include "elements/person.html" %}
-                    {% endwith %}
-                </tr>
+            {% for person in info.followers.entities %}
+                {% include "elements/person.html" %}
             {% endfor %}
         </table>
     </div>

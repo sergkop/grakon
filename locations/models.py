@@ -24,8 +24,9 @@ class LocationManager(models.Manager):
             cached_ids.append(id)
             res[id] = entity
 
+        from tools.officials.models import Official
         from users.models import Profile
-        entities_models = {'participants': Profile} # TODO: make it global dict?
+        entities_models = {'participants': Profile, 'officials': Official} # TODO: make it global dict?
 
         other_ids = set(ids) - set(cached_ids)
         if len(other_ids) > 0:

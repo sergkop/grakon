@@ -7,6 +7,6 @@ from users.models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'username', 'points', 'rating')
+        exclude = ('user', 'username')
 
     helper = form_helper('', u'Сохранить')
