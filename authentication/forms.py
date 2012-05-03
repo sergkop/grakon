@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-import json
 import re
 
 from django import forms
@@ -13,7 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
 
-from crispy_forms.layout import ButtonHolder, Fieldset, HTML, Layout, Submit
+from crispy_forms.layout import Fieldset, Layout
 
 from authentication.models import ActivationProfile
 from elements.forms import location_init

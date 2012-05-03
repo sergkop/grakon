@@ -11,7 +11,10 @@
 {% block left_column %}
     <h3>Инструменты<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials"><a href="">Чиновники ({{ info.officials.count }})</a> <i title="контролируем их деятельность">&nbsp;</i></h4>
+        <h4 class="gr-officials">
+            <a href="{% url location_tools location.id %}?type=officials">Чиновники ({{ info.officials.count }})</a>
+            <i title="контролируем их деятельность">&nbsp;</i>
+        </h4>
         <ul>
             {% for official in info.officials.entities %}
                 <li>

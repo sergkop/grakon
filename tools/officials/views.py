@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
-from elements.models import EntityAdmin
+from elements.models import EntityAdmin, EntityFollower
 from tools.officials.forms import OfficialForm
 from tools.officials.models import Official
 
@@ -21,10 +21,11 @@ class BaseOfficialView(object):
         ctx = super(BaseOfficialView, self).get_context_data(**kwargs)
         self.official = get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
 
-        # TODO: use generic relation
-        is_admin = EntityAdmin.objects.filter(
-                content_type=ContentType.objects.get_for_model(type(self.official)),
-                entity_id=self.official.id, admin=self.request.profile).exists()
+        is_admin = False
+        is_follower = False
+        if self.request.user.is_authenticated():
+            is_admin = EntityAdmin.objects.is_admin(self.official, self.request.profile)
+            is_follower = EntityFollower.objects.is_followed(self.official, self.request.profile)
 
         tabs = [
             ('view', u'Информация', self.official.get_absolute_url(), 'officials/view.html', ''),
@@ -42,7 +43,11 @@ class BaseOfficialView(object):
             'tabs': tabs,
             'info': self.info,
             'official': self.official,
+            'is_follower': is_follower,
+            'is_admin': is_admin,
         })
+        print self.info.keys()
+        print self.info['locations']
         ctx.update(self.update_context())
         return ctx
 

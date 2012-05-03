@@ -2,6 +2,10 @@ Wall:
     * configure disqus + authorization
     * automatically disable discus at dev server
 
+* Left column of profile - administration, participation, представитель организации, etc.
+
+* Test generic rel by directly including it in model
+
 Officials:
     * adding urls about officials + universal entity feature for it
     * complaints
@@ -19,7 +23,6 @@ Emails:
 * Misha can log in to my account
 
 Misc:
-    * Left column of profile - administration, participation, представитель организации, etc.
     * generate forms using features
 
 SEO:
@@ -41,6 +44,7 @@ Performance:
     * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * make lazy reformal loading
+    * start using subqueries - http://charlesleifer.com/blog/working-around-django-s-orm-to-do-interesting-things-with-gfks/
 
 SEO:
     * Webmaster Tools, seo, https://www.google.com/webmasters/
@@ -224,3 +228,5 @@ Deployment:
 * highlight buttons in the menu
 
 * put all our media (video, presentations, logos, infographics, etc.) online in social networks
+
+* use pylint for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)

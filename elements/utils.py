@@ -1,5 +1,3 @@
-from django.core.cache import cache
-
 import bleach
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -39,7 +37,7 @@ def class_decorator(attrs):
     """
     def decorator(cls):
         class NewMetaclass(type):
-            def __new__(cls1, name, bases, attrs1):
+            def __new__(mcs, name, bases, attrs1):
                 attrs1.update(attrs)
                 new_class = cls.__metaclass__(name, bases, attrs1)
                 return new_class

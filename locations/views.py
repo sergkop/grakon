@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import json
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
@@ -47,8 +46,6 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
         })
-        print self.info
-
         ctx.update(self.update_context())
         return ctx
 
@@ -61,9 +58,43 @@ class MapLocationView(BaseLocationView, TemplateView):
 class ToolsLocationView(BaseLocationView, TemplateView):
     tab = 'tools'
 
+    def update_context(self):
+        try:
+            start = int(self.request.GET.get('start', 0))
+        except ValueError:
+            start = 0
+
+        entity_type = self.request.GET.get('type', '')
+
+        # TODO: move it out of here
+        from tools.officials.models import Official
+        entity_models = {'officials': Official}
+
+        if entity_type not in entity_models.keys():
+            entity_type = 'officials'
+
+        entity_model = entity_models[entity_type]
+
+        # TODO: generate table header (include sorting links and highlighting arrows)
+
+        # TODO: allow to choose limit (?), max allow value of it
+        # TODO: accept sorting field
+
+        entity_ids = entity_model.objects.for_location(self.location, start, limit=20)['ids']
+        entities_info = entity_model.objects.info_for(entity_ids, related=False)
+        entities = [entities_info[id] for id in entity_ids if id in entities_info]
+
+        ctx = {
+            'entities': entities,
+            'header_template': entity_model.table_header,
+            'line_template': entity_model.table_line,
+        }
+        return ctx
+
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'
 
+    # TODO: similar to tools tab
     def update_context(self):
         try:
             start = int(self.request.GET.get('start', 0))

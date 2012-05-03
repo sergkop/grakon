@@ -258,8 +258,8 @@ class EntityFollower(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.follower) + ' follows ' + unicode(self.entity)
 
+# TODO: similar to follower model code
 class EntityAdminManager(BaseEntityManager):
-    # TODO: similar to follower model code
     def get_for(self, model, ids):
         """ Return admins data {id: {'count': count, 'ids': [ids]}} """
         admins_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
@@ -279,6 +279,14 @@ class EntityAdminManager(BaseEntityManager):
                 'ids': map(lambda a: a[0], top_admin_rating),
             }
         return res
+
+    def is_admin(self, entity, profile):
+        if self.model.feature not in type(entity).features:
+            return False
+
+        # TODO: use generic relation
+        return self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
+                entity_id=entity.id, admin=profile).exists()
 
 class EntityAdmin(BaseEntityProperty):
     admin = models.ForeignKey('users.Profile', related_name='admins')
@@ -395,6 +403,8 @@ class BaseEntityModel(models.Model):
 
     cache_prefix = ''
     features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
+    table_header = ''
+    table_line = ''
 
     class Meta:
         abstract = True

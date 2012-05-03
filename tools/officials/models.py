@@ -25,6 +25,8 @@ class Official(BaseEntityModel):
     objects = OfficialManager()
 
     cache_prefix = 'official/'
+    table_header = 'tables/officials_header.html'
+    table_line = 'tables/officials_line.html'
 
     @models.permalink
     def get_absolute_url(self):

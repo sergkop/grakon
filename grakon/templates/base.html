@@ -44,9 +44,9 @@
                 <div class="gr-login-info">
                     {% if request.user.is_authenticated %}
                         <a href="{{ request.profile.get_absolute_url }}">{{ request.profile.first_name }} {{ request.profile.last_name }}</a>
-                        <a href=""><strong class="gr-leader">{{ request.profile_info.points.leader }}</strong></a>
-                        <a href=""><strong class="gr-activity">{{ request.profile_info.points.offline }}</strong></a>
-                        <a href=""><strong class="gr-web-activity">{{ request.profile_info.points.online }}</strong></a>
+                        <a><strong class="gr-leader">{{ request.profile_info.points.leader }}</strong></a>
+                        <a><strong class="gr-activity">{{ request.profile_info.points.offline }}</strong></a>
+                        <a><strong class="gr-web-activity">{{ request.profile_info.points.online }}</strong></a>
                         {% if request.profile_info.locations.main_id %}<a href="{% url location request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                         <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                     {% else %}

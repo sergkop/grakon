@@ -43,7 +43,7 @@ class ActivationManager(models.Manager):
 
     def delete_expired_users(self):
         """
-        Remove expired instances of RegistrationProfile and their associated User's.
+        Remove expired instances of ActivationProfile and their associated User's.
 
         It is recommended that this method be executed regularly as
         part of your routine site maintenance; this application
@@ -53,7 +53,7 @@ class ActivationManager(models.Manager):
         If you have a troublesome User and wish to disable their
         account while keeping it in the database, simply delete the
         associated ActivationProfile; an inactive User which
-        does not have an associated RegistrationProfile will not
+        does not have an associated ActivationProfile will not
         be deleted.
         """
         for profile in self.all():
