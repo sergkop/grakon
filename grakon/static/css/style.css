@@ -1,4 +1,4 @@
-.gr-breadcrumbs {margin: 1em 0 2em; clear: both;}
+.gr-breadcrumbs {margin: 1em 0 0; clear: both;}
     .gr-breadcrumbs i {position: absolute; top:0; right: -15px; width: 16px; height: 35px; overflow: hidden; z-index:1;}
 
 /*Общие стили для постоянного использования*/
@@ -48,6 +48,7 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
         .gr-side-item h4.gr-participants{background-position: 0 -300px;}
         .gr-side-item h4.gr-contacts{background-position: 0 -358px;}
         .gr-side-item h4.gr-followers{background-position: 0 -406px;}
+        .gr-side-item h4.gr-eureka{background-position: 0 -466px;}
 
 .gr-orange-arrow-up, .gr-orange-arrow-down {background: url(../images/icons/sort-orange-arrows.png) right 0 no-repeat; width: 12px; height: 11px;}  
 .gr-orange-arrow-down {background-position: right bottom;}  
@@ -123,10 +124,12 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
     .gr-tags a:before { content: ""; position: absolute; width: 0; height: 0; border-top: 1em solid #fff; border-right: 6px solid #d8edf8; border-bottom: .95em solid #fff; top: 0; left: -6px;}
     
 /*Кнопки соцсетей*/
-.gr-twitter {width: 90px; overflow: hidden; margin-bottom: 9px; margin-right: .6em; float: right;} 
-.gr-gplusone {width:72px; overflow: hidden; float: right;}
-.gr-facebook {margin: 0 0 9px; float: right;}
-.gr-vk {margin: 0 0 9px; height: 22px; overflow: hidden; width: 170px; float: right;}
+.gr-social {margin: 1em 0 0; text-align:center;}
+    .gr-left-sidebar .gr-social {margin: 0;}
+.gr-twitter {width: 90px; overflow: hidden; margin-bottom: 9px; margin-right: .9em; display: inline-block;} 
+.gr-gplusone {width:72px; overflow: hidden; display: inline-block; margin: 0 0 9px;}
+.gr-facebook {margin: 0 auto 9px; width: 155px;}
+.gr-vk {margin: 0 auto 9px; height: 22px; overflow: hidden; width: 170px;}
 
 
 /* ----- Переиспользуемые элементы ----- */
