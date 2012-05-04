@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
+from elements.utils import disqus_page_params
 from locations.models import Location
 from locations.utils import subregion_list
 from users.models import Profile
@@ -47,6 +48,8 @@ class BaseLocationView(object):
                     location.id in self.request.profile_info['locations']['ids'],
         })
         ctx.update(self.update_context())
+        # TODO: bad url for disqus in case of russia
+        ctx.update(disqus_page_params('loc/'+str(loc_id), location.get_absolute_url(), 'locations'))
         return ctx
 
 class WallLocationView(BaseLocationView, TemplateView):

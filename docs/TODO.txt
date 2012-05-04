@@ -1,10 +1,15 @@
 Wall:
-    * configure disqus + authorization
-    * automatically disable discus at dev server
+    * кнопка авторизации через гракон
+    * неправильный заголовок на вкладке логина через гракон
+    * special login url, which closes window
+    * bad url for disqus on main page
 
+* in entityclass register classes to dict
+
+* template for creating side block
 * Left column of profile - administration, participation, представитель организации, etc.
 
-* Test generic rel by directly including it in model
+* creating and editing officials
 
 Officials:
     * adding urls about officials + universal entity feature for it
@@ -19,6 +24,7 @@ Emails:
     * page with form for writing messages (put link on it in emails)
     * 1x1 px image
 
+* Test generic rel by directly including it in model
 * prepare events and dmp templates for Yulia to make static pages
 * Misha can log in to my account
 
@@ -75,8 +81,9 @@ Misc:
     * in forms limit lengths of strings that go into model's CharField
 
 Profile:
-    * user's picture
+    * user's avatar, use it in disqus
     * tab for user's contacts
+    * дополнительные поля (телефон, скайп, сайт, пол?, возраст?->дата рождения)
 
 Emails:
     * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
@@ -129,6 +136,7 @@ Registration
     * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
     * create google oauth2 app from grakon account (?)
     * file with all passwords, social applications (where to get them)
+    * add Facebook App ID to disqus
 
 Front-end
     * conventions file for front-end developer (docs about tabs and buttons, page layout)
@@ -230,3 +238,5 @@ Deployment:
 * put all our media (video, presentations, logos, infographics, etc.) online in social networks
 
 * use pylint for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
+
+* use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python

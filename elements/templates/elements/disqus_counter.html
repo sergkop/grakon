@@ -1,0 +1,19 @@
+<script type="text/javascript">
+    var disqus_shortname = "{{ DISQUS_SHORTNAME }}";
+    var disqus_identifier = "{{ disqus_identifier }}";
+    var disqus_url = "{{ disqus_url }}";
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+
+    // TODO: fix it
+    // Add counter in the header of the wall tab
+    //var display_counter = $("<a/>").attr("data-disqus-identifier", "location/{{ current_location.id }}")
+    //        .attr("href", "{{ request.path }}#disqus_thread");
+    //$("#tabs > ul li:nth-child(1)").append(display_counter);
+    //display_counter.click(function(){$(this).attr("href", $("#tabs ul li:nth-child(2) a:first").attr("href"))});
+</script>

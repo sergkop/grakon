@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.forms.widgets import Media
 
 from grakon.utils import project_settings
+from elements.utils import disqus_sso_message
 
 # TODO: add IE-specific styles here
 # TODO: take extra media files from request - ability to add them per-view (variable in class-based views?)
@@ -51,4 +52,8 @@ def media_files(request):
     return {'media_files': media}
 
 def proj_settings(request):
-    return project_settings()
+    ctx = project_settings()
+    ctx.update({
+        'disqus_sso_message': disqus_sso_message(request.profile),
+    })
+    return ctx

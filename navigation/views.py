@@ -29,7 +29,6 @@ class Feedback(FormView):
 
     def get_context_data(self, **kwargs):
         ctx = super(Feedback, self).get_context_data(**kwargs)
-        print 'ctx', ctx
         ctx.update({'tab': 'feedback'})
         return ctx
 
