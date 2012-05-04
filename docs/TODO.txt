@@ -4,15 +4,16 @@
 
 * creating and editing officials
 
+Officials:
+    * adding urls about officials + universal entity feature for it
+    * complaints
+    * editing locations
+
 Wall:
     * кнопка авторизации через гракон
     * неправильный заголовок на вкладке логина через гракон
     * special login url, which closes window
     * bad url for disqus on main page
-
-Officials:
-    * adding urls about officials + universal entity feature for it
-    * complaints
 
 Emails:
     * feedback form

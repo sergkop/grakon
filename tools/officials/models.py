@@ -20,7 +20,7 @@ class Official(BaseEntityModel):
     address = models.CharField(u'Адрес', max_length=250, blank=True)
     telephone = models.CharField(u'Телефон', max_length=100, blank=True)
     email = models.EmailField(u'Электронная почта', blank=True)
-    about = HTMLField(u'О себе', blank=True)
+    about = HTMLField(u'О чиновнике', blank=True)
 
     objects = OfficialManager()
 

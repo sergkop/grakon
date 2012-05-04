@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from elements.models import EntityLocation
-from elements.utils import class_decorator, clean_html
+from elements.utils import clean_html
 from locations.models import Location
 
 class HTMLCharField(forms.CharField):
@@ -43,7 +43,7 @@ def location_init(required, label):
     }
 
     def decorator(cls):
-        new_cls = class_decorator(attrs)(cls)
+        new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
         new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
 
         clean = new_cls.clean
@@ -57,8 +57,7 @@ def location_init(required, label):
             entity = save(form)
 
             # TODO: what about is_main (take decorator params to control it)
-            # TODO: it can cause IntegrityError
-            EntityLocation.objects.create(entity=entity, location=form.location, is_main=True)
+            EntityLocation.objects.add(entity, form.location, params={'is_main': True})
 
             return entity
         new_cls.save = new_save

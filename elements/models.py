@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from tinymce.models import HTMLField as TinyMCEHTMLField
 
-from elements.utils import class_decorator, reset_cache
+from elements.utils import reset_cache
 from locations.models import Location
 
 class BaseEntityManager(models.Manager):
@@ -455,7 +455,13 @@ def entity_class(features):
         attrs['admins'] = generic.GenericRelation(EntityAdmin, object_id_field='entity_id')
 
     def decorator(cls):
-        new_cls = class_decorator(attrs)(cls)
+        class NewMetaclass(type):
+            def __new__(mcs, name, bases, attrs1):
+                attrs1.update(attrs)
+                new_class = cls.__metaclass__(name, bases, attrs1)
+                return new_class
+
+        new_cls = type(cls.__name__, (cls,), {'__metaclass__': NewMetaclass, '__module__': cls.__module__})
         new_cls.features = features
         return new_cls
 

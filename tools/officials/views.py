@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from elements.models import EntityAdmin, EntityFollower
 from tools.officials.forms import OfficialForm
@@ -46,8 +46,6 @@ class BaseOfficialView(object):
             'is_follower': is_follower,
             'is_admin': is_admin,
         })
-        print self.info.keys()
-        print self.info['locations']
         ctx.update(self.update_context())
         return ctx
 
@@ -65,7 +63,21 @@ class EditOfficialView(BaseOfficialView, UpdateView):
         return get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
 
     def get_success_url(self):
-        return reverse('official', args=[self.official.id])
+        return reverse('official', args=[self.kwargs.get('official_id')])
 
 # TODO: need more strict condition
 edit_official = login_required(EditOfficialView.as_view())
+
+
+class CreateOfficialView(CreateView):
+    template_name = 'violations/create.html'
+    form_class = ViolationForm
+    model = Violation
+
+    def form_valid(self, form):
+        violation = form.save(commit=False)
+        violation.source = self.request.profile
+        violation.save()
+
+        response = super(ReportViolationView, self).form_valid(form)
+        return response
