@@ -183,7 +183,7 @@
 	}
 
 	blockquote {
-		margin:1.5em 0 0 1.5em;
+		margin:1.5em 0 0;
 		color:#666;
 	}
 
@@ -392,7 +392,7 @@
 	.center {
 		display:block;
 		text-align:center;
-		margin: 1.5em auto 0 auto;
+		margin: 0 auto;
 	}
 
 	/**

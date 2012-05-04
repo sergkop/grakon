@@ -15,7 +15,7 @@ def form_helper(action_name, button_name):
     helper = FormHelper()
     helper.form_action = action_name
     helper.form_method = 'POST'
-    helper.add_input(Submit('', button_name, css_class='ui-button ui-state-default'))
+    helper.add_input(Submit('', button_name, css_class='gr-blue-button ui-state-default'))
     return helper
 
 def reset_cache(func):

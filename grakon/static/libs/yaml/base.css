@@ -203,8 +203,8 @@
 		width:100%;
 	}
 	
-	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -1.7em 0; padding: 0;  min-width: 1024px;}
-	.gr-footer {height: 4em;}
+	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3.5em 0; padding: 0;  min-width: 1024px;}
+	.gr-footer {height: 3.5em;}
 }
 
 @media screen, projection {
