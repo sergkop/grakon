@@ -87,11 +87,11 @@ th {
 }
 
 .gr-location-tool .gr-blue-button:hover {
-    box-shadow: 1px 1px 2px #1d6f98s;    
+    box-shadow: 1px 1px 2px #1d6f98;    
 }
 
 .ym-hlist .gr-breadcrumbs ul li strong, .gr-blue-button {
-    box-shadow: inset 0 -1px 0 #2a88b8ss;
+    box-shadow: inset 0 -1px 0 #2a88b8;
 	color: #fff !important;
 	background-color: #2a88b8;
     background: -moz-linear-gradient(top, #62c0ee, #45a3d2 55%, #2a88b8);

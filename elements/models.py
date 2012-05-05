@@ -401,6 +401,7 @@ class BaseEntityModel(models.Model):
 
     objects = BaseEntityManager()
 
+    entity_name = ''
     cache_prefix = ''
     features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
     table_header = ''
@@ -431,6 +432,8 @@ class BaseEntityModel(models.Model):
     @reset_cache
     def delete(self, *args, **kwargs):
         return super(BaseEntityModel, self).delete(*args, **kwargs)
+
+ENTITIES_MODELS = {}
 
 @reset_cache
 def update_resources(self, resources):
@@ -463,6 +466,7 @@ def entity_class(features):
 
         new_cls = type(cls.__name__, (cls,), {'__metaclass__': NewMetaclass, '__module__': cls.__module__})
         new_cls.features = features
+        ENTITIES_MODELS[new_cls.entity_name] = new_cls
         return new_cls
 
     return decorator

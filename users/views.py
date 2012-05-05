@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
-from grakon.utils import authenticated_ajax_post
+from grakon.utils import authenticated_ajax_post, escape_html
 from services.email import send_email
 from users.forms import ProfileForm
 from users.models import Message, Profile
@@ -105,7 +105,7 @@ def send_message(request):
 
     show_email = 'show_email' in request.POST
 
-    # TODO: clean body html (leave text only?)
+    body = escape_html(body)
 
     subject = u'Пользователь %s написал вам сообщение' % str(request.profile)
     ctx = {

@@ -17,8 +17,7 @@ urlpatterns = patterns('',
     url(r'', include('social_auth.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
 
-    # TODO: move it under settings.DEBUG
-    (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    url(r'^img1x1$', 'grakon.views.img1x1', name='img1x1'),
 
     url(r'^%s/' % settings.ADMIN_PREFIX, include(admin.site.urls)),
 )
@@ -26,4 +25,5 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^code_data$', 'grakon.views.code_data', name='code_data'),
+        (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     )

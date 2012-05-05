@@ -1,6 +1,6 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from django.views.generic.edit import FormView
+from django.template.response import TemplateResponse
 
 from locations.models import Location
 from locations.views import WallLocationView
@@ -23,22 +23,18 @@ def static_page(request, tab, template, tabs=[]):
     }
     return render_to_response(template, context_instance=RequestContext(request, ctx))
 
-class Feedback(FormView):
-    form_class = FeedbackForm
-    template_name = 'static_pages/how_to_help/base.html'
+def feedback(request, **kwargs):
+    if request.method == 'POST':
+        form = FeedbackForm(request, request.POST)
+        if form.is_valid():
+            form.send()
+            return redirect('feedback_thanks')
+    else:
+        form = FeedbackForm(request)
 
-    def get_context_data(self, **kwargs):
-        ctx = super(Feedback, self).get_context_data(**kwargs)
-        ctx.update({'tab': 'feedback'})
-        return ctx
+    ctx = {'form': form}
+    ctx.update(kwargs)
+    return TemplateResponse(request, 'static_pages/how_to_help/base.html', ctx)
 
-    def get_form_kwargs(self):
-        kwargs = super(Feedback, self).get_form_kwargs()
-        kwargs.update({'request': self.request})
-        return kwargs
-
-    def form_valid(self, form):
-        form.send()
-        return redirect('feedback_thanks')
-
-feedback = Feedback.as_view()
+def feedback_thanks(request):
+    return render_to_response('feedback/thanks.html', context_instance=RequestContext(request, {}))

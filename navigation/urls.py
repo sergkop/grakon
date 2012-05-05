@@ -29,7 +29,11 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/feedback/base.html', [
-        ('feedback', u'Обратная связь', 'static_pages/how_to_help/feedback.html', '',
+        ('feedback', u'Обратная связь', 'feedback/feedback.html', '',
                 'navigation.views.feedback'),
     ])
+)
+
+urlpatterns += patterns('',
+    url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),
 )

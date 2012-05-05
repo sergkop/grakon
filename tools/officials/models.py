@@ -24,6 +24,7 @@ class Official(BaseEntityModel):
 
     objects = OfficialManager()
 
+    entity_name = 'officials'
     cache_prefix = 'official/'
     table_header = 'tables/officials_header.html'
     table_line = 'tables/officials_line.html'

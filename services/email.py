@@ -30,26 +30,25 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     # TODO: replace <a href="url">text</a> with 'text url', no GA tracking in it
     text = html
 
-    hash = hashlib.md5(recipient.username+' '+str(datetime.now())).hexdigest()[:20]
+    name = recipient.username if recipient else 'grakon'
+    hash = hashlib.md5(name+' '+str(datetime.now())).hexdigest()[:20]
+
+    params = urlencode({'mh': hash, 'utm_campaign': type, 'utm_medium': 'email', 'utm_source': 'main'})
 
     xml = fromstring(html)
     for a in xml.findall('.//a'):
         url = a.get('href')
         if url.startswith(settings.URL_PREFIX):
-            params = {
-                'mh': hash,
-                'utm_campaign': type,
-                'utm_medium': 'email',
-                'utm_source': 'main',
-            }
             url += '&' if '?' in url else '?'
-            url += urlencode(params)
+            url += params
 
         a.set('href', url)
 
-    html = tostring(xml)
+    img1x1 = xml.find(".//img[@id='img1x1']")
+    if img1x1 is not None:
+        img1x1.set('src', img1x1.get('src')+'?mh='+hash)
 
-    # TODO: append 1x1 px image to track opening
+    html = tostring(xml)
 
     # TODO: set reply_to
     from_str = u'%s <%s>' % settings.EMAILS[from_email]

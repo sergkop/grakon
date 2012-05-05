@@ -68,16 +68,17 @@ class EditOfficialView(BaseOfficialView, UpdateView):
 # TODO: need more strict condition
 edit_official = login_required(EditOfficialView.as_view())
 
-
 class CreateOfficialView(CreateView):
-    template_name = 'violations/create.html'
-    form_class = ViolationForm
-    model = Violation
+    template_name = 'officials/create.html'
+    form_class = OfficialForm
+    model = Official
 
     def form_valid(self, form):
-        violation = form.save(commit=False)
-        violation.source = self.request.profile
-        violation.save()
+        official = form.save()
 
-        response = super(ReportViolationView, self).form_valid(form)
+        EntityAdmin.objects.add(official, self.request.profile)
+
+        response = super(CreateOfficialView, self).form_valid(form)
         return response
+
+create_official = login_required(CreateOfficialView.as_view())
