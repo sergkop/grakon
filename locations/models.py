@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 
@@ -24,10 +25,7 @@ class LocationManager(models.Manager):
             cached_ids.append(id)
             res[id] = entity
 
-        from tools.officials.models import Official
-        from users.models import Profile
-        entities_models = {'participants': Profile, 'officials': Official} # TODO: make it global dict?
-
+        from elements.models import ENTITIES_MODELS
         other_ids = set(ids) - set(cached_ids)
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
@@ -36,9 +34,9 @@ class LocationManager(models.Manager):
             for loc in locations:
                 other_res[loc.id] = {'location': loc}
 
-                for name, model in entities_models.iteritems():
-                    # TODO: limit should be taken from settings per entity model
-                    other_res[loc.id][name] = model.objects.for_location(loc, limit=3)
+                for name, model in ENTITIES_MODELS.iteritems():
+                    other_res[loc.id][name] = model.objects.for_location(
+                            loc, limit=settings.TOP_PARTICIPANTS_COUNT)
 
             res.update(other_res)
 
@@ -46,7 +44,7 @@ class LocationManager(models.Manager):
             cache.set_many(cache_res, 60) # TODO: specify time outside of this method
 
         if related:
-            for name, model in entities_models.iteritems():
+            for name, model in ENTITIES_MODELS.iteritems():
                 e_ids = set(e_id for id in ids for e_id in res[id][name]['ids'])
                 e_info = model.objects.info_for(e_ids, related=False)
 

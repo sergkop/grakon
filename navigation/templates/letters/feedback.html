@@ -1,6 +1,14 @@
-{% load crispy_forms_tags %}
+{% extends "letters/base.html" %}
 
-<p>Вы можете отправить нам свое сообщение или оставить отзыв
-нажав красную кнопку на левой стороне экрана.</p>
-
-{% crispy_form form form.helper %}
+{% block content %}
+    {% if profile %}
+        Пользователь: <a href="{{ URL_PREFIX }}{{ profile.get_absolute_url }}" target="_blank">
+            {{ profile.full_name }} ({{ profile.username }})</a><br />
+        Еmail: {{ profile.user.email }}
+    {% else %}
+        Имя: {{ name }}<br />
+        Email: {{ email }}
+    {% endif %}
+    <br /><br />
+    {{ message }}
+{% endblock %}

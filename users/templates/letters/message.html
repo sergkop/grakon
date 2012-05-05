@@ -1,18 +1,19 @@
 {% extends "letters/base.html" %}
 
 {% block content %}
-    <font size="5" face="Tahoma, Geneva, sans-serif"><strong>Николай Кузнецов</strong></font>&nbsp; &nbsp;
-            &nbsp;<font size="4" face="Tahoma, Geneva, sans-serif" color="bcb2b2">Nikolya</font><br />
-    <font size="4" face="Tahoma, Geneva, sans-serif">ответил на Ваш запрос</font><br /><br />
+    <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank">
+        <font size="4" face="Tahoma, Geneva, sans-serif"><strong>{{ sender }}</strong></font>
+    </a>
+    &nbsp; &nbsp; &nbsp;<font size="4" face="Tahoma, Geneva, sans-serif" color="bcb2b2">{{ sender.username }}</font><br />
+    <font size="4" face="Tahoma, Geneva, sans-serif">отправил(а) вам сообщение</font><br /><br />
     <table cellpadding="20" cellspacing="0" width="100%" bgcolor="e9eff2">
         <tr>
             <td width="330">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td width="58" valign="top"><img src="i/mail/avatar.jpg" /></td>
+                        <!--td width="58" valign="top"><img src="i/mail/avatar.jpg" /></td-->
                         <td valign="top" align="left">
-                            <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank"><font size="3" face="Tahoma, Geneva, sans-serif"><strong>{{ sender }}</strong></font></a>&nbsp;
-                            <!--a href="" style="text-decoration: none;"><font size="2" face="Tahoma, Geneva, sans-serif" color="3694c4">Nikolya</font></a-->
+                            <font size="3" face="Tahoma, Geneva, sans-serif"><strong>{{ title }}</strong></font></a>&nbsp;
                             <br />
                             <font size="2" face="Tahoma, Geneva, sans-serif">{{ body }}</font>
                             <br /><br />
@@ -21,14 +22,12 @@
                     </tr>
                 </table>
             </td>
-            <td>&nbsp;</td>
+            <!--td>&nbsp;</td>
             <td valign="top" align="left" width="105">
                 <img src="i/mail/icon-leader.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="85ac14">20</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong><br />
                 <img src="i/mail/icon-offline.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="3290bf">15</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong>
-            </td>
+            </td-->
         </tr>
     </table>
     <div style="border-bottom: 1px #a5a5a5 dotted">&nbsp;</div>
-    <br />
-    <a href="" target="_blank"><font size="2" face="Tahoma, Geneva, sans-serif" color="3694c4">Отказаться от сообщений</font></a>
 {% endblock %}

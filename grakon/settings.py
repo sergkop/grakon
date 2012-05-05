@@ -149,8 +149,8 @@ SOCIAL_AUTH_PIPELINE = (
 SOCIAL_AUTH_PIPELINE_RESUME_ENTRY = 'social_auth.backends.pipeline.user.create_user'
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
+    #'social_auth.backends.facebook.FacebookBackend',
+    #'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'authentication.backend.EmailAuthenticationBackend',
 )
@@ -180,5 +180,5 @@ FORCE_SCRIPT_NAME = ''
 # Numbers of entries shown in the side blocks for tools and participants
 TOP_FOLLOWERS_COUNT = 5
 TOP_FOLLOWED_COUNT = 5
-TOP_PARTICIPANTS_COUNT = 7 # number of participants displayed on location page
+TOP_PARTICIPANTS_COUNT = 10 # number of participants displayed on location page
 TOP_ADMIN_COUNT = 5

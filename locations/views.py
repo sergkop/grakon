@@ -5,10 +5,10 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
+from elements.models import ENTITIES_MODELS
 from elements.utils import disqus_page_params
 from locations.models import Location
 from locations.utils import subregion_list
-from users.models import Profile
 
 class BaseLocationView(object):
     template_name = 'locations/base.html'
@@ -27,7 +27,7 @@ class BaseLocationView(object):
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 
-        self.info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
+        self.info = location.info(related=True)
 
         tabs = [
             ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
@@ -37,7 +37,7 @@ class BaseLocationView(object):
         ]
 
         ctx.update({
-            'geography_menu_item': True,
+            'menu_item': 'geography',
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
             'tab': self.tab,
             'tabs': tabs,
@@ -68,15 +68,9 @@ class ToolsLocationView(BaseLocationView, TemplateView):
             start = 0
 
         entity_type = self.request.GET.get('type', '')
-
-        # TODO: move it out of here
-        from tools.officials.models import Official
-        entity_models = {'officials': Official}
-
-        if entity_type not in entity_models.keys():
+        if entity_type not in ENTITIES_MODELS.keys() or entity_type=='participants':
             entity_type = 'officials'
-
-        entity_model = entity_models[entity_type]
+        entity_model = ENTITIES_MODELS[entity_type]
 
         # TODO: generate table header (include sorting links and highlighting arrows)
 
@@ -104,11 +98,13 @@ class ParticipantsLocationView(BaseLocationView, TemplateView):
         except ValueError:
             start = 0
 
+        entity_model = ENTITIES_MODELS['participants']
+
         # TODO: allow to choose limit (?), max allow value of it
         # TODO: accept sorting field
 
-        profile_ids = Profile.objects.for_location(self.location, start, limit=20)['ids']
-        participants_info = Profile.objects.info_for(profile_ids, related=False)
+        profile_ids = entity_model.objects.for_location(self.location, start, limit=20)['ids']
+        participants_info = entity_model.objects.info_for(profile_ids, related=False)
         participants = [participants_info[id] for id in profile_ids if id in participants_info]
 
         ctx = {

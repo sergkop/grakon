@@ -1,6 +1,6 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from django.views.generic.edit import FormView
+from django.template.response import TemplateResponse
 
 from locations.models import Location
 from locations.views import WallLocationView
@@ -13,32 +13,26 @@ def main(request):
 
 # TODO: how to utilise caching for logged in users?
 @cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
-def static_page(request, tab, template, tabs=[]):
-    """ tabs=[(name, url, template, css_class), ...] """
-    ctx = {
-        'about_menu_item': True,
-        'tab': tab,
-        'template': template,
-        'tabs': tabs,
-    }
-    return render_to_response(template, context_instance=RequestContext(request, ctx))
+def static_page(request, **kwargs):
+    """ 
+    kwargs must contain the following keys: 'tab', 'template', 'tabs', 'menu_item'.
+    kwargs['tabs']=[(name, url, template, css_class), ...]
+    """
+    return render_to_response(kwargs['template'], context_instance=RequestContext(request, kwargs))
 
-class Feedback(FormView):
-    form_class = FeedbackForm
-    template_name = 'static_pages/how_to_help/base.html'
+def feedback(request, **kwargs):
+    if request.method == 'POST':
+        form = FeedbackForm(request, request.POST)
+        if form.is_valid():
+            form.send()
+            return redirect('feedback_thanks')
+    else:
+        form = FeedbackForm(request)
 
-    def get_context_data(self, **kwargs):
-        ctx = super(Feedback, self).get_context_data(**kwargs)
-        ctx.update({'tab': 'feedback'})
-        return ctx
+    ctx = {'form': form}
+    ctx.update(kwargs)
+    return TemplateResponse(request, 'static_pages/how_to_help/base.html', ctx)
 
-    def get_form_kwargs(self):
-        kwargs = super(Feedback, self).get_form_kwargs()
-        kwargs.update({'request': self.request})
-        return kwargs
-
-    def form_valid(self, form):
-        form.send()
-        return redirect('feedback_thanks')
-
-feedback = Feedback.as_view()
+def feedback_thanks(request):
+    return render_to_response('feedback/thanks.html',
+            context_instance=RequestContext(request, {'menu_item': 'help'}))

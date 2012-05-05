@@ -9,19 +9,25 @@
                 </tr>
                 <tr>
                     <td>
-                        <table cellpadding="40" cellspacing="0" border="0" width="100%">
+                        <table cellpadding="30" cellspacing="0" border="0" width="100%">
                             <tr>
                                 <td>
                                     {% block content %}{% endblock %}
-                                    <br />
-                                    С уважением, команда Гракон<br />
-                                    <a href="{{ URL_PREFIX }}" target="_blank">{{ URL_PREFIX }}</a>
+                                    {% if not hide_signature %}
+                                        <!--br />
+                                        <a href="" target="_blank"><font size="2" face="Tahoma, Geneva, sans-serif" color="3694c4">Отказаться от сообщений</font></a-->
+                                        <br />
+                                        <br />
+                                        С уважением, команда Гракона<br />
+                                        <a href="{{ URL_PREFIX }}" target="_blank">{{ URL_PREFIX }}</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
+            <img src="{{ URL_PREFIX }}{% url img1x1 %}" width="1" height="1" id="img1x1" />
         </td>
     </tr>
 </table>

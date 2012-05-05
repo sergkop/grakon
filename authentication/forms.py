@@ -7,16 +7,15 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
 import django.contrib.auth.forms as auth_forms
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
 
-from crispy_forms.layout import Fieldset, Layout
+from crispy_forms.layout import Fieldset, HTML, Layout
 
 from authentication.models import ActivationProfile
-from elements.forms import location_init
+from elements.forms import location_init, resources_init
 from elements.utils import form_helper
+from services.email import send_email
 from users.models import Profile
 
 password_digit_re = re.compile(r'\d')
@@ -33,6 +32,7 @@ class BaseRegistrationForm(forms.ModelForm):
         model = Profile
         fields = ('username', 'last_name', 'first_name')
 
+@resources_init
 @location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
     password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
@@ -42,7 +42,7 @@ class RegistrationForm(BaseRegistrationForm):
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
-        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select'),
+        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select', 'resources'),
         Fieldset(u'Аккаунт', 'username', 'password1', 'password2')
     )
 
@@ -201,10 +201,10 @@ class SocialRegistrationForm(BaseRegistrationForm):
 class LoginForm(auth_forms.AuthenticationForm):
     helper = form_helper('login', u'Войти')
     helper.form_id = 'login_form'
-    # TODO: fix it
-    #helper.layout = Layout(
-    #    HTML(r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'),
-    #)
+    helper.layout = Layout(
+        Fieldset('', 'username', 'password'),
+        HTML(r'<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.get_full_path }}{% endif %}" />'),
+    )
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
@@ -236,11 +236,11 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
 
     def save(self, **kwargs):
         for user in self.users_cache:
-            subject = u'Смена пароля на grakon.org'
-            message = render_to_string('letters/password_reset_email.html', {
+            ctx = {
                 'uid': int_to_base36(user.id),
                 'user': user,
                 'token': kwargs['token_generator'].make_token(user),
                 'URL_PREFIX': settings.URL_PREFIX,
-            })
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+            }
+            send_email(user.get_profile(), u'Смена пароля на grakon.org', 'letters/password_reset_email.html',
+                    ctx, 'password_reset', 'noreply')

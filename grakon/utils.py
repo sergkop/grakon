@@ -31,6 +31,9 @@ def read_url(url, encoding='windows-1251'):
         raise e # TODO: what to do here?
         return ''
 
+def escape_html(html):
+    return html.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
 def print_progress(i, count):
     """ Show progress message updating in-place """
     if i < count-1:

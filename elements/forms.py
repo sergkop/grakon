@@ -1,13 +1,9 @@
 # -*- coding:utf-8 -*-
-import json
-
 from django import forms
-from django.forms.widgets import Widget
-from django.template.loader import render_to_string
-from django.utils.safestring import mark_safe
 
-from elements.models import EntityLocation
-from elements.utils import class_decorator, clean_html
+from elements.models import EntityLocation, EntityResource, RESOURCE_CHOICES
+from elements.utils import clean_html
+from elements.widgets import LocationSelectWidget, ResourcesSelectWidget
 from locations.models import Location
 
 class HTMLCharField(forms.CharField):
@@ -15,22 +11,7 @@ class HTMLCharField(forms.CharField):
         html = super(HTMLCharField, self).clean(value)
         return clean_html(html)
 
-class LocationSelectWidget(Widget):
-    def render(self, name, value, attrs=None):
-        """ value is a location path - the list [region_id, district_id, location_id] """
-        value = value or []
-
-        html = '<div id="%s">%s</div>' % (name, render_to_string('elements/select_location.html'))
-        html += '<script type="text/javascript">' \
-                    '$().ready(function(){' \
-                        '(new SelectLocation({el: $("#%s"), path: %s})).render();' \
-                    '});' \
-                '</script>' % (name, json.dumps(value))
-        html += '<input type="text" name="%s" style="display:none;" value="test" />' % name
-
-        return mark_safe(html)
-
-# TODO: write one method taking a list of features (take params from models)
+# TODO: write one method taking a list of features (take params from models) + classes with methods and data
 # TODO: rename it
 def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
@@ -43,7 +24,7 @@ def location_init(required, label):
     }
 
     def decorator(cls):
-        new_cls = class_decorator(attrs)(cls)
+        new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
         new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
 
         clean = new_cls.clean
@@ -57,8 +38,7 @@ def location_init(required, label):
             entity = save(form)
 
             # TODO: what about is_main (take decorator params to control it)
-            # TODO: it can cause IntegrityError
-            EntityLocation.objects.create(entity=entity, location=form.location, is_main=True)
+            EntityLocation.objects.add(entity, form.location, params={'is_main': True})
 
             return entity
         new_cls.save = new_save
@@ -114,3 +94,26 @@ def location_clean(form):
 
     form_location_path(form)
     return form.cleaned_data
+
+def resources_init(cls):
+    # TODO: take resources label as an argument (and description)
+    attrs = {'resources': forms.MultipleChoiceField(label=u'Навыки и ресурсы',
+            choices=RESOURCE_CHOICES, widget=ResourcesSelectWidget)}
+    new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
+
+    old_init = new_cls.__init__
+    def new_init(form, *args, **kwargs):
+        old_init(form, *args, **kwargs)
+        if form.instance.id: # if this is editing form
+            form.fields['resources'].initial = map(lambda er: er['name'],
+                    EntityResource.objects.get_for(type(form.instance), [form.instance.id])[form.instance.id])
+    new_cls.__init__ = new_init
+
+    save = new_cls.save
+    def new_save(form):
+        entity = save(form)
+        EntityResource.objects.update(entity, form.cleaned_data['resources'])
+        return entity
+    new_cls.save = new_save
+
+    return new_cls

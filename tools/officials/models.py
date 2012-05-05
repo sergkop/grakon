@@ -17,13 +17,14 @@ class Official(BaseEntityModel):
     middle_name = models.CharField(u'Отчество', max_length=50, blank=True)
     last_name = models.CharField(u'Фамилия', max_length=70)
 
-    address = models.CharField(u'Адрес', max_length=250, blank=True)
+    address = models.CharField(u'Рабочий адрес', max_length=250, blank=True)
     telephone = models.CharField(u'Телефон', max_length=100, blank=True)
     email = models.EmailField(u'Электронная почта', blank=True)
-    about = HTMLField(u'О себе', blank=True)
+    about = HTMLField(u'О чиновнике', blank=True)
 
     objects = OfficialManager()
 
+    entity_name = 'officials'
     cache_prefix = 'official/'
     table_header = 'tables/officials_header.html'
     table_line = 'tables/officials_line.html'
