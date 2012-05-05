@@ -36,7 +36,7 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/ideas-test/base.html', '', [
-        ('test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
+        ('ideas-test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
 )
 
