@@ -21,9 +21,15 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/about/base.html', [
+    *static_tabs_urls('static_pages/about/base.html', '', [
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
+    ])
+)
+
+urlpatterns += patterns('',
+    *static_tabs_urls('static_pages/ideas-test/base.html', [
+        ('test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
 )
 
