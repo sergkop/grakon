@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from crispy_forms.layout import Fieldset, HTML, Layout
 
 from authentication.models import ActivationProfile
-from elements.forms import location_init
+from elements.forms import location_init, resources_init
 from elements.utils import form_helper
 from services.email import send_email
 from users.models import Profile
@@ -32,6 +32,7 @@ class BaseRegistrationForm(forms.ModelForm):
         model = Profile
         fields = ('username', 'last_name', 'first_name')
 
+@resources_init
 @location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
     password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
@@ -41,7 +42,7 @@ class RegistrationForm(BaseRegistrationForm):
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
-        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select'),
+        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select', 'resources'),
         Fieldset(u'Аккаунт', 'username', 'password1', 'password2')
     )
 

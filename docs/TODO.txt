@@ -1,7 +1,3 @@
-* menu item highlighting for static pages
-
-* Left column of profile - administration, participation, представитель организации, etc.
-
 * reformal
 
 * server from Grisha
@@ -10,17 +6,15 @@ Officials:
     * adding urls about officials + universal entity feature for it
     * editing locations
 
-Resources:
-    * choosing resources in registration
-    * create element forms for resources (like for location)
-    * text fields for resources
+Profile:
+    * user's avatar, use it in disqus, emails
+    * дополнительные поля (телефон, скайп, сайт, пол?, возраст?->дата рождения)
+
+* Left column of profile - administration, participation, представитель организации, etc.
 
 * Misha can log in to my account
 
 * prepare events and dmp templates for Yulia to make static pages
-
-Registration:
-    * restore location on error in form
 
 Emails:
     * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
@@ -30,10 +24,10 @@ Misc:
     * pagination + sorting by columns
     * Prohibit to become participant at higher levels (hide button)?
 
-Profile:
-    * user's avatar, use it in disqus, emails
-    * tab for user's contacts
-    * дополнительные поля (телефон, скайп, сайт, пол?, возраст?->дата рождения)
+Emails:
+    * subscription configuration
+    * page with form for writing messages (put link on it in emails)
+    * link to feedback form (or our email), 'read us' buttons (Yulia) in email template
 
 Wall:
     * кнопка авторизации через гракон
@@ -41,15 +35,17 @@ Wall:
     * special login url, which closes window
     * bad url for disqus on main page
 
-Emails:
-    * subscription configuration
-    * page with form for writing messages (put link on it in emails)
-
-* link to feedback form (or our email), 'read us' buttons (Yulia) in email template
+Registration:
+    * restore location on error in form
 
 * disqus message counter
 
 ---------Before launch-----------------
+
+Resources:
+    * text fields for resources
+
+* tab for user's contacts in profile
 
 * Test generic rel by directly including it in model
 

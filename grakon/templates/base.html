@@ -58,11 +58,11 @@
         <nav class="ym-hlist">
             <div class="ym-wrapper">
                 <ul class="gr-mb10">
-                    <li {% if geography_menu_item %}class="active"{% endif %}><a href="{% url main %}">География</a></li>
-                    <!--li {% if participants_menu_item %}class="active"{% endif %}><a href="">Участники</a></li>
-                    <li {% if tools_menu_item %}class="active"{% endif %}><a href="">Инструменты</a></li-->
-                    <li {% if about_menu_item %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
-                    <li><a href="{% url feedback %}">Как помочь</a></li>
+                    <li {% if menu_item == "geography" %}class="active"{% endif %}><a href="{% url main %}">География</a></li>
+                    <!--li {% if menu_item == "participants" %}class="active"{% endif %}><a href="">Участники</a></li>
+                    <li {% if menu_item == "tools" %}class="active"{% endif %}><a href="">Инструменты</a></li-->
+                    <li {% if menu_item == "about" %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
+                    <li {% if menu_item == "help" %}class="active"{% endif %}><a href="{% url feedback %}">Как помочь</a></li>
                     <li><a href="">FAQ</a></li>
                     <li class="ym-clearfix">&nbsp;</li>
                 </ul>

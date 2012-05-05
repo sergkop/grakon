@@ -37,7 +37,7 @@ class BaseLocationView(object):
         ]
 
         ctx.update({
-            'geography_menu_item': True,
+            'menu_item': 'geography',
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
             'tab': self.tab,
             'tabs': tabs,

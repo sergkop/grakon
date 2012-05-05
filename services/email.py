@@ -15,7 +15,7 @@ from grakon.utils import project_settings
 from services.models import Email
 
 # TODO: ability to attach files
-# TODO: check user's subscription settings?
+# TODO: check user's subscription settings? (some emails should be sent anyway)
 def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None):
     """ To send emails to admin account set recipient=None """
     # TODO: generate unsubscribe link with hash (page with confirmation); default place for it in base template

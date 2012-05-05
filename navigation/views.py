@@ -13,15 +13,12 @@ def main(request):
 
 # TODO: how to utilise caching for logged in users?
 @cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
-def static_page(request, tab, template, tabs=[]):
-    """ tabs=[(name, url, template, css_class), ...] """
-    ctx = {
-        'about_menu_item': True,
-        'tab': tab,
-        'template': template,
-        'tabs': tabs,
-    }
-    return render_to_response(template, context_instance=RequestContext(request, ctx))
+def static_page(request, **kwargs):
+    """ 
+    kwargs must contain the following keys: 'tab', 'template', 'tabs', 'menu_item'.
+    kwargs['tabs']=[(name, url, template, css_class), ...]
+    """
+    return render_to_response(kwargs['template'], context_instance=RequestContext(request, kwargs))
 
 def feedback(request, **kwargs):
     if request.method == 'POST':
@@ -37,4 +34,5 @@ def feedback(request, **kwargs):
     return TemplateResponse(request, 'static_pages/how_to_help/base.html', ctx)
 
 def feedback_thanks(request):
-    return render_to_response('feedback/thanks.html', context_instance=RequestContext(request, {}))
+    return render_to_response('feedback/thanks.html',
+            context_instance=RequestContext(request, {'menu_item': 'help'}))
