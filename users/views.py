@@ -107,7 +107,7 @@ def send_message(request):
 
     body = escape_html(body)
 
-    subject = u'Пользователь %s написал вам сообщение' % str(request.profile)
+    subject = u'Пользователь %s написал вам сообщение' % unicode(request.profile)
     ctx = {
         'title': title,
         'body': body,

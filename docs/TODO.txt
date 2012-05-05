@@ -5,6 +5,7 @@
 Officials:
     * adding urls about officials + universal entity feature for it
     * editing locations
+    * points for adding officials
 
 Profile:
     * user's avatar, use it in disqus, emails
@@ -41,6 +42,8 @@ Registration:
 * disqus message counter
 
 ---------Before launch-----------------
+
+* reset text in message send dialog if sent successfully
 
 Resources:
     * text fields for resources

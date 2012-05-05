@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 
@@ -34,8 +35,8 @@ class LocationManager(models.Manager):
                 other_res[loc.id] = {'location': loc}
 
                 for name, model in ENTITIES_MODELS.iteritems():
-                    # TODO: limit should be taken from settings per entity model
-                    other_res[loc.id][name] = model.objects.for_location(loc, limit=3)
+                    other_res[loc.id][name] = model.objects.for_location(
+                            loc, limit=settings.TOP_PARTICIPANTS_COUNT)
 
             res.update(other_res)
 

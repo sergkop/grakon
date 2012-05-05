@@ -43,7 +43,7 @@ def disqus_sso_message(profile):
     if profile:
         data = json.dumps({
             'id': profile.username+str(profile.id),
-            'username': str(profile),
+            'username': unicode(profile),
             'email': profile.user.email,
             'url': settings.URL_PREFIX+profile.get_absolute_url(),
             # TODO: avatar

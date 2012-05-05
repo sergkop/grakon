@@ -9,9 +9,9 @@
                 <li class="gr-icons-like">Понравилось<big>1234</big></li>
             </ul>
 
-            <div class="gr-tags">
+            <!--div class="gr-tags">
                 <a href="">Депутат</a>
-            </div>
+            </div-->
 
             <!--h3>Горсовет Сыктывкара <a href="" class="gr-location">&nbsp;</a></h3-->
             {% for location in info.locations.entities %}
@@ -24,26 +24,21 @@
 
             <p><span class="dimmed">Рабочий адрес:</span> {{ official.address }}</p>
 
-            {% comment %}
             <dl class="gr-inline-dl">
-                <dt class="dimmed">Сайт:</dt>
-                <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
+                <dt class="dimmed">Телефон:</dt>
+                <dd>{{ official.telephone }}</dd>
 
                 <dt class="dimmed">E-mail:</dt>
-                <dd><a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a></dd>
-
-                <dt class="dimmed">Skype:</dt>
-                <dd>MPanko <a class="gr-skype" href="">&nbsp;</a></dd>
+                <dd><a href="mailto:{{ official.email }}">{{ official.email }}</a></dd>
             </dl>
-            {% endcomment %}
 
             {{ official.about|safe }}
 
             {% include "officials/view_buttons_panel.html" %}
         </div>
-        
+
         <div class="ym-clearfix">&nbsp;</div>
-        
+
         <div id="showcase" class="showcase">
             <!-- Each child div in #showcase represents a slide -->
             <div class="showcase-slide">

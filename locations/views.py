@@ -27,7 +27,7 @@ class BaseLocationView(object):
         except Location.DoesNotExist:
             raise Http404(u'Район не найден')
 
-        self.info = location.info(related=True) # TODO: use settings.TOP_PARTICIPANTS_COUNT
+        self.info = location.info(related=True)
 
         tabs = [
             ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
