@@ -62,8 +62,9 @@
                     <!--li {% if menu_item == "participants" %}class="active"{% endif %}><a href="">Участники</a></li>
                     <li {% if menu_item == "tools" %}class="active"{% endif %}><a href="">Инструменты</a></li-->
                     <li {% if menu_item == "about" %}class="active"{% endif %}><a href="{% url about %}">О проекте</a></li>
-                    <li {% if menu_item == "help" %}class="active"{% endif %}><a href="{% url feedback %}">Как помочь</a></li>
-                    <li><a href="">FAQ</a></li>
+                    <li {% if menu_item == "help" %}class="active"{% endif %}><a href="{% url how_to_help %}">Как помочь</a></li>
+                    <li {% if menu_item == "feedback" %}class="active"{% endif %}><a href="{% url feedback %}">Обратная связь</a></li>
+                    <li {% if menu_item == "partners" %}class="active"{% endif %}><a href="{% url partners %}">Партнеры</a></li>
                     <li class="ym-clearfix">&nbsp;</li>
                 </ul>
                 <div class="ym-clearfix gr-bb-grey">&nbsp;</div>

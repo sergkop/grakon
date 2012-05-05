@@ -27,8 +27,24 @@ urlpatterns += patterns('',
     ])
 )
 
+
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/feedback/base.html', 'help', [
+    *static_tabs_urls('static_pages/how_to_help/base.html', 'help', [
+        ('how_to_help', u'...мозгами', 'static_pages/how_to_help/join_us.html', '', ''),
+        ('donate', u'...деньгами', 'static_pages/how_to_help/donate.html', '', ''),
+        ('volunteer', u'... как волонтер', 'static_pages/how_to_help/volunteer.html', '', ''),
+        ('share', u'... распространить информацию', 'static_pages/how_to_help/share.html', '', ''),
+    ])
+)
+
+urlpatterns += patterns('',
+    *static_tabs_urls('static_pages/partners/base.html', 'partners', [
+        ('partners', u'Наши партнеры', 'static_pages/partners/partners.html', '', ''),
+    ])
+)
+
+urlpatterns += patterns('',
+    *static_tabs_urls('static_pages/feedback/base.html', 'feedback', [
         ('feedback', u'Обратная связь', 'feedback/feedback.html', '',
                 'navigation.views.feedback'),
     ])
@@ -39,6 +55,7 @@ urlpatterns += patterns('',
         ('ideas-test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
 )
+
 
 urlpatterns += patterns('',
     url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),

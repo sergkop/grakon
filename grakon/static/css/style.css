@@ -33,11 +33,11 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
         .gr-side-item ul, .gr-side-item li, .gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none;}           
             .gr-source-list-slider {border: 1px solid #f3f3f3;}
             .gr-side-item li, .gr-source-list-slider li {padding: .7em .5em .7em 3.5em; position: relative; color: #887a7a}
-                .gr-source-list-slider li {color: #000;}
+                .gr-source-list-slider li {color: #000; padding: 1em .5em 1em 3em;}
                 .gr-side-item .gr-nomargin li {padding-left: 1em;}
                 .gr-side-item li:nth-child(2n+1), .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
                 .gr-side-item li i, .gr-source-list-slider li i {position: absolute; top: .8em; left: 0; width: 3em; text-align: right; font-style: normal;}
-                .gr-source-list-slider li i {top: 1em;} 
+                .gr-source-list-slider li i {top: 1.3em; width: 2em;} 
                 .gr-orange-arrow-up, .gr-orange-arrow-down { top: .9em;}
                 .gr-side-item li:first-child {border-top: 1px solid #ded5d5;}
                 .gr-disabled {position: absolute; top: 0; left: 0; z-index: 1; width: 100%; background-color: rgba(0,0,0,0.1); height: 300px;}
@@ -117,7 +117,7 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 
 .gr-aw-showcase_additional {font-size: .95em; margin-top: 1em; float: right; position: relative; z-index:1;}
 .gr-source-list-slider p {margin: 0;}
-.gr-source-list-context {margin: 0.3em 0 1em;}
+.gr-source-list-context {margin: 0.3em 0 0;}
 
 
 /* Страница чиновника */
