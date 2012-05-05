@@ -1,16 +1,24 @@
+* user's avatar, use it in disqus, emails
+
+Officials:
+    * points for adding officials
+    * automatically follow the official user created
+
+* pagination + sorting by columns
+
 * reformal
+
+* disqus message counter
+
+* restore location on error in form
 
 * server from Grisha
 
 Officials:
     * adding urls about officials + universal entity feature for it
     * editing locations
-    * points for adding officials
 
-Profile:
-    * user's avatar, use it in disqus, emails
-    * дополнительные поля (телефон, скайп, сайт, пол?, возраст?->дата рождения)
-
+* дополнительные поля в профайле (телефон, скайп, сайт, пол?, возраст?->дата рождения)
 * Left column of profile - administration, participation, представитель организации, etc.
 
 * Misha can log in to my account
@@ -22,8 +30,8 @@ Emails:
 
 Misc:
     * only activated users should be displayed in lists
-    * pagination + sorting by columns
     * Prohibit to become participant at higher levels (hide button)?
+    * How to respond to messages? (link to profile page with opened dialog + reply_to)
 
 Emails:
     * subscription configuration
@@ -36,12 +44,14 @@ Wall:
     * special login url, which closes window
     * bad url for disqus on main page
 
-Registration:
-    * restore location on error in form
+* move old grakon to elections.grakon.org
 
-* disqus message counter
+* link to old grakon on 404 page
 
 ---------Before launch-----------------
+
+* Ratings
+* Use aggregates for counting points
 
 * reset text in message send dialog if sent successfully
 
@@ -85,10 +95,15 @@ Misc:
     * add tips to buttons and ? signs to get help on features of the system
     * in forms limit lengths of strings that go into model's CharField
 
+* Graphs with statistics (in dashboard first)
 --------------------------------------
 * combine create pages with search pages
 
 * display entities assigned to higher levels of hierarchy on lower levels
+
+* use gravatar
+
+* in registration don't take password at first (like in gravatar.com)?
 
 * choosing main location
 
