@@ -33,13 +33,13 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
         .gr-side-item ul, .gr-side-item li, .gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none;}           
             .gr-source-list-slider {border: 1px solid #f3f3f3;}
             .gr-side-item li, .gr-source-list-slider li {padding: .7em .5em .7em 3.5em; position: relative; color: #887a7a}
+                .gr-source-list-slider li {color: #000;}
                 .gr-side-item .gr-nomargin li {padding-left: 1em;}
                 .gr-side-item li:nth-child(2n+1), .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
                 .gr-side-item li i, .gr-source-list-slider li i {position: absolute; top: .8em; left: 0; width: 3em; text-align: right; font-style: normal;}
                 .gr-source-list-slider li i {top: 1em;} 
                 .gr-orange-arrow-up, .gr-orange-arrow-down { top: .9em;}
                 .gr-side-item li:first-child {border-top: 1px solid #ded5d5;}
-                .gr-source-list-slider li .dimmed {padding-left: 1.3em; margin-left:.5em; background: url(../images/icons/back-dotted-arrow.gif) 0 .5em no-repeat;}
                 .gr-disabled {position: absolute; top: 0; left: 0; z-index: 1; width: 100%; background-color: rgba(0,0,0,0.3); height: 300px;}
 
         .gr-side-item h4.gr-officials {background-position: 0 -182px;}
@@ -111,11 +111,13 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
     .gr-icons-otchet {background-image:url(../images/icons/otchet.png);}
 
 .gr-icon-link {padding: 0 1em .1em 1.5em; background-position: 0 .3em; background-repeat: no-repeat;}
-    .gr-upload {background-image:url(../images/icons/upload-small.gif); background-position: 0 .1em;}			
+    .gr-upload {background-image:url(../images/icons/upload-small.gif); background-position: 0 .1em;}
     .gr-like {background-image:url(../images/icons/like-small.gif);}
     .gr-abuse {background-image:url(../images/icons/abuse-small.gif); padding-left: .9em; color: #769fb5;}
 
-.gr-aw-showcase_additional {font-size: .95em; margin-top: -1.3em; float: right; position: relative; z-index:1;}	
+.gr-aw-showcase_additional {font-size: .95em; margin-top: 1em; float: right; position: relative; z-index:1;}
+.gr-source-list-slider p {margin: 0;}
+.gr-source-list-context {margin: 0.3em 0 1em;}
 
 
 /* Страница чиновника */
@@ -131,6 +133,16 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 .gr-gplusone {width:72px; overflow: hidden; display: inline-block; margin: 0 0 9px;}
 .gr-facebook {margin: 0 auto 9px; width: 155px;}
 .gr-vk {margin: 0 auto 9px; height: 22px; overflow: hidden; width: 170px;}
+
+/*pagination*/
+.gr-pagination {clear: both; margin-top: 10px; text-align: center; font-size: .95em;}
+.gr-pagination span {cursor: pointer; color: #a9c93e;}
+.gr-pagination span.active {color: #000; font-weight: bold;}
+.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(/i/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
+.gr-pagination-arrow-previous {margin-right: 5px;}
+.gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
+.gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}
+.gr-pagination-arrow-next:hover {background-position: 0 -59px;}
 
 
 /* ----- Переиспользуемые элементы ----- */
