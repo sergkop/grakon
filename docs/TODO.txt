@@ -4,6 +4,8 @@ Officials:
     * points for adding officials
     * automatically follow the official user created
 
+* all at the end of lists
+
 * pagination + sorting by columns
 
 * reformal
@@ -250,6 +252,6 @@ Deployment:
 
 * put all our media (video, presentations, logos, infographics, etc.) online in social networks
 
-* use pylint for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
+* use pylint, pyflakes for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
 
 * use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python
