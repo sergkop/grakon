@@ -21,31 +21,22 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
-<<<<<<< HEAD
     *static_tabs_urls('static_pages/about/base.html', 'about', [
-=======
-    *static_tabs_urls('static_pages/about/base.html', '', [
->>>>>>> 6a9c1f108c2a16ab704068325fee927d64c53299
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
     ])
 )
 
 urlpatterns += patterns('',
-<<<<<<< HEAD
     *static_tabs_urls('static_pages/feedback/base.html', 'help', [
         ('feedback', u'Обратная связь', 'feedback/feedback.html', '',
-=======
-    *static_tabs_urls('static_pages/ideas-test/base.html', [
-        ('test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
+                'navigation.views.feedback'),
     ])
 )
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/feedback/base.html', [
-        ('feedback', u'Обратная связь', 'static_pages/how_to_help/feedback.html', '',
->>>>>>> 6a9c1f108c2a16ab704068325fee927d64c53299
-                'navigation.views.feedback'),
+    *static_tabs_urls('static_pages/ideas-test/base.html', '', [
+        ('test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
 )
 
