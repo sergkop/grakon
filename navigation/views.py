@@ -1,15 +1,25 @@
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.template.response import TemplateResponse
+from django.views.generic.base import TemplateView
 
 from locations.models import Location
-from locations.views import WallLocationView
+from locations.views import BaseLocationView
 from navigation.forms import FeedbackForm
 from services.cache import cache_view
 
-def main(request):
-    country_id = Location.objects.country().id
-    return WallLocationView.as_view()(request, loc_id=country_id)
+class MainView(BaseLocationView, TemplateView):
+    tab = 'main'
+
+    def get_context_data(self, **kwargs):
+        kwargs['loc_id'] = Location.objects.country().id
+        return super(MainView, self). get_context_data(**kwargs)
+
+main = MainView.as_view()
+
+#def main(request):
+#    country_id = Location.objects.country().id
+#    return WallLocationView.as_view()(request, loc_id=country_id)
 
 # TODO: how to utilise caching for logged in users?
 @cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)

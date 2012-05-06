@@ -30,11 +30,14 @@ class BaseLocationView(object):
         self.info = location.info(related=True)
 
         tabs = [
-            ('wall', u'Стена', reverse('location', args=[location.id]), 'locations/wall.html', ''),
+            ('wall', u'Стена', reverse('location_wall', args=[location.id]), 'locations/wall.html', 'wall-tab'),
             #('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
             ('tools', u'Инструменты', reverse('location_tools', args=[location.id]), 'locations/tools.html', ''),
             ('participants', u'Участники', reverse('location_participants', args=[location.id]), 'locations/participants.html', ''),
         ]
+
+        if location.is_country():
+            tabs = [('main', u'Главная', reverse('main'), 'main/base.html', '')] + tabs
 
         ctx.update({
             'menu_item': 'geography',
@@ -49,7 +52,6 @@ class BaseLocationView(object):
             'is_lowest_level': location.is_lowest_level(),
         })
         ctx.update(self.update_context())
-        # TODO: bad url for disqus in case of russia
         ctx.update(disqus_page_params('loc/'+str(loc_id), location.get_absolute_url(), 'locations'))
         return ctx
 
@@ -138,5 +140,5 @@ def goto_location(request):
     except ValueError:
         return HttpResponseRedirect(reverse('main')) # TODO: redirect to country page?
 
-    url = reverse('location', args=[loc_id])
+    url = reverse('location_wall', args=[loc_id])
     return HttpResponseRedirect(url)

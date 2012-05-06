@@ -2,7 +2,7 @@
     <ul class="clearfix tabs-list">
         {% for tab in tabs %}
             {% if tab.0 == active %}
-                <li class="current" {{ tab.4 }}>
+                <li class="current {{ tab.4 }}">
                     <a>{{ tab.1 }}</a>
                 </li>
             {% else %}

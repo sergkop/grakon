@@ -47,7 +47,7 @@
                         <a><strong class="gr-leader">{{ request.profile_info.points.leader }}</strong></a>
                         <a><strong class="gr-activity">{{ request.profile_info.points.offline }}</strong></a>
                         <a><strong class="gr-web-activity">{{ request.profile_info.points.online }}</strong></a>
-                        {% if request.profile_info.locations.main_id %}<a href="{% url location request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
+                        {% if request.profile_info.locations.main_id %}<a href="{% url location_wall request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                         <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                     {% else %}
                         <a id="menu_login_btn">Войти</a>

@@ -129,7 +129,4 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        if self.is_country():
-            return ('main', (), {})
-        else:
-            return ('location', (), {'loc_id': str(self.id)})
+        return ('location_wall', (), {'loc_id': str(self.id)})

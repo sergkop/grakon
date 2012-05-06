@@ -14,5 +14,5 @@
     // Add counter in the header of the wall tab
     var display_counter = $("<a/>").attr("data-disqus-identifier", "{{ disqus_identifier }}")
             .attr("href", "{{ URL_PREFIX }}{{ disqus_partial_url }}#disqus_thread");
-    $(".jquery_tabs > ul li:nth-child(1)").append(display_counter);
+    $(".jquery_tabs > ul li.wall-tab").append(display_counter);
 </script>

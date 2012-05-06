@@ -1,13 +1,4 @@
-* update list of resources
-
-* prepare tab for main page
-* bad url for disqus on main page (move all of them to /wall)
-
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
-
-
-
-
 
 * place of work and position for officials
 * adding urls about officials + universal entity feature for it
