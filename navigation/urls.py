@@ -1,11 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('',
-    url(r'^$', 'navigation.views.main', name='main'),
-    url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),
-)
-
 def static_tabs_urls(base_template, menu_item, tabs_short):
     """
     tabs_short=[(name, title, temsplate, css_class, view), ...]
@@ -21,12 +16,17 @@ def static_tabs_urls(base_template, menu_item, tabs_short):
 
     return urls
 
+urlpatterns = patterns('',
+    url(r'^$', 'navigation.views.main', name='main'),
+)
+
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/about/base.html', 'about', [
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
     ])
 )
+
 
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/how_to_help/base.html', 'help', [
@@ -54,4 +54,9 @@ urlpatterns += patterns('',
     *static_tabs_urls('static_pages/ideas-test/base.html', '', [
         ('ideas-test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
+)
+
+
+urlpatterns += patterns('',
+    url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),
 )

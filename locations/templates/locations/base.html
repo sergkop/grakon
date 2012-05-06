@@ -18,13 +18,10 @@
         <ul>
             {% for official in info.officials.entities %}
                 <li>
-                    <!--i class="highlight">89</i-->
+                    <i class="highlight">89</i>
                     <a href="{{ official.official.get_absolute_url }}">{{ official.official }}</a>
                 </li>
             {% endfor %}
-            {% if info.officials.count > LIST_COUNT.tools %}
-                <li><a href="{% url location_tools location.id %}?type=officials">Все</a></li>
-            {% endif %}
         </ul>
         <div align="center">
             <a href="{% url create_official %}" class="ym-button">Добавить чиновника</a>
@@ -32,7 +29,7 @@
     </div>
 
     <div class="gr-side-item">
-        <h4 class="gr-eureka"><a>Генератор идей<br /> (в разработке)</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>
+        <h4 class="gr-eureka"><a href="">Генератор идей</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>
         <ul>
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
             <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
@@ -45,7 +42,7 @@
 
     <div class="gr-side-item">
         <div class="gr-disabled">&nbsp;</div>
-        <h4 class="gr-events"><a href="">Мероприятия<br /> (в разработке)</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
+        <h4 class="gr-events"><a href="">Мероприятия</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
             <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
@@ -64,14 +61,8 @@
             {% for person in info.participants.entities %}
                 {% include "elements/person.html" %}
             {% endfor %}
-            {% if info.participants.count > LIST_COUNT.participants %}
-                <tr>
-                    <td><a href="{% url location_participants location.id %}">Все</a></td>
-                    <td></td><td></td><td></td><td></td>
-                </tr>
-            {% endif %}
         </table>
-        {% if is_lowest_level and not is_participant %}
+        {% if not is_participant %}
             <div align="center">
                 <a id="become_participant_btn" class="ym-button">Стать участником</a>
             </div>
@@ -79,8 +70,6 @@
             {% include "dialogs/become_participant.html" %}
         {% endif %}
     </div>
-
-    {% include "elements/disqus_counter.html" %}
 {% endblock %}
 
 {% block content %}

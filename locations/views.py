@@ -37,7 +37,7 @@ class BaseLocationView(object):
         ]
 
         if location.is_country():
-            tabs = [('main', u'Главная', reverse('main'), 'main/base.html', '')] + tabs
+            tabs = [('main', u'Добро пожаловать', reverse('main'), 'main/base.html', '')] + tabs
 
         ctx.update({
             'menu_item': 'geography',
