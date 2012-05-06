@@ -34,9 +34,11 @@ class LocationManager(models.Manager):
             for loc in locations:
                 other_res[loc.id] = {'location': loc}
 
+                # TODO: separate participants and tools
                 for name, model in ENTITIES_MODELS.iteritems():
+                    count_name = 'participants' if name=='participants' else 'tools'
                     other_res[loc.id][name] = model.objects.for_location(
-                            loc, limit=settings.TOP_PARTICIPANTS_COUNT)
+                            loc, limit=settings.LIST_COUNT[count_name])
 
             res.update(other_res)
 
@@ -90,6 +92,16 @@ class Location(models.Model):
 
     def is_location(self):
         return self.district_id is not None
+
+    # TODO: cache it (use internal self attribute)
+    def is_lowest_level(self):
+        if not self.region:
+            return False
+
+        if self.is_district():
+            return not Location.objects.filter(district=self).exists()
+        else:
+            return True
 
     def children_query_field(self):
         """ Return name of of Location field to construct db query filtering children """

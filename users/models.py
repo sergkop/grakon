@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from elements.models import BaseEntityManager, BaseEntityModel, entity_class, \
-        EntityFollower, EntityResource, HTMLField
+from elements.models import BaseEntityManager, BaseEntityModel, ENTITIES_MODELS, \
+        entity_class, EntityAdmin, EntityFollower, EntityResource, HTMLField
 
 class ProfileManager(BaseEntityManager):
     def get_info(self, data, ids):
@@ -73,7 +73,7 @@ class Profile(BaseEntityModel):
 
     def save(self):
         super(Profile, self).save()
-        self.update_source_points('show_name')
+        self.update_points()
         self.clear_cache()
 
     @models.permalink
@@ -102,6 +102,23 @@ def points_type(type):
         return func
     return decorator
 
+def features_points(queryset, points_dict):
+    """ Shortcut to calculate points based on the number of entity feature instances """
+    # TODO: use aggregates to get counts immediately?
+    entities = list(queryset.values_list('content_type', 'entity_id'))
+
+    entities_by_ct = {}
+    for ct_id, entity_id in entities:
+        entities_by_ct.setdefault(ct_id, []).append(entity_id)
+
+    res = 0
+    for entity_type in points_dict:
+        entity_ct_id = ContentType.objects.get_for_model(ENTITIES_MODELS[entity_type]).id
+        entities_num = len(entities_by_ct.get(entity_ct_id, []))
+        res += entities_num * points_dict[entity_type]
+
+    return res
+
 # TODO: give points for being admin
 # TODO: complaints related to user lower his points
 # Collection of methods for calculating profile points coming from different sources
@@ -122,6 +139,11 @@ class PointsSources(object):
         return 3 if has_resources else 0
 
     @points_type('online')
+    def follows(self, profile):
+        points = {'officials': 1}
+        return features_points(EntityFollower.objects.filter(follower=profile), points)
+
+    @points_type('online')
     def contacts(self, profile):
         contacts_ids = list(EntityFollower.objects.filter(follower=profile,
                 content_type=ContentType.objects.get_for_model(Profile)).values_list('entity_id', flat=True))
@@ -131,9 +153,17 @@ class PointsSources(object):
         # TODO: several levels (5 contacts, 10, 50) + count 2-sided connections
         # TODO: distinguish the limit when a popular person is followed by many
 
+        res = 0
         if len(contacts_ids) > 0:
-            return 1
-        return 0
+            res += 1
+        if len(followers_ids) >= 10:
+            res += 3
+        return res
+
+    @points_type('online')
+    def admin(self, profile):
+        points = {'officials': 3}
+        return features_points(EntityAdmin.objects.filter(admin=profile), points)
 
 points_methods = PointsSources()
 

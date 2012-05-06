@@ -77,8 +77,12 @@ class CreateOfficialView(CreateView):
         official = form.save()
 
         EntityAdmin.objects.add(official, self.request.profile)
+        EntityFollower.objects.add(official, self.request.profile)
 
         response = super(CreateOfficialView, self).form_valid(form)
+
+        self.request.profile.update_source_points('admin')
+        self.request.profile.update_source_points('follows')
         return response
 
 create_official = login_required(CreateOfficialView.as_view())

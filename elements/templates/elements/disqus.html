@@ -5,8 +5,8 @@
         this.page.api_key = "{{ DISQUS_PUBLIC_KEY }}";
         this.sso = {
             name: "Гракон",
-            button:  "http://example.com/images/samplenews.gif",
-            icon:    "{{ URL_PREFIX }}{{ STATIC_URL }}/images/favicon.png",
+            button: "{{ URL_PREFIX }}{{ STATIC_URL }}/images/logos/signin_with_grakon.png",
+            icon: "{{ URL_PREFIX }}{{ STATIC_URL }}/images/favicon.png",
             url:     "{{ URL_PREFIX }}{% url login %}",
             //mobile:  "http://example.com/?returnURL=currentpage",
             logout:  "{{ URL_PREFIX }}{% url logout %}?next={{ request.get_full_path }}",

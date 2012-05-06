@@ -10,10 +10,9 @@
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 
-    // TODO: fix it
+    // TODO: generalize it to be used everywhere
     // Add counter in the header of the wall tab
-    //var display_counter = $("<a/>").attr("data-disqus-identifier", "location/{{ current_location.id }}")
-    //        .attr("href", "{{ request.path }}#disqus_thread");
-    //$("#tabs > ul li:nth-child(1)").append(display_counter);
-    //display_counter.click(function(){$(this).attr("href", $("#tabs ul li:nth-child(2) a:first").attr("href"))});
+    var display_counter = $("<a/>").attr("data-disqus-identifier", "{{ disqus_identifier }}")
+            .attr("href", "{{ URL_PREFIX }}{{ disqus_partial_url }}#disqus_thread");
+    $(".jquery_tabs > ul li:nth-child(1)").append(display_counter);
 </script>

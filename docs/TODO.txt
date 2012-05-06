@@ -1,56 +1,56 @@
-* user's avatar, use it in disqus, emails
+* update list of resources
 
-Officials:
-    * points for adding officials
-    * automatically follow the official user created
+* prepare tab for main page
+* bad url for disqus on main page (move all of them to /wall)
 
-* all at the end of lists
+* дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
 
-* pagination + sorting by columns
 
-* reformal
 
-* disqus message counter
 
-* restore location on error in form
 
-* server from Grisha
+* place of work and position for officials
+* adding urls about officials + universal entity feature for it
 
-Officials:
-    * adding urls about officials + universal entity feature for it
-    * editing locations
+* configure new server
+* move old grakon to elections.grakon.org
 
-* дополнительные поля в профайле (телефон, скайп, сайт, пол?, возраст?->дата рождения)
 * Left column of profile - administration, participation, представитель организации, etc.
+
+* link to old grakon on 404 page
+
+* editing locations in officials
+
+* show_name field in registration form
 
 * Misha can log in to my account
 
-* prepare events and dmp templates for Yulia to make static pages
+* check that reformal.grakon.org works
 
-Emails:
-    * DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+---------Before launch-----------------
+
+* verify reformal project
+
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+
+* restore location on error in form
 
 Misc:
     * only activated users should be displayed in lists
-    * Prohibit to become participant at higher levels (hide button)?
     * How to respond to messages? (link to profile page with opened dialog + reply_to)
+
+* pagination + sorting by columns
 
 Emails:
     * subscription configuration
     * page with form for writing messages (put link on it in emails)
-    * link to feedback form (or our email), 'read us' buttons (Yulia) in email template
+    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
 
 Wall:
-    * кнопка авторизации через гракон
     * неправильный заголовок на вкладке логина через гракон
     * special login url, which closes window
-    * bad url for disqus on main page
 
-* move old grakon to elections.grakon.org
-
-* link to old grakon on 404 page
-
----------Before launch-----------------
+* user's avatar, use it in disqus, emails
 
 * Ratings
 * Use aggregates for counting points
@@ -255,3 +255,5 @@ Deployment:
 * use pylint, pyflakes for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
 
 * use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python
+
+* move reformal options to settings

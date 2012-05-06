@@ -105,6 +105,7 @@ def send_message(request):
 
     show_email = 'show_email' in request.POST
 
+    title = escape_html(title)
     body = escape_html(body)
 
     subject = u'Пользователь %s написал вам сообщение' % unicode(request.profile)

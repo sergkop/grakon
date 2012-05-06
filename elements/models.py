@@ -76,30 +76,37 @@ class BaseEntityProperty(models.Model):
 # TODO: add subcategories (?)
 # (name, title)
 RESOURCE_CHOICES = (
-    ('money', u'Деньги'), #u'Возможность оказать финансовую помощь'),
-    ('transport', u'Транспорт'), #u'Возможность предоставить автомобиль, автобус, ...'),
-    ('time', u'Время'), #u'Возможность самому принять активное участие'),
-    ('printing', u'Печать'), #u'Наличие принтера, доступ к типографии, ...'),
-    ('premises', u'Помещение'), #u'Ресторан, клуб, спортзал, ...'),
-    ('food', u'Общественное питание'), #u'Поставка продуктов, обслуживание обедов'),
-    ('auditory', u'Аудитория'), #u'Распространение информации среди своих друзей и читателей'),
-    ('people', u'Человеческие ресурсы'), #u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
-    ('organization', u'Представительство в организации'), #u'Руководитель общественного движения, ...'),
-    ('authority', u'Представительство во власти'), #u'Муниципальный депутат, полицейский, ...'),
-    #('other', u'Другое', u''),
+    ('money', u'спонсор/деньги'),
+    ('transport', u'автомобиль/автобус'),
+    ('time', u'волонтер/время'),
+    ('printing', u'типография/печать'),
+    ('premises', u'помещение/заведение'),
+    ('food', u'повар/общественное питание'),
+    ('auditory', u'большое количество друзей'),
+    
+    ('organization', u'представитель большой организации'),
+    ('authority', u'представитель власти'),
 
-    # Skills
-    ('lawyer', u'Юридическая помощь'),
-    ('programmer', u'Программирование'),
-    ('design', u'Дизайн'),
-    ('copywriting', u'Написание текстов'),
-    #('creative', u'Креатив'), # TODO: improve
-    ('organizator', u'Организаторские навыки'),
-    #('', u'Физическая сила'), # TODO: improve
-    ('musician', u'Музыкальные навыки'),
-    ('photographer', u'Фотография'),
-    ('journalist', u'Журналистские навыки'),
-    ('observer', u'Опыт наблюдения на выборах'),
+    ('lawyer', u'юрист/адвокат/правозащитник'),
+    ('programmer', u'программист/веб-разработчик'),
+    ('computer', u'продвинутый пользователь компьютера'),
+    ('design', u'дизайнер/художник/оформитель'),
+    ('copywriting', u'копирайтер/писатель/поэт'),
+    ('pr', u'PR специалист/специалист по продвижению'),
+    ('creative', u'креативщик/генератор идей/нэймер'),
+    ('musician', u'музыкант/певец/диджей'),
+    ('photographer', u'фотограф/оператор/монтажер'),
+    ('journalist', u'журналист/представитель СМИ'),
+    ('narrator', u'оратор/ведущий/диктор'),
+    ('actor', u'актер/шоумэн'),
+    ('organizator', u'организатор мероприятий'),
+    ('observer', u'опыт наблюдения на выборах'),
+    ('interpreter', u'переводчик'),
+    ('strong', u'физическая сила'),
+
+    #('people', u'Человеческие ресурсы'), #u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
+    # учитель/преподаватель
+    #('other', u'Другое', u''),
 )
 
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
@@ -209,7 +216,7 @@ class EntityFollowerManager(BaseEntityManager):
         for id in ids:
             f_ids = map(lambda fd: fd[1], filter(lambda f: f[0]==id, followers_data))
             top_followers_rating = sorted(filter(lambda f: f[0] in f_ids, followers_rating),
-                    key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWERS_COUNT]
+                    key=lambda f: f[1], reverse=True)[:settings.LIST_COUNT['followers']]
             res[id] = {
                 'count': len(f_ids),
                 'ids': map(lambda f: f[0], top_followers_rating),
@@ -228,7 +235,7 @@ class EntityFollowerManager(BaseEntityManager):
         for id in ids:
             e_ids = map(lambda fd: fd[0], filter(lambda f: f[1]==id, followed_data))
             top_followed_rating = sorted(filter(lambda f: f[0] in e_ids, followed_rating),
-                    key=lambda f: f[1], reverse=True)[:settings.TOP_FOLLOWED_COUNT]
+                    key=lambda f: f[1], reverse=True)[:settings.LIST_COUNT['followed']]
             res[id] = {
                 'count': len(e_ids),
                 'ids': map(lambda f: f[0], top_followed_rating),
@@ -250,7 +257,7 @@ class EntityFollower(BaseEntityProperty):
 
     feature = 'followers'
     fk_field = 'follower'
-    points_sources = ['contacts']
+    points_sources = ['contacts', 'follows']
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'follower')
@@ -273,7 +280,7 @@ class EntityAdminManager(BaseEntityManager):
         for id in ids:
             a_ids = map(lambda ad: ad[1], filter(lambda a: a[0]==id, admins_data))
             top_admin_rating = sorted(filter(lambda a: a[0] in a_ids, admins_rating),
-                    key=lambda a: a[1], reverse=True)[:settings.TOP_ADMIN_COUNT]
+                    key=lambda a: a[1], reverse=True)[:settings.LIST_COUNT['admin']]
             res[id] = {
                 'count': len(a_ids),
                 'ids': map(lambda a: a[0], top_admin_rating),

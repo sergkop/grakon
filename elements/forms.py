@@ -81,16 +81,9 @@ def location_clean(form):
                 else:
                     form.location = Location.objects.country()
 
-    if form.required:
-        if form.location.region_id is None:
-            form_location_path(form)
-            raise forms.ValidationError(msg)
-
-        # Check that this is the lowest possible level
-        if form.location.is_district():
-            if Location.objects.filter(district=form.location).count() != 0:
-                form_location_path(form)
-                raise forms.ValidationError(msg)
+    if form.required and not form.location.is_lowest_level():
+        form_location_path(form)
+        raise forms.ValidationError(msg)
 
     form_location_path(form)
     return form.cleaned_data
@@ -117,3 +110,21 @@ def resources_init(cls):
     new_cls.save = new_save
 
     return new_cls
+
+"""
+def image_init(cls):
+    attrs = {
+        'photo': forms.FileField(label=u'Фотография', help_text=u'Размер не должен превышать 5 Мб')
+    }
+
+    new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
+
+    save = new_cls.save
+    def new_save(form):
+        entity = save(form)
+
+        return entity
+    new_cls.save = new_save
+
+    return new_cls
+"""

@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import json
 
 from django.forms.widgets import SelectMultiple, Widget
@@ -27,6 +28,7 @@ class ResourcesSelectWidget(SelectMultiple):
         html = super(ResourcesSelectWidget, self).render(name, value, attrs)
         html += '<script type="text/javascript">' \
                     'var select = $("#id_%(name)s");' \
+                    u'select.attr("data-placeholder", "Выберите навыки и ресурсы");' \
                     'if (!select.hasClass("chzn-done"))' \
                         'select.chosen();' \
                     'select.trigger("liszt:updated");' \

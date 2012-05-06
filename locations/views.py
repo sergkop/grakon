@@ -46,6 +46,7 @@ class BaseLocationView(object):
             'info': self.info,
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
+            'is_lowest_level': location.is_lowest_level(),
         })
         ctx.update(self.update_context())
         # TODO: bad url for disqus in case of russia

@@ -178,7 +178,10 @@ CRISPY_TEMPLATE_PACK = 'uni_form'
 FORCE_SCRIPT_NAME = ''
 
 # Numbers of entries shown in the side blocks for tools and participants
-TOP_FOLLOWERS_COUNT = 5
-TOP_FOLLOWED_COUNT = 5
-TOP_PARTICIPANTS_COUNT = 10 # number of participants displayed on location page
-TOP_ADMIN_COUNT = 5
+LIST_COUNT = {
+    'followers': 5,
+    'followed': 5,
+    'participants': 10,
+    'admin': 5,
+    'tools': 5,
+}
