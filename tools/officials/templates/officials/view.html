@@ -1,73 +1,73 @@
-<div class="jquery_tabs">
-    <div class="tabbody">
-        <div class="gr-fl gr-photo">
-            <img src="/static/images/icons/nophoto.jpg" />
-        </div>
+<div class="gr-fl gr-photo">
+    <img src="{{ STATIC_URL }}images/icons/nophoto.jpg" />
+</div>
 
-        <div>
-            <!--ul class="gr-fr gr-icons">
-                <li class="gr-icons-like">Понравилось<big>1234</big></li>
-            </ul-->
+<div>
+    <!--ul class="gr-fr gr-icons">
+        <li class="gr-icons-like">Понравилось<big>1234</big></li>
+    </ul-->
 
-            <!--div class="gr-tags">
-                <a href="">Депутат</a>
-            </div-->
+    <div class="gr-tags">
+        <a>{{ official.post }}</a>
+    </div>
 
-            <!--h3>Горсовет Сыктывкара <a href="" class="gr-location">&nbsp;</a></h3-->
-            {% for location in info.locations.entities %}
-                <div class="gr-mb20">
-                {% with location=location.location %}
-                    {% include "elements/location_path.html" %}
-                {% endwith %}
-                </div>
-            {% endfor %}
+    <h3>{{ official.place }} <a class="gr-location">&nbsp;</a></h3>
+    <div class="gr-mb20">
+        {% for location in info.locations.entities %}
+            {% with location=location.location %}
+                {% include "elements/location_path.html" %}
+            {% endwith %}
+            <br />
+        {% endfor %}
+    </div>
 
-            <p><span class="dimmed">Рабочий адрес:</span> {{ official.address }}</p>
+    {% if official.address %}
+        <p><span class="dimmed">Рабочий адрес:</span> {{ official.address }}</p>
+    {% endif %}
 
-            <dl class="gr-inline-dl">
-                <dt class="dimmed">Телефон:</dt>
-                <dd>{{ official.telephone }}</dd>
+    <dl class="gr-inline-dl">
+        {% if official.telephone %}
+            <dt class="dimmed">Телефон:</dt>
+            <dd>{{ official.telephone }}</dd>
+        {% endif %}
 
-                <dt class="dimmed">E-mail:</dt>
-                <dd><a href="mailto:{{ official.email }}">{{ official.email }}</a></dd>
-            </dl>
+        {% if official.email %}
+            <dt class="dimmed">E-mail:</dt>
+            <dd><a href="mailto:{{ official.email }}">{{ official.email }}</a></dd>
+        {% endif %}
+    </dl>
 
-            {{ official.about|safe }}
+    {{ official.about|safe }}
 
-            {% include "officials/view_buttons_panel.html" %}
-        </div>
+    {% include "officials/view_buttons_panel.html" %}
+</div>
 
-        <div class="ym-clearfix">&nbsp;</div>
+<div class="ym-clearfix">&nbsp;</div>
 
-        <div id="showcase" class="showcase">
-            <!-- Each child div in #showcase represents a slide -->
-            <div class="showcase-slide">
-                <!-- Put the slide content in a div with the class .showcase-content. -->
-                <div class="showcase-content">
-                    <div class="showcase-content-wrapper">
-                        <ul class="gr-source-list-slider">
-                            <li>
-                                <i class="gr-orange-arrow-up">&nbsp;</i>
-                                <p>Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                                <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                            </li>
-                            <li>
-                                <i class="gr-orange-arrow-up">&nbsp;</i>
-                                <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                                <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                            </li>
-                            <li>
-                                <i class="gr-orange-arrow-down">&nbsp;</i>
-                                <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                                <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+<!--div id="showcase" class="showcase">
+    <div class="showcase-slide">
+        <div class="showcase-content">
+            <div class="showcase-content-wrapper">
+                <ul class="gr-source-list-slider">
+                    <li>
+                        <i class="gr-orange-arrow-up">&nbsp;</i>
+                        <p>Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
+                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
+                    </li>
+                    <li>
+                        <i class="gr-orange-arrow-up">&nbsp;</i>
+                        <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
+                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
+                    </li>
+                    <li>
+                        <i class="gr-orange-arrow-down">&nbsp;</i>
+                        <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
+                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <p class="gr-aw-showcase_additional"><a class="gr-icon-link gr-abuse" href="">Пожаловаться</a>
-        </p>
-
     </div>
-</div>
+</div-->
+
+<!--p class="gr-aw-showcase_additional"><a class="gr-icon-link gr-abuse" href="">Пожаловаться</a></p-->

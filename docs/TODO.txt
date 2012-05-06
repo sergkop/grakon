@@ -1,18 +1,16 @@
-* place of work and position for officials
 * adding urls about officials + universal entity feature for it
 
 * configure new server
 * move old grakon to elections.grakon.org
 
-* Left column of profile - administration, participation, представитель организации, etc.
-
 * link to old grakon on 404 page
-
-* editing locations in officials
 
 * Misha can log in to my account
 
 ---------Before launch-----------------
+* editing locations in officials
+
+* Left column of profile - administration, participation, представитель организации, etc.
 
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
 
@@ -84,8 +82,15 @@ Misc:
     * add tips to buttons and ? signs to get help on features of the system
     * in forms limit lengths of strings that go into model's CharField
 
+* tabs with lists of contacts and entities on profile and officials pages
+
 * Graphs with statistics (in dashboard first)
+
+* give superuser the rights of all admins
 --------------------------------------
+* Types of officials (депутаты, судьи, адвокаты)
+* Pages for places
+
 * combine create pages with search pages
 
 * display entities assigned to higher levels of hierarchy on lower levels
@@ -218,6 +223,7 @@ Deployment:
     * database backups
     * configure virtualenv inside settings properly
     * separate server for media files? (512 mb)
+    * configure firewall (ufw)
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 

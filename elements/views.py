@@ -93,3 +93,10 @@ def remove_location(request, entity):
 
     EntityLocation.objects.remove(entity, location)
     return HttpResponse('ok')
+
+"""
+@entity_post_method
+def add_post(request, entity):
+    EntityPost.objects.add(entity, request.profile, content, url, opinion)
+    return HttpResponse('ok')
+"""

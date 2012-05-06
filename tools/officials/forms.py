@@ -15,7 +15,7 @@ class OfficialForm(forms.ModelForm):
     helper = form_helper('', u'Сохранить')
     helper.layout = Layout(
         Fieldset(u'Персональные данные', 'last_name', 'first_name', 'middle_name',
-                'email', 'telephone'),
+                'post', 'place', 'email', 'telephone'),
         Fieldset(u'География', 'location_select', 'address'),
         Fieldset(u'', 'about'),
     )

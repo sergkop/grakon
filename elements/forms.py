@@ -13,6 +13,7 @@ class HTMLCharField(forms.CharField):
 
 # TODO: write one method taking a list of features (take params from models) + classes with methods and data
 # TODO: rename it
+# TODO: if required is False provide help_text saying that nothing chosen means Russia
 def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
     attrs = {

@@ -302,12 +302,60 @@ class EntityAdmin(BaseEntityProperty):
 
     feature = 'admins'
     fk_field  = 'admin'
+    points_sources = ['admin']
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'admin')
 
     def __unicode__(self):
         return unicode(self.admin) + ' is admin of ' + unicode(self.entity)
+
+"""
+OPINION_CHOICES = (
+    ('positive', u'положительная'),
+    ('neutral', u'нейтральная'),
+    ('negative', u'негативная'),
+)
+
+class EntityPostManager(models.Manager):
+    def add(self, entity, profile, content, url, opinion):
+        if self.model.feature not in type(entity).features:
+            return
+
+        if opinion not in map(lambda op: op[0], OPINION_CHOICES):
+            return
+
+        self.create(content_type=ContentType.objects.get_for_model(type(entity)),
+                entity_id=entity.id, profile=profile, content=content, url=url, opinion=opinion)
+
+        for source in self.model.points_sources:
+            profile.update_source_points(source)
+
+        entity.clear_cache()
+        profile.clear_cache()
+
+# TODO: make it a feature (?)
+class EntityPost(BaseEntityProperty):
+    profile = models.ForeignKey('users.Profile', related_name='posts')
+    content = models.CharField(max_length=250)
+    url = models.URLField(u'Ссылка')
+    opinion = models.CharField(u'Оценка', max_length=8, choices=OPINION_CHOICES)
+
+    objects = EntityPostManager()
+
+    feature = 'posts'
+    # TODO: add points_sources and points for posts
+
+    def delete(self):
+        self.entity.clear_cache()
+        super(EntityPost, self).delete()
+
+        for source in self.model.points_sources:
+            profile.update_source_points(source)
+
+    def __unicode__(self):
+        return unicode(self.profile) + ' posted ' + unicode(self.opinion) + ' opinion'
+"""
 
 # TODO: add search method
 class BaseEntityManager(models.Manager):

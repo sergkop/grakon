@@ -10,13 +10,15 @@ class OfficialManager(BaseEntityManager):
             data[id]['official'] = officials_by_id[id]
 
 # TODO: url - for official website/page (maybe several) (element for that?)
-# TODO: introduce type
+# TODO: introduce choices for types
 @entity_class(['followers', 'locations', 'admins'])
 class Official(BaseEntityModel):
     first_name = models.CharField(u'Имя', max_length=50)
     middle_name = models.CharField(u'Отчество', max_length=50, blank=True)
     last_name = models.CharField(u'Фамилия', max_length=70)
 
+    post = models.CharField(u'Должность', max_length=100)
+    place = models.CharField(u'Место работы', max_length=150, help_text=u'Например, Московский городской суд')
     address = models.CharField(u'Рабочий адрес', max_length=250, blank=True)
     telephone = models.CharField(u'Телефон', max_length=100, blank=True)
     email = models.EmailField(u'Электронная почта', blank=True)

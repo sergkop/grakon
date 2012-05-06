@@ -37,6 +37,10 @@ class BaseOfficialView(object):
 
         self.info = self.official.info()
 
+        # TODO: move it to elements
+        #posts = EntityPost.objects.filter(entity_id=official.id,
+        #        content_type=ContentType.objects.get_for_model(Official))
+
         ctx.update({
             'tools_menu_item': True,
             'tab': self.tab,
@@ -80,9 +84,6 @@ class CreateOfficialView(CreateView):
         EntityFollower.objects.add(official, self.request.profile)
 
         response = super(CreateOfficialView, self).form_valid(form)
-
-        self.request.profile.update_source_points('admin')
-        self.request.profile.update_source_points('follows')
         return response
 
 create_official = login_required(CreateOfficialView.as_view())
