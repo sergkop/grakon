@@ -10,19 +10,19 @@ $.fn.tipsy.defaults.fade = true;
 $.fn.tipsy.defaults.opacity = 0.6;
 
 function get_cookie(name){
-    var cookieValue = null;
+    var cookie_value = "";
     if (document.cookie && document.cookie!="") {
         var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
             // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) == (name + "=")) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                cookie_value = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
             }
         }
     }
-    return cookieValue;
+    return cookie_value;
 }
 
 // TODO: use list to set buttons (?)

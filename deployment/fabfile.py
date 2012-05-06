@@ -105,10 +105,11 @@ def init_system():
     cmd('ssh-keygen -t rsa -f /home/%s/.ssh/id_rsa -N %s -C "%s"' % (
             USERNAME, conf['SSH_KEY_PASSPHRASE'], conf['GITHUB_EMAIL']))
 
-    # TODO: automate it (or change text color)
+    # TODO: change text color
     print "Copy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)"
     cmd('cat /home/%s/.ssh/id_rsa.pub' % USERNAME)
 
+    # TODO: stop here to wait while key is added to github
     # Test access to repo
     cmd('ssh -T git@github.com') # TODO: make sure this test is positive
 

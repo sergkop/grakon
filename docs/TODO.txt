@@ -1,13 +1,8 @@
-* adding urls about officials + universal entity feature for it
-
-* configure new server
-* move old grakon to elections.grakon.org
-
-* link to old grakon on 404 page
-
-* Misha can log in to my account
+* Misha can log in to my account (?)
 
 ---------Before launch-----------------
+* adding urls about officials + universal entity feature for it
+
 * editing locations in officials
 
 * Left column of profile - administration, participation, представитель организации, etc.
