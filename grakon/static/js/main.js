@@ -10,7 +10,7 @@ $.fn.tipsy.defaults.fade = true;
 $.fn.tipsy.defaults.opacity = 0.6;
 
 function get_cookie(name){
-    var cookie_value = "";
+    var cookie_value = null;
     if (document.cookie && document.cookie!="") {
         var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++) {

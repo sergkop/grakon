@@ -1,6 +1,7 @@
 <div id="login_dialog" class="hidden">
     <form id="login_form" method="post" action="{% url login %}?next={{ request.get_full_path }}">
-        <input type="hidden" value="" name="csrfmiddlewaretoken"/>
+        {% csrf_token %}
+        <!--input type="hidden" value="" name="csrfmiddlewaretoken"/-->
         <table class="markup" width="300">
             <tr>
                 <td><label for="id_username">Логин/email:</label></td>

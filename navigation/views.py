@@ -22,7 +22,7 @@ main = MainView.as_view()
 #    return WallLocationView.as_view()(request, loc_id=country_id)
 
 # TODO: how to utilise caching for logged in users?
-@cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
+#@cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
 def static_page(request, **kwargs):
     """ 
     kwargs must contain the following keys: 'tab', 'template', 'tabs', 'menu_item'.
