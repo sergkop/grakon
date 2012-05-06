@@ -4,7 +4,7 @@ NAME=grakon
 PIDFILE=/var/run/$NAME.pid
 SOCKET=%(path)s$NAME.sock
 
-METHOD="threaded" # "prefork"
+METHOD="prefork"
 
 action=${1:-restart}
 

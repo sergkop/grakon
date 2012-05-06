@@ -1,6 +1,5 @@
-* Misha can log in to my account (?)
+* Text on the main page with the link to elections.grakon.org
 
----------Before launch-----------------
 * adding urls about officials + universal entity feature for it
 
 * editing locations in officials
@@ -82,6 +81,8 @@ Misc:
 * Graphs with statistics (in dashboard first)
 
 * give superuser the rights of all admins
+
+* Misha can log in to my account (?)
 --------------------------------------
 * Types of officials (депутаты, судьи, адвокаты)
 * Pages for places
