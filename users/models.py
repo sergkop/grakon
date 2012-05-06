@@ -45,8 +45,8 @@ class Profile(BaseEntityModel):
 
     first_name = models.CharField(u'Имя', max_length=40)
     last_name = models.CharField(u'Фамилия', max_length=40)
-    show_name = models.BooleanField(u'Показывать настоящее имя', default=False,
-            help_text=u'<b>Поставьте эту галку, чтобы другие пользователи видели ваше настоящее имя</b>')
+    show_name = models.BooleanField(u'Показывать настоящее имя', default=True,
+            help_text=u'Снимите эту галку, чтобы скрыть свое имя от других пользователей')
 
     about = HTMLField(u'О себе', default='', blank=True)
 

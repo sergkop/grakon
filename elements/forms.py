@@ -91,7 +91,8 @@ def location_clean(form):
 def resources_init(cls):
     # TODO: take resources label as an argument (and description)
     attrs = {'resources': forms.MultipleChoiceField(label=u'Навыки и ресурсы',
-            choices=RESOURCE_CHOICES, widget=ResourcesSelectWidget)}
+            choices=RESOURCE_CHOICES, widget=ResourcesSelectWidget,
+            help_text=u'Можно выбрать несколько')}
     new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
 
     old_init = new_cls.__init__
