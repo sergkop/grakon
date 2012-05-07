@@ -33,12 +33,16 @@ SEO:
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
-* text fields for resources
+* text fields for resources + other option
 
 * override save() method of EntityProperty models to reset cache
 
 * give 1 point for completing about field
 -------------------------------------------------------------------------------
+
+* show sender's points in message email
+
+* form fields are not highlighted anymore (with uniform script)
 
 * entity model must contain info on how to display its instances in side panels and tables
 
@@ -97,6 +101,10 @@ Misc:
 * Graphs with statistics (in dashboard first)
 
 * Check that urls are specified properly in templates (look for "/ and http://grakon.org
+
+* ability to request entity deletion (like with profiles)
+
+* privacy settings
 
 --------------------------------------
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters

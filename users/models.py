@@ -131,11 +131,10 @@ class PointsSources(object):
     def show_name(self, profile):
         return 3 if profile.show_name else 0
 
+    # TODO: do we need it since resources became mandatory?
     @points_type('online')
     def resources(self, profile):
-        # TODO: generic relation should be used
-        has_resources = EntityResource.objects.filter(entity_id=profile.id,
-                content_type=ContentType.objects.get_for_model(Profile)).exists()
+        has_resources = profile.resources.exists()
         return 3 if has_resources else 0
 
     @points_type('online')
