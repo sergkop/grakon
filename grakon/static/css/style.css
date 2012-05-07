@@ -80,7 +80,7 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
     .gr-down-active {background-position: right bottom; top: .8em;}
     .gr-up-active {background-position: right 0;}
 
-/*Страница плрофиля*/
+/*Страница профиля*/
 .gr-photo {margin: 0 1em 1em 0;}	
 .gr-next-arrow {background:url(../images/icons/right-arrow-blue.gif) 0 5px no-repeat; width: 5px; margin: 0 5px;}	
 .gr-skype  {width: 20px; line-height:1.6em; display: inline-block; text-decoration: none;}	
@@ -102,7 +102,7 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
 h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 
 
-/*Страница инструмента*/	
+/*Страница инструмента*/
 .gr-icons, gr-icons li {margin: 0; padding: 0; list-style-type: none;}
     .gr-icons {margin: 0 2em 2em;}
     .gr-icons big {display: block;}
@@ -138,7 +138,7 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 .gr-pagination {clear: both; margin-top: 10px; text-align: center; font-size: .95em;}
 .gr-pagination span {cursor: pointer; color: #a9c93e;}
 .gr-pagination span.active {color: #000; font-weight: bold;}
-.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(/i/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
+.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(../images/icons/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
 .gr-pagination-arrow-previous {margin-right: 5px;}
 .gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
 .gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}

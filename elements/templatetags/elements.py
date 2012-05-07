@@ -1,19 +1,7 @@
 from django import template
-from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
 register = template.Library()
-
-@register.inclusion_tag('elements/button.html')
-def button(icon, title, id=None, link='', center='center', tip=''):
-    """ link is either a url, starting with http:// or https://, or the name of a view """
-    if link!='' and not link.startswith('http://') and not link.startswith('https://') and not link.startswith('mailto:'):
-        link = reverse(link)
-
-    external = link.startswith('http') if link else False
-
-    return {'icon': icon, 'title': title, 'id': id, 'link': link,
-            'external': external, 'center': center!='', 'tip': tip}
 
 @register.tag(name="tabs")
 def tabs_tag(parser, token):

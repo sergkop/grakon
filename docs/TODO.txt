@@ -1,24 +1,53 @@
-* Text on the main page with the link to elections.grakon.org
-
-* adding urls about officials + universal entity feature for it
-
-* editing locations in officials
-
-* Left column of profile - administration, participation, представитель организации, etc.
-
-* дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
-
 * verify reformal project
 
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* show user's points in participants
+
+* Fix bug with tabs (see email error)
+* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
+
+SEO:
+    * Webmaster Tools, seo, https://www.google.com/webmasters/
+    * set proper page titles
+    * sitemaps
+    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
+
+* use space from icons against users in right panel
+* popups with user's info and points in right panel
+* make icons against users clickable
+
+* adding urls about officials + universal entity feature for it
+* Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
+
+* show administration in left column of profile
 
 * restore location on error in form
 
-Misc:
-    * only activated users should be displayed in lists
-    * How to respond to messages? (link to profile page with opened dialog + reply_to)
+* Text on the main page with the link to elections.grakon.org
+
+* only activated users should be displayed in lists
 
 * pagination + sorting by columns
+
+* user's avatar, use it in disqus, emails
+
+* tabs with lists of contacts and entities on profile and officials pages
+
+* Test generic rel by directly including it in model
+
+* complaints
+
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+
+* calculate ratings
+-------------------------------------------------------------------------------
+
+* pages for tools and users (with search) + bring them back in main menu
+
+* editing locations in officials
+
+* дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
+
+* How to respond to messages? (link to profile page with opened dialog + reply_to)
 
 Emails:
     * subscription configuration
@@ -29,45 +58,23 @@ Wall:
     * неправильный заголовок на вкладке логина через гракон
     * special login url, which closes window
 
-* user's avatar, use it in disqus, emails
-
-* Ratings
 * Use aggregates for counting points
 
-* reset text in message send dialog if sent successfully
-
-Resources:
-    * text fields for resources
-
-* tab for user's contacts in profile
-
-* Test generic rel by directly including it in model
-
-* complaints
+* text fields for resources
 
 Performance:
     * in chrome page reloads on tabs change
     * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
-    * make lazy reformal loading
-    * start using subqueries - http://charlesleifer.com/blog/working-around-django-s-orm-to-do-interesting-things-with-gfks/
-
-SEO:
-    * Webmaster Tools, seo, https://www.google.com/webmasters/
-    * set proper page titles
-    * sitemaps
-    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
 
 Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
     * share buttons
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
-    * do we need button tag?
     * unused skill icon in icons/badges.png
     * shortcut to prevent using enter in dialog forms
     * remove-after-launch
     * aw-showcase
-    * share and share_horizontal are overlap a lot
+    * share and share_horizontal overlap a lot
 
 Misc:
     * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
@@ -76,14 +83,14 @@ Misc:
     * add tips to buttons and ? signs to get help on features of the system
     * in forms limit lengths of strings that go into model's CharField
 
-* tabs with lists of contacts and entities on profile and officials pages
-
 * Graphs with statistics (in dashboard first)
 
-* give superuser the rights of all admins
-
-* Misha can log in to my account (?)
 --------------------------------------
+* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
+* Ability to send mails to unregistered users (add email field to Email model)
+
+* Left column of profile - administration, participation, представитель организации, etc.
+
 * Types of officials (депутаты, судьи, адвокаты)
 * Pages for places
 
@@ -97,11 +104,7 @@ Misc:
 
 * choosing main location
 
-* make icons against users clickable
-
 * Show list my locations in top panel (if there are more than 1)
-
-* pages for tools and users (with search) + bring them back in main menu
 
 * friend invitation
 
@@ -112,8 +115,6 @@ Misc:
 
 * use celery to send emails (method for delayed sending of email)
 
-* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
-
 * show post messages
 
 * move fb:admins meta tag value out of template
@@ -123,6 +124,10 @@ Misc:
 * captchas
 
 * dashboard with statistics (emails, users activities, traffic, etc.)
+
+* in 'about' fields add target="_blank" to all external links
+
+* give superuser the rights of all admins
 --------------------------------------
 Emails:
     * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
@@ -178,6 +183,9 @@ Emails:
     * sending emails using mailgun.net or mailchimp.com (?) or amazon ses
 
 Performance:
+    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
+    * make lazy reformal loading
+    * start using subqueries - http://charlesleifer.com/blog/working-around-django-s-orm-to-do-interesting-things-with-gfks/
     * use debug toolbar, page speed to optimize page load
     * activate compression for tinymce
     * add all mime types to gzip list of nginx configuration

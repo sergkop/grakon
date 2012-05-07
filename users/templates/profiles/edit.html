@@ -4,8 +4,8 @@
 
 <hr/>
 <div class="center">
-    {% button "pencil" "Сменить пароль" "password_change" "password_change" "" %}
-    {% button "pencil" "Удалить аккаунт" "remove_account_btn" "" "" %}
+    <a href="{% url password_change %}" class="ym-button gr-blue-button"><span>Сменить пароль</span></a>
+    <a id="remove_account_btn" class="ym-button gr-blue-button"><span>Удалить аккаунт</span></a>
 </div>
 
 {% include "dialogs/remove_account.html" %}
