@@ -59,23 +59,11 @@
 {% endcomment %}
 
 <h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
-<div id="resources">
-    {% if own_profile %}
-        {% with tags=info.resources %}
-            {% include "elements/tags.html" %}
-        {% endwith %}
-
-        <script type="text/javascript">
-            (new TagsView({el: $("#resources"), choices_dict: RESOURCES_DICT,
-                    save_url: "{{ URL_PREFIX }}{% url update_resources %}",
-                    ct_id: {{ info.ct }}, entity_id: {{ request.profile.id }} })).render();
-        </script>
-    {% else %}
-        {% with tags=info.resources %}
-            {% include "elements/tags_view.html" %}
-        {% endwith %}
-    {% endif %}
-</div>
+<ul id="resources">
+    {% for resource in info.resources %}
+        <li>{{ resource.title }}</li>
+    {% endfor %}
+</ul>
 
 <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
 {% with locations_data=info.locations.entities %}

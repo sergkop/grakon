@@ -1,13 +1,13 @@
 <table width="100%" class="narrow">
     <tr>
-        <th width="40%">
+        <th width="35%">
             <div class="gr-sort">Участник<span class="gr-up-active">&nbsp;</span><span class="gr-down-active">&nbsp;</span></div>
         </th>
-        <th width="40%">
+        <th width="35%">
             <div class="gr-sort">Ресурсы<span class="gr-up">&nbsp;</span><span class="gr-down">&nbsp;</span></div>
         </th>
-        <th width="20%" align="center">
-            <div class="gr-sort">Рейтинг<span class="gr-up">&nbsp;</span><span class="gr-down">&nbsp;</span></div>
+        <th width="30%" style="text-align:center;">
+            <div class="gr-sort">Очки<span class="gr-up">&nbsp;</span><span class="gr-down">&nbsp;</span></div>
         </th>
     </tr>
 
@@ -23,7 +23,11 @@
                     <span>{{ tag.title }}{% if not forloop.last %},{% endif %}</span>
                 {% endfor %}
             </td>
-            <td align="center">{{ participant.profile.points }}</td>
+            <td align="center">
+                <span class="gr-leader" style="display:inline;">&nbsp;</span>{{ participant.points.leader }}
+                <span class="gr-activity" style="display:inline;">&nbsp;</span>{{ participant.points.offline }}
+                <span class="gr-web-activity" style="display:inline;">&nbsp;</span>{{ participant.points.online }}
+            </td>
         </tr>
     {% endfor %}
 </table>

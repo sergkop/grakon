@@ -1,8 +1,3 @@
-* verify reformal project
-
-* show user's points in participants
-
-* Fix bug with tabs (see email error)
 * process cases when edit tab is not shown but user tries to access it, generalize tabs creation
 
 SEO:
@@ -10,10 +5,6 @@ SEO:
     * set proper page titles
     * sitemaps
     * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
-
-* use space from icons against users in right panel
-* popups with user's info and points in right panel
-* make icons against users clickable
 
 * adding urls about officials + universal entity feature for it
 * Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
@@ -34,12 +25,20 @@ SEO:
 
 * Test generic rel by directly including it in model
 
+* popups with user's info and points in right panel
+
 * complaints
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
 * calculate ratings
+
+* text fields for resources
+
+* fix bug with google robot
 -------------------------------------------------------------------------------
+
+* send email notifying that user has been added to contacts (+ ability to unsubscribe)
 
 * pages for tools and users (with search) + bring them back in main menu
 
@@ -59,8 +58,6 @@ Wall:
     * special login url, which closes window
 
 * Use aggregates for counting points
-
-* text fields for resources
 
 Performance:
     * in chrome page reloads on tabs change

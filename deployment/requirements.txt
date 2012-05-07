@@ -16,6 +16,5 @@ boto
 flup
 google-api-python-client
 #mysql-python
-#python-cloudfiles
 #PIL
 #django-simple-captcha

@@ -1,7 +1,7 @@
 <script type="text/javascript">
     var reformalOptions = {
         project_id: 61566,
-        project_host: "grakon2.reformal.ru",
+        project_host: "reformal.grakon.org",
         force_new_window: false,
         tab_alignment: "left",
         tab_top: "300",
@@ -10,10 +10,9 @@
     };
 
     (function() {
-        if ('https:' == document.location.protocol) return;
         var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'http://media.reformal.ru/widgets/v1/reformal.js';
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
         document.getElementsByTagName('head')[0].appendChild(script);
     })();
 </script>

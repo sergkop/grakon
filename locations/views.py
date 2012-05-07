@@ -22,10 +22,13 @@ class BaseLocationView(object):
         ctx = super(BaseLocationView, self).get_context_data(**kwargs)
 
         loc_id = int(kwargs['loc_id'])
+        # TODO: do we need select_related? (can we use location from cache?)
         try:
-            self.location = location = Location.objects.select_related('region', 'district').get(id=loc_id)
-        except Location.DoesNotExist:
+            location = Location.objects.select_related('region', 'district').get(id=loc_id)
+        except: # Location.DoesNotExist: # TODO: hack to overcome strange bug
             raise Http404(u'Район не найден')
+
+        self.location = location
 
         self.info = location.info(related=True)
 

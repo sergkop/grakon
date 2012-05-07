@@ -1,7 +1,18 @@
 <tr>
-    <td width="45%"><a href="{{ person.profile.get_absolute_url }}">{{ person.profile }}</a></td>
-    <td width="14%">{% if person.points.leader >= 100 %}<span class="gr-leader">&nbsp;</span>{% endif %}</td>
-    <td width="14%">{% if person.points.offline >= 100 %}<span class="gr-activity">&nbsp;</span>{% endif%}</td>
-    <td width="14%">{% if person.points.online >= 100 %}<span class="gr-web-activity">&nbsp;</span>{% endif %}</td>
-    <td width="13%">{% if person.resources %}<span class="gr-resources">&nbsp;</span>{% endif %}</td>
+    <td width=""><a href="{{ person.profile.get_absolute_url }}">{{ person.profile }}</a></td>
+    {% if person.points.leader >= 100 %}
+        <td width="14%"><span class="gr-leader">&nbsp;</span></td>
+    {% else %}
+        <td></td>
+    {% endif %}
+    {% if person.points.offline >= 100 %}
+        <td width="14%"><span class="gr-activity">&nbsp;</span></td>
+    {% else %}
+        <td></td>
+    {% endif %}
+    {% if person.points.online >= 100 %}
+        <td width="14%"><span class="gr-web-activity">&nbsp;</span></td>
+    {% else %}
+        <td></td>
+    {% endif %}
 </tr>
