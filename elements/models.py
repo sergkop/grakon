@@ -37,9 +37,8 @@ class BaseEntityManager(models.Manager):
             self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
                     entity_id=entity.id, defaults=params, **{self.model.fk_field: instance})
         else:
-            # TODO: use generic relation
-            self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
-                    entity_id=entity.id, **{self.model.fk_field: instance}).delete()
+            # Use generic relation to filter related feature instances
+            getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}).delete()
 
         if self.model.points_sources:
             from users.models import Profile
@@ -127,9 +126,7 @@ class EntityResourceManager(BaseEntityManager):
         # Filter out resources not from the list
         resources = set(RESOURCE_DICT.keys()) & set(resources)
 
-        # TODO: use generic relation
-        entity_resources = list(self.filter(entity_id=entity.id,
-                content_type=ContentType.objects.get_for_model(type(entity))))
+        entity_resources = list(getattr(entity, self.model.feature).all())
         new_resources = resources - set(er.resource for er in entity_resources)
 
         for er in entity_resources:
@@ -137,7 +134,7 @@ class EntityResourceManager(BaseEntityManager):
                 er.delete()
 
         # TODO: this can cause IntegrityError
-        self.bulk_create([EntityResource(entity=entity, resource=resource) for resource in new_resources])
+        self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
 
         from users.models import Profile
         if type(entity) is Profile:
@@ -245,10 +242,7 @@ class EntityFollowerManager(BaseEntityManager):
     def is_followed(self, entity, profile):
         if self.model.feature not in type(entity).features:
             return False
-
-        # TODO: use generic relation
-        return self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
-                entity_id=entity.id, follower=profile).exists()
+        return getattr(entity, self.model.feature).filter(follower=profile).exists()
 
 class EntityFollower(BaseEntityProperty):
     follower = models.ForeignKey('users.Profile', related_name='followed_entities')
@@ -290,15 +284,12 @@ class EntityAdminManager(BaseEntityManager):
     def is_admin(self, entity, profile):
         if self.model.feature not in type(entity).features:
             return False
-
-        # TODO: use generic relation
-        return self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
-                entity_id=entity.id, admin=profile).exists()
+        return getattr(entity, self.model.feature).filter(admin=profile).exists()
 
     # TODO: take params for pagination
     def administered_by(self, profile):
         """ Return {'count': count, 'entities': [top_entities_info]} """
-        entities_data = list(self.filter(admin=profile).values_list('content_type', 'entity_id'))
+        entities_data = list(profile.administered_entities.values_list('content_type', 'entity_id'))
 
         entities_by_ct = {}
         for ct_id, e_id in entities_data:
@@ -313,7 +304,7 @@ class EntityAdminManager(BaseEntityManager):
                 'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['admin']]}
 
 class EntityAdmin(BaseEntityProperty):
-    admin = models.ForeignKey('users.Profile', related_name='admins')
+    admin = models.ForeignKey('users.Profile', related_name='administered_entities')
 
     objects = EntityAdminManager()
 
@@ -353,7 +344,7 @@ class EntityPostManager(models.Manager):
 
 # TODO: make it a feature (?)
 class EntityPost(BaseEntityProperty):
-    profile = models.ForeignKey('users.Profile', related_name='posts')
+    profile = models.ForeignKey('users.Profile', related_name='post_entities')
     content = models.CharField(max_length=250)
     url = models.URLField(u'Ссылка')
     opinion = models.CharField(u'Оценка', max_length=8, choices=OPINION_CHOICES)
@@ -374,6 +365,10 @@ class EntityPost(BaseEntityProperty):
         return unicode(self.profile) + ' posted ' + unicode(self.opinion) + ' opinion'
 """
 
+# TODO: generate it using feature
+FEATURES_MODELS = {'resources': EntityResource, 'followers': EntityFollower,
+        'locations': EntityLocation, 'admins': EntityAdmin}
+
 # TODO: add search method
 class BaseEntityManager(models.Manager):
     def info_for(self, ids, related=True):
@@ -384,10 +379,6 @@ class BaseEntityManager(models.Manager):
         features = self.model.features
         cache_prefix = self.model.cache_prefix
         cached_entities = cache.get_many([cache_prefix+str(id) for id in ids])
-
-        # TODO: move it out of here (?), generate it
-        features_models = {'resources': EntityResource, 'followers': EntityFollower,
-                'locations': EntityLocation, 'admins': EntityAdmin}
 
         cached_ids = []
         res = {}
@@ -404,7 +395,7 @@ class BaseEntityManager(models.Manager):
             other_res = dict((id, {'ct': content_type_id}) for id in other_ids)
 
             for feature in features:
-                feature_data = features_models[feature].objects.get_for(self.model, other_ids)
+                feature_data = FEATURES_MODELS[feature].objects.get_for(self.model, other_ids)
                 for id in other_ids:
                     other_res[id][feature] = feature_data[id]
 
@@ -418,7 +409,7 @@ class BaseEntityManager(models.Manager):
 
         if related:
             for feature in features:
-                features_models[feature].objects.get_related_info(res, ids)
+                FEATURES_MODELS[feature].objects.get_related_info(res, ids)
 
             self.get_related_info(res, ids)
 
@@ -509,36 +500,23 @@ ENTITIES_MODELS = {}
 
 @reset_cache
 def update_resources(self, resources):
-    EntityResource.objects.update_entity_resources(self, resources)
+    EntityResource.objects.update(self, resources)
 
 def entity_class(features):
     """ Return decorator for entity model """
-    attrs = {}
-
-    # TODO: start using generic relations don't work
-    if 'resources' in features:
-        attrs['resources'] = generic.GenericRelation(EntityResource, object_id_field='entity_id')
-        attrs['update_resources'] = update_resources
-
-    if 'followers' in features:
-        attrs['followers'] = generic.GenericRelation(EntityFollower, object_id_field='entity_id')
-
-    if 'locations' in features:
-        attrs['locations'] = generic.GenericRelation(EntityLocation, object_id_field='entity_id')
-
-    if 'admins' in features:
-        attrs['admins'] = generic.GenericRelation(EntityAdmin, object_id_field='entity_id')
-
     def decorator(cls):
-        class NewMetaclass(type):
-            def __new__(mcs, name, bases, attrs1):
-                attrs1.update(attrs)
-                new_class = cls.__metaclass__(name, bases, attrs1)
-                return new_class
-
-        new_cls = type(cls.__name__, (cls,), {'__metaclass__': NewMetaclass, '__module__': cls.__module__})
+        new_cls = type(cls.__name__, (cls,), {'__module__': cls.__module__})
         new_cls.features = features
         ENTITIES_MODELS[new_cls.entity_name] = new_cls
+
+        if 'resources' in features:
+            new_cls.update_resources = update_resources
+
+        # Create generic relations
+        for feature in FEATURES_MODELS:
+            field = generic.GenericRelation(FEATURES_MODELS[feature], object_id_field='entity_id')
+            field.contribute_to_class(new_cls, feature)
+
         return new_cls
 
     return decorator

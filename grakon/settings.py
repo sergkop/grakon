@@ -181,7 +181,7 @@ FORCE_SCRIPT_NAME = ''
 LIST_COUNT = {
     'followers': 5,
     'followed': 5,
-    'participants': 10,
+    'participants': 15,
     'admin': 5,
     'tools': 5,
 }

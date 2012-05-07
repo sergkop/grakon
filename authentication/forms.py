@@ -43,7 +43,7 @@ class RegistrationForm(BaseRegistrationForm):
     helper.form_id = 'registration_form'
     helper.layout = Layout(
         Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select',
-                'resources', 'show_name'),
+                'resources1', 'show_name'),
         Fieldset(u'Аккаунт', 'username', 'password1', 'password2')
     )
 
