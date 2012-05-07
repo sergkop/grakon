@@ -1,15 +1,21 @@
-* process cases when edit tab is not shown but user tries to access it, generalize tabs creation
+* show administration in left column of profile
 
-SEO:
-    * Webmaster Tools, seo, https://www.google.com/webmasters/
-    * set proper page titles
-    * sitemaps
-    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
+* pagination + sorting by columns
+
+* tabs with lists of contacts and entities on profile and officials pages
+
+* Test generic rel by directly including it in model
+
+* calculate ratings
 
 * adding urls about officials + universal entity feature for it
 * Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
 
-* show administration in left column of profile
+SEO:
+    * Webmaster Tools, https://www.google.com/webmasters/
+    * set proper page titles
+    * sitemaps
+    * block indexing tst.grakon.org
 
 * restore location on error in form
 
@@ -17,13 +23,7 @@ SEO:
 
 * only activated users should be displayed in lists
 
-* pagination + sorting by columns
-
 * user's avatar, use it in disqus, emails
-
-* tabs with lists of contacts and entities on profile and officials pages
-
-* Test generic rel by directly including it in model
 
 * popups with user's info and points in right panel
 
@@ -31,12 +31,16 @@ SEO:
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
-* calculate ratings
-
 * text fields for resources
-
-* fix bug with google robot
 -------------------------------------------------------------------------------
+
+* move test server to Grisha's account
+
+* process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
+  generalize tabs creation
+
+SEO:
+    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
 
 * send email notifying that user has been added to contacts (+ ability to unsubscribe)
 
