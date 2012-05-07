@@ -1,12 +1,10 @@
 <p align="center">
-    <img src="{{ STATIC_URL }}images/main-diagramma.jpg" style="border: 1px solid #ccc;" />
+    <a href="{% url register %}" title="Зарегистрироваться"><img src="{{ STATIC_URL }}images/main-diagramma.jpg" style="border: 1px solid #ccc;" /></a>
 </p>
 
 {% if not request.profile %}
     <div class="gr-mb10" align="center">
-        <a href="{% url login %}" class="ym-button gr-blue-button">Войти</a>
-        <a href="{% url register %}" class="ym-button gr-blue-button">Зарегистрироваться</a>
-        <a href="{% url feedback %}" class="ym-button gr-blue-button">Обратная связь</a>
+       <br /><big> <a href="{% url register %}" class="ym-button gr-blue-button">Зарегистрироваться</a></big><br /><br />
     </div>
 {% endif %}
 
