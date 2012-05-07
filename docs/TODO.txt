@@ -1,12 +1,8 @@
-* show administration in left column of profile
+* Test generic rel by directly including it in model
 
 * pagination + sorting by columns
 
-* tabs with lists of contacts and entities on profile and officials pages
-
-* Test generic rel by directly including it in model
-
-* calculate ratings
+* tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
 
 * adding urls about officials + universal entity feature for it
 * Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
@@ -16,6 +12,12 @@ SEO:
     * set proper page titles
     * sitemaps
     * block indexing tst.grakon.org
+
+* calculate ratings
+
+* Introduce FINAL_URL_PREFIX and use
+
+* Class to standartize forms features
 
 * restore location on error in form
 
@@ -32,7 +34,15 @@ SEO:
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
 * text fields for resources
+
+* override save() method of EntityProperty models to reset cache
+
+* give 1 point for completing about field
 -------------------------------------------------------------------------------
+
+* entity model must contain info on how to display its instances in side panels and tables
+
+* Give points for disqus activity, negative for complaints
 
 * move test server to Grisha's account
 
@@ -85,6 +95,8 @@ Misc:
     * in forms limit lengths of strings that go into model's CharField
 
 * Graphs with statistics (in dashboard first)
+
+* Check that urls are specified properly in templates (look for "/ and http://grakon.org
 
 --------------------------------------
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
@@ -255,3 +267,5 @@ Deployment:
 * use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python
 
 * move reformal options to settings
+
+* Automatically find valuable mentions of officials in news, e.g. lenta.ru and post them as a link

@@ -5,8 +5,14 @@
 {% block left_column %}
     <h3>Активность<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials"><a>Админ</a> <i title="страницы администрируемые пользователем">&nbsp;</i></h4>
+        <h4 class="gr-officials"><a>Админ ({{ administered_entities.count }})</a> <i title="страницы администрируемые пользователем">&nbsp;</i></h4>
         <ul>
+            {% for entity in administered_entities.entities %}
+                <li><a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a></li>
+            {% endfor %}
+            {% if administered_entities.count > LIST_COUNT.admin %}
+                <li><a href="">Все</a></li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

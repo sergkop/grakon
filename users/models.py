@@ -13,7 +13,7 @@ class ProfileManager(BaseEntityManager):
         # Get profile instances
         profiles_by_id = self.in_bulk(ids)
         for id in ids:
-            data[id]['profile'] = profiles_by_id[id]
+            data[id]['instance'] = profiles_by_id[id]
 
         # TODO: add info on non-profile entities followed by the user
 

@@ -14,8 +14,8 @@
     {% for participant in participants %}
         <tr>
             <td>
-                <a href="{{ participant.profile.get_absolute_url }}">
-                    {{ participant.profile }}
+                <a href="{{ participant.instance.get_absolute_url }}">
+                    {{ participant.instance }}
                 </a>
             </td>
             <td>

@@ -28,7 +28,6 @@
         create_dialog("send_message_dialog", 400, 350, "Отправить сообщение", "Отмена", {
             "Отправить": dialog_post_shortcut("{% url send_message %}", {"id": {{ profile.id }} },
                     function(){
-                        console.log($('#send_message_form [name="title"]'));
                         $('#send_message_form [name="title"], #send_message_form [name="body"]').val("");
                         $("#send_message_dialog").dialog("close");
                     },

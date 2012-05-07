@@ -16,10 +16,10 @@
             <i title="контролируем их деятельность">&nbsp;</i>
         </h4>
         <ul>
-            {% for official in info.officials.entities %}
+            {% for entity in info.officials.entities %}
                 <li>
                     <!--i class="highlight">89</i-->
-                    <a href="{{ official.official.get_absolute_url }}">{{ official.official }}</a>
+                    <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a>
                 </li>
             {% endfor %}
             {% if info.officials.count > LIST_COUNT.tools %}

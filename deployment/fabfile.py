@@ -135,6 +135,7 @@ def prepare_code():
     cmd('mkdir -p %s %s %s' % (conf['code_path'], conf['env_path'], conf['STATIC_ROOT']))
 
     cmd('git clone %s %s' % (REPOSITORY, conf['code_path']))
+    # TODO: detect if requirements.txt was updated in git pull and run pip install -r requirements.txt
     # TODO: how to pass ssh-key password?
 
     # TODO: move updating settings to separate method + do backup

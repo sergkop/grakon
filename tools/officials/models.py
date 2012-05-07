@@ -7,7 +7,7 @@ class OfficialManager(BaseEntityManager):
     def get_info(self, data, ids):
         officials_by_id = self.in_bulk(ids)
         for id in ids:
-            data[id]['official'] = officials_by_id[id]
+            data[id]['instance'] = officials_by_id[id]
 
 # TODO: url - for official website/page (maybe several) (element for that?)
 # TODO: introduce choices for types

@@ -295,6 +295,23 @@ class EntityAdminManager(BaseEntityManager):
         return self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
                 entity_id=entity.id, admin=profile).exists()
 
+    # TODO: take params for pagination
+    def administered_by(self, profile):
+        """ Return {'count': count, 'entities': [top_entities_info]} """
+        entities_data = list(self.filter(admin=profile).values_list('content_type', 'entity_id'))
+
+        entities_by_ct = {}
+        for ct_id, e_id in entities_data:
+            entities_by_ct.setdefault(ct_id, []).append(e_id)
+
+        entities = []
+        for ct_id in entities_by_ct:
+            model = ContentType.objects.get_for_id(ct_id).model_class()
+            entities += model.objects.info_for(entities_by_ct[ct_id], related=False).values()
+
+        return {'count': len(entities_data),
+                'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['admin']]}
+
 class EntityAdmin(BaseEntityProperty):
     admin = models.ForeignKey('users.Profile', related_name='admins')
 

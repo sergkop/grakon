@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
 from grakon.utils import authenticated_ajax_post, escape_html
+from elements.models import EntityAdmin
 from services.email import send_email
 from users.forms import ProfileForm
 from users.models import Message, Profile
@@ -46,6 +47,7 @@ class BaseProfileView(object):
             'own_profile': own_profile,
             'in_contacts': in_contacts,
             'info': self.info,
+            'administered_entities': EntityAdmin.objects.administered_by(profile),
         })
         ctx.update(self.update_context())
         return ctx
