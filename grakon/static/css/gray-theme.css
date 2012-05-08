@@ -264,6 +264,21 @@
 		margin: .5em 0 1em;
 		text-align:center;		
 	}
+	
+	.gr-big-button div {
+        margin: 0 auto;
+        display: inline-block;
+        font-size: 1.2em;
+        background-color: #fff;
+        padding: 1.1em;
+        border-radius: 2.2em;
+        margin-bottom: .5em;
+        box-shadow:  0 1px 1px #DEDEDE inset;
+        
+    }
+     .gr-big-button .ym-button{
+        margin-right: 0;         
+     }
 
 	.ym-form button:hover,
 	.ym-form input[type="button"]:hover,

@@ -56,6 +56,12 @@
 {% endblock %}
 
 {% block right_column %}
+    
+    {% if not request.profile %}
+        <div class="gr-mb10 gr-big-button" align="center">
+            <div><a href="{% url register %}" class="ym-button gr-blue-button">Зарегистрироваться</a></div>
+        </div>
+    {% endif %}
     <div class="gr-side-item gr-light-back">
         <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники&nbsp;({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
