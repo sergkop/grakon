@@ -3,7 +3,7 @@
         {% for tab in tabs %}
             {% if tab.0 == active %}
                 <li class="current {{ tab.4 }}">
-                    <a>{{ tab.1 }}</a>
+                    <a href="{{ tab.2 }}">{{ tab.1 }}</a>
                 </li>
             {% else %}
                 <li class="{{ tab.4 }}">

@@ -1,7 +1,7 @@
-* tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
+* Text above breadcrumbs
+  Внимание! Интернет-площадка Гракон для гражданского контроля за выборами президента 4 марта переехала на elections.grakon.org
 
-* adding urls about officials + universal entity feature for it
-* Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
+* tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
 
 * sorting by columns
 * calculate ratings
@@ -9,6 +9,9 @@
 * override save() method of EntityProperty models to reset cache
 
 * give 1 point for completing about field
+
+* adding urls about officials + universal entity feature for it
+* Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
 
 SEO:
     * Webmaster Tools, https://www.google.com/webmasters/
@@ -22,11 +25,7 @@ SEO:
 
 * restore location on error in form
 
-* Text on the main page with the link to elections.grakon.org
-
 * user's avatar, use it in disqus, emails
-
-* popups with user's info and points in right panel
 
 * complaints
 
@@ -34,6 +33,7 @@ SEO:
 
 * text fields for resources + other option
 -------------------------------------------------------------------------------
+* popups with user's info and points in right panel
 
 * in profile editing move resources above about, load about field faster
 
@@ -104,6 +104,8 @@ Misc:
 * privacy settings
 
 --------------------------------------
+* use jinja instead of django templates (?) Check rendering time
+
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
 * Ability to send mails to unregistered users (add email field to Email model)
 
