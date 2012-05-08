@@ -1,19 +1,20 @@
-* Test generic rel by directly including it in model
-
-* pagination + sorting by columns
-
 * tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
 
 * adding urls about officials + universal entity feature for it
 * Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
+
+* sorting by columns
+* calculate ratings
+
+* override save() method of EntityProperty models to reset cache
+
+* give 1 point for completing about field
 
 SEO:
     * Webmaster Tools, https://www.google.com/webmasters/
     * set proper page titles
     * sitemaps
     * block indexing tst.grakon.org
-
-* calculate ratings
 
 * Introduce FINAL_URL_PREFIX and use
 
@@ -22,8 +23,6 @@ SEO:
 * restore location on error in form
 
 * Text on the main page with the link to elections.grakon.org
-
-* only activated users should be displayed in lists
 
 * user's avatar, use it in disqus, emails
 
@@ -34,11 +33,9 @@ SEO:
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
 * text fields for resources + other option
-
-* override save() method of EntityProperty models to reset cache
-
-* give 1 point for completing about field
 -------------------------------------------------------------------------------
+
+* in profile editing move resources above about, load about field faster
 
 * show sender's points in message email
 

@@ -2,6 +2,7 @@ import base64
 import json
 import hashlib
 import hmac
+from math import ceil
 import time
 
 from django.conf import settings
@@ -62,4 +63,31 @@ def disqus_page_params(identifier, url, category):
         'disqus_url': settings.DISQUS_URL_PREFIX+url,
         'disqus_category_id': settings.DISQUS_CATEGORIES[category],
         'disqus_partial_url': url,
+    }
+
+def paginator_params(page, per_page):
+    """ page and per_page can be str """
+    try:
+        page = max(int(page), 1)
+    except ValueError:
+        page = 1
+
+    try:
+        per_page = max(min(int(per_page), 100), 1)
+    except ValueError:
+        per_page = 20
+
+    return page, per_page
+
+# TODO: what if count==0?
+def paginator_data(page, per_page, count, url_prefix):
+    num_pages = int(ceil(count/float(per_page)))
+    return {
+        'page': page,
+        'has_prev': page>1,
+        'prev_page': page-1,
+        'has_next': page<num_pages,
+        'next_page': page+1,
+        'pages': range(1, num_pages+1),
+        'url_prefix': url_prefix,
     }

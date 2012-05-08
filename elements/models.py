@@ -428,12 +428,13 @@ class BaseEntityManager(models.Manager):
     # TODO: cache it (at least for data for side panels) - in Location
     def for_location(self, location, start=0, limit=None, sort_by=('-rating',)):
         """ Return {'ids': sorted_entities_ids, 'count': total_count} """
-        res = {}
-        if location.is_country():
-            # Special processing to minify entity_query
-            entity_query = Q()
-            res['count'] = self.count()
-        else:
+        entity_query = Q()
+
+        # Filter out unactivated accounts
+        if self.model.entity_name == 'participants':
+            entity_query = Q(user__is_active=True)
+
+        if not location.is_country(): # used to speed up processing
             loc_query = Q(location__id=location.id)
 
             field = location.children_query_field()
@@ -444,15 +445,14 @@ class BaseEntityManager(models.Manager):
                     content_type=ContentType.objects.get_for_model(self.model)) \
                     .filter(loc_query).values_list('entity_id', flat=True))
 
-            # TODO: what happens when the list of ids is too long (for the next query)?
-            entity_query = Q(id__in=entity_ids)
-
-            res['count'] = len(entity_ids)
+            # TODO: what happens when the list of ids is too long (for the next query)? - use subqueries
+            entity_query &= Q(id__in=entity_ids)
 
         ids = self.filter(entity_query).order_by(*sort_by).values_list('id', flat=True)
-        res['ids'] = ids[slice(start, start+limit if limit else None)]
-
-        return res
+        return {
+            'count': ids.count(),
+            'ids': ids[slice(start, start+limit if limit else None)],
+        }
 
 # TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)

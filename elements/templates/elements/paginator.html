@@ -1,0 +1,20 @@
+{% if paginator.has_prev or paginator.has_next %}
+    <div class="gr-pagination">
+        {% if paginator.has_prev %}
+            <a href="{{ paginator.url_prefix }}page={{ paginator.prev_page }}"><i class="gr-pagination-arrow-previous">&nbsp;</i></a>
+        {% endif %}
+        На страницу: &nbsp;&nbsp;
+        {% for page in paginator.pages %}
+            {% if page == paginator.page %}
+                <span class="active">{{ page }}</span>
+            {% else %}
+                <a href="{{ paginator.url_prefix }}page={{ page }}"><span>{{ page }}</span></a>
+            {% endif %}
+            {% if not forloop.last %}|{% endif %}
+        {% endfor %}
+
+        {% if paginator.has_next %}
+            <a href="{{ paginator.url_prefix }}page={{ paginator.next_page }}"><i class="gr-pagination-arrow-next">&nbsp;</i></a>
+        {% endif %}
+    </div>
+{% endif %}
