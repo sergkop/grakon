@@ -64,6 +64,27 @@ class WallLocationView(BaseLocationView, TemplateView):
 class MapLocationView(BaseLocationView, TemplateView):
     tab = 'map'
 
+# TODO: generalize it to use at other tables (take for_location as parameter)
+def table_data(request, location, entity_type):
+    page, per_page = paginator_params(request.GET.get('page', 0), 20)
+
+    entity_model = ENTITIES_MODELS[entity_type]
+    entities_data = entity_model.objects.for_location(location, (page-1)*per_page, limit=per_page)
+    entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
+    entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
+
+    # TODO: allow to choose limit (?)
+    url_prefix = '?' # TODO: add sorting and limit (per_page) params - don't do it unless they differ from default
+
+    # TODO: show count somewhere
+    # TODO: generate table header (include sorting links and highlighting arrows)
+    return {
+        'entities': entities,
+        'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
+        'header_template': entity_model.table_header,
+        'line_template': entity_model.table_line,
+    }
+
 class ToolsLocationView(BaseLocationView, TemplateView):
     tab = 'tools'
 
@@ -71,45 +92,14 @@ class ToolsLocationView(BaseLocationView, TemplateView):
         entity_type = self.request.GET.get('type', '')
         if entity_type not in ENTITIES_MODELS.keys() or entity_type=='participants':
             entity_type = 'officials'
-        entity_model = ENTITIES_MODELS[entity_type]
 
-        page, per_page = paginator_params(self.request.GET.get('page', 0), 20)
-
-        entities_data = entity_model.objects.for_location(self.location, (page-1)*per_page, limit=per_page)
-        entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
-        entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
-
-        # TODO: allow to choose limit (?)
-        url_prefix = '?' # TODO: add sorting and limit (per_page) params - don't do it unless they differ from default
-
-        # TODO: show count somewhere
-        # TODO: generate table header (include sorting links and highlighting arrows)
-        return {
-            'entities': entities,
-            'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
-            'header_template': entity_model.table_header,
-            'line_template': entity_model.table_line,
-        }
+        return table_data(self.request, self.location, entity_type)
 
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'
 
-    # TODO: similar to tools tab
     def update_context(self):
-        page, per_page = paginator_params(self.request.GET.get('page', 0), 20)
-
-        entity_model = ENTITIES_MODELS['participants']
-        entities_data = entity_model.objects.for_location(self.location, (page-1)*per_page, limit=per_page)
-        entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
-        entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
-
-        url_prefix = '?' # TODO: add sorting and limit (per_page) params - don't do it unless they differ from default
-
-        ctx = {
-            'entities': entities,
-            'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
-        }
-        return ctx
+        return table_data(self.request, self.location, 'participants')
 
 def get_subregions(request):
     if not request.is_ajax():

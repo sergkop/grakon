@@ -1,14 +1,9 @@
-* Text above breadcrumbs
-  Внимание! Интернет-площадка Гракон для гражданского контроля за выборами президента 4 марта переехала на elections.grakon.org
-
 * tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
 
-* sorting by columns
 * calculate ratings
+* sorting official by last_name and sorting by ratings
 
-* override save() method of EntityProperty models to reset cache
-
-* give 1 point for completing about field
+* check admin rights in elements.views.check_permissions
 
 * adding urls about officials + universal entity feature for it
 * Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
@@ -32,6 +27,8 @@ SEO:
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
 * text fields for resources + other option
+
+* override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
 * popups with user's info and points in right panel
 
@@ -148,6 +145,8 @@ Misc:
 * in 'about' fields add target="_blank" to all external links
 
 * give superuser the rights of all admins
+
+* display html fields in admin listings nicely (extract text only)
 --------------------------------------
 Emails:
     * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)

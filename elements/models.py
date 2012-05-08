@@ -72,6 +72,26 @@ class BaseEntityProperty(models.Model):
     class Meta:
         abstract = True
 
+    """
+    def save(self):
+        super(BaseEntityProperty, self).save()
+
+        if type(self).points_sources:
+            profiles = []
+
+            from users.models import Profile
+            if self.content_type.get_model() == Profile:
+                profiles.append(Profile(id))
+
+            if self.fk_field:
+                related_model = type(self)._meta.get_field(self.model.fk_field).rel.to
+
+            profiles = [x for x in instances if type(x) is Profile]
+            for profile in profiles:
+                for source in self.model.points_sources:
+                    profile.update_source_points(source)
+    """
+
 # TODO: add subcategories (?)
 # (name, title)
 RESOURCE_CHOICES = (

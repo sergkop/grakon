@@ -1,0 +1,9 @@
+<table width="100%" class="narrow">
+    <tr>{% include header_template %}</tr>
+
+    {% for entity in entities %}
+        <tr>{% include line_template %}</tr>
+    {% endfor %}
+</table>
+
+{% include "elements/paginator.html" %}

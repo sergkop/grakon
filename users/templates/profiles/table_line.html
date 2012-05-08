@@ -1,0 +1,15 @@
+<td>
+    <a href="{{ entity.instance.get_absolute_url }}">
+        {{ entity.instance }}
+    </a>
+</td>
+<td>
+    {% for resource in entity.resources %}
+        <span>{{ resource.title }}{% if not forloop.last %},{% endif %}</span>
+    {% endfor %}
+</td>
+<td align="center">
+    <span class="gr-leader" style="display:inline;">&nbsp;</span>{{ entity.points.leader }}
+    <span class="gr-activity" style="display:inline;">&nbsp;</span>{{ entity.points.offline }}
+    <span class="gr-web-activity" style="display:inline;">&nbsp;</span>{{ entity.points.online }}
+</td>

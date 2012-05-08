@@ -12,7 +12,7 @@
     <h3>Инструменты<i>&nbsp;</i></h3>
     <div class="gr-side-item">
         <h4 class="gr-officials">
-            <a href="{% url location_tools location.id %}?type=officials">Чиновники ({{ info.officials.count }})</a>
+            <a href="{% url location_tools location.id %}?type=officials">Чиновники&nbsp;({{ info.officials.count }})</a>
             <i title="контролируем их деятельность">&nbsp;</i>
         </h4>
         <ul>
@@ -32,11 +32,9 @@
     </div>
 
     <div class="gr-side-item">
-        <h4 class="gr-eureka  gr-long-title"><a>Генератор идей<br /> (в разработке)</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>
+        <h4 class="gr-eureka gr-long-title"><a>Генератор идей<br /> (в разработке)</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>
         <ul>
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
-            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
-            <li><i class="gr-orange-arrow-down">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (2)</li>
         </ul>
         <div align="center">
             <a href="" class="ym-button">Добавить мероприятие</a>
@@ -45,7 +43,7 @@
 
     <div class="gr-side-item">
         <div class="gr-disabled">&nbsp;</div>
-        <h4 class="gr-events  gr-long-title"><a href="">Мероприятия<br /> (в разработке)</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
+        <h4 class="gr-events gr-long-title"><a href="">Мероприятия<br /> (в разработке)</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
         <ul>
             <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
             <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
@@ -59,7 +57,7 @@
 
 {% block right_column %}
     <div class="gr-side-item gr-light-back">
-        <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники ({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
+        <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники&nbsp;({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for person in info.participants.entities %}
                 {% include "elements/person.html" %}

@@ -54,6 +54,8 @@ class Profile(BaseEntityModel):
 
     entity_name = 'participants'
     cache_prefix = 'user_info/'
+    table_header = 'profiles/table_header.html'
+    table_line = 'profiles/table_line.html'
 
     def calc_rating(self):
         pass # TODO: implement it
@@ -127,9 +129,12 @@ class PointsSources(object):
     def registration(self, profile):
         return 3
 
+    # TODO: rename it
     @points_type('online')
     def show_name(self, profile):
-        return 3 if profile.show_name else 0
+        res = 3 if profile.show_name else 0
+        res += 1 if profile.about else 0
+        return res
 
     # TODO: do we need it since resources became mandatory?
     @points_type('online')

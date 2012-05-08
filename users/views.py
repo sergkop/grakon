@@ -27,6 +27,7 @@ class BaseProfileView(object):
 
         tabs = [
             ('view', u'Профиль', profile.get_absolute_url(), 'profiles/view.html', ''),
+            ('contacts', u'Контакты', profile.get_absolute_url(), 'profiles/view.html', ''),
         ]
 
         if own_profile:

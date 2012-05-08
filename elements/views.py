@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from grakon.utils import authenticated_ajax_post
 
-from elements.models import EntityFollower, EntityLocation, EntityResource
+from elements.models import EntityFollower, EntityLocation
 from locations.models import Location
 from users.models import Profile
 
@@ -63,11 +63,11 @@ def remove_follower(request, entity):
     EntityFollower.objects.remove(entity, request.profile)
     return HttpResponse('ok')
 
-@entity_post_method
-@check_permissions
-def update_resources(request, entity):
-    EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
-    return HttpResponse('ok')
+#@entity_post_method
+#@check_permissions
+#def update_resources(request, entity):
+#    EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
+#    return HttpResponse('ok')
 
 # TODO: allow to create main location
 @entity_post_method

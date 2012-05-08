@@ -5,7 +5,7 @@
 {% block left_column %}
     <h3>Активность<i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <h4 class="gr-officials"><a>Админ ({{ administered_entities.count }})</a> <i title="страницы администрируемые пользователем">&nbsp;</i></h4>
+        <h4 class="gr-officials"><a>Админ&nbsp;({{ administered_entities.count }})</a> <i title="страницы администрируемые пользователем">&nbsp;</i></h4>
         <ul>
             {% for entity in administered_entities.entities %}
                 <li><a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a></li>
@@ -27,7 +27,7 @@
         </table>
     </div>
     <div class="gr-side-item">
-        <h4 class="gr-followers">Добавлен в&nbsp;контакты ({{ info.followers.count }}) <i title="пользователя добавили в контакты">&nbsp;</i></h4>
+        <h4 class="gr-followers gr-long-title">Добавлен в&nbsp;контакты&nbsp;({{ info.followers.count }}) <i title="пользователя добавили в контакты">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
             {% for person in info.followers.entities %}
                 {% include "elements/person.html" %}
