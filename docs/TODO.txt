@@ -1,4 +1,4 @@
-* rename "Все", links; add everywhere
+* rename "Все", add where missing, set header links
 
 * restore location on error in forms
 
@@ -34,6 +34,8 @@ SEO:
 
 * override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
+* join tabs on official page
+
 * sorting official by last_name
 
 * for anonym users logo in the hat must contain the text 'гражданский контроль...'
