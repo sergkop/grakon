@@ -8,7 +8,10 @@
 
 {% block right_column %}
     <div class="gr-side-item">
-        <h4>Админы&nbsp;({{ info.admins.count }}) <i>&nbsp;</i></h4>
+        <h4>
+            <a href="{% url official_admins official.id %}">Админы&nbsp;({{ info.admins.count }})</a>
+            <i>&nbsp;</i>
+        </h4>
         <table width="100%" class="gr-side-table">
             {% for person in info.admins.entities %}
                 {% include "elements/person.html" %}
@@ -23,11 +26,14 @@
     </div-->
 
     <div class="gr-side-item">
-        <h4 class="gr-observers">Следят&nbsp;({{ info.followers.count }}) <i>&nbsp;</i></h4>
-            <table width="100%" class="gr-side-table">
-                {% for person in info.followers.entities %}
-                    {% include "elements/person.html" %}
-                {% endfor %}
+        <h4 class="gr-observers">
+            <a href="{% url official_followers official.id %}">Следят&nbsp;({{ info.followers.count }})</a>
+            <i>&nbsp;</i>
+        </h4>
+        <table width="100%" class="gr-side-table">
+            {% for person in info.followers.entities %}
+                {% include "elements/person.html" %}
+            {% endfor %}
         </table>
     </div>
 {% endblock %}

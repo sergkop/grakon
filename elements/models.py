@@ -4,7 +4,6 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.db import models
-from django.db.models import Q
 
 from tinymce.models import HTMLField as TinyMCEHTMLField
 
@@ -443,37 +442,6 @@ class BaseEntityManager(models.Manager):
         """ Take {id: info} and add info from related features """
         pass
 
-    # TODO: cache count separately?
-    # TODO: take is_main into account
-    # TODO: cache it (at least for data for side panels) - in Location
-    def for_location(self, location, start=0, limit=None, sort_by=('-rating',)):
-        """ Return {'ids': sorted_entities_ids, 'count': total_count} """
-        entity_query = Q()
-
-        # Filter out unactivated accounts
-        if self.model.entity_name == 'participants':
-            entity_query = Q(user__is_active=True)
-
-        if not location.is_country(): # used to speed up processing
-            loc_query = Q(location__id=location.id)
-
-            field = location.children_query_field()
-            if field:
-                loc_query |= Q(**{'location__'+field: location.id})
-
-            entity_ids = set(EntityLocation.objects.filter(
-                    content_type=ContentType.objects.get_for_model(self.model)) \
-                    .filter(loc_query).values_list('entity_id', flat=True))
-
-            # TODO: what happens when the list of ids is too long (for the next query)? - use subqueries
-            entity_query &= Q(id__in=entity_ids)
-
-        ids = self.filter(entity_query).order_by(*sort_by).values_list('id', flat=True)
-        return {
-            'count': ids.count(),
-            'ids': ids[slice(start, start+limit if limit else None)],
-        }
-
 # TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
@@ -515,6 +483,29 @@ class BaseEntityModel(models.Model):
     @reset_cache
     def delete(self, *args, **kwargs):
         return super(BaseEntityModel, self).delete(*args, **kwargs)
+
+    def get_admins(self, start=0, limit=None, sort_by=('-admin__rating',)):
+        if 'admins' not in type(self).features:
+            return None
+
+        queryset = self.admins.order_by(*sort_by)
+        return {
+            'count': queryset.count(),
+            'ids': queryset.values_list('admin', flat=True)[slice(start, start+limit if limit else None)],
+        }
+
+    # TODO: generate sort_by appending feature_model.feature+'__'
+    def get_followers(self, start=0, limit=None, sort_by=('-follower__rating',)):
+        if 'followers' not in type(self).features:
+            return None
+
+        feature_model = FEATURES_MODELS['followers']
+        queryset = getattr(self, feature_model.feature).order_by(*sort_by)
+        return {
+            'count': queryset.count(),
+            'ids': queryset.values_list(feature_model.fk_field, flat=True) \
+                    [slice(start, start+limit if limit else None)],
+        }
 
 ENTITIES_MODELS = {}
 

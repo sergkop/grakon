@@ -8,6 +8,7 @@ from django.views.generic.edit import UpdateView
 
 from grakon.utils import authenticated_ajax_post, escape_html
 from elements.models import EntityAdmin
+from elements.utils import table_data
 from services.email import send_email
 from users.forms import ProfileForm
 from users.models import Message, Profile
@@ -27,7 +28,7 @@ class BaseProfileView(object):
 
         tabs = [
             ('view', u'Профиль', profile.get_absolute_url(), 'profiles/view.html', ''),
-            ('contacts', u'Контакты', profile.get_absolute_url(), 'profiles/view.html', ''),
+            ('contacts', u'В контактах у', reverse('profile_contacts', args=[profile.username]), 'profiles/contacts.html', ''),
         ]
 
         if own_profile:
@@ -57,6 +58,14 @@ class ProfileView(BaseProfileView, TemplateView):
     tab = 'view'
 
 view_profile = ProfileView.as_view()
+
+class ProfileContactsView(BaseProfileView, TemplateView):
+    tab = 'contacts'
+
+    def update_context(self):
+        return table_data(self.request, 'participants', self.request.profile.get_followers)
+
+profile_contacts = ProfileContactsView.as_view()
 
 # TODO: test that only user can edit his own profile
 class EditProfileView(BaseProfileView, UpdateView):

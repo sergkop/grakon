@@ -9,5 +9,3 @@ urlpatterns = patterns('elements.views',
     url(r'^add_location$', 'add_location', name='add_location'),
     url(r'^remove_location$', 'remove_location', name='remove_location'),
 )
-
-

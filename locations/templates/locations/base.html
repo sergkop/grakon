@@ -12,6 +12,17 @@
     <h3>Инструменты<i>&nbsp;</i></h3>
     <div class="gr-side-item">
         <h4 class="gr-officials">
+            <a href="http://elections.grakon.org" target="_blank">Выборы</a>
+            <i title="результаты выборов президента">&nbsp;</i>
+        </h4>
+        <div style="padding: 0.5em; text-align:center;">Интернет-площадка посвященная выборам переехала</div>
+        <div align="center">
+            <a href="http://elections.grakon.org" target="_blank" class="ym-button">Сайт о выборах</a>
+        </div>
+    </div>
+
+    <div class="gr-side-item">
+        <h4 class="gr-officials">
             <a href="{% url location_tools location.id %}?type=officials">Чиновники&nbsp;({{ info.officials.count }})</a>
             <i title="контролируем их деятельность">&nbsp;</i>
         </h4>
@@ -23,7 +34,7 @@
                 </li>
             {% endfor %}
             {% if info.officials.count > LIST_COUNT.tools %}
-                <li><a href="{% url location_tools location.id %}?type=officials">Все</a></li>
+                <li><a href="{% url location_tools location.id %}?type=officials">Показать всех...</a></li>
             {% endif %}
         </ul>
         <div align="center">
@@ -37,7 +48,7 @@
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
         </ul>
         <div align="center">
-            <a href="" class="ym-button">Добавить мероприятие</a>
+            <a href="" class="ym-button">Добавить идею</a>
         </div>
     </div>
 
@@ -56,12 +67,12 @@
 {% endblock %}
 
 {% block right_column %}
-    
-    {% if not request.profile %}
+    {% if not request.profile and location.is_country %}
         <div class="gr-mb10 gr-big-button" align="center">
             <div><a href="{% url register %}" class="ym-button gr-blue-button">Зарегистрироваться</a></div>
         </div>
     {% endif %}
+
     <div class="gr-side-item gr-light-back">
         <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники&nbsp;({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
         <table width="100%" class="gr-side-table">
@@ -70,7 +81,7 @@
             {% endfor %}
             {% if info.participants.count > LIST_COUNT.participants %}
                 <tr>
-                    <td><a href="{% url location_participants location.id %}">Все</a></td>
+                    <td><a href="{% url location_participants location.id %}">Показать всех...</a></td>
                     <td></td><td></td><td></td>
                 </tr>
             {% endif %}

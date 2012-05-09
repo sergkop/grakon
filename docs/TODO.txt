@@ -1,7 +1,13 @@
-* tabs with lists of contacts and entities on profile and officials pages; all links in side panels + header links
+* rename "Все", links; add everywhere
+
+* restore location on error in forms
+
+* make pages with lists of administered items and contacts; all links in side panels + header links
+
+* rename participants to profiles?
 
 * calculate ratings
-* sorting official by last_name and sorting by ratings
+* sorting by ratings
 
 * check admin rights in elements.views.check_permissions
 
@@ -18,8 +24,6 @@ SEO:
 
 * Class to standartize forms features
 
-* restore location on error in form
-
 * user's avatar, use it in disqus, emails
 
 * complaints
@@ -30,6 +34,12 @@ SEO:
 
 * override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
+* sorting official by last_name
+
+* for anonym users logo in the hat must contain the text 'гражданский контроль...'
+
+* Ability to sign up for higher levels
+
 * popups with user's info and points in right panel
 
 * in profile editing move resources above about, load about field faster
@@ -101,7 +111,14 @@ Misc:
 * privacy settings
 
 --------------------------------------
+* GA events to track buttons clicking
+
+* Invite friends button under contacts in profile
+
 * use jinja instead of django templates (?) Check rendering time
+
+* Registration form should take get parameters
+* Fill in registration form with location or login
 
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
 * Ability to send mails to unregistered users (add email field to Email model)

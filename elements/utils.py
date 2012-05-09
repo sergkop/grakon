@@ -91,3 +91,27 @@ def paginator_data(page, per_page, count, url_prefix):
         'pages': range(1, num_pages+1),
         'url_prefix': url_prefix,
     }
+
+# TODO: merge paginator methods in it (?)
+def table_data(request, entity_type, selector):
+    """ selector(start, limit, sort_by) """
+    page, per_page = paginator_params(request.GET.get('page', 0), 20)
+
+    from elements.models import ENTITIES_MODELS
+    entity_model = ENTITIES_MODELS[entity_type]
+    entities_data = selector((page-1)*per_page, limit=per_page)
+    print entity_type, type(entities_data)
+    entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
+    entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
+
+    # TODO: allow to choose limit (?)
+    url_prefix = '?' # TODO: add sorting and limit (per_page) params - don't do it unless they differ from default
+
+    # TODO: show count somewhere
+    # TODO: generate table header (include sorting links and highlighting arrows)
+    return {
+        'entities': entities,
+        'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
+        'header_template': entity_model.table_header,
+        'line_template': entity_model.table_line,
+    }

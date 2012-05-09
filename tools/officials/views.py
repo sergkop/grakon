@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from elements.models import EntityAdmin, EntityFollower
+from elements.utils import table_data
 from tools.officials.forms import OfficialForm
 from tools.officials.models import Official
 
@@ -29,6 +30,8 @@ class BaseOfficialView(object):
 
         tabs = [
             ('view', u'Информация', self.official.get_absolute_url(), 'officials/view.html', ''),
+            ('admins', u'Админы', reverse('official_admins', args=[self.official.id]), 'officials/admins.html', ''),
+            ('followers', u'Следят', reverse('official_followers', args=[self.official.id]), 'officials/followers.html', ''),
         ]
 
         if is_admin:
@@ -57,6 +60,22 @@ class OfficialView(BaseOfficialView, TemplateView):
     tab = 'view'
 
 view_official = OfficialView.as_view()
+
+class OfficialFollowersView(BaseOfficialView, TemplateView):
+    tab = 'followers'
+
+    def update_context(self):
+        return table_data(self.request, 'participants', self.official.get_followers)
+
+official_followers = OfficialFollowersView.as_view()
+
+class OfficialAdminsView(BaseOfficialView, TemplateView):
+    tab = 'admins'
+
+    def update_context(self):
+        return table_data(self.request, 'participants', self.official.get_admins)
+
+official_admins = OfficialAdminsView.as_view()
 
 # TODO: test that only admin can edit official page
 class EditOfficialView(BaseOfficialView, UpdateView):
