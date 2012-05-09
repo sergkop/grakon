@@ -4,6 +4,8 @@
 
 * make pages with lists of administered items and contacts; all links in side panels + header links
 
+* after deleting official points are not updated
+
 * rename participants to profiles?
 
 * calculate ratings
@@ -114,6 +116,9 @@ Misc:
 
 --------------------------------------
 * GA events to track buttons clicking
+* separate analytics of elections site
+* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
+* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
 
 * Invite friends button under contacts in profile
 

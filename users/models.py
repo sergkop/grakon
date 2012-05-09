@@ -192,7 +192,8 @@ class PointsManager(models.Manager):
                 if source in points_by_source:
                     if points_by_source[source].points != points:
                         to_delete.append(points_by_source[source].id)
-                        to_create.append(Points(profile=profile, source=source, points=points))
+                        to_create.append(Points(profile=profile, source=source, points=points,
+                                type=SOURCES_TYPES[source]))
                 else:
                     to_create.append(Points(profile=profile, source=source, points=points,
                             type=SOURCES_TYPES[source]))
