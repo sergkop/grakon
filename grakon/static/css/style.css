@@ -17,6 +17,7 @@
         .gr-login-info a:last-child {border: none; box-shadow: none;}
         .gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-geography {display: block; padding-right: 1.25em }
         header .gr-activity, header .gr-web-activity, header .gr-leader {padding-right: 1.7em; display: inline;}
+        .gr-job {float: left; background:url(../images/icons/search.png) 0 0 no-repeat; color: #fff; padding: .7em 0 .7em 35px; margin-left: 3em;}
 
 nav .ym-wrapper {padding: 1.8em 20px 1em;}
 
