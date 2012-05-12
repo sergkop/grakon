@@ -1,17 +1,23 @@
 # -*- coding:utf-8 -*-
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
+from posts.models import EntityPost
 
 class OfficialManager(BaseEntityManager):
     def get_info(self, data, ids):
-        officials_by_id = self.in_bulk(ids)
+        opinions_data = EntityPost.objects.filter(content_type=ContentType.objects.get_for_model(Official),
+                entity_id__in=ids).exclude(opinion='neutral').values_list('entity_id', 'opinion')
+
         for id in ids:
-            data[id]['instance'] = officials_by_id[id]
+            opinions = map(lambda op: op[1], filter(lambda op: op[0]==id, opinions_data))
+            data[id]['posts']['positive'] = opinions.count('positive')
+            data[id]['posts']['negative'] = opinions.count('negative')
 
 # TODO: url - for official website/page (maybe several) (element for that?)
 # TODO: introduce choices for types
-@entity_class(['followers', 'locations', 'admins'])
+@entity_class(['followers', 'locations', 'admins', 'posts'])
 class Official(BaseEntityModel):
     first_name = models.CharField(u'Имя', max_length=50)
     middle_name = models.CharField(u'Отчество', max_length=50, blank=True)

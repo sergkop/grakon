@@ -87,6 +87,7 @@ INSTALLED_APPS = (
 
     # Applications
     'elements',
+    'posts',
     'users',
     'authentication',
     'grakon',
@@ -182,6 +183,8 @@ LIST_COUNT = {
     'followers': 5,
     'followed': 5,
     'participants': 15,
-    'admin': 5,
+    'admins': 5,
+    'administered': 5,
     'tools': 5,
+    'posts': 5,
 }

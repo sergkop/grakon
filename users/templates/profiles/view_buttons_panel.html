@@ -31,7 +31,7 @@
                         $('#send_message_form [name="title"], #send_message_form [name="body"]').val("");
                         $("#send_message_dialog").dialog("close");
                     },
-                    "send_message_form")
+                    false, "send_message_form")
         });
         $("#send_message_btn").click(function(){$("#send_message_dialog").dialog("open");});
     </script>
@@ -44,11 +44,7 @@
         <script type="text/javascript">
             create_dialog("remove_contact_dialog", 300, 200, "Удалить из контактов", "Отмена", {
                 "Удалить": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
-                    function(){
-                        $("#remove_contact_dialog").dialog("close");
-                        window.location.reload();
-                    }
-                )
+                        function(){$("#remove_contact_dialog").dialog("close");}, true)
             });
             $("#remove_contact_btn").click(function(){$("#remove_contact_dialog").dialog("open");});
         </script>
@@ -60,11 +56,7 @@
         <script type="text/javascript">
             create_dialog("add_contact_dialog", 300, 200, "Добавить в контакты", "Отмена", {
                 "Добавить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ profile.id }} },
-                    function(){
-                        $("#add_contact_dialog").dialog("close");
-                        window.location.reload();
-                    }
-                )
+                            function(){$("#add_contact_dialog").dialog("close");}, true)
             });
             $("#add_contact_btn").click(function(){$("#add_contact_dialog").dialog("open");});
         </script>

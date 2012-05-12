@@ -1,26 +1,36 @@
-* rename "Все", add where missing, set header links
-
 * restore location on error in forms
 
-* make pages with lists of administered items and contacts; all links in side panels + header links
+* disqus wall for officials - обсуждения
+
+
+* show posts on the left panel (link to anchor on a page with post)
+* return entities of posts, not model instances
+
+* join tabs on official page, develop cap above tables
+
+* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
+
+* methods like get_followers should come from entity properties models (features)
 
 * after deleting official points are not updated
 
 * rename participants to profiles?
 
-* calculate ratings
+* start using tables in side panels everywhere
+
+* calculate ratings (similar to points - unify in one method?)
 * sorting by ratings
 
-* check admin rights in elements.views.check_permissions
-
-* adding urls about officials + universal entity feature for it
-* Subclass posts from entities (has features followers, admin, complaint, aggitators, ratings)
+* use django forms to generate forms in dialogs
 
 SEO:
     * Webmaster Tools, https://www.google.com/webmasters/
     * set proper page titles
     * sitemaps
     * block indexing tst.grakon.org
+    * ability to set individual titles for tabs of static pages
+
+* adding urls about officials + universal entity feature for it
 
 * Introduce FINAL_URL_PREFIX and use
 
@@ -32,11 +42,18 @@ SEO:
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
+* check admin rights in elements.views.check_permissions
+
 * text fields for resources + other option
 
 * override save() method of EntityProperty models to reset cache
+
+* in account activation email also provide plain url
+* what happens when account activation link expires? is it possible to register again?
 -------------------------------------------------------------------------------
-* join tabs on official page
+* change the looks of title of officials page - apply styles to 'Чиновники'
+
+* allow passwords in russian
 
 * sorting official by last_name
 
@@ -79,7 +96,7 @@ Emails:
     * page with form for writing messages (put link on it in emails)
     * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
 
-Wall:
+Disqus:
     * неправильный заголовок на вкладке логина через гракон
     * special login url, which closes window
 
@@ -106,7 +123,8 @@ Misc:
     * add tips to buttons and ? signs to get help on features of the system
     * in forms limit lengths of strings that go into model's CharField
 
-* Graphs with statistics (in dashboard first)
+* Graphs with statistics (in dashboard first); stats about users, emails, activities, etc.
+* http://analytics.blogspot.co.uk/2012/05/new-google-analytics-easy-dashboard.html
 
 * Check that urls are specified properly in templates (look for "/ and http://grakon.org
 
@@ -114,7 +132,14 @@ Misc:
 
 * privacy settings
 
+* split elements.models into files
+
+* add per_page selector in paginator
 --------------------------------------
+* system of notifications (show them in top panel + send accumulating email once a day)
+
+* can we speed up get_for by not taking all entities, just those within requested limit?
+
 * GA events to track buttons clicking
 * separate analytics of elections site
 * exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
@@ -147,8 +172,6 @@ Misc:
 
 * Show list my locations in top panel (if there are more than 1)
 
-* friend invitation
-
 * generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
 
 * move password change views to users (from auth)
@@ -168,10 +191,12 @@ Misc:
 
 * in 'about' fields add target="_blank" to all external links
 
+* display html fields in admin listings nicely (extract text only)
+
+* increase expiration time of account activation link
+--------------------------------------
 * give superuser the rights of all admins
 
-* display html fields in admin listings nicely (extract text only)
---------------------------------------
 Emails:
     * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
     * list-unsubscribe header
@@ -222,9 +247,6 @@ Testing:
     * testing in browsers, selenium, http://www.browserstack.com
     * tests and test coverage
 
-Emails:
-    * sending emails using mailgun.net or mailchimp.com (?) or amazon ses
-
 Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * make lazy reformal loading
@@ -268,7 +290,6 @@ Deployment:
 
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * database backups
-    * configure virtualenv inside settings properly
     * separate server for media files? (512 mb)
     * configure firewall (ufw)
 
@@ -277,8 +298,6 @@ Deployment:
 * start writing documentation
 
 * project news page - store in db, rss + ability to post to social networks automatically
-
-* send email when someone adds you to contacts
 
 * don't use cache for anonymous users on the dev server (for convinience)
 

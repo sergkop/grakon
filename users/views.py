@@ -57,15 +57,11 @@ class BaseProfileView(object):
 class ProfileView(BaseProfileView, TemplateView):
     tab = 'view'
 
-view_profile = ProfileView.as_view()
-
 class ProfileContactsView(BaseProfileView, TemplateView):
     tab = 'contacts'
 
     def update_context(self):
         return table_data(self.request, 'participants', self.profile.get_followers)
-
-profile_contacts = ProfileContactsView.as_view()
 
 # TODO: test that only user can edit his own profile
 class EditProfileView(BaseProfileView, UpdateView):

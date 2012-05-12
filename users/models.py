@@ -10,11 +10,6 @@ from elements.models import BaseEntityManager, BaseEntityModel, ENTITIES_MODELS,
 
 class ProfileManager(BaseEntityManager):
     def get_info(self, data, ids):
-        # Get profile instances
-        profiles_by_id = self.in_bulk(ids)
-        for id in ids:
-            data[id]['instance'] = profiles_by_id[id]
-
         # TODO: add info on non-profile entities followed by the user
 
         # Get contacts

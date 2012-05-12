@@ -5,6 +5,7 @@ from django.forms.widgets import Media
 
 from grakon.utils import project_settings
 from elements.utils import disqus_sso_message
+from posts.models import OPINION_CHOICES
 
 # TODO: add IE-specific styles here
 # TODO: take extra media files from request - ability to add them per-view (variable in class-based views?)
@@ -55,5 +56,6 @@ def proj_settings(request):
     ctx = project_settings()
     ctx.update({
         'disqus_sso_message': disqus_sso_message(request.profile),
+        'OPINION_CHOICES': OPINION_CHOICES,
     })
     return ctx

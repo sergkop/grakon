@@ -1,6 +1,6 @@
 $(function(){
     $("form.uniForm").uniform();
-    $(".gr-side-item h4 i").tipsy({gravity: 'n', opacity: .8});
+    $(".gr-side-item h4 i, .gr-login-info a").tipsy({gravity: 'n', opacity: .8});
 });
 
 // Default tipsy settings
@@ -44,7 +44,7 @@ function create_dialog(id, width, height, title, cancel_btn_title, buttons){
 // If post response is "ok", provided function is performed and dialog is closed.
 // Otherwise alert with error message appears.
 // If form_id is specified, params is updated with form data.
-function dialog_post_shortcut(url, params, on_success, form_id){
+function dialog_post_shortcut(url, params, on_success, reload_page, form_id){
     return function(){
         params["csrfmiddlewaretoken"] = get_cookie("csrftoken");
         if (form_id){
@@ -56,6 +56,8 @@ function dialog_post_shortcut(url, params, on_success, form_id){
         $.post(url, params, function(data){
             if (data=="ok"){
                 on_success();
+                if (reload_page)
+                    window.location.reload();
             } else
                 alert(data);
         });

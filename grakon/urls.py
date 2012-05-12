@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^', include('navigation.urls')),
     url(r'^', include('users.urls')),
     url(r'^', include('tools.officials.urls')),
+    url(r'^', include('posts.urls')),
 
     url(r'', include('social_auth.urls')),
     url(r'^tinymce/', include('tinymce.urls')),

@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import base64
 import json
 import hashlib
@@ -6,10 +7,13 @@ from math import ceil
 import time
 
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponse
 
 import bleach
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from grakon.utils import authenticated_ajax_post
 
 def form_helper(action_name, button_name):
     """ Shortcut to generate django-crispy-forms helper """
@@ -93,14 +97,13 @@ def paginator_data(page, per_page, count, url_prefix):
     }
 
 # TODO: merge paginator methods in it (?)
-def table_data(request, entity_type, selector):
+def table_data(request, entity_type, selector, limit=20):
     """ selector(start, limit, sort_by) """
-    page, per_page = paginator_params(request.GET.get('page', 0), 20)
+    page, per_page = paginator_params(request.GET.get('page', 0), limit)
 
     from elements.models import ENTITIES_MODELS
     entity_model = ENTITIES_MODELS[entity_type]
     entities_data = selector((page-1)*per_page, limit=per_page)
-    print entity_type, type(entities_data)
     entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
     entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
 
@@ -110,8 +113,53 @@ def table_data(request, entity_type, selector):
     # TODO: show count somewhere
     # TODO: generate table header (include sorting links and highlighting arrows)
     return {
-        'entities': entities,
+        'pagination_entities': entities,
         'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
         'header_template': entity_model.table_header,
         'line_template': entity_model.table_line,
     }
+
+def get_entity(post_data):
+    """ Shortcut returning entity or None for form data """
+    try:
+        ct_id = int(post_data.get('ct', ''))
+        id = int(post_data.get('id', ''))
+    except ValueError:
+        return
+
+    try:
+        content_type = ContentType.objects.get_for_id(ct_id)
+    except ContentType.DoesNotExist:
+        return
+
+    model = content_type.model_class()
+    try:
+        return model.objects.get(id=id)
+    except model.DoesNotExist:
+        return
+
+def entity_post_method(func):
+    """ Shortcut for creating entity ajax ports """
+    @authenticated_ajax_post
+    def new_func(request):
+        entity = get_entity(request.POST)
+        if not entity:
+            return HttpResponse(u'Запись указана неверно')
+        return func(request, entity)
+    return new_func
+
+def check_permissions(func):
+    """ Check if user has permissions to modify entity """
+    from users.models import Profile
+    def new_func(request, entity):
+        if type(entity) is Profile:
+            has_perm = (entity==request.profile)
+        else:
+            pass # TODO: check that model has admins feature and user is admin
+
+        if not has_perm:
+            return HttpResponse(u'У вас нет прав на выполнение этой операции')
+
+        return func(request, entity)
+
+    return new_func

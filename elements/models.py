@@ -10,7 +10,11 @@ from tinymce.models import HTMLField as TinyMCEHTMLField
 from elements.utils import reset_cache
 from locations.models import Location
 
-class BaseEntityManager(models.Manager):
+class BaseEntityPropertyManager(models.Manager):
+    def get_for(self, model, ids):
+        raise NotImplemented()
+
+    # TODO: rename it not to overlap with BaseEntityModel method
     def get_related_info(self, data, ids):
         if not self.model.fk_field:
             return
@@ -55,6 +59,8 @@ class BaseEntityManager(models.Manager):
     def remove(self, entity, instance):
         self._add_remove(entity, instance, False)
 
+FEATURES_MODELS = {}
+
 class BaseEntityProperty(models.Model):
     content_type = models.ForeignKey(ContentType)
     entity_id = models.PositiveIntegerField(db_index=True)
@@ -66,7 +72,7 @@ class BaseEntityProperty(models.Model):
     fk_field = None # specify if there is another foreign key field besides content_type
     points_sources = []
 
-    objects = BaseEntityManager()
+    objects = BaseEntityPropertyManager()
 
     class Meta:
         abstract = True
@@ -90,6 +96,10 @@ class BaseEntityProperty(models.Model):
                 for source in self.model.points_sources:
                     profile.update_source_points(source)
     """
+
+def feature_model(cls):
+    FEATURES_MODELS[cls.feature] = cls
+    return cls
 
 # TODO: add subcategories (?)
 # (name, title)
@@ -129,7 +139,7 @@ RESOURCE_CHOICES = (
 
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
 
-class EntityResourceManager(BaseEntityManager):
+class EntityResourceManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         """ Return {id: [resources]} """
         res = dict((id, []) for id in ids)
@@ -162,6 +172,7 @@ class EntityResourceManager(BaseEntityManager):
         entity.clear_cache()
 
 # TODO: ability to add text, describing resources + custom resources (in case of other)
+@feature_model
 class EntityResource(BaseEntityProperty):
     resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
 
@@ -176,7 +187,7 @@ class EntityResource(BaseEntityProperty):
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)
 
-class EntityLocationManager(BaseEntityManager):
+class EntityLocationManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         """ Return {id: {'ids': loc_ids, 'main_id': loc_id_or_None}} """
         locations_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
@@ -201,6 +212,7 @@ class EntityLocationManager(BaseEntityManager):
 
 # TODO: some models may need only one location (?)
 # TODO: reset cache on save()/delete() (here and in other models)
+@feature_model
 class EntityLocation(BaseEntityProperty):
     location = models.ForeignKey(Location, related_name='entities')
     is_main = models.BooleanField(default=False, db_index=True)
@@ -218,7 +230,7 @@ class EntityLocation(BaseEntityProperty):
 
 # TODO: avoid importing profile in many places
 # TODO: user should not follow himself
-class EntityFollowerManager(BaseEntityManager):
+class EntityFollowerManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         """ Return followers data {id: {'count': count, 'ids': [top_followers_ids]}} """
         followers_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
@@ -263,6 +275,7 @@ class EntityFollowerManager(BaseEntityManager):
             return False
         return getattr(entity, self.model.feature).filter(follower=profile).exists()
 
+@feature_model
 class EntityFollower(BaseEntityProperty):
     follower = models.ForeignKey('users.Profile', related_name='followed_entities')
 
@@ -279,7 +292,7 @@ class EntityFollower(BaseEntityProperty):
         return unicode(self.follower) + ' follows ' + unicode(self.entity)
 
 # TODO: similar to follower model code
-class EntityAdminManager(BaseEntityManager):
+class EntityAdminManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         """ Return admins data {id: {'count': count, 'ids': [ids]}} """
         admins_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
@@ -293,7 +306,7 @@ class EntityAdminManager(BaseEntityManager):
         for id in ids:
             a_ids = map(lambda ad: ad[1], filter(lambda a: a[0]==id, admins_data))
             top_admin_rating = sorted(filter(lambda a: a[0] in a_ids, admins_rating),
-                    key=lambda a: a[1], reverse=True)[:settings.LIST_COUNT['admin']]
+                    key=lambda a: a[1], reverse=True)[:settings.LIST_COUNT['admins']]
             res[id] = {
                 'count': len(a_ids),
                 'ids': map(lambda a: a[0], top_admin_rating),
@@ -320,8 +333,9 @@ class EntityAdminManager(BaseEntityManager):
             entities += model.objects.info_for(entities_by_ct[ct_id], related=False).values()
 
         return {'count': len(entities_data),
-                'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['admin']]}
+                'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['admins']]}
 
+@feature_model
 class EntityAdmin(BaseEntityProperty):
     admin = models.ForeignKey('users.Profile', related_name='administered_entities')
 
@@ -336,57 +350,6 @@ class EntityAdmin(BaseEntityProperty):
 
     def __unicode__(self):
         return unicode(self.admin) + ' is admin of ' + unicode(self.entity)
-
-"""
-OPINION_CHOICES = (
-    ('positive', u'положительная'),
-    ('neutral', u'нейтральная'),
-    ('negative', u'негативная'),
-)
-
-class EntityPostManager(models.Manager):
-    def add(self, entity, profile, content, url, opinion):
-        if self.model.feature not in type(entity).features:
-            return
-
-        if opinion not in map(lambda op: op[0], OPINION_CHOICES):
-            return
-
-        self.create(content_type=ContentType.objects.get_for_model(type(entity)),
-                entity_id=entity.id, profile=profile, content=content, url=url, opinion=opinion)
-
-        for source in self.model.points_sources:
-            profile.update_source_points(source)
-
-        entity.clear_cache()
-        profile.clear_cache()
-
-# TODO: make it a feature (?)
-class EntityPost(BaseEntityProperty):
-    profile = models.ForeignKey('users.Profile', related_name='post_entities')
-    content = models.CharField(max_length=250)
-    url = models.URLField(u'Ссылка')
-    opinion = models.CharField(u'Оценка', max_length=8, choices=OPINION_CHOICES)
-
-    objects = EntityPostManager()
-
-    feature = 'posts'
-    # TODO: add points_sources and points for posts
-
-    def delete(self):
-        self.entity.clear_cache()
-        super(EntityPost, self).delete()
-
-        for source in self.model.points_sources:
-            profile.update_source_points(source)
-
-    def __unicode__(self):
-        return unicode(self.profile) + ' posted ' + unicode(self.opinion) + ' opinion'
-"""
-
-# TODO: generate it using feature
-FEATURES_MODELS = {'resources': EntityResource, 'followers': EntityFollower,
-        'locations': EntityLocation, 'admins': EntityAdmin}
 
 # TODO: add search method
 class BaseEntityManager(models.Manager):
@@ -413,6 +376,11 @@ class BaseEntityManager(models.Manager):
             content_type_id = ContentType.objects.get_for_model(self.model).id
             other_res = dict((id, {'ct': content_type_id}) for id in other_ids)
 
+            # Get entity instances
+            entities_by_id = self.in_bulk(other_ids)
+            for id in other_ids:
+                other_res[id]['instance'] = entities_by_id[id]
+
             for feature in features:
                 feature_data = FEATURES_MODELS[feature].objects.get_for(self.model, other_ids)
                 for id in other_ids:
@@ -436,7 +404,7 @@ class BaseEntityManager(models.Manager):
 
     def get_info(self, data, ids):
         """ Take {id: info} filled with features data and add the rest information """
-        raise NotImplemented
+        pass
 
     def get_related_info(self, data, ids):
         """ Take {id: info} and add info from related features """
@@ -484,6 +452,7 @@ class BaseEntityModel(models.Model):
     def delete(self, *args, **kwargs):
         return super(BaseEntityModel, self).delete(*args, **kwargs)
 
+    # TODO: move it inside feature class
     def get_admins(self, start=0, limit=None, sort_by=('-admin__rating',)):
         if 'admins' not in type(self).features:
             return None
@@ -504,6 +473,18 @@ class BaseEntityModel(models.Model):
         return {
             'count': queryset.count(),
             'ids': queryset.values_list(feature_model.fk_field, flat=True) \
+                    [slice(start, start+limit if limit else None)],
+        }
+
+    def get_posts(self, start=0, limit=None, sort_by=('-rating',)):
+        if 'posts' not in type(self).features:
+            return None
+
+        feature_model = FEATURES_MODELS['posts']
+        queryset = getattr(self, feature_model.feature).order_by(*sort_by)
+        return {
+            'count': queryset.count(),
+            'ids': queryset.values_list('id', flat=True) \
                     [slice(start, start+limit if limit else None)],
         }
 

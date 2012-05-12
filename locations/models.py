@@ -38,6 +38,8 @@ class LocationManager(models.Manager):
 
                 # TODO: separate participants and tools
                 for name, model in ENTITIES_MODELS.iteritems():
+                    if name == 'posts': # TODO: hack
+                        continue
                     count_name = 'participants' if name=='participants' else 'tools'
                     other_res[loc.id][name] = loc.get_entities(name)(
                             limit=settings.LIST_COUNT[count_name])
@@ -49,6 +51,8 @@ class LocationManager(models.Manager):
 
         if related:
             for name, model in ENTITIES_MODELS.iteritems():
+                if name == 'posts':
+                    continue
                 e_ids = set(e_id for id in ids for e_id in res[id][name]['ids'])
                 e_info = model.objects.info_for(e_ids, related=False)
 

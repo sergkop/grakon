@@ -40,10 +40,6 @@ class BaseOfficialView(object):
 
         self.info = self.official.info()
 
-        # TODO: move it to elements
-        #posts = EntityPost.objects.filter(entity_id=official.id,
-        #        content_type=ContentType.objects.get_for_model(Official))
-
         ctx.update({
             'tools_menu_item': True,
             'tab': self.tab,
@@ -59,7 +55,8 @@ class BaseOfficialView(object):
 class OfficialView(BaseOfficialView, TemplateView):
     tab = 'view'
 
-view_official = OfficialView.as_view()
+    def update_context(self):
+        return table_data(self.request, 'posts', self.official.get_posts, 5)
 
 class OfficialFollowersView(BaseOfficialView, TemplateView):
     tab = 'followers'
@@ -67,15 +64,11 @@ class OfficialFollowersView(BaseOfficialView, TemplateView):
     def update_context(self):
         return table_data(self.request, 'participants', self.official.get_followers)
 
-official_followers = OfficialFollowersView.as_view()
-
 class OfficialAdminsView(BaseOfficialView, TemplateView):
     tab = 'admins'
 
     def update_context(self):
         return table_data(self.request, 'participants', self.official.get_admins)
-
-official_admins = OfficialAdminsView.as_view()
 
 # TODO: test that only admin can edit official page
 class EditOfficialView(BaseOfficialView, UpdateView):

@@ -5,6 +5,7 @@ from elements.forms import resources_init
 from elements.utils import form_helper
 from users.models import Profile
 
+# TODO: change order of fields
 @resources_init
 class ProfileForm(forms.ModelForm):
     class Meta:

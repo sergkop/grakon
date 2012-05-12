@@ -4,23 +4,19 @@
     {% else %}
         <a id="follow_official_btn" class="ym-button gr-blue-button gr-look"><span>Следить</span><i>&nbsp;</i></a>
     {% endif %}
-    <!--a class="ym-button gr-blue-button gr-add"><span>Добавить информацию</span><i>&nbsp;</i></a-->
+    <a id="add_info_btn" class="ym-button gr-blue-button gr-add"><span>Добавить информацию</span><i>&nbsp;</i></a>
 </div>
 
 {% if request.user.is_authenticated %}
     {% if is_follower %}
         <div id="unfollow_official_dialog" class="hidden">
-            <p>Вы хотите отписаться но новостях об этом чиновнике?</p>
+            <p>Вы хотите отписаться от новостей об этом чиновнике?</p>
         </div>
 
         <script type="text/javascript">
-            create_dialog("unfollow_official_dialog", 300, 200, "Отписаться от новостей о чиновнике", "Отмена", {
+            create_dialog("unfollow_official_dialog", 320, 200, "Отписаться от новостей о чиновнике", "Отмена", {
                 "Отписаться": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ official.id }} },
-                    function(){
-                        $("#unfollow_official_dialog").dialog("close");
-                        window.location.reload();
-                    }
-                )
+                        function(){$("#unfollow_official_dialog").dialog("close");}, true)
             });
             $("#unfollow_official_btn").click(function(){$("#unfollow_official_dialog").dialog("open");});
         </script>
@@ -32,17 +28,37 @@
         <script type="text/javascript">
             create_dialog("follow_official_dialog", 300, 200, "Следить за чиновником", "Отмена", {
                 "Следить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ official.id }} },
-                    function(){
-                        $("#follow_official_dialog").dialog("close");
-                        window.location.reload();
-                    }
-                )
+                        function(){$("#follow_official_dialog").dialog("close");}, true)
             });
             $("#follow_official_btn").click(function(){$("#follow_official_dialog").dialog("open");});
         </script>
     {% endif %}
+
+    <div id="add_info_dialog" class="hidden">
+        <form id="add_info_form" method="post">
+            <div><label for="content">Информация:</label></div>
+            <div><textarea name="content" rows="4" cols="30"></textarea></div>
+            <div><label for="url">Ссылка:</label></div>
+            <div><input type="text" name="url" maxlength="200" size="30"/></div>
+            <div>Оценка:
+                <select name="opinion">
+                    {% for name, title in OPINION_CHOICES %}
+                        <option value="{{ name }}">{{ title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        create_dialog("add_info_dialog", 400, 400, "Добавить информацию о чиновнике", "Отмена", {
+            "Добавить": dialog_post_shortcut("{% url add_post %}", {"ct": {{ info.ct }}, "id": {{ official.id }} },
+                    function(){$("#add_info_dialog").dialog("close");}, true, "add_info_form")
+        });
+        $("#add_info_btn").click(function(){$("#add_info_dialog").dialog("open");});
+    </script>
 {% else %}
     <script type="text/javascript">
-        $("#follow_official_btn").click(login_dialog_init);
+        $("#follow_official_btn, #add_info_btn").click(login_dialog_init);
     </script>
 {% endif %}

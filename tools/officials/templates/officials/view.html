@@ -3,9 +3,9 @@
 </div>
 
 <div>
-    <!--ul class="gr-fr gr-icons">
-        <li class="gr-icons-like">Понравилось<big>1234</big></li>
-    </ul-->
+    <div class="gr-fr" style="font-size: 1.8em; font-weight: bold; color: #85AC14;">
+        Оценка: +{{ info.posts.positive }} / -{{ info.posts.negative }}
+    </div>
 
     <div class="gr-tags">
         <a>{{ official.post }}</a>
@@ -44,30 +44,21 @@
 
 <div class="ym-clearfix">&nbsp;</div>
 
-<!--div id="showcase" class="showcase">
-    <div class="showcase-slide">
-        <div class="showcase-content">
-            <div class="showcase-content-wrapper">
-                <ul class="gr-source-list-slider">
-                    <li>
-                        <i class="gr-orange-arrow-up">&nbsp;</i>
-                        <p>Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                    </li>
-                    <li>
-                        <i class="gr-orange-arrow-up">&nbsp;</i>
-                        <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                    </li>
-                    <li>
-                        <i class="gr-orange-arrow-down">&nbsp;</i>
-                        <p class="gr-source-list-slider-content">Сегодня Дмитрий Медведев наградил генерального директора телекомпании НТВ Владимира Кулистикова орденом «За заслуги перед Отечеством» третьей степени... </p>
-                        <div class="gr-source-list-context"><a href="">Источник</a> <span class="dimmed">01.05.12</span> <a href="">user</a></div>
-                    </li>
-                </ul>
+<ul class="gr-source-list-slider">
+    {% for post in pagination_entities %}
+        <li>
+            {% if post.instance.opinion == 'positive' %}<i class="gr-orange-arrow-up">&nbsp;</i>{% endif %}
+            {% if post.instance.opinion == 'negative' %}<i class="gr-orange-arrow-down">&nbsp;</i>{% endif %}
+            <p>{{ post.instance.content }}</p>
+            <div class="gr-source-list-context">
+                {% if post.instance.url %}<a href="{{ post.instance.url }}" target="_blank">Источник</a>{% endif %}
+                <span class="dimmed">{{ post.instance.time|date:"j.n.y" }}</span>
+                <a href="{{ post.instance.profile.get_absolute_url }}">{{ post.instance.profile }}</a>
             </div>
-        </div>
-    </div>
-</div-->
+        </li>
+    {% endfor %}
+</ul>
+
+{% include "elements/paginator.html" %}
 
 <!--p class="gr-aw-showcase_additional"><a class="gr-icon-link gr-abuse" href="">Пожаловаться</a></p-->

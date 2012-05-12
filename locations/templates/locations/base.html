@@ -28,7 +28,7 @@
         <ul>
             {% for entity in info.officials.entities %}
                 <li>
-                    <!--i class="highlight">89</i-->
+                    <i class="highlight">{{ entity.followers.count }}</i>
                     <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a>
                 </li>
             {% endfor %}
