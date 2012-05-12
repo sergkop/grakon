@@ -17,9 +17,11 @@ class Event(BaseEntityModel):
     objects = EventManager()
 
     entity_name = 'events'
+    entity_title = u'Мероприятия'
     cache_prefix = 'event/'
     table_header = 'events/table_header.html'
     table_line = 'events/table_line.html'
+    table_cap = 'events/table_cap.html'
 
     @models.permalink
     def get_absolute_url(self):

@@ -48,6 +48,7 @@ class Profile(BaseEntityModel):
     objects = ProfileManager()
 
     entity_name = 'participants'
+    entity_title = u'Участники'
     cache_prefix = 'user_info/'
     table_header = 'profiles/table_header.html'
     table_line = 'profiles/table_line.html'

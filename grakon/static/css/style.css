@@ -68,12 +68,20 @@ nav .ym-wrapper {padding: 1.8em 20px 1em;}
 
 /*Страница location*/
 .gr-location-tool {background-color: #b1ddf3; border-radius: 0.2em; box-shadow: 0 0 1px #f5f5f5;  height: 62px; overflow: hidden;}
-    .gr-location-tool h3 {float: left; margin: 0 20px 0 0; font-size: 1.1em; font-weight: bold; font-style:italic; background: #fff url(../images/bg-location-tool.png) right 0 no-repeat; height: 62px; overflow: hidden; padding: 15px 65px 0 20px; position: relative;}
+    .gr-location-tool h3 {float: left; margin: 0 20px 0 0; font-size: 1.1em; font-weight: bold; font-style:italic; background: #fff url(../images/bg-location-tool.png) right 0 no-repeat; height: 62px; overflow: hidden; padding: 15px 65px 0 20px; position: relative; cursor: pointer;}
     .gr-location-tool h3 small {color: #989495; font-style: normal; font-weight: normal; display: block; font-size: 0.9em; margin-top: 0.2em}
     .gr-location-tool .gr-icon-state {padding: 7px 0 0 32px; display: block;}
-    .gr-select-arrow {position: absolute; top: 18px; right: 38px; width:21px; height: 22px; cursor: pointer;	} 
+    .gr-select-arrow {position: absolute; top: 18px; right: 38px; width:21px; height: 22px;} 
     .gr-location-tool .gr-add {margin-left: 1em; margin-right: 1.2em;}
     .gr-location-tool .gr-fr {margin-top: 1.5em;}
+    
+    .gr-select-list {position: absolute; padding: 10px 10px 0; z-index:1; margin-top: 40px; left: 50px;}
+    .gr-select-list ul, .gr-select-list li {list-style-type: none; margin: 0; padding: 0;}
+    .gr-select-list ul {background-color: #fff; border: 1px solid #eaeaea;  box-shadow: 1px 1px 2px #d7d7d7; border-radius: .3em; display: none;}
+    .gr-select-list li a {display: block; padding: 5px 10px;}
+        .gr-select-list li a:hover {background-color: #f6f6f6; text-decoration: none;}
+        .gr-select-list li:first-child a {padding-top: 10px;}
+        .gr-select-list li:last-child a {padding-bottom: 10px;}
 
 .gr-sort {position: relative; padding-right: 20px;} 
     .gr-up, .gr-down, .gr-up-active, .gr-down-active {position: absolute; top: .3em; margin-left:.8em; width: 7px; height: 5px; background: url(../images/icons/sort-arrows.png) 0 0 no-repeat; cursor: pointer;}	

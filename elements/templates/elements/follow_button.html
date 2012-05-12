@@ -11,7 +11,7 @@
         </div>
 
         <script type="text/javascript">
-            create_dialog("unfollow_dialog", 320, 200, "Отписаться от новостей о чиновнике", "Отмена", {
+            create_dialog("unfollow_dialog", 320, 200, "Отписаться от новостей", "Отмена", {
                 "Отписаться": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
                         function(){$("#unfollow_dialog").dialog("close");}, true)
             });
@@ -23,7 +23,7 @@
         </div>
 
         <script type="text/javascript">
-            create_dialog("follow_dialog", 320, 200, "Следить за чиновником", "Отмена", {
+            create_dialog("follow_dialog", 320, 200, "Следить за новостями", "Отмена", {
                 "Следить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
                         function(){$("#follow_dialog").dialog("close");}, true)
             });

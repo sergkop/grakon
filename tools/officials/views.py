@@ -6,7 +6,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from elements.models import EntityAdmin, EntityFollower
-from elements.utils import disqus_page_params, table_data
+from elements.utils import table_data
+from services.disqus import disqus_page_params
 from tools.officials.forms import OfficialForm
 from tools.officials.models import Official
 

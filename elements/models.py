@@ -421,6 +421,7 @@ class BaseEntityModel(models.Model):
     objects = BaseEntityManager()
 
     entity_name = ''
+    entity_title = ''
     cache_prefix = ''
     features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
 

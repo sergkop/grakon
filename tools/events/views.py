@@ -6,7 +6,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from elements.models import EntityAdmin, EntityFollower
-from elements.utils import disqus_page_params, table_data
+from elements.utils import table_data
+from services.disqus import disqus_page_params
 from tools.events.forms import EventForm
 from tools.events.models import Event
 
@@ -29,8 +30,7 @@ class BaseEventView(object):
 
         tabs = [
             ('view', u'Информация', self.event.get_absolute_url(), 'events/view.html', 'wall-tab'),
-            ('admins', u'Организаторы', reverse('event_admins', args=[self.event.id]), 'events/admins.html', ''),
-            ('followers', u'Следят', reverse('event_followers', args=[self.event.id]), 'events/followers.html', ''),
+            ('participants', u'Участники', reverse('event_participants', args=[self.event.id]), 'events/participants.html', ''),
         ]
 
         if is_admin:
@@ -57,17 +57,30 @@ class EventView(BaseEventView, TemplateView):
     def update_context(self):
         return disqus_page_params('event/'+str(self.event.id), self.event.get_absolute_url(), 'events')
 
-class EventFollowersView(BaseEventView, TemplateView):
-    tab = 'followers'
+class EventParticipantsView(BaseEventView, TemplateView):
+    tab = 'participants'
 
     def update_context(self):
-        return table_data(self.request, 'participants', self.event.get_followers)
+        participants_types = [
+            ('admins', u'Организаторы', 'events/admins.html', self.event.get_admins),
+            ('followers', u'Следят', 'events/followers.html', self.event.get_followers),
+        ]
 
-class EventAdminsView(BaseEventView, TemplateView):
-    tab = 'admins'
+        p_type = self.request.GET.get('type', '')
+        if p_type not in map(lambda p: p[0], participants_types):
+            p_type = 'admins'
 
-    def update_context(self):
-        return table_data(self.request, 'participants', self.event.get_admins)
+        name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
+
+        ctx = table_data(self.request, 'participants', method)
+
+        base_url = reverse('event_participants', args=[self.event.id])
+        ctx.update({
+            'table_cap_choices': map(lambda p: (base_url+'?type='+p[0], p[1]), participants_types),
+            'table_cap_title': title,
+            'table_cap_template': template,
+        })
+        return ctx
 
 # TODO: test that only admin can edit event page
 class EditEventView(BaseEventView, UpdateView):

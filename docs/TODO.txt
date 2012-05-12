@@ -1,14 +1,9 @@
-* join tabs on official page, develop cap above tables
-
 * shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
-
-* order events according to the date (side list and table)
-
-* Move disqus to services
 
 Refactoring:
     * move features in elements to separate apps inside elements
-    * side blocks with admins, followers, participants should be moved to reusable templates
+    * side blocks with admins, followers, participants, tools should be moved to reusable templates
+    * start using tables in side panels everywhere
     * methods like get_followers should come from entity properties models (features)
     * rename participants to profiles?
     * Class to standartize forms features
@@ -27,6 +22,12 @@ Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs
 
+* show count of items in tables
+
+* widget for choosing date and time
+
+* order events according to the date (side list and table)
+
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
 * adding urls about officials, events + universal entity feature for it
@@ -35,8 +36,6 @@ Dialog forms:
 
 * calculate ratings (similar to points - unify in one method?)
 * sorting by ratings
-
-* widget for choosing date and time
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
@@ -56,8 +55,6 @@ Dialog forms:
 * show posts on the left panel (link to anchor on a page with post)
 * return entities of posts, not model instances
 -------------------------------------------------------------------------------
-* start using tables in side panels everywhere
-
 * user's avatar, use it in disqus, emails
 
 * complaints

@@ -33,6 +33,7 @@ class Official(BaseEntityModel):
     objects = OfficialManager()
 
     entity_name = 'officials'
+    entity_title = u'Чиновники'
     cache_prefix = 'official/'
     table_header = 'officials/table_header.html'
     table_line = 'officials/table_line.html'

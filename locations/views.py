@@ -6,9 +6,10 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
 from elements.models import ENTITIES_MODELS
-from elements.utils import disqus_page_params, table_data
+from elements.utils import table_data
 from locations.models import Location
 from locations.utils import subregion_list
+from services.disqus import disqus_page_params
 
 class BaseLocationView(object):
     template_name = 'locations/base.html'
@@ -68,37 +69,22 @@ class ToolsLocationView(BaseLocationView, TemplateView):
     tab = 'tools'
 
     def update_context(self):
+        entity_types = sorted(set(ENTITIES_MODELS.keys()) - set(['participants', 'posts']),
+                key=lambda em: ENTITIES_MODELS[em].entity_title)
+
         entity_type = self.request.GET.get('type', '')
-        if entity_type not in ENTITIES_MODELS.keys() or entity_type=='participants':
+        if entity_type not in entity_types:
             entity_type = 'officials'
 
-        
-        
-        
-        
-        
-        tools_types = [
-            ('admins', u'Админы', 'officials/admins.html', self.official.get_admins),
-            ('followers', u'Следят', 'officials/followers.html', self.official.get_followers),
-        ]
-
-        p_type = self.request.GET.get('type', '')
-        if p_type not in map(lambda p: p[0], participants_types):
-            p_type = 'admins'
-
-        name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
-
-        #ctx = table_data(self.request, 'participants', method)
         ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
 
-        base_url = reverse('official_participants', args=[self.official.id])
+        base_url = reverse('location_tools', args=[self.location.id])
         ctx.update({
-            'table_cap_choices': map(lambda p: (base_url+'?type='+p[0], p[1]), participants_types),
-            'table_cap_title': title,
-            'table_cap_template': template,
+            'table_cap_choices': map(lambda em: (base_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
+            'table_cap_title': ENTITIES_MODELS[entity_type].entity_title,
+            'table_cap_template': ENTITIES_MODELS[entity_type].table_cap,
         })
         return ctx
-        
 
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'
