@@ -182,3 +182,4 @@ def update_code():
     virtualenv('python %s migrate' % manage_path)
     deploy_static_files()
     restart_web_server()
+    # TODO: reset memcached

@@ -423,8 +423,11 @@ class BaseEntityModel(models.Model):
     entity_name = ''
     cache_prefix = ''
     features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
+
+    # Paths to templates constructing tables
     table_header = ''
     table_line = ''
+    table_cap = '' # Used on locations pages
 
     class Meta:
         abstract = True

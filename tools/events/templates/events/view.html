@@ -1,0 +1,29 @@
+<div class="gr-fl gr-photo">
+    <img src="{{ STATIC_URL }}images/icons/nophoto.jpg" />
+</div>
+
+<div>
+    <div class="gr-fr" style="font-size: 1.8em; font-weight: bold; color: #85AC14;">
+        Идут: 
+    </div>
+
+    <div class="gr-mb20">
+        {% for location in info.locations.entities %}
+            {% with location=location.location %}
+                {% include "elements/location_path.html" %}
+            {% endwith %}
+            <br />
+        {% endfor %}
+    </div>
+
+    <p><span class="dimmed">Место:</span> {{ event.place }}</p>
+    <p><span class="dimmed">Время:</span> {{ event.time }}</p>
+
+    {{ event.description|safe }}
+
+    {% include "events/view_buttons_panel.html" %}
+</div>
+
+<div class="ym-clearfix">&nbsp;</div>
+
+{% include "elements/disqus.html" %}

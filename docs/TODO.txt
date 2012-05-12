@@ -1,44 +1,42 @@
-* restore location on error in forms
-
-* disqus wall for officials - обсуждения
-
-
-* show posts on the left panel (link to anchor on a page with post)
-* return entities of posts, not model instances
-
 * join tabs on official page, develop cap above tables
+
+* shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
+
+* order events according to the date (side list and table)
+
+* Move disqus to services
+
+Refactoring:
+    * move features in elements to separate apps inside elements
+    * side blocks with admins, followers, participants should be moved to reusable templates
+    * methods like get_followers should come from entity properties models (features)
+    * rename participants to profiles?
+    * Class to standartize forms features
+    * entity model must contain info on how to display its instances in side panels and tables
+    * Distribute elements templates between apps
+
+Forms:
+    * restore location on error in forms
+    * allow passwords in russian
+    * in profile editing move resources above about, load about field faster
+    * editing locations in officials/events (only one)
+
+Dialog forms:
+    * shortcut to prevent using enter in dialog forms
+    * in posts about officials make link mandatory
+    * check form data for posts
+    * use django forms to generate forms in dialogs
 
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
-* methods like get_followers should come from entity properties models (features)
+* adding urls about officials, events + universal entity feature for it
 
 * after deleting official points are not updated
-
-* rename participants to profiles?
-
-* start using tables in side panels everywhere
 
 * calculate ratings (similar to points - unify in one method?)
 * sorting by ratings
 
-* use django forms to generate forms in dialogs
-
-SEO:
-    * Webmaster Tools, https://www.google.com/webmasters/
-    * set proper page titles
-    * sitemaps
-    * block indexing tst.grakon.org
-    * ability to set individual titles for tabs of static pages
-
-* adding urls about officials + universal entity feature for it
-
-* Introduce FINAL_URL_PREFIX and use
-
-* Class to standartize forms features
-
-* user's avatar, use it in disqus, emails
-
-* complaints
+* widget for choosing date and time
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
@@ -50,10 +48,35 @@ SEO:
 
 * in account activation email also provide plain url
 * what happens when account activation link expires? is it possible to register again?
--------------------------------------------------------------------------------
-* change the looks of title of officials page - apply styles to 'Чиновники'
 
-* allow passwords in russian
+* move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+
+* share buttons
+
+* show posts on the left panel (link to anchor on a page with post)
+* return entities of posts, not model instances
+-------------------------------------------------------------------------------
+* start using tables in side panels everywhere
+
+* user's avatar, use it in disqus, emails
+
+* complaints
+
+* Introduce FINAL_URL_PREFIX and use
+
+* show locations in tables (?)
+
+SEO:
+    * Webmaster Tools, https://www.google.com/webmasters/
+    * set proper page titles
+    * sitemaps
+    * ability to set individual titles for tabs of static pages
+
+* invitations to events
+
+* entity model can provide parameters for features
+
+* change the looks of title of officials page - apply styles to 'Чиновники'
 
 * sorting official by last_name
 
@@ -63,17 +86,11 @@ SEO:
 
 * popups with user's info and points in right panel
 
-* in profile editing move resources above about, load about field faster
-
 * show sender's points in message email
 
 * form fields are not highlighted anymore (with uniform script)
 
-* entity model must contain info on how to display its instances in side panels and tables
-
 * Give points for disqus activity, negative for complaints
-
-* move test server to Grisha's account
 
 * process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
   generalize tabs creation
@@ -84,8 +101,6 @@ SEO:
 * send email notifying that user has been added to contacts (+ ability to unsubscribe)
 
 * pages for tools and users (with search) + bring them back in main menu
-
-* editing locations in officials
 
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
 
@@ -102,16 +117,10 @@ Disqus:
 
 * Use aggregates for counting points
 
-Performance:
-    * in chrome page reloads on tabs change
-    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-
 Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
-    * share buttons
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * unused skill icon in icons/badges.png
-    * shortcut to prevent using enter in dialog forms
     * remove-after-launch
     * aw-showcase
     * share and share_horizontal overlap a lot
@@ -132,10 +141,18 @@ Misc:
 
 * privacy settings
 
-* split elements.models into files
-
 * add per_page selector in paginator
+
+* unsubscribe from location button on location page; put this button in the center as with officials, events
+
+* ability to add admins
+
+* button for creating new entity on entities pages
 --------------------------------------
+* add wikipedia links to locations, info about population, map boundaries
+
+* show events on map and allow to specify exact location on the map
+
 * system of notifications (show them in top panel + send accumulating email once a day)
 
 * can we speed up get_for by not taking all entities, just those within requested limit?

@@ -38,9 +38,6 @@ def social_registration(request):
     if not data:
         return redirect('login')
 
-    from pprint import pprint
-    pprint(data)#['kwargs'])
-
     details = data['kwargs']['details']
 
     # TODO: data from google

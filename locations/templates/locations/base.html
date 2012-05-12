@@ -30,6 +30,7 @@
                 <li>
                     <i class="highlight">{{ entity.followers.count }}</i>
                     <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a>
+                    (+{{ entity.posts.positive }}/-{{ entity.posts.negative }})
                 </li>
             {% endfor %}
             {% if info.officials.count > LIST_COUNT.tools %}
@@ -42,25 +43,30 @@
     </div>
 
     <div class="gr-side-item">
+        <h4 class="gr-events"><a href="{% url location_tools location.id %}?type=events">Мероприятия</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
+        <ul>
+            {% for entity in info.events.entities %}
+                <li>
+                    <i class="highlight">{{ entity.instance.time|date:"j/n" }}</i>
+                    <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance.title }}</a> ()
+                </li>
+            {% endfor %}
+            {% if info.events.count > LIST_COUNT.events %}
+                <li><a href="{% url location_tools location.id %}?type=events">Показать всех...</a></li>
+            {% endif %}
+        </ul>
+        <div align="center">
+            <a href="{% url create_event %}" class="ym-button">Добавить мероприятие</a>
+        </div>
+    </div>
+
+    <div class="gr-side-item">
         <h4 class="gr-eureka gr-long-title"><a>Генератор идей<br /> (в разработке)</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>
         <ul>
             <li><i class="gr-orange-arrow-up">&nbsp;</i><a href="/ideas-test">Посмотреть пример: Как собрать миллион человек на&nbsp;митинг 6&nbsp;мая в&nbsp;Москве?</a> (72)</li>
         </ul>
         <div align="center">
             <a href="" class="ym-button">Добавить задачу</a>
-        </div>
-    </div>
-
-    <div class="gr-side-item">
-        <div class="gr-disabled">&nbsp;</div>
-        <h4 class="gr-events gr-long-title"><a href="">Мероприятия<br /> (в разработке)</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
-        <ul>
-            <li><i class="highlight">12/5</i><a href="">Замена старых канализационных труб</a> (12)</li>
-            <li><i class="highlight">12/12</i><a href="">Уборка района</a> (2)</li>
-            <li><i class="highlight">1/12</i><a href="">Встреча активистов</a> (12)</li>
-        </ul>
-        <div align="center">
-            <a href="" class="ym-button">Добавить мероприятие</a>
         </div>
     </div>
 {% endblock %}

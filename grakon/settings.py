@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'locations',
     'navigation',
     'tools.officials',
+    'tools.events',
     'services',
 )
 
@@ -187,4 +188,5 @@ LIST_COUNT = {
     'administered': 5,
     'tools': 5,
     'posts': 5,
+    'events': 5,
 }

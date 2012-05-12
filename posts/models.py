@@ -77,8 +77,9 @@ class EntityPost(BaseEntityModel):
 
     entity_name = 'posts'
     cache_prefix = 'posts/'
-    table_header = ''
-    table_line = ''
+    table_header = 'events/table_header.html'
+    table_line = 'events/table_line.html'
+    table_cap = 'events/table_cap.html'
 
     #def delete(self):
     #    self.entity.clear_cache()

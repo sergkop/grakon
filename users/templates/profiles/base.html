@@ -13,7 +13,7 @@
             {% for entity in administered_entities.entities %}
                 <li><a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a></li>
             {% endfor %}
-            {% if administered_entities.count > LIST_COUNT.adminstered %}
+            {% if administered_entities.count > LIST_COUNT.administered %}
                 <li><a href="">Показать все...</a></li>
             {% endif %}
         </ul>

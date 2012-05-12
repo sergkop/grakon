@@ -52,7 +52,7 @@
             <p>{{ post.instance.content }}</p>
             <div class="gr-source-list-context">
                 {% if post.instance.url %}<a href="{{ post.instance.url }}" target="_blank">Источник</a>{% endif %}
-                <span class="dimmed">{{ post.instance.time|date:"j.n.y" }}</span>
+                <span class="dimmed">{{ post.instance.time|date:"j.n.y G:i" }}</span>
                 <a href="{{ post.instance.profile.get_absolute_url }}">{{ post.instance.profile }}</a>
             </div>
         </li>

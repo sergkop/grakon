@@ -55,7 +55,7 @@ class BaseLocationView(object):
             'is_lowest_level': location.is_lowest_level(),
         })
         ctx.update(self.update_context())
-        ctx.update(disqus_page_params('loc/'+str(loc_id), location.get_absolute_url(), 'locations'))
+        ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))
         return ctx
 
 class WallLocationView(BaseLocationView, TemplateView):
@@ -72,7 +72,33 @@ class ToolsLocationView(BaseLocationView, TemplateView):
         if entity_type not in ENTITIES_MODELS.keys() or entity_type=='participants':
             entity_type = 'officials'
 
-        return table_data(self.request, entity_type, self.location.get_entities(entity_type))
+        
+        
+        
+        
+        
+        tools_types = [
+            ('admins', u'Админы', 'officials/admins.html', self.official.get_admins),
+            ('followers', u'Следят', 'officials/followers.html', self.official.get_followers),
+        ]
+
+        p_type = self.request.GET.get('type', '')
+        if p_type not in map(lambda p: p[0], participants_types):
+            p_type = 'admins'
+
+        name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
+
+        #ctx = table_data(self.request, 'participants', method)
+        ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
+
+        base_url = reverse('official_participants', args=[self.official.id])
+        ctx.update({
+            'table_cap_choices': map(lambda p: (base_url+'?type='+p[0], p[1]), participants_types),
+            'table_cap_title': title,
+            'table_cap_template': template,
+        })
+        return ctx
+        
 
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'

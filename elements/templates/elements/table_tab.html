@@ -1,0 +1,20 @@
+<div class="gr-location-tool">
+    <h3>
+        <span class="gr-icon-state">
+            {{ table_cap_title }}
+            <!--small>(по районам)</small-->
+            <div class="gr-select-arrow">&nbsp;</div>
+
+            <!--
+            {% for url, title in table_cap_choices %}
+                <a href="{{ url }}">{{ title }}</a>
+            {% endfor %}
+            -->
+        </span>
+    </h3>
+    <div class="gr-fr">
+        {% include table_cap_template %}
+    </div>
+</div>
+
+{% include "elements/table.html" %}

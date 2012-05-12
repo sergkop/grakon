@@ -2,14 +2,14 @@
 
 {% load elements %}
 
-{% block title %}{{ official }} - Гракон{% endblock %}
+{% block title %}{{ event.title }} - Гракон{% endblock %}
 
 {% block page_class %}gr-right-sidebar{% endblock %}
 
 {% block right_column %}
     <div class="gr-side-item">
         <h4>
-            <a href="{% url official_participants official.id %}?type=admins">Админы&nbsp;({{ info.admins.count }})</a>
+            <a href="{% url event_admins event.id %}">Организаторы&nbsp;({{ info.admins.count }})</a>
             <i>&nbsp;</i>
         </h4>
         <table width="100%" class="gr-side-table">
@@ -17,20 +17,14 @@
                 {% include "elements/person.html" %}
             {% endfor %}
             {% if info.admins.count > LIST_COUNT.admins %}
-                <td colspan="4"><a href="{% url official_participants official.id %}?type=admins">Показать всеx...</a></td>
+                <td colspan="4"><a href="{% url event_admins event.id %}">Показать всеx...</a></td>
             {% endif %}
         </table>
     </div>
 
-    <!--div class="gr-side-item">
-        <h4 class="gr-agitators">Агитаторы (123) <i>&nbsp;</i></h4>
-            <table width="100%" class="gr-side-table">
-            </table>
-    </div-->
-
     <div class="gr-side-item">
-        <h4 class="gr-followers">
-            <a href="{% url official_participants official.id %}?type=followers">Следят&nbsp;({{ info.followers.count }})</a>
+        <h4 class="gr-observers">
+            <a href="{% url event_followers event.id %}">Следят&nbsp;({{ info.followers.count }})</a>
             <i>&nbsp;</i>
         </h4>
         <table width="100%" class="gr-side-table">
@@ -38,7 +32,7 @@
                 {% include "elements/person.html" %}
             {% endfor %}
             {% if info.followers.count > LIST_COUNT.followers %}
-                <td colspan="4"><a href="{% url official_participants official.id %}?type=followers">Показать всеx...</a></td>
+                <td colspan="4"><a href="{% url event_followers event.id %}">Показать всеx...</a></td>
             {% endif %}
         </table>
     </div>
@@ -47,6 +41,6 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Чиновники &mdash; {{ official }}</h1>
+    <h1>Мероприятия &mdash; {{ event.title }}</h1>
     {% tabs tabs tab %}
 {% endblock %}
