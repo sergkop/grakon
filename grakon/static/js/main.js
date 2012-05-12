@@ -199,3 +199,7 @@ function locations_list_editing(ct_id, id){
                 .prependTo(li);
     });
 }
+
+function toggleDiv(obj) {
+    obj.slideToggle();
+}

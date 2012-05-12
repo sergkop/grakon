@@ -1,10 +1,19 @@
 <div class="gr-location-tool">
-    <h3>
+    <h3 onclick="javascript: toggleDiv(jQuery('#officialsList'));">
         <span class="gr-icon-state">Чиновники
             <!--small>(по районам)</small-->
             <div class="gr-select-arrow">&nbsp;</div>
         </span>
     </h3>
+    <div class="gr-select-list">
+        <ul id="officialsList">
+            <li><a href="">Чиновники</a></li>
+            <li><a href="">Судьи</a></li>
+            <li><a href="">Пользователи</a></li>
+            <li><a href="">Депутаты</a></li>
+            <li><a href="">Оппозиционеры</a></li>                        
+        </ul>  
+    </div>
     <div class="gr-fr">
         <!--a href="">Полный список</a-->
         <a href="{% url create_official %}" class="ym-button gr-blue-button gr-add"><span>Добавить чиновника</span></a>
