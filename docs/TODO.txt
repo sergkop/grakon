@@ -1,5 +1,3 @@
-* widget for choosing date and time
-
 Refactoring:
     * methods like get_followers should come from entity properties models (features)
 
