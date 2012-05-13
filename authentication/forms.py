@@ -37,7 +37,7 @@ class BaseRegistrationForm(forms.ModelForm):
 @location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
     password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
-            help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну латинскую букву и одну цифру')
+            help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну букву и одну цифру')
     password2 = forms.CharField(label=u'Подтвердите пароль', widget=forms.PasswordInput(render_value=False))
 
     helper = form_helper('register', u'Зарегистрироваться')

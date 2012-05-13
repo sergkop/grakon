@@ -1,3 +1,5 @@
+* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/
+
 Refactoring:
     * methods like get_followers should come from entity properties models (features)
 
@@ -19,20 +21,23 @@ Dialog forms:
 
 * order events according to the date (side list and table)
 
-* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
-
 * adding urls about officials, events + universal entity feature for it
 
-* after deleting official points are not updated
+* text fields for resources + other option
+
 
 * calculate ratings (similar to points - unify in one method?)
 * sorting by ratings
 
+* share buttons
+
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
-* check admin rights in elements.views.check_permissions
+* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
-* text fields for resources + other option
+* after deleting official points are not updated
+
+* check admin rights in elements.views.check_permissions
 
 * override save() method of EntityProperty models to reset cache
 
@@ -40,12 +45,10 @@ Dialog forms:
 * what happens when account activation link expires? is it possible to register again?
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-
-* share buttons
-
+-------------------------------------------------------------------------------
 * show posts on the left panel (link to anchor on a page with post)
 * return entities of posts, not model instances
--------------------------------------------------------------------------------
+
 * entity model must contain info on how to display its instances in side panels and tables
 
 * Class to standartize forms features

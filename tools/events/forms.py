@@ -10,7 +10,8 @@ from tools.events.models import Event
 
 @location_init(False, u'Место проведения')
 class EventForm(forms.ModelForm):
-    event_time = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'], widget=DateTimeWidget(format='%d/%m/%Y %H:%M'))
+    event_time = forms.DateTimeField(label=u'Время проведения', input_formats=['%d/%m/%Y %H:%M'],
+            widget=DateTimeWidget(format='%d/%m/%Y %H:%M'))
 
     class Meta:
         model = Event
