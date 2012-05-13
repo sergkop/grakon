@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from elements.admins.models import EntityAdmin
+from elements.followers.models import EntityFollower
 from elements.models import BaseEntityManager, BaseEntityModel, ENTITIES_MODELS, \
-        entity_class, EntityAdmin, EntityFollower, EntityResource, HTMLField
+        entity_class, HTMLField
+from elements.resources.models import EntityResource
 
 class ProfileManager(BaseEntityManager):
     def get_info(self, data, ids):

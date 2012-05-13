@@ -87,6 +87,10 @@ INSTALLED_APPS = (
 
     # Applications
     'elements',
+    'elements.admins',
+    'elements.followers',
+    'elements.locations',
+    'elements.resources',
     'posts',
     'users',
     'authentication',

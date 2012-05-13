@@ -2,7 +2,7 @@
     {% for location_data in locations_data %}
         <li loc_id="{{ location_data.location.id }}">
             {% with location=location_data.location %}
-                {% include "elements/location_path.html" %}
+                {% include "locations/path.html" %}
             {% endwith %}
         </li>
     {% endfor %}

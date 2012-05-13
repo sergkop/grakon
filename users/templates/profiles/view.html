@@ -67,7 +67,7 @@
 
 <h5>География участия <span class="gr-geography">&nbsp;</span></h5>
 {% with locations_data=info.locations.entities %}
-    {% include "elements/locations.html" %}
+    {% include "locations/list.html" %}
 {% endwith %}
 
 {% if own_profile %}

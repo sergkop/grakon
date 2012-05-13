@@ -5,6 +5,7 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models import Q
 
+from elements.models import ENTITIES_MODELS
 from services.cache import cache_function
 
 class LocationManager(models.Manager):
@@ -27,7 +28,6 @@ class LocationManager(models.Manager):
             cached_ids.append(id)
             res[id] = entity
 
-        from elements.models import ENTITIES_MODELS
         other_ids = set(ids) - set(cached_ids)
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
@@ -128,7 +128,7 @@ class Location(models.Model):
     # TODO: cache it (at least for data for side panels) - in Location
     def get_entities(self, entity_type):
         """ Return {'ids': sorted_entities_ids, 'count': total_count} """
-        from elements.models import EntityLocation, ENTITIES_MODELS
+        from elements.locations.models import EntityLocation
         model = ENTITIES_MODELS[entity_type]
 
         def method(start=0, limit=None, sort_by=('-rating',)):

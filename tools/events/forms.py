@@ -3,7 +3,7 @@ from django import forms
 
 from crispy_forms.layout import Fieldset, Layout
 
-from elements.forms import location_init
+from elements.locations.forms import location_init
 from elements.utils import form_helper
 from tools.events.models import Event
 

@@ -37,37 +37,18 @@ def clean_html(html):
     styles = ['text-decoration', 'font-size', 'font-family', 'text-align', 'padding-left', 'color', 'background-color', ]
     return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
 
-def paginator_params(page, per_page):
-    """ page and per_page can be str """
+# TODO: use anchors to show table on navigation to another page
+def table_data(request, entity_type, selector, limit=20):
+    """ selector(start, limit, sort_by) """
     try:
-        page = max(int(page), 1)
+        page = max(int(request.GET.get('page', 0)), 1)
     except ValueError:
         page = 1
 
     try:
-        per_page = max(min(int(per_page), 100), 1)
+        per_page = max(min(int(limit), 100), 1)
     except ValueError:
         per_page = 20
-
-    return page, per_page
-
-# TODO: what if count==0?
-def paginator_data(page, per_page, count, url_prefix):
-    num_pages = int(ceil(count/float(per_page)))
-    return {
-        'page': page,
-        'has_prev': page>1,
-        'prev_page': page-1,
-        'has_next': page<num_pages,
-        'next_page': page+1,
-        'pages': range(1, num_pages+1),
-        'url_prefix': url_prefix,
-    }
-
-# TODO: merge paginator methods in it (?)
-def table_data(request, entity_type, selector, limit=20):
-    """ selector(start, limit, sort_by) """
-    page, per_page = paginator_params(request.GET.get('page', 0), limit)
 
     from elements.models import ENTITIES_MODELS
     entity_model = ENTITIES_MODELS[entity_type]
@@ -78,11 +59,22 @@ def table_data(request, entity_type, selector, limit=20):
     # TODO: allow to choose limit (?)
     url_prefix = '?' # TODO: add sorting and limit (per_page) params - don't do it unless they differ from default
 
+    num_pages = int(ceil(entities_data['count']/float(per_page)))
+
+    # TODO: what if count==0?
     # TODO: show count somewhere
     # TODO: generate table header (include sorting links and highlighting arrows)
     return {
         'pagination_entities': entities,
-        'paginator': paginator_data(page, per_page, entities_data['count'], url_prefix),
+        'paginator': {
+            'page': page,
+            'has_prev': page>1,
+            'prev_page': page-1,
+            'has_next': page<num_pages,
+            'next_page': page+1,
+            'pages': range(1, num_pages+1),
+            'url_prefix': url_prefix,
+        },
         'header_template': entity_model.table_header,
         'line_template': entity_model.table_line,
     }

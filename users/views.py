@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
 from grakon.utils import authenticated_ajax_post, escape_html
-from elements.models import EntityAdmin
+from elements.admins.models import EntityAdmin
 from elements.utils import table_data
 from services.email import send_email
 from users.forms import ProfileForm

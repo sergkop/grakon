@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.models import EntityAdmin, EntityFollower
+from elements.admins.models import EntityAdmin
+from elements.followers.models import EntityFollower
 from elements.utils import table_data
 from services.disqus import disqus_page_params
 from tools.officials.forms import OfficialForm
@@ -28,10 +29,12 @@ class BaseOfficialView(object):
             is_admin = EntityAdmin.objects.is_admin(self.official, self.request.profile)
             is_follower = EntityFollower.objects.is_followed(self.official, self.request.profile)
 
+        self.participants_url = reverse('official_participants', args=[self.official.id])
+
         tabs = [
             ('view', u'Информация', self.official.get_absolute_url(), 'officials/view.html', ''),
             ('wall', u'Обсуждение', reverse('official_wall', args=[self.official.id]), 'officials/wall.html', 'wall-tab'),
-            ('participants', u'Участники', reverse('official_participants', args=[self.official.id]), 'officials/participants.html', ''),
+            ('participants', u'Участники', self.participants_url, 'officials/participants.html', ''),
         ]
 
         if is_admin:
@@ -48,6 +51,8 @@ class BaseOfficialView(object):
             'official': self.official,
             'is_follower': is_follower,
             'is_admin': is_admin,
+            'admins_title': u'Админы',
+            'participants_url': self.participants_url,
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('official/'+str(self.official.id),
@@ -80,10 +85,8 @@ class OfficialParticipantsView(BaseOfficialView, TemplateView):
         name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
 
         ctx = table_data(self.request, 'participants', method)
-
-        base_url = reverse('official_participants', args=[self.official.id])
         ctx.update({
-            'table_cap_choices': map(lambda p: (base_url+'?type='+p[0], p[1]), participants_types),
+            'table_cap_choices': map(lambda p: (self.participants_url+'?type='+p[0], p[1]), participants_types),
             'table_cap_title': title,
             'table_cap_template': template,
         })

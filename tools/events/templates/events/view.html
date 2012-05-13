@@ -10,7 +10,7 @@
     <div class="gr-mb20">
         {% for location in info.locations.entities %}
             {% with location=location.location %}
-                {% include "elements/location_path.html" %}
+                {% include "locations/path.html" %}
             {% endwith %}
             <br />
         {% endfor %}

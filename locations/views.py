@@ -33,10 +33,12 @@ class BaseLocationView(object):
 
         self.info = location.info(related=True)
 
+        self.tools_url = reverse('location_tools', args=[location.id])
+
         tabs = [
             ('wall', u'Стена', reverse('location_wall', args=[location.id]), 'locations/wall.html', 'wall-tab'),
             #('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
-            ('tools', u'Инструменты', reverse('location_tools', args=[location.id]), 'locations/tools.html', ''),
+            ('tools', u'Инструменты', self.tools_url, 'locations/tools.html', ''),
             ('participants', u'Участники', reverse('location_participants', args=[location.id]), 'locations/participants.html', ''),
         ]
 
@@ -54,6 +56,7 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
             'is_lowest_level': location.is_lowest_level(),
+            'tools_url': self.tools_url,
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))
@@ -77,10 +80,8 @@ class ToolsLocationView(BaseLocationView, TemplateView):
             entity_type = 'officials'
 
         ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
-
-        base_url = reverse('location_tools', args=[self.location.id])
         ctx.update({
-            'table_cap_choices': map(lambda em: (base_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
+            'table_cap_choices': map(lambda em: (self.tools_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
             'table_cap_title': ENTITIES_MODELS[entity_type].entity_title,
             'table_cap_template': ENTITIES_MODELS[entity_type].table_cap,
         })

@@ -20,45 +20,9 @@
         </ul>
     </div>
 
-    <div class="gr-side-item">
-        <h4 class="gr-officials">
-            <a href="{% url location_tools location.id %}?type=officials">Чиновники&nbsp;({{ info.officials.count }})</a>
-            <i title="контролируем их деятельность">&nbsp;</i>
-        </h4>
-        <ul>
-            {% for entity in info.officials.entities %}
-                <li>
-                    <i class="highlight">{{ entity.followers.count }}</i>
-                    <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a>
-                    (+{{ entity.posts.positive }}/-{{ entity.posts.negative }})
-                </li>
-            {% endfor %}
-            {% if info.officials.count > LIST_COUNT.tools %}
-                <li><a href="{% url location_tools location.id %}?type=officials">Показать всех...</a></li>
-            {% endif %}
-        </ul>
-        <div align="center">
-            <a href="{% url create_official %}" class="ym-button">Добавить чиновника</a>
-        </div>
-    </div>
+    {% include "officials/side_block.html" %}
 
-    <div class="gr-side-item">
-        <h4 class="gr-events"><a href="{% url location_tools location.id %}?type=events">Мероприятия</a> <i title="мероприятия для активистов">&nbsp;</i></h4>
-        <ul>
-            {% for entity in info.events.entities %}
-                <li>
-                    <i class="highlight">{{ entity.instance.time|date:"j/n" }}</i>
-                    <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance.title }}</a> ()
-                </li>
-            {% endfor %}
-            {% if info.events.count > LIST_COUNT.events %}
-                <li><a href="{% url location_tools location.id %}?type=events">Показать всех...</a></li>
-            {% endif %}
-        </ul>
-        <div align="center">
-            <a href="{% url create_event %}" class="ym-button">Добавить мероприятие</a>
-        </div>
-    </div>
+    {% include "events/side_block.html" %}
 
     <div class="gr-side-item">
         <h4 class="gr-eureka gr-long-title"><a>Генератор идей<br /> (в разработке)</a> <i title="поделитесь своими идеями с обществом">&nbsp;</i></h4>

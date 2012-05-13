@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.models import EntityAdmin, EntityFollower
+from elements.admins.models import EntityAdmin
+from elements.followers.models import EntityFollower
 from elements.utils import table_data
 from services.disqus import disqus_page_params
 from tools.events.forms import EventForm
@@ -28,9 +29,11 @@ class BaseEventView(object):
             is_admin = EntityAdmin.objects.is_admin(self.event, self.request.profile)
             is_follower = EntityFollower.objects.is_followed(self.event, self.request.profile)
 
+        self.participants_url = reverse('event_participants', args=[self.event.id])
+
         tabs = [
             ('view', u'Информация', self.event.get_absolute_url(), 'events/view.html', 'wall-tab'),
-            ('participants', u'Участники', reverse('event_participants', args=[self.event.id]), 'events/participants.html', ''),
+            ('participants', u'Участники', self.participants_url, 'events/participants.html', ''),
         ]
 
         if is_admin:
@@ -47,6 +50,8 @@ class BaseEventView(object):
             'event': self.event,
             'is_follower': is_follower,
             'is_admin': is_admin,
+            'admins_title': u'Организаторы',
+            'participants_url': self.participants_url,
         })
         ctx.update(self.update_context())
         return ctx
@@ -73,10 +78,8 @@ class EventParticipantsView(BaseEventView, TemplateView):
         name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
 
         ctx = table_data(self.request, 'participants', method)
-
-        base_url = reverse('event_participants', args=[self.event.id])
         ctx.update({
-            'table_cap_choices': map(lambda p: (base_url+'?type='+p[0], p[1]), participants_types),
+            'table_cap_choices': map(lambda p: (self.participants_url+'?type='+p[0], p[1]), participants_types),
             'table_cap_title': title,
             'table_cap_template': template,
         })

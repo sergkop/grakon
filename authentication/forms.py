@@ -13,13 +13,14 @@ from django.utils.safestring import mark_safe
 from crispy_forms.layout import Fieldset, HTML, Layout
 
 from authentication.models import ActivationProfile
-from elements.forms import location_init, resources_init
+from elements.locations.forms import location_init
+from elements.resources.forms import resources_init
 from elements.utils import form_helper
 from services.email import send_email
 from users.models import Profile
 
 password_digit_re = re.compile(r'\d')
-password_letter_re = re.compile(r'[a-zA-Z]')
+password_letter_re = re.compile(u'[a-zA-Zа-яА-Я]')
 
 class BaseRegistrationForm(forms.ModelForm):
     username = forms.RegexField(label=u'Имя пользователя (логин)', max_length=20, min_length=4, regex=r'^[\w\.]+$',

@@ -1,19 +1,8 @@
-* shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
-
 Refactoring:
-    * move features in elements to separate apps inside elements
-    * side blocks with admins, followers, participants, tools should be moved to reusable templates
-    * start using tables in side panels everywhere
     * methods like get_followers should come from entity properties models (features)
-    * rename participants to profiles?
-    * Class to standartize forms features
-    * entity model must contain info on how to display its instances in side panels and tables
-    * Distribute elements templates between apps
 
 Forms:
     * restore location on error in forms
-    * allow passwords in russian
-    * in profile editing move resources above about, load about field faster
     * editing locations in officials/events (only one)
 
 Dialog forms:
@@ -21,6 +10,10 @@ Dialog forms:
     * in posts about officials make link mandatory
     * check form data for posts
     * use django forms to generate forms in dialogs
+
+* participants entity property
+
+* shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
 
 * show count of items in tables
 
@@ -55,6 +48,13 @@ Dialog forms:
 * show posts on the left panel (link to anchor on a page with post)
 * return entities of posts, not model instances
 -------------------------------------------------------------------------------
+* entity model must contain info on how to display its instances in side panels and tables
+
+* Class to standartize forms features
+
+* start using tables in side panels everywhere
+* rename participants to profiles?
+
 * user's avatar, use it in disqus, emails
 
 * complaints
@@ -76,6 +76,8 @@ SEO:
 * change the looks of title of officials page - apply styles to 'Чиновники'
 
 * sorting official by last_name
+
+* load tinymce fields faster
 
 * for anonym users logo in the hat must contain the text 'гражданский контроль...'
 
@@ -145,7 +147,14 @@ Misc:
 * ability to add admins
 
 * button for creating new entity on entities pages
+
+* ability to choose timezone/determine it from location
+
+* button creating event/official from location page should automatically fill in location in the form
+  (get params in url)
 --------------------------------------
+* specify username in account activation email
+
 * add wikipedia links to locations, info about population, map boundaries
 
 * show events on map and allow to specify exact location on the map
@@ -208,7 +217,10 @@ Misc:
 * display html fields in admin listings nicely (extract text only)
 
 * increase expiration time of account activation link
+* fix sending profile activation email via admin
 --------------------------------------
+* use https://github.com/Kicksend/mailcheck to suggest correct email
+
 * give superuser the rights of all admins
 
 Emails:

@@ -1,0 +1,14 @@
+<div class="gr-side-item">
+    <h4>
+        <a href="{{ participants_url }}?type=admins">{{ admins_title }}&nbsp;({{ info.admins.count }})</a>
+        <i>&nbsp;</i>
+    </h4>
+    <table width="100%" class="gr-side-table">
+        {% for person in info.admins.entities %}
+            {% include "elements/person.html" %}
+        {% endfor %}
+        {% if info.admins.count > LIST_COUNT.admins %}
+            <td colspan="4"><a href="{{ participants_url }}?type=admins">Показать всеx...</a></td>
+        {% endif %}
+    </table>
+</div>

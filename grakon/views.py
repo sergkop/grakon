@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
-from elements.models import RESOURCE_CHOICES
+from elements.resources.models import RESOURCE_CHOICES
 from services.cache import cache_view
 
 def code_data(request):
