@@ -1,3 +1,5 @@
+* widget for choosing date and time
+
 Refactoring:
     * methods like get_followers should come from entity properties models (features)
 
@@ -16,8 +18,6 @@ Dialog forms:
 * shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
 
 * show count of items in tables
-
-* widget for choosing date and time
 
 * order events according to the date (side list and table)
 
