@@ -55,7 +55,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '%(from_email)s'
-EMAIL_HOST_PASSWORD = 'K3_c4!=-0,dh,.de32n8q1._'
+EMAIL_HOST_PASSWORD = ''
 
 DEFAULT_FROM_EMAIL = '%(from_email)s'
 SERVER_EMAIL = '%(from_email)s'

@@ -1,4 +1,5 @@
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
+* fix init_database.sqlite
 
 Forms:
     * restore location on error in forms
