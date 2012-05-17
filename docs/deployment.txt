@@ -3,10 +3,6 @@ Installation of required software:
         * sudo aptitude install python python-setuptools git libmysqlclient-dev python-lxml
         * sudo easy_install pip
 
-    * for Windows:
-        * setup Python 2.7, git
-        * install setuptools and pip (http://pypi.python.org/pypi/pip)
-
 Create virtualenv (optional)
     * sudo pip install virtualenv
     * virtualenv --no-site-packages VIRTUAL_ENV_DIR

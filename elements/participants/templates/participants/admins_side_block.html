@@ -1,13 +1,13 @@
 <div class="gr-side-item">
     <h4>
-        <a href="{{ participants_url }}?type=admins">{{ admins_title }}&nbsp;({{ info.admins.count }})</a>
+        <a href="{{ participants_url }}?type=admins">{{ admins_title }}&nbsp;({{ info.participants.admin.count }})</a>
         <i>&nbsp;</i>
     </h4>
     <table width="100%" class="gr-side-table">
-        {% for person in info.admins.entities %}
+        {% for person in info.participants.admin.entities %}
             {% include "elements/person.html" %}
         {% endfor %}
-        {% if info.admins.count > LIST_COUNT.admins %}
+        {% if info.participants.admin.count > LIST_COUNT.admin %}
             <td colspan="4"><a href="{{ participants_url }}?type=admins">Показать всеx...</a></td>
         {% endif %}
     </table>

@@ -5,8 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.admins.models import EntityAdmin
-from elements.followers.models import EntityFollower
+from elements.participants.models import EntityParticipant
 from elements.utils import table_data
 from services.disqus import disqus_page_params
 from tools.events.forms import EventForm
@@ -26,8 +25,8 @@ class BaseEventView(object):
         is_admin = False
         is_follower = False
         if self.request.user.is_authenticated():
-            is_admin = EntityAdmin.objects.is_admin(self.event, self.request.profile)
-            is_follower = EntityFollower.objects.is_followed(self.event, self.request.profile)
+            is_admin = EntityParticipant.objects.is_participant(self.event, self.request.profile, 'admin')
+            is_follower = EntityParticipant.objects.is_participant(self.event, self.request.profile, 'follower')
 
         self.participants_url = reverse('event_participants', args=[self.event.id])
 
@@ -107,8 +106,8 @@ class CreateEventView(CreateView):
     def form_valid(self, form):
         event = form.save()
 
-        EntityAdmin.objects.add(event, self.request.profile)
-        EntityFollower.objects.add(event, self.request.profile)
+        for role in ('admin', 'follower', 'participant'):
+            EntityParticipant.objects.add(event, self.request.profile, role)
 
         response = super(CreateEventView, self).form_valid(form)
         return response

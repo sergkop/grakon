@@ -8,12 +8,22 @@ from tinymce.models import HTMLField as TinyMCEHTMLField
 
 from elements.utils import reset_cache
 
+# TODO: rename for Feature?
 class BaseEntityPropertyManager(models.Manager):
     def get_for(self, model, ids):
+        """
+        This method collects property-related data for the list of entities,
+        specified by entity model and instance ids.
+        Return a nested dict: {id: entity_data}
+        """
         raise NotImplemented()
 
     # TODO: rename it not to overlap with BaseEntityModel method
     def get_related_info(self, data, ids):
+        """
+        This method is used to extend data obtained by get_for(),
+        attaching info about related entities.
+        """
         if not self.model.fk_field:
             return
 
@@ -39,7 +49,8 @@ class BaseEntityPropertyManager(models.Manager):
                     entity_id=entity.id, defaults=params, **{self.model.fk_field: instance})
         else:
             # Use generic relation to filter related feature instances
-            getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}).delete()
+            getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}) \
+                    .filter(**params).delete()
 
         if self.model.points_sources:
             from users.models import Profile
@@ -54,8 +65,8 @@ class BaseEntityPropertyManager(models.Manager):
     def add(self, entity, instance, params={}):
         self._add_remove(entity, instance, True, params)
 
-    def remove(self, entity, instance):
-        self._add_remove(entity, instance, False)
+    def remove(self, entity, instance, params={}):
+        self._add_remove(entity, instance, False, params)
 
 FEATURES_MODELS = {}
 
@@ -69,6 +80,9 @@ class BaseEntityProperty(models.Model):
     feature = None # name of corresponding feature
     fk_field = None # specify if there is another foreign key field besides content_type
     points_sources = []
+
+    # Methods will be added to entity model {name: method}. It's either a dict or classmethod of entity_model
+    entity_methods = {} 
 
     objects = BaseEntityPropertyManager()
 
@@ -204,48 +218,7 @@ class BaseEntityModel(models.Model):
     def delete(self, *args, **kwargs):
         return super(BaseEntityModel, self).delete(*args, **kwargs)
 
-    # TODO: move it inside feature class
-    def get_admins(self, start=0, limit=None, sort_by=('-admin__rating',)):
-        if 'admins' not in type(self).features:
-            return None
-
-        queryset = self.admins.order_by(*sort_by)
-        return {
-            'count': queryset.count(),
-            'ids': queryset.values_list('admin', flat=True)[slice(start, start+limit if limit else None)],
-        }
-
-    # TODO: generate sort_by appending feature_model.feature+'__'
-    def get_followers(self, start=0, limit=None, sort_by=('-follower__rating',)):
-        if 'followers' not in type(self).features:
-            return None
-
-        feature_model = FEATURES_MODELS['followers']
-        queryset = getattr(self, feature_model.feature).order_by(*sort_by)
-        return {
-            'count': queryset.count(),
-            'ids': queryset.values_list(feature_model.fk_field, flat=True) \
-                    [slice(start, start+limit if limit else None)],
-        }
-
-    def get_posts(self, start=0, limit=None, sort_by=('-rating',)):
-        if 'posts' not in type(self).features:
-            return None
-
-        feature_model = FEATURES_MODELS['posts']
-        queryset = getattr(self, feature_model.feature).order_by(*sort_by)
-        return {
-            'count': queryset.count(),
-            'ids': queryset.values_list('id', flat=True) \
-                    [slice(start, start+limit if limit else None)],
-        }
-
 ENTITIES_MODELS = {}
-
-@reset_cache
-def update_resources(self, resources):
-    from elements.resources.models import EntityResource # TODO: move it out of here
-    EntityResource.objects.update(self, resources)
 
 def entity_class(features):
     """ Return decorator for entity model """
@@ -254,11 +227,15 @@ def entity_class(features):
         new_cls.features = features
         ENTITIES_MODELS[new_cls.entity_name] = new_cls
 
-        if 'resources' in features:
-            new_cls.update_resources = update_resources
+        # Create generic relations and add feature-related methods
+        for feature in features:
+            methods = FEATURES_MODELS[feature].entity_methods
+            if type(methods) is not dict:
+                methods = methods(new_cls)
 
-        # Create generic relations
-        for feature in FEATURES_MODELS:
+            for name, method in methods.iteritems():
+                setattr(new_cls, name, method)
+
             field = generic.GenericRelation(FEATURES_MODELS[feature], object_id_field='entity_id')
             field.contribute_to_class(new_cls, feature)
 

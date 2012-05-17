@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'elements',
     'elements.admins',
     'elements.followers',
+    'elements.participants',
     'elements.locations',
     'elements.resources',
     'posts',
@@ -185,10 +186,11 @@ FORCE_SCRIPT_NAME = ''
 
 # Numbers of entries shown in the side blocks for tools and participants
 LIST_COUNT = {
-    'followers': 5,
+    'follower': 5,
     'followed': 5,
     'participants': 15,
-    'admins': 5,
+    'participant': 5,
+    'admin': 5,
     'administered': 5,
     'tools': 5,
     'posts': 5,

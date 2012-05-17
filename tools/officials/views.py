@@ -5,8 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.admins.models import EntityAdmin
-from elements.followers.models import EntityFollower
+from elements.participants.models import EntityParticipant
 from elements.utils import table_data
 from services.disqus import disqus_page_params
 from tools.officials.forms import OfficialForm
@@ -26,8 +25,8 @@ class BaseOfficialView(object):
         is_admin = False
         is_follower = False
         if self.request.user.is_authenticated():
-            is_admin = EntityAdmin.objects.is_admin(self.official, self.request.profile)
-            is_follower = EntityFollower.objects.is_followed(self.official, self.request.profile)
+            is_admin = EntityParticipant.objects.is_participant(self.official, self.request.profile, 'admin')
+            is_follower = EntityParticipant.objects.is_participant(self.official, self.request.profile, 'follower')
 
         self.participants_url = reverse('official_participants', args=[self.official.id])
 
@@ -74,8 +73,8 @@ class OfficialParticipantsView(BaseOfficialView, TemplateView):
     # TODO: this method should be moved to utils
     def update_context(self):
         participants_types = [
-            ('admins', u'Админы', 'officials/admins.html', self.official.get_admins),
-            ('followers', u'Следят', 'officials/followers.html', self.official.get_followers),
+            ('admins', u'Админы', 'officials/admins.html', self.official.get_admin),
+            ('followers', u'Следят', 'officials/followers.html', self.official.get_follower),
         ]
 
         p_type = self.request.GET.get('type', '')
@@ -114,8 +113,8 @@ class CreateOfficialView(CreateView):
     def form_valid(self, form):
         official = form.save()
 
-        EntityAdmin.objects.add(official, self.request.profile)
-        EntityFollower.objects.add(official, self.request.profile)
+        EntityParticipant.objects.add(official, self.request.profile, 'admin')
+        EntityParticipant.objects.add(official, self.request.profile, 'follower')
 
         response = super(CreateOfficialView, self).form_valid(form)
         return response

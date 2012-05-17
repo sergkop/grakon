@@ -1,0 +1,37 @@
+{% if is_participant %}
+    <a id="cancel_{{ role }}_btn" class="ym-button gr-blue-button gr-look"><span>{{ cancel_btn_long }}</span><i>&nbsp;</i></a>
+{% else %}
+    <a id="confirm_{{ role }}_btn" class="ym-button gr-blue-button gr-look"><span>{{ confirm_btn_long }}</span><i>&nbsp;</i></a>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+    {% if is_participant %}
+        <div id="cancel_{{ role }}_dialog" class="hidden">
+            <p>{{ cancel_msg }}</p>
+        </div>
+
+        <script type="text/javascript">
+            create_dialog("cancel_{{ role }}_dialog", 320, 200, "{{ cancel_btn_long }}", "Отмена", {
+                "{{ cancel_btn }}": dialog_post_shortcut("{% url remove_participant %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }}, "role": "{{ role }}"},
+                        function(){$("#cancel_{{ role }}_dialog").dialog("close");}, true)
+            });
+            $("#cancel_{{ role }}_btn").click(function(){$("#cancel_{{ role }}_dialog").dialog("open");});
+        </script>
+    {% else %}
+        <div id="confirm_{{ role }}_dialog" class="hidden">
+            <p>{{ confirm_msg }}</p>
+        </div>
+
+        <script type="text/javascript">
+            create_dialog("confirm_{{ role }}_dialog", 320, 200, "{{ confirm_btn_long }}", "Отмена", {
+                "{{ confirm_btn }}": dialog_post_shortcut("{% url add_participant %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }}, "role": "{{ role }}"},
+                        function(){$("#confirm_{{ role }}_dialog").dialog("close");}, true)
+            });
+            $("#confirm_{{ role }}_btn").click(function(){$("#confirm_{{ role }}_dialog").dialog("open");});
+        </script>
+    {% endif %}
+{% else %}
+    <script type="text/javascript">
+        $("#confirm_{{ role }}_btn").click(login_dialog_init);
+    </script>
+{% endif %}

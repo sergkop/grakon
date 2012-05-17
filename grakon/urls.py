@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'', include('social_auth.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
 
-    url(r'^img1x1$', 'grakon.views.img1x1', name='img1x1'),
+    url(r'^img1x1$', 'grakon.views.img1x1', name='img1x1'), # used to trace emails opening
 
     url(r'^%s/' % settings.ADMIN_PREFIX, include(admin.site.urls)),
 )

@@ -1,13 +1,13 @@
 <div class="gr-side-item">
     <h4 class="gr-followers">
-        <a href="{{ participants_url }}?type=followers">Следят&nbsp;({{ info.followers.count }})</a>
+        <a href="{{ participants_url }}?type=followers">Следят&nbsp;({{ info.participants.follower.count }})</a>
         <i>&nbsp;</i>
     </h4>
     <table width="100%" class="gr-side-table">
-        {% for person in info.followers.entities %}
+        {% for person in info.participants.follower.entities %}
             {% include "elements/person.html" %}
         {% endfor %}
-        {% if info.followers.count > LIST_COUNT.followers %}
+        {% if info.participants.follower.count > LIST_COUNT.follower %}
             <td colspan="4"><a href="{{ participants_url }}?type=followers">Показать всеx...</a></td>
         {% endif %}
     </table>

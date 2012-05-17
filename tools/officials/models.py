@@ -17,7 +17,7 @@ class OfficialManager(BaseEntityManager):
 
 # TODO: url - for official website/page (maybe several) (element for that?)
 # TODO: introduce choices for types
-@entity_class(['followers', 'locations', 'admins', 'posts'])
+@entity_class(['locations', 'participants', 'posts'])
 class Official(BaseEntityModel):
     first_name = models.CharField(u'Имя', max_length=50)
     middle_name = models.CharField(u'Отчество', max_length=50, blank=True)
@@ -38,6 +38,8 @@ class Official(BaseEntityModel):
     table_header = 'officials/table_header.html'
     table_line = 'officials/table_line.html'
     table_cap = 'officials/table_cap.html'
+
+    roles = ['admin', 'follower']
 
     @models.permalink
     def get_absolute_url(self):

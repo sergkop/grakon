@@ -7,7 +7,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
 from grakon.utils import authenticated_ajax_post, escape_html
-from elements.admins.models import EntityAdmin
 from elements.utils import table_data
 from services.email import send_email
 from users.forms import ProfileForm
@@ -49,7 +48,7 @@ class BaseProfileView(object):
             'own_profile': own_profile,
             'in_contacts': in_contacts,
             'info': self.info,
-            'administered_entities': EntityAdmin.objects.administered_by(profile),
+            'administered_entities': profile.admin_of(),
         })
         ctx.update(self.update_context())
         return ctx
@@ -61,7 +60,7 @@ class ProfileContactsView(BaseProfileView, TemplateView):
     tab = 'contacts'
 
     def update_context(self):
-        return table_data(self.request, 'participants', self.profile.get_followers)
+        return table_data(self.request, 'participants', self.profile.get_follower)
 
 # TODO: test that only user can edit his own profile
 class EditProfileView(BaseProfileView, UpdateView):

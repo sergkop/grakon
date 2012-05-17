@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
+from elements.utils import reset_cache
 
 # TODO: add subcategories (?)
 # (name, title)
@@ -74,6 +75,10 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         entity.clear_cache()
 
+@reset_cache
+def update_resources(entity, resources):
+    EntityResource.objects.update(entity, resources)
+
 # TODO: ability to add text, describing resources + custom resources (in case of other)
 @feature_model
 class EntityResource(BaseEntityProperty):
@@ -83,6 +88,7 @@ class EntityResource(BaseEntityProperty):
 
     feature = 'resources'
     points_sources = ['resources']
+    entity_methods = {'update_resources': update_resources}
 
     class Meta:
         unique_together = ('content_type', 'entity_id', 'resource')

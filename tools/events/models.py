@@ -7,7 +7,7 @@ class EventManager(BaseEntityManager):
     pass
 
 # TODO: add event type
-@entity_class(['followers', 'locations', 'admins'])
+@entity_class(['locations', 'participants'])
 class Event(BaseEntityModel):
     title = models.CharField(u'Название', max_length=150)
     description = HTMLField(u'Описание', blank=True)
@@ -22,6 +22,8 @@ class Event(BaseEntityModel):
     table_header = 'events/table_header.html'
     table_line = 'events/table_line.html'
     table_cap = 'events/table_cap.html'
+
+    roles = ['admin', 'follower', 'participant']
 
     @models.permalink
     def get_absolute_url(self):

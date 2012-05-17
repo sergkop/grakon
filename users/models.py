@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from elements.admins.models import EntityAdmin
-from elements.followers.models import EntityFollower
+from elements.participants.models import EntityParticipant
 from elements.models import BaseEntityManager, BaseEntityModel, ENTITIES_MODELS, \
         entity_class, HTMLField
 from elements.resources.models import EntityResource
@@ -16,7 +15,7 @@ class ProfileManager(BaseEntityManager):
         # TODO: add info on non-profile entities followed by the user
 
         # Get contacts
-        contacts = EntityFollower.objects.followed(ids, Profile)
+        contacts = EntityParticipant.objects.participant_in('follower', ids, Profile)
         for id in ids:
             data[id]['contacts'] = contacts[id]
 
@@ -36,7 +35,7 @@ class ProfileManager(BaseEntityManager):
             data[id]['contacts']['entities'] = [contacts_info[c_id] for c_id in data[id]['contacts']['ids']
                             if c_id in contacts_info]
 
-@entity_class(['resources', 'followers', 'locations'])
+@entity_class(['resources', 'locations', 'participants'])
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30, db_index=True)
@@ -56,6 +55,8 @@ class Profile(BaseEntityModel):
     table_header = 'profiles/table_header.html'
     table_line = 'profiles/table_line.html'
 
+    roles = ['follower']
+
     def calc_rating(self):
         pass # TODO: implement it
 
@@ -70,7 +71,7 @@ class Profile(BaseEntityModel):
         Points.objects.recalculate_source(self, source)
 
     def has_contact(self, profile):
-        return EntityFollower.objects.is_followed(profile, self)
+        return EntityParticipant.objects.is_participant(profile, self, 'follower')
 
     def save(self):
         super(Profile, self).save()
@@ -144,14 +145,14 @@ class PointsSources(object):
     @points_type('online')
     def follows(self, profile):
         points = {'officials': 1}
-        return features_points(EntityFollower.objects.filter(follower=profile), points)
+        return features_points(EntityParticipant.objects.filter(person=profile, role='follower'), points)
 
     @points_type('online')
     def contacts(self, profile):
-        contacts_ids = list(EntityFollower.objects.filter(follower=profile,
+        contacts_ids = list(EntityParticipant.objects.filter(person=profile, role='follower',
                 content_type=ContentType.objects.get_for_model(Profile)).values_list('entity_id', flat=True))
-        followers_ids = list(EntityFollower.objects.filter(entity_id=profile.id,
-                content_type=ContentType.objects.get_for_model(Profile)).values_list('follower', flat=True))
+        followers_ids = list(EntityParticipant.objects.filter(entity_id=profile.id, role='follower',
+                content_type=ContentType.objects.get_for_model(Profile)).values_list('person', flat=True))
 
         # TODO: several levels (5 contacts, 10, 50) + count 2-sided connections
         # TODO: distinguish the limit when a popular person is followed by many
@@ -166,7 +167,7 @@ class PointsSources(object):
     @points_type('online')
     def admin(self, profile):
         points = {'officials': 3}
-        return features_points(EntityAdmin.objects.filter(admin=profile), points)
+        return features_points(EntityParticipant.objects.filter(person=profile, role='admin'), points)
 
 points_methods = PointsSources()
 

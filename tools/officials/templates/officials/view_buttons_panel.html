@@ -1,39 +1,12 @@
 <div class="gr-mb20">
-    {% if is_follower %}
-        <a id="unfollow_official_btn" class="ym-button gr-blue-button gr-look"><span>Отписаться</span><i>&nbsp;</i></a>
-    {% else %}
-        <a id="follow_official_btn" class="ym-button gr-blue-button gr-look"><span>Следить</span><i>&nbsp;</i></a>
-    {% endif %}
+    {% with role="follower" is_participant=is_follower cancel_msg="Вы хотите отписаться от новостей об этом чиновнике?" cancel_btn="Отписаться" cancel_btn_long="Отписаться" confirm_msg="Вы хотите следить за новостями об этом чиновнике?" confirm_btn="Следить" confirm_btn_long="Следить" %}
+        {% include "participants/follow_button.html" %}
+    {% endwith %}
+
     <a id="add_info_btn" class="ym-button gr-blue-button gr-add"><span>Добавить информацию</span><i>&nbsp;</i></a>
 </div>
 
 {% if request.user.is_authenticated %}
-    {% if is_follower %}
-        <div id="unfollow_official_dialog" class="hidden">
-            <p>Вы хотите отписаться от новостей об этом чиновнике?</p>
-        </div>
-
-        <script type="text/javascript">
-            create_dialog("unfollow_official_dialog", 320, 200, "Отписаться от новостей о чиновнике", "Отмена", {
-                "Отписаться": dialog_post_shortcut("{% url remove_follower %}", {"ct": {{ info.ct }}, "id": {{ official.id }} },
-                        function(){$("#unfollow_official_dialog").dialog("close");}, true)
-            });
-            $("#unfollow_official_btn").click(function(){$("#unfollow_official_dialog").dialog("open");});
-        </script>
-    {% else %}
-        <div id="follow_official_dialog" class="hidden">
-            <p>Вы хотите следить за новостями об этом чиновнике?</p>
-        </div>
-
-        <script type="text/javascript">
-            create_dialog("follow_official_dialog", 320, 200, "Следить за чиновником", "Отмена", {
-                "Следить": dialog_post_shortcut("{% url add_follower %}", {"ct": {{ info.ct }}, "id": {{ official.id }} },
-                        function(){$("#follow_official_dialog").dialog("close");}, true)
-            });
-            $("#follow_official_btn").click(function(){$("#follow_official_dialog").dialog("open");});
-        </script>
-    {% endif %}
-
     <div id="add_info_dialog" class="hidden">
         <form id="add_info_form" method="post">
             <div><label for="content">Информация:</label></div>
@@ -59,6 +32,6 @@
     </script>
 {% else %}
     <script type="text/javascript">
-        $("#follow_official_btn, #add_info_btn").click(login_dialog_init);
+        $("#add_info_btn").click(login_dialog_init);
     </script>
 {% endif %}

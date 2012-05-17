@@ -55,6 +55,17 @@ class EntityPostManager(BaseEntityPropertyManager, BaseEntityManager):
 
     # TODO: remove (using id)
 
+def get_posts(entity, start=0, limit=None, sort_by=('-rating',)):
+    if 'posts' not in type(entity).features:
+        return None
+
+    queryset = entity.posts.order_by(*sort_by)
+    return {
+        'count': queryset.count(),
+        'ids': queryset.values_list('id', flat=True) \
+                [slice(start, start+limit if limit else None)],
+    }
+
 # TODO: add points for posts
 # TODO: introduce post type (depends on entity - officials, dmp, disqus)
 @feature_model
@@ -74,6 +85,7 @@ class EntityPost(BaseEntityModel):
     feature = 'posts'
     fk_field = 'profile'
     points_sources = [] # TODO: specify it
+    entity_methods = {'get_posts': get_posts}
 
     entity_name = 'posts'
     cache_prefix = 'posts/'

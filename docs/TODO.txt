@@ -1,7 +1,4 @@
-* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/
-
-Refactoring:
-    * methods like get_followers should come from entity properties models (features)
+* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
 Forms:
     * restore location on error in forms
@@ -13,9 +10,16 @@ Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs
 
-* participants entity property
+* bug with disqus wall when some users log in
+
+* text fields for resources + other option
+
+* calculate ratings (similar to points - unify in one method?) - using info
+* sorting by ratings
 
 * shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
+
+* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/
 
 * show count of items in tables
 
@@ -23,17 +27,9 @@ Dialog forms:
 
 * adding urls about officials, events + universal entity feature for it
 
-* text fields for resources + other option
-
-
-* calculate ratings (similar to points - unify in one method?)
-* sorting by ratings
-
 * share buttons
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
-
-* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
 * after deleting official points are not updated
 
@@ -46,6 +42,12 @@ Dialog forms:
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 -------------------------------------------------------------------------------
+* make resources in registration not mandatory
+
+* denormalization of counters
+
+* ability to specify yandex money account when asking for money
+
 * show posts on the left panel (link to anchor on a page with post)
 * return entities of posts, not model instances
 
@@ -71,8 +73,6 @@ SEO:
     * ability to set individual titles for tabs of static pages
 
 * invitations to events
-
-* entity model can provide parameters for features
 
 * change the looks of title of officials page - apply styles to 'Чиновники'
 
@@ -153,6 +153,8 @@ Misc:
 
 * button creating event/official from location page should automatically fill in location in the form
   (get params in url)
+
+* link social likes to the page on which they are located
 --------------------------------------
 * specify username in account activation email
 

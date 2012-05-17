@@ -1,0 +1,96 @@
+# -*- coding:utf-8 -*-
+import os.path
+
+# Settings in this file must be edited before deployment
+
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+ADMINS = ()
+
+MANAGERS = ADMINS
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'database.sqlite',                # Or path to database file if using sqlite3.
+        'USER': '',                       # Not used with sqlite3.
+        'PASSWORD': '',               # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'grakon-cache',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': '',
+    }
+}
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = ')#f8s=iur+$2!aj1wer43e_234r3(m@1)75z9yty#1(1@73)2w(+t'
+
+DOMAIN = '127.0.0.1:8000'
+URL_PREFIX = 'http://127.0.0.1:8000'
+
+STATIC_ROOT = '/home/serg/data/grakon/static/static'
+
+VK_APP_ID = 2798211
+
+GOOGLE_ANALYTICS_ID = 'UA-28992589-1'
+
+YA_METRIKA_ID = 12237667
+
+ADMIN_PREFIX = 'admin'
+
+YANDEX_MAPS_KEY = 'ADSyKU8BAAAAD-VBCwIA5ak5VGynqt5xp2tzedBMfAmF8-kAAAAAAAAAAAD_nM6wtAPq97uJHRvkF_aJL3gRVQ=='
+
+# Emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+DEFAULT_FROM_EMAIL = 'admin@grakon.org'
+SERVER_EMAIL = 'admin@grakon.org'
+ADMIN_EMAIL = 'admin@grakon.org' # emails from users and notifications should be delivered here
+
+EMAILS = {
+    'noreply': (u'Гракон', 'noreply@grakon.org'),
+}
+
+AWS_ACCESS_KEY_ID = 'AKIAICO76HOSLYNPVKWA'
+AWS_SECRET_ACCESS_KEY = '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'
+
+DKIM_DOMAIN = 'grakon.org'
+DKIM_SELECTOR = 'ses'
+DKIM_PRIVATE_KEY = '' # TODO: set it; update site_settings.py.template
+
+# Authentication
+FACEBOOK_APP_ID = ''
+FACEBOOK_API_SECRET = ''
+
+GOOGLE_OAUTH2_CLIENT_ID = ''
+GOOGLE_OAUTH2_CLIENT_SECRET = ''
+GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.google.com/m8/feeds'] # used to get user's contacts
+
+DISQUS_SHORTNAME = 'grakon2'
+DISQUS_PUBLIC_KEY = 'leNujd0f35GHCwCam29hHCK0rKv91z02eN8g8CIdrQMCs2cDSJKopWC3Ad4mhoeW'
+DISQUS_SECRET_KEY = '1S31E7cNYJQ36C3LlyrWwKbn4ftGFyFTwJ8d21p1QFre6g3XMJlMojozRhpTWUmc'
+DISQUS_URL_PREFIX = 'http://grakon.org' # TODO: temporary
+DISQUS_DEVELOPER = 0 if DISQUS_URL_PREFIX==URL_PREFIX else 1
+DISQUS_CATEGORIES = {
+    'general': 1444561,
+    'locations': 1444565,
+    'officials': 1444566,
+    'events': 1456479,
+}
+
+#INTERNAL_IPS = ('127.0.0.1',)
