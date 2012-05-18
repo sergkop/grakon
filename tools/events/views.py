@@ -66,8 +66,8 @@ class EventParticipantsView(BaseEventView, TemplateView):
 
     def update_context(self):
         participants_types = [
-            ('admins', u'Организаторы', 'events/admins.html', self.event.get_admins),
-            ('followers', u'Следят', 'events/followers.html', self.event.get_followers),
+            ('admins', u'Организаторы', 'events/admins.html', self.event.get_admin),
+            ('followers', u'Следят', 'events/followers.html', self.event.get_follower),
         ]
 
         p_type = self.request.GET.get('type', '')
