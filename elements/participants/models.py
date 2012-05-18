@@ -146,7 +146,7 @@ ROLE_CHOICES = (
 @feature_model
 class EntityParticipant(BaseEntityProperty):
     person = models.ForeignKey('users.Profile', related_name='participates_in')
-    role = models.CharField(max_length=8, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=11, choices=ROLE_CHOICES)
 
     objects = EntityParticipantManager()
 
