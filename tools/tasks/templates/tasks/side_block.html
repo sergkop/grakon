@@ -1,0 +1,20 @@
+<div class="gr-side-item">
+    <h4 class="gr-eureka">
+        <a href="{{ tools_url }}?type=tasks">Задачи&nbsp;({{ info.tasks.count }})</a>
+        <i title="решаем проблемы вместе">&nbsp;</i>
+    </h4>
+    <ul>
+        {% for entity in info.tasks.entities %}
+            <li>
+                <i class="highlight">{{ entity.followers.count }}</i>
+                <a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a>
+            </li>
+        {% endfor %}
+        {% if info.tasks.count > LIST_COUNT.tools %}
+            <li><a href="{{ tools_url }}?type=tasks">Показать всех...</a></li>
+        {% endif %}
+    </ul>
+    <div align="center">
+        <a href="{% url create_task %}" class="ym-button">Добавить задачу</a>
+    </div>
+</div>

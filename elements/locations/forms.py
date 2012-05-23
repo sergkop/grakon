@@ -5,13 +5,18 @@ from elements.locations.models import EntityLocation
 from elements.locations.widgets import LocationSelectWidget
 from locations.models import Location
 
+class LocationSelectField(forms.CharField):
+    # Override this method to recover location path on errors in form
+    def bound_data(self, data, initial):
+        return initial
+
 # TODO: write one method taking a list of features (take params from models) + classes with methods and data
 # TODO: rename it
 # TODO: if required is False provide help_text saying that nothing chosen means Russia
-def location_init(required, label):
+def location_init(required, label, edit=True):
     """ If required then the lowest possible level must be chosen """
     attrs = {
-        'location_select': forms.CharField(label=label, required=True, initial=[],
+        'location_select': LocationSelectField(label=label, required=True, initial=[],
                 widget=LocationSelectWidget),
         'region': forms.CharField(required=False),
         'district': forms.CharField(required=False),
@@ -22,18 +27,31 @@ def location_init(required, label):
         new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
         new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
 
+        old_init = new_cls.__init__
+        def new_init(form, *args, **kwargs):
+            old_init(form, *args, **kwargs)
+            if form.instance.id: # if this is editing form
+                location_info = EntityLocation.objects.get_for(type(form.instance), [form.instance.id])[form.instance.id]
+                loc_id = location_info['ids'][0] # TODO: which location to choose?
+                form.fields['location_select'].initial = Location.objects.get(id=loc_id).path()
+        new_cls.__init__ = new_init
+
         clean = new_cls.clean
         def new_clean(form):
             form.cleaned_data = location_clean(form)
             return clean(form)
         new_cls.clean = new_clean
 
+        # TODO: location_init should take parameter, which controls whether location is added or updated
         save = new_cls.save
         def new_save(form):
             entity = save(form)
 
             # TODO: what about is_main (take decorator params to control it)
-            EntityLocation.objects.add(entity, form.location, params={'is_main': True})
+            if edit:
+                EntityLocation.objects.update_location(entity, form.location)
+            else:
+                EntityLocation.objects.add(entity, form.location, params={'is_main': True})
 
             return entity
         new_cls.save = new_save
@@ -45,18 +63,9 @@ def location_init(required, label):
     return decorator
 
 def form_location_path(form):
-    path = []
+    form.initial['location_select'] = []
     if getattr(form, 'location', None):
-        for attr in ('region_id', 'district_id', 'id'):
-            if getattr(form.location, attr) is not None:
-                path.append(getattr(form.location, attr))
-
-    # TODO: pass path to location_select on errors
-    #form.fields['location_select'].initial = path
-    #form.fields['location_select'].widget.attrs['dat'] = path
-    #form.initial['location_select'] = path
-    #form.cleaned_data['location_select'] = path
-    #print "path", path
+        form.initial['location_select'] = form.location.path()
 
 def location_clean(form):
     msg = u'Необходимо выбрать нижний уровень географической иерархии'

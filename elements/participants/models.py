@@ -135,11 +135,12 @@ def participant_in(role):
                 'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['administered']]}
     return func
 
-ROLE_CHOICES = (
-    ('admin', u'Админ'),
-    ('follower', u'Следит'),
-    ('participant', u'Идет'),
+ROLE_TYPES = (
+    ('admin', u'Админ', u'Админы'),
+    ('follower', u'Следит', u'Следят'),
+    ('participant', u'Идет', u'Идут'),
 )
+ROLE_CHOICES = map(lambda r: (r[0], r[1]), ROLE_TYPES)
 
 # TODO: add char field for free-text description of role
 # Entity model, using this feature, must specify roles attribute - list of supported roles

@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from elements.participants.models import EntityParticipant
 from elements.utils import table_data
+from elements.views import entity_base_view, participants_view
 from services.disqus import disqus_page_params
 from tools.officials.forms import OfficialForm
 from tools.officials.models import Official
@@ -20,49 +21,43 @@ class BaseOfficialView(object):
 
     def get_context_data(self, **kwargs):
         ctx = super(BaseOfficialView, self).get_context_data(**kwargs)
-        self.official = get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
 
-        is_admin = False
-        is_follower = False
-        if self.request.user.is_authenticated():
-            is_admin = EntityParticipant.objects.is_participant(self.official, self.request.profile, 'admin')
-            is_follower = EntityParticipant.objects.is_participant(self.official, self.request.profile, 'follower')
-
-        self.participants_url = reverse('official_participants', args=[self.official.id])
+        id = int(self.kwargs.get('id'))
+        self.participants_url = reverse('official_participants', args=[id])
+        ctx.update(entity_base_view(self, Official, id))
 
         tabs = [
-            ('view', u'Информация', self.official.get_absolute_url(), 'officials/view.html', ''),
-            ('wall', u'Обсуждение', reverse('official_wall', args=[self.official.id]), 'officials/wall.html', 'wall-tab'),
-            ('participants', u'Участники', self.participants_url, 'officials/participants.html', ''),
+            ('view', u'Информация', self.entity.get_absolute_url(), 'officials/view.html', ''),
+            ('wall', u'Обсуждение', reverse('official_wall', args=[id]), 'disqus/comments.html', 'wall-tab'),
+            ('participants', u'Участники', self.participants_url, 'elements/table_tab.html', ''),
         ]
 
-        if is_admin:
-            tabs.append(('edit', u'Редактировать', reverse('edit_official', args=[self.official.id]),
-                    'officials/edit.html', ''))
-
-        self.info = self.official.info()
+        if ctx['is_admin']:
+            tabs.append(('edit', u'Редактировать', reverse('edit_official', args=[id]),
+                    'elements/edit_form.html', ''))
 
         ctx.update({
-            'tools_menu_item': True,
-            'tab': self.tab,
             'tabs': tabs,
-            'info': self.info,
-            'official': self.official,
-            'is_follower': is_follower,
-            'is_admin': is_admin,
-            'admins_title': u'Админы',
-            'participants_url': self.participants_url,
+            'official': self.entity,
+            'admins_title': u'Админы', # TODO: this should be defined in entity model
+            'follow_button': {
+                'cancel_msg': u'Вы хотите отписаться от новостей об этом чиновнике?',
+                'cancel_btn': u'Отписаться',
+                'cancel_btn_long': u'Отписаться',
+                'confirm_msg': u'Вы хотите следить за новостями об этом чиновнике?',
+                'confirm_btn': u'Следить',
+                'confirm_btn_long': u'Следить',
+            },
         })
-        ctx.update(self.update_context())
-        ctx.update(disqus_page_params('official/'+str(self.official.id),
-                reverse('official_wall', args=[self.official.id]), 'officials'))
+        ctx.update(disqus_page_params('official/'+str(id),
+                reverse('official_wall', args=[id]), 'officials'))
         return ctx
 
 class OfficialView(BaseOfficialView, TemplateView):
     tab = 'view'
 
     def update_context(self):
-        return table_data(self.request, 'posts', self.official.get_posts, 5)
+        return table_data(self.request, 'posts', self.entity.get_posts, 5)
 
 class OfficialWallView(BaseOfficialView, TemplateView):
     tab = 'wall'
@@ -70,26 +65,8 @@ class OfficialWallView(BaseOfficialView, TemplateView):
 class OfficialParticipantsView(BaseOfficialView, TemplateView):
     tab = 'participants'
 
-    # TODO: this method should be moved to utils
     def update_context(self):
-        participants_types = [
-            ('admins', u'Админы', 'officials/admins.html', self.official.get_admin),
-            ('followers', u'Следят', 'officials/followers.html', self.official.get_follower),
-        ]
-
-        p_type = self.request.GET.get('type', '')
-        if p_type not in map(lambda p: p[0], participants_types):
-            p_type = 'admins'
-
-        name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
-
-        ctx = table_data(self.request, 'participants', method)
-        ctx.update({
-            'table_cap_choices': map(lambda p: (self.participants_url+'?type='+p[0], p[1]), participants_types),
-            'table_cap_title': title,
-            'table_cap_template': template,
-        })
-        return ctx
+        return participants_view(self)
 
 # TODO: test that only admin can edit official page
 class EditOfficialView(BaseOfficialView, UpdateView):
@@ -97,10 +74,10 @@ class EditOfficialView(BaseOfficialView, UpdateView):
     tab = 'edit'
 
     def get_object(self):
-        return get_object_or_404(Official, id=int(self.kwargs.get('official_id')))
+        return get_object_or_404(Official, id=int(self.kwargs.get('id')))
 
     def get_success_url(self):
-        return reverse('official', args=[self.kwargs.get('official_id')])
+        return reverse('official', args=[self.kwargs.get('id')])
 
 # TODO: need more strict condition
 edit_official = login_required(EditOfficialView.as_view())

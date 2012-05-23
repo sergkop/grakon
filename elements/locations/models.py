@@ -27,6 +27,13 @@ class EntityLocationManager(BaseEntityPropertyManager):
             id_data['main'] = (filter(lambda d: d['location'].id==id_data['main_id'],
                     id_data['entities']) or [None])[0]
 
+    def update_location(self, entity, location):
+        # TODO: what if there are several locations? what about main?
+        el = self.filter(content_type=ContentType.objects.get_for_model(type(entity)),
+                entity_id=entity.id)[0]
+        el.location = location
+        el.save()
+
 # TODO: some models may need only one location (?)
 # TODO: reset cache on save()/delete() (here and in other models)
 @feature_model

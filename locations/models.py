@@ -99,6 +99,13 @@ class Location(models.Model):
     def is_location(self):
         return self.district_id is not None
 
+    def path(self):
+        res = []
+        for attr in ('region_id', 'district_id', 'id'):
+            if getattr(self, attr) is not None:
+                res.append(getattr(self, attr))
+        return res
+
     # TODO: cache it (use internal self attribute)
     def is_lowest_level(self):
         if not self.region:

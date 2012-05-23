@@ -42,12 +42,5 @@
     "from_email": "admin@grakon.org",
     "ADMIN_EMAIL": "admin@grakon.org",
 
-    "ADMIN_PREFIX": "admin",
-
-    "GOOGLE_ANALYTICS_ID": "UA-28992589-1",
-    "YA_METRIKA_ID": 12237667,
-
-    "YANDEX_MAPS_KEY": "ADSyKU8BAAAAD-VBCwIA5ak5VGynqt5xp2tzedBMfAmF8-kAAAAAAAAAAAD_nM6wtAPq97uJHRvkF_aJL3gRVQ==",
-
-    "VK_APP_ID": 2798211
+    "ADMIN_PREFIX": "admin"
 }

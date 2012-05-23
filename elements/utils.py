@@ -7,6 +7,7 @@ from django.http import HttpResponse
 import bleach
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+
 from grakon.utils import authenticated_ajax_post
 
 def form_helper(action_name, button_name):
@@ -110,12 +111,15 @@ def entity_post_method(func):
 
 def check_permissions(func):
     """ Check if user has permissions to modify entity """
+    from elements.participants.models import EntityParticipant
     from users.models import Profile
     def new_func(request, entity):
         if type(entity) is Profile:
             has_perm = (entity==request.profile)
+        elif 'participants' in type(entity).features and 'admin' in type(entity).roles:
+            has_perm = EntityParticipant.objects.is_participant(entity, request.profile, 'admin')
         else:
-            pass # TODO: check that model has admins feature and user is admin
+            has_perm = False
 
         if not has_perm:
             return HttpResponse(u'У вас нет прав на выполнение этой операции')

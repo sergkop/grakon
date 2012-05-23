@@ -5,8 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, BaseEntityPropertyManager, \
-        entity_class, feature_model
-from users.models import Profile
+        entity_class, feature_model, HTMLField
 
 OPINION_CHOICES = (
     ('positive', u'положительная'),
@@ -69,15 +68,15 @@ def get_posts(entity, start=0, limit=None, sort_by=('-rating',)):
 # TODO: add points for posts
 # TODO: introduce post type (depends on entity - officials, dmp, disqus)
 @feature_model
-@entity_class([])
+@entity_class(['participants', 'resources'])
 class EntityPost(BaseEntityModel):
     content_type = models.ForeignKey(ContentType)
     entity_id = models.PositiveIntegerField(db_index=True)
     entity = generic.GenericForeignKey('content_type', 'entity_id')
 
     profile = models.ForeignKey('users.Profile', related_name='post_entities')
-    content = models.TextField(u'Сообщение')
-    url = models.URLField(u'Ссылка', blank=True)
+    content = HTMLField(u'Сообщение')
+
     opinion = models.CharField(u'Оценка', max_length=8, choices=OPINION_CHOICES)
 
     objects = EntityPostManager()
@@ -89,9 +88,11 @@ class EntityPost(BaseEntityModel):
 
     entity_name = 'posts'
     cache_prefix = 'posts/'
-    table_header = 'events/table_header.html'
-    table_line = 'events/table_line.html'
-    table_cap = 'events/table_cap.html'
+    #table_header = 'events/table_header.html'
+    #table_line = 'events/table_line.html'
+    #table_cap = 'events/table_cap.html'
+
+    roles = ['admin', 'follower']
 
     #def delete(self):
     #    self.entity.clear_cache()
@@ -100,5 +101,9 @@ class EntityPost(BaseEntityModel):
     #    for source in self.model.points_sources:
     #        profile.update_source_points(source)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('post', [self.id])
+
     def __unicode__(self):
-        return unicode(self.profile) + ' created a post'
+        return 'a post by ' + unicode(self.profile)

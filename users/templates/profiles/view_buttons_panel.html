@@ -2,7 +2,7 @@
     <a id="send_message_btn" class="ym-button gr-blue-button gr-mail"><span>Отправить сообщение</span></a>
     
     {% with role="follower" is_participant=in_contacts cancel_msg="Вы хотите удалить этого пользователя из списка контактов?" cancel_btn="Удалить" cancel_btn_long="Удалить из контактов" confirm_msg="Вы хотите добавить этого пользователя в список контактов?" confirm_btn="Добавить" confirm_btn_long="Добавить в контакты" %}
-        {% include "participants/follow_button.html" %}
+        {% include "participants/follower_button.html" %}
     {% endwith %}
     <!--a class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a-->
 </div>

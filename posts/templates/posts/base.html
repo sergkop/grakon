@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load elements %}
+
+{% block title %}Идея - Гракон{% endblock %}
+
+{% block page_class %}gr-right-sidebar{% endblock %}
+
+{% block right_column %}
+    {% include "participants/admins_side_block.html" %}
+
+    <!--div class="gr-side-item">
+        <h4 class="gr-agitators">Агитаторы (123) <i>&nbsp;</i></h4>
+            <table width="100%" class="gr-side-table">
+            </table>
+    </div-->
+
+    {% include "participants/followers_side_block.html" %}
+
+    {% include "disqus/counter.html" %}
+{% endblock %}
+
+{% block content %}
+    <h1>Идея</h1>
+    {% tabs tabs tab %}
+{% endblock %}

@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from elements.participants.models import EntityParticipant
-from elements.utils import table_data
+from elements.views import entity_base_view, participants_view
 from services.disqus import disqus_page_params
 from tools.events.forms import EventForm
 from tools.events.models import Event
@@ -20,69 +20,44 @@ class BaseEventView(object):
 
     def get_context_data(self, **kwargs):
         ctx = super(BaseEventView, self).get_context_data(**kwargs)
-        self.event = get_object_or_404(Event, id=int(self.kwargs.get('event_id')))
 
-        is_admin = False
-        is_follower = False
-        if self.request.user.is_authenticated():
-            is_admin = EntityParticipant.objects.is_participant(self.event, self.request.profile, 'admin')
-            is_follower = EntityParticipant.objects.is_participant(self.event, self.request.profile, 'follower')
-
-        self.participants_url = reverse('event_participants', args=[self.event.id])
+        id = int(self.kwargs.get('id'))
+        self.participants_url = reverse('event_participants', args=[id])
+        ctx.update(entity_base_view(self, Event, id))
 
         tabs = [
-            ('view', u'Информация', self.event.get_absolute_url(), 'events/view.html', 'wall-tab'),
-            ('participants', u'Участники', self.participants_url, 'events/participants.html', ''),
+            ('view', u'Информация', self.entity.get_absolute_url(), 'events/view.html', 'wall-tab'),
+            ('participants', u'Участники', self.participants_url, 'elements/table_tab.html', ''),
         ]
 
-        if is_admin:
-            tabs.append(('edit', u'Редактировать', reverse('edit_event', args=[self.event.id]),
-                    'events/edit.html', ''))
-
-        self.info = self.event.info()
+        if ctx['is_admin']:
+            tabs.append(('edit', u'Редактировать', reverse('edit_event', args=[id]),
+                    'elements/edit_form.html', ''))
 
         ctx.update({
-            'tools_menu_item': True,
-            'tab': self.tab,
             'tabs': tabs,
-            'info': self.info,
-            'event': self.event,
-            'is_follower': is_follower,
-            'is_admin': is_admin,
-            'admins_title': u'Организаторы',
-            'participants_url': self.participants_url,
+            'event': self.entity,
+            'admins_title': u'Организаторы', # TODO: maybe it should be Админы as everywhere else?
+            'follow_button': {
+                'cancel_msg': u'Вы хотите отписаться от новостей об этом мероприятии?',
+                'cancel_btn': u'Отписаться',
+                'cancel_btn_long': u'Отписаться',
+                'confirm_msg': u'Вы хотите следить за новостями об этом мероприятии?',
+                'confirm_btn': u'Следить',
+                'confirm_btn_long': u'Следить',
+            },
         })
-        ctx.update(self.update_context())
+        ctx.update(disqus_page_params('event/'+str(id), self.entity.get_absolute_url(), 'events'))
         return ctx
 
 class EventView(BaseEventView, TemplateView):
     tab = 'view'
 
-    def update_context(self):
-        return disqus_page_params('event/'+str(self.event.id), self.event.get_absolute_url(), 'events')
-
 class EventParticipantsView(BaseEventView, TemplateView):
     tab = 'participants'
 
     def update_context(self):
-        participants_types = [
-            ('admins', u'Организаторы', 'events/admins.html', self.event.get_admin),
-            ('followers', u'Следят', 'events/followers.html', self.event.get_follower),
-        ]
-
-        p_type = self.request.GET.get('type', '')
-        if p_type not in map(lambda p: p[0], participants_types):
-            p_type = 'admins'
-
-        name, title, template, method = filter(lambda p: p[0]==p_type, participants_types)[0]
-
-        ctx = table_data(self.request, 'participants', method)
-        ctx.update({
-            'table_cap_choices': map(lambda p: (self.participants_url+'?type='+p[0], p[1]), participants_types),
-            'table_cap_title': title,
-            'table_cap_template': template,
-        })
-        return ctx
+        return participants_view(self)
 
 # TODO: test that only admin can edit event page
 class EditEventView(BaseEventView, UpdateView):
@@ -90,10 +65,10 @@ class EditEventView(BaseEventView, UpdateView):
     tab = 'edit'
 
     def get_object(self):
-        return get_object_or_404(Event, id=int(self.kwargs.get('event_id')))
+        return get_object_or_404(Event, id=int(self.kwargs.get('id')))
 
     def get_success_url(self):
-        return reverse('event', args=[self.kwargs.get('event_id')])
+        return reverse('event', args=[self.kwargs.get('id')])
 
 # TODO: need more strict condition
 edit_event = login_required(EditEventView.as_view())

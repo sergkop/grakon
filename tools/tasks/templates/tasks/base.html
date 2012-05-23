@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load elements %}
+
+{% block title %}{{ task.title }} - Гракон{% endblock %}
+
+{% block page_class %}gr-right-sidebar{% endblock %}
+
+{% block right_column %}
+    {% include "participants/admins_side_block.html" %}
+
+    {% include "participants/followers_side_block.html" %}
+
+    {% include "disqus/counter.html" %}
+{% endblock %}
+
+{% block content %}
+    <h1>Задачи &mdash; {{ task.title }}</h1>
+    {% tabs tabs tab %}
+{% endblock %}

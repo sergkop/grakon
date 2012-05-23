@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'navigation',
     'tools.officials',
     'tools.events',
+    'tools.tasks',
     'services',
 )
 

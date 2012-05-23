@@ -199,3 +199,12 @@ function locations_list_editing(ct_id, id){
                 .prependTo(li);
     });
 }
+
+function prevent_enter_in_form(selector){
+    $(selector).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+}

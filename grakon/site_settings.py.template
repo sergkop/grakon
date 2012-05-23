@@ -1,9 +1,6 @@
 # -*- coding:utf-8 -*-
-import os.path
 
 # Settings in this file must be edited before deployment
-
-PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 DEBUG = %(DEBUG)s
 TEMPLATE_DEBUG = DEBUG
@@ -39,15 +36,7 @@ URL_PREFIX = '%(URL_PREFIX)s'
 
 STATIC_ROOT = '%(STATIC_ROOT)s'
 
-VK_APP_ID = %(VK_APP_ID)i
-
-GOOGLE_ANALYTICS_ID = '%(GOOGLE_ANALYTICS_ID)s'
-
-YA_METRIKA_ID = %(YA_METRIKA_ID)i
-
 ADMIN_PREFIX = '%(ADMIN_PREFIX)s'
-
-YANDEX_MAPS_KEY = '%(YANDEX_MAPS_KEY)s'
 
 # Emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -55,11 +44,14 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '%(from_email)s'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = '' # TODO: set it
 
 DEFAULT_FROM_EMAIL = '%(from_email)s'
 SERVER_EMAIL = '%(from_email)s'
-ADMIN_EMAIL = '%(ADMIN_EMAIL)s' # emails from users and notifications should be delivered here
+
+DKIM_DOMAIN = 'grakon.org'
+DKIM_SELECTOR = 'ses'
+DKIM_PRIVATE_KEY = '' # TODO: set it; update site_settings.py.template
 
 # Authentication
 FACEBOOK_APP_ID = '%(FACEBOOK_APP_ID)s'

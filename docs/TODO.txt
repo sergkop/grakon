@@ -1,49 +1,98 @@
-* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
-* fix init_database.sqlite
-
-Forms:
-    * restore location on error in forms
-    * editing locations in officials/events (only one)
-
-Dialog forms:
-    * shortcut to prevent using enter in dialog forms
-    * in posts about officials make link mandatory
-    * check form data for posts
-    * use django forms to generate forms in dialogs
-
-* bug with disqus wall when some users log in
-
-* text fields for resources + other option
-
-* calculate ratings (similar to points - unify in one method?) - using info
-* sorting by ratings
-
-* shortcut to create follow/unfollow buttons and dialogs (take name, messages, dialog titles) (finish)
-
-* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/
-
-* show count of items in tables
-
-* order events according to the date (side list and table)
-
-* adding urls about officials, events + universal entity feature for it
-
 * share buttons
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 
+Dialog forms:
+    * check form data for posts
+    * use django forms to generate forms in dialogs (fix officials)
+
+* site_settings deployment
+* fix init_database.sqlite
+
+* bug with disqus wall when some users log in
+
+* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
+
+* calculate ratings (similar to points - unify in one method?) - using info
+* sorting by ratings
+
 * after deleting official points are not updated
 
-* check admin rights in elements.views.check_permissions
+* check admin rights in elements.views.check_permissions (check that it works)
 
 * override save() method of EntityProperty models to reset cache
 
-* in account activation email also provide plain url
-* what happens when account activation link expires? is it possible to register again?
+Account activation:
+    * specify username in account activation email
+    * in account activation email also provide plain url
+    * what happens when account activation link expires? is it possible to register again?
+    * increase expiration time of account activation link
+    * fix sending profile activation email via admin
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+
+* user's avatar, use it in disqus, emails
+
+* remove ideas-test
+
+* link social likes to the page on which they are located
+
+* sitemaps
+
+* load tinymce fields faster (enable compression)
+
+* How to respond to messages? (link to profile page with opened dialog + reply_to)
+
+* in 'about' fields add target="_blank" to all external links (in HTMLField)
+
+Deployment:
+    * minification of static files (http://developer.yahoo.com/yui/compressor/)
+    * switch to wsgi
+    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
+    * database backups
+    * configure firewall (ufw)
+
+Performance:
+    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
+    * activate compression for tinymce
 -------------------------------------------------------------------------------
-* make resources in registration not mandatory
+Emails:
+    * subscription configuration
+    * page with form for writing messages (put link on it in emails)
+    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
+    * send email notifying that user has been added to contacts (+ ability to unsubscribe)
+    * Ability to send mails to unregistered users (add email field to Email model)
+
+Analytics:
+    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
+    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+    * use ga events to monitor pressing buttons, registration and other activities
+
+* system of notifications (show them in top panel + send accumulating email once a day)
+
+* button for creating new entity on entities pages
+
+* unsubscribe from location button on location page; put this button in the center as with officials, events
+
+* ability to request entity deletion (like with profiles)
+
+* show count of items in tables
+
+* text fields for resources + other option
+
+* adding urls about officials, events + universal entity feature for it
+
+* order events according to the date (side list and table)
+
+* decorator to restrict permissions on access to edit/create views
+* process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
+  generalize tabs creation
+
+* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
+
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
+* make resources in registration not mandatory (?)
 
 * denormalization of counters
 
@@ -59,8 +108,6 @@ Dialog forms:
 * start using tables in side panels everywhere
 * rename participants to profiles?
 
-* user's avatar, use it in disqus, emails
-
 * complaints
 
 * Introduce FINAL_URL_PREFIX and use
@@ -70,7 +117,6 @@ Dialog forms:
 SEO:
     * Webmaster Tools, https://www.google.com/webmasters/
     * set proper page titles
-    * sitemaps
     * ability to set individual titles for tabs of static pages
 
 * invitations to events
@@ -78,8 +124,6 @@ SEO:
 * change the looks of title of officials page - apply styles to 'Чиновники'
 
 * sorting official by last_name
-
-* load tinymce fields faster
 
 * for anonym users logo in the hat must contain the text 'гражданский контроль...'
 
@@ -93,24 +137,12 @@ SEO:
 
 * Give points for disqus activity, negative for complaints
 
-* process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
-  generalize tabs creation
-
 SEO:
     * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
-
-* send email notifying that user has been added to contacts (+ ability to unsubscribe)
 
 * pages for tools and users (with search) + bring them back in main menu
 
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
-
-* How to respond to messages? (link to profile page with opened dialog + reply_to)
-
-Emails:
-    * subscription configuration
-    * page with form for writing messages (put link on it in emails)
-    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
 
 Disqus:
     * неправильный заголовок на вкладке логина через гракон
@@ -138,32 +170,24 @@ Misc:
 
 * Check that urls are specified properly in templates (look for "/ and http://grakon.org
 
-* ability to request entity deletion (like with profiles)
-
 * privacy settings
 
 * add per_page selector in paginator
 
-* unsubscribe from location button on location page; put this button in the center as with officials, events
-
 * ability to add admins
-
-* button for creating new entity on entities pages
 
 * ability to choose timezone/determine it from location
 
 * button creating event/official from location page should automatically fill in location in the form
   (get params in url)
 
-* link social likes to the page on which they are located
+* ability to read messages on website
 --------------------------------------
-* specify username in account activation email
+* calendar page with events
 
 * add wikipedia links to locations, info about population, map boundaries
 
 * show events on map and allow to specify exact location on the map
-
-* system of notifications (show them in top panel + send accumulating email once a day)
 
 * can we speed up get_for by not taking all entities, just those within requested limit?
 
@@ -180,7 +204,6 @@ Misc:
 * Fill in registration form with location or login
 
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
-* Ability to send mails to unregistered users (add email field to Email model)
 
 * Left column of profile - administration, participation, представитель организации, etc.
 
@@ -208,29 +231,23 @@ Misc:
 
 * show post messages
 
-* move fb:admins meta tag value out of template
-
 * allow user to start working without confirmation of his email, but limit his functionality (?)
 
 * captchas
 
 * dashboard with statistics (emails, users activities, traffic, etc.)
 
-* in 'about' fields add target="_blank" to all external links
-
 * display html fields in admin listings nicely (extract text only)
-
-* increase expiration time of account activation link
-* fix sending profile activation email via admin
 --------------------------------------
 * use https://github.com/Kicksend/mailcheck to suggest correct email
 
-* give superuser the rights of all admins
+* give superuser the rights of all admins (?)
 
 Emails:
     * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
     * list-unsubscribe header
-    * messages, subscription @grakon.org
+    * messages, subscription @grakon.org (send messages of different types from different emails)
+    * analyze email postfixes, detect sending problems, configure properly
 
 Registration
     * configure registration with fb, vk, google
@@ -257,16 +274,12 @@ Front-end
     * automate search for unused and missing images, style classes
 
 Analytics:
-    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
-    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * analyze when user visited site/logged in last time
     * configure logging, sentry
     * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
       which pages are visited
-    * use yandex targets (?) to monitor pressing buttons, registration and other activities
     * use page visits analytics to determine optimal caching times
     * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
-    * count how often people click on buttons in side bars (with google analytics)
     * get statistics on db usage
 
 SEO:
@@ -278,11 +291,10 @@ Testing:
     * tests and test coverage
 
 Performance:
-    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * make lazy reformal loading
     * start using subqueries - http://charlesleifer.com/blog/working-around-django-s-orm-to-do-interesting-things-with-gfks/
     * use debug toolbar, page speed to optimize page load
-    * activate compression for tinymce
+
     * add all mime types to gzip list of nginx configuration
     * cache ajax (json) queries, gzip it, don't make authentication db queries for public ajax queries
     * move static content to sub-domain (?), keep it cookie-free (how?)
@@ -304,24 +316,16 @@ Celery:
 
 * update select widget in breadcrumbs with chosen (?)
 
-* analyze email postfixes, detect sending problems, configure properly
-
 * stackoverflow-like ordering of news
 
 * search + autocompletion
 
 Deployment:
     * far expires date in nginx
-    * minification of static files (http://developer.yahoo.com/yui/compressor/)
     * configure nginx (see config settings)
-    * switch to wsgi
-    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
-    * put site_settings.py.example in repo (ready for developer)
 
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
-    * database backups
     * separate server for media files? (512 mb)
-    * configure firewall (ufw)
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 

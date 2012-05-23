@@ -3,6 +3,7 @@ import os.path
 import StringIO
 
 from fabric.api import cd, env, get, local, prefix, put, run, sudo
+from fabric.contrib.files import sed
 
 REPOSITORY = 'git@github.com:sergkop/grakon.git'
 CONFIG_FILE_PATH = '/home/serg/data/grakon/passwords/config.json' # TODO: take it as an argument
@@ -82,6 +83,7 @@ def init_system():
         # Libraries
         'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',
         'libmemcached-dev', 'postgresql-server-dev-all', # 'libmysqlclient-dev',
+        'libjpeg', 'libjpeg-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev',
     ]
 
     sudo('aptitude -y update')
@@ -149,6 +151,13 @@ def prepare_code():
 
     # TODO: pygraphviz may require creating soft link to be used in virtualenv
     virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'))
+
+    # PIL requires custom installation to activate JPEG support
+    virtualenv('pip install -I pil --no-install')
+    sed(os.path.join(conf['env_path'], 'build', 'pil', 'setup.py'),
+            '# standard locations',
+            'add_directory(library_dirs, "/usr/lib/x86_64-linux-gnu")')
+    virtualenv('pip install -I pil --no-download')
 
     # fcgi starting script
     file_from_template(os.path.join(conf['code_path'], 'deployment', 'server.sh.template'),
