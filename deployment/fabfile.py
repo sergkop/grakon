@@ -10,6 +10,7 @@ CONFIG_FILE_PATH = '/home/serg/data/grakon/passwords/config.json' # TODO: take i
 
 # TODO: set env attributes like in http://stackoverflow.com/questions/1180411/activate-a-virtualenv-via-fabric-as-deploy-user
 # TODO: start using roles
+# TODO: command to upgrade requirements.txt packages
 
 conf = json.load(open(CONFIG_FILE_PATH))
 
@@ -26,9 +27,25 @@ conf['STATIC_ROOT'] = os.path.join(conf['static_path'], 'static/')
 
 manage_path = os.path.join(conf['code_path'], 'manage.py')
 
-def virtualenv(command):
+UBUNTU_PACKAGES = [
+    # Python
+    'python', 'python-setuptools', 'python-pip', 'python-virtualenv',
+
+    # Utils
+    'gcc', 'git', 'graphviz', 'mc', 'htop',
+
+    # Libraries
+    'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',
+    'libmemcached-dev', 'postgresql-server-dev-all', # 'libmysqlclient-dev',
+    'libjpeg', 'libjpeg-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev',
+]
+
+def virtualenv(command, run_local=False):
     with prefix('source %s' % os.path.join(conf['env_path'], 'bin', 'activate')):
-        cmd(command)
+        if run_local:
+            local(command)
+        else:
+            cmd(command)
 
 def cmd(command):
     # TODO: solve 'mesg: /dev/pts/1: Operation not permitted'
@@ -70,22 +87,10 @@ def init_system():
     #       set files permissions, install sentry
 
     # Install libraries and applications
-    ubuntu_packages = [
-        # Python
-        'python', 'python-setuptools', 'python-pip', 'python-virtualenv',
-
-        # Utils
-        'gcc', 'git', 'graphviz', 'mc', 'htop',
-
+    ubuntu_packages = UBUNTU_PACKAGES + [
         # Services
         'nginx',
-
-        # Libraries
-        'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',
-        'libmemcached-dev', 'postgresql-server-dev-all', # 'libmysqlclient-dev',
-        'libjpeg', 'libjpeg-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev',
     ]
-
     sudo('aptitude -y update')
     sudo('aptitude -y upgrade')
     sudo('aptitude -y install %s' % ' '.join(ubuntu_packages))
@@ -124,7 +129,7 @@ def restart_web_server():
 
     # TODO: commands for data server
     # sudo('/etc/init.d/postgresql restart')
-    # sudo('/etc/init.d/memcached restart')
+    sudo('/etc/init.d/memcached restart')
 
 def init_db():
     virtualenv('python %s syncdb --all' % manage_path) # TODO: don't create superuser before migrate
@@ -191,4 +196,31 @@ def update_code():
     virtualenv('python %s migrate' % manage_path)
     deploy_static_files()
     restart_web_server()
-    # TODO: reset memcached
+
+def developer_init():
+    # TODO: make it independent on conf
+    conf['code_path'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    conf['env_path'] = os.path.abspath(os.path.join(conf['code_path'], '..', 'env'))
+
+    sudo('aptitude -y install %s' % ' '.join(UBUNTU_PACKAGES))
+
+    # Copy settings file
+    local('cp %s %s' % (os.path.join(conf['code_path'], 'grakon', 'site_settings.py.example'),
+            os.path.join(conf['code_path'], 'grakon', 'site_settings.py'))
+
+    # Create virtualenv
+    local('virtualenv --no-site-packages %s' % conf['env_path'])
+
+    # TODO: pygraphviz may require creating soft link to be used in virtualenv
+    virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'), True)
+
+    # PIL requires custom installation to activate JPEG support
+    virtualenv('pip install -I pil --no-install', True)
+    sed(os.path.join(conf['env_path'], 'build', 'pil', 'setup.py'),
+            '# standard locations',
+            'add_directory(library_dirs, "/usr/lib/x86_64-linux-gnu")')
+    virtualenv('pip install -I pil --no-download', True)
+
+    # Copy database file
+    local('cp %s %s' % (os.path.join(conf['code_path'], 'init_database.sqlite'),
+            os.path.join(conf['code_path'], 'database.sqlite'))

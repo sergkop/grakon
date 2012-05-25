@@ -67,9 +67,9 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
 
     # Sign headers with DKIM
     # TODO: test it
-    #sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,
-    #        include_headers=['From', 'To', 'Cc', 'Subject', 'Reply-To'])
-    #message = sig + message
+    sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,
+            include_headers=['From', 'To', 'Cc', 'Subject'], debuglog=open('/home/serg/data/grakon/debug.txt', 'w'))
+    message = sig + message
 
     # TODO: set priority
     email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email, priority=0)

@@ -11,9 +11,10 @@ django-social-auth
 psycopg2
 ipython
 dnspython
-pydkim
+-e git+https://github.com/ghewgill/pydkim.git#egg=pydkim
 boto
 flup
 google-api-python-client
+sphinx
 #mysql-python
 #django-simple-captcha

@@ -4,5 +4,6 @@
 *.pyc
 *.bak
 *.kate-swp
+deployment/config.json
 grakon/site_settings.py
 database.sqlite

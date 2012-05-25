@@ -1,13 +1,24 @@
-* share buttons
+* site_settings deployment
+* in fabric script move reading config file to a separate method
 
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* add to contacts button on profile
+
+Account activation:
+    * specify username in account activation email
+    * in account activation email also provide plain url
+    * what happens when account activation link expires? is it possible to register again?
+    * increase expiration time of account activation link
+
+    * fix sending profile activation email via admin
+
+* share buttons
 
 Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs (fix officials)
 
-* site_settings deployment
-* fix init_database.sqlite
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* reinstall pydkim on server
 
 * bug with disqus wall when some users log in
 
@@ -21,13 +32,6 @@ Dialog forms:
 * check admin rights in elements.views.check_permissions (check that it works)
 
 * override save() method of EntityProperty models to reset cache
-
-Account activation:
-    * specify username in account activation email
-    * in account activation email also provide plain url
-    * what happens when account activation link expires? is it possible to register again?
-    * increase expiration time of account activation link
-    * fix sending profile activation email via admin
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 
@@ -43,8 +47,6 @@ Account activation:
 
 * How to respond to messages? (link to profile page with opened dialog + reply_to)
 
-* in 'about' fields add target="_blank" to all external links (in HTMLField)
-
 Deployment:
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
     * switch to wsgi
@@ -55,7 +57,11 @@ Deployment:
 Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * activate compression for tinymce
+
+* in 'about' fields add target="_blank" to all external links (in HTMLField)
 -------------------------------------------------------------------------------
+* README
+
 Emails:
     * subscription configuration
     * page with form for writing messages (put link on it in emails)
@@ -248,6 +254,7 @@ Emails:
     * list-unsubscribe header
     * messages, subscription @grakon.org (send messages of different types from different emails)
     * analyze email postfixes, detect sending problems, configure properly
+    * suggest users to add our emails to contacts lists
 
 Registration
     * configure registration with fb, vk, google

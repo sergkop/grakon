@@ -12,7 +12,7 @@ class LocationSelectWidget(Widget):
         html = '<div id="%s">%s</div>' % (name, render_to_string('locations/select.html'))
         html += '<script type="text/javascript">' \
                     '$().ready(function(){' \
-                        '(new SelectLocation({el: $("#%s"), path: %s })).render();' \
+                        '(new SelectLocation({el: $("#%s"), path: %s})).render();' \
                     '});' \
                 '</script>' % (name, json.dumps(value))
 

@@ -13,7 +13,7 @@ class LocationSelectField(forms.CharField):
 # TODO: write one method taking a list of features (take params from models) + classes with methods and data
 # TODO: rename it
 # TODO: if required is False provide help_text saying that nothing chosen means Russia
-def location_init(required, label, edit=True):
+def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
     attrs = {
         'location_select': LocationSelectField(label=label, required=True, initial=[],
@@ -48,7 +48,7 @@ def location_init(required, label, edit=True):
             entity = save(form)
 
             # TODO: what about is_main (take decorator params to control it)
-            if edit:
+            if form.instance.id:
                 EntityLocation.objects.update_location(entity, form.location)
             else:
                 EntityLocation.objects.add(entity, form.location, params={'is_main': True})

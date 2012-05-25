@@ -161,6 +161,7 @@ AUTHENTICATION_BACKENDS = (
     'authentication.backend.EmailAuthenticationBackend',
 )
 
+from grakon.public_site_settings import *
 from grakon.site_settings import *
 
 TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'

@@ -18,7 +18,6 @@ EMAILS = {
 }
 
 DISQUS_SHORTNAME = 'grakon2'
-DISQUS_URL_PREFIX = 'http://grakon.org' # TODO: temporary
 DISQUS_CATEGORIES = {
     'general': 1444561,
     'locations': 1444565,

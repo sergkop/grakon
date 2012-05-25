@@ -66,6 +66,7 @@ GOOGLE_OAUTH_EXTRA_SCOPE = ['https://www.google.com/m8/feeds'] # used to get use
 
 DISQUS_PUBLIC_KEY = 'leNujd0f35GHCwCam29hHCK0rKv91z02eN8g8CIdrQMCs2cDSJKopWC3Ad4mhoeW'
 DISQUS_SECRET_KEY = '1S31E7cNYJQ36C3LlyrWwKbn4ftGFyFTwJ8d21p1QFre6g3XMJlMojozRhpTWUmc'
+DISQUS_URL_PREFIX = 'http://grakon.org' # TODO: temporary
 DISQUS_DEVELOPER = 0 if DISQUS_URL_PREFIX==URL_PREFIX else 1
 
 #INTERNAL_IPS = ('127.0.0.1',)
