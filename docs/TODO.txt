@@ -5,11 +5,12 @@
 
 *  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
 
-* How to respond to messages? (link to profile page with opened dialog + reply_to)
+* Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
 
 Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs (fix officials)
+    * show_email checkbox in sending message doesn't work
 
 * bug with disqus wall when some users log in
 
@@ -22,6 +23,7 @@ Dialog forms:
 * remove ideas-test
 * remove-after-launch
 * aw-showcase
+* depricate account activated page and registration failed page
 
 * link social likes to the page on which they are located
 

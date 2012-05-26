@@ -1,11 +1,8 @@
 {% extends "letters/base.html" %}
 
 {% block content %}
-    <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank">
-        <font size="4" face="Tahoma, Geneva, sans-serif"><strong>{{ sender }}</strong></font>
-    </a>
-    &nbsp; &nbsp; &nbsp;<font size="4" face="Tahoma, Geneva, sans-serif" color="bcb2b2">{{ sender.username }}</font><br />
-    <font size="4" face="Tahoma, Geneva, sans-serif">отправил(а) вам сообщение</font><br /><br />
+    <font face="Tahoma, Geneva, sans-serif">Пользователь <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank"><strong>{{ sender }}</strong></a>
+    отправил(а) вам сообщение</font><br /><br />
     <table cellpadding="20" cellspacing="0" width="100%" bgcolor="e9eff2">
         <tr>
             <td width="330">
@@ -16,8 +13,6 @@
                             <font size="3" face="Tahoma, Geneva, sans-serif"><strong>{{ title }}</strong></font></a>&nbsp;
                             <br />
                             <font size="2" face="Tahoma, Geneva, sans-serif">{{ body }}</font>
-                            <br /><br />
-                            <a href="" target="_blank"><img src="i/mail/btn-send-message.png" border="0" /></a>
                         </td>
                     </tr>
                 </table>
@@ -29,5 +24,18 @@
             </td-->
         </tr>
     </table>
+
+    {% if show_email %}
+        <p>Вы можете ответить на это сообщение, нажав кнопку "Ответить" в своем почтовом клиенте (адрес отправителя - 
+        <a href="mailto:{{ sender.user.email }}">{{ sender.user.email }}</a>).</p>
+        <p>Вы также можете отправить сообщение с нашего сайта:</p>
+    {% else %}
+        <p><b>Не отвечайте на это письмо в вашем почтовом клиенте!</b></p>
+        <p>Вы можете ответить на это сообщение на нашем сайте:</p>
+    {% endif %}
+    <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank">
+        <img src="{{ URL_PREFIX }}{{ STATIC_URL }}images/letters/btn-resond-to-message.png" border="0" />
+    </a>
+
     <div style="border-bottom: 1px #a5a5a5 dotted">&nbsp;</div>
 {% endblock %}

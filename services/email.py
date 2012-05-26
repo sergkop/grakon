@@ -7,6 +7,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 import boto
+from boto.ses import SESConnection
 import dkim
 from lxml.etree import tostring
 from lxml.html.soupparser import fromstring
@@ -50,22 +51,25 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
 
     html = tostring(xml)
 
-    # TODO: set reply_to
     from_str = u'%s <%s>' % settings.EMAILS[from_email]
     to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
-    msg = EmailMultiAlternatives(subject, text, from_str, [to_email])
+    
+    headers = {}
+    if reply_to:
+        headers['Reply-To'] = reply_to
+    
+    msg = EmailMultiAlternatives(subject, text, from_str, [to_email], headers=headers)
     msg.attach_alternative(html, "text/html")
-    #msg.send()
 
+    message = msg.message().as_string()
+
+    # Sign headers with DKIM
     """
     To enable DKIM signing you should specify values for the DKIM_PRIVATE_KEY and DKIM_DOMAIN settings.
     You can generate a private key with a command such as openssl genrsa 512 and get the public key portion
     with openssl rsa -pubout <private.key. The public key should be published to ses._domainkey.example.com
     if your domain is example.com. You can use a different name instead of ses by changing the DKIM_SELECTOR setting.
     """
-    message = msg.message().as_string()
-
-    # Sign headers with DKIM
     # TODO: test it
     sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,
             include_headers=['From', 'To', 'Cc', 'Subject'], debuglog=open('/home/serg/data/grakon/debug.txt', 'w'))
@@ -83,11 +87,10 @@ def send_email_task(email):
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
 
     try:
-        # TODO: specify source
         # TODO: use select_related
-        response = conn.send_raw_email(
+        response = conn.send_raw_email(raw_message=email.raw_msg,
                 destinations=email.recipient.user.email if email.recipient else settings.ADMIN_EMAIL,
-                raw_message=email.raw_msg)
+                source=settings.EMAILS[email.from_email][1])
     except SESConnection.ResponseError, err:
         error_keys = ['status', 'reason', 'body', 'request_id',
                         'error_code', 'error_message']

@@ -110,7 +110,7 @@ def send_message(request):
     if body == '':
         return HttpResponse(u'Сообщение не должно быть пустым')
 
-    # TODO: limit title to the maximum length allowed by model
+    # TODO: limit title to the maximum length allowed by model (use model form)
 
     try:
         recipient_id = int(request.POST.get('id', ''))
@@ -118,21 +118,16 @@ def send_message(request):
     except ValueError, Profile.DoesNotExist:
         return HttpResponse(u'Получатель указан неверно')
 
+    # TODO: fix it
     show_email = 'show_email' in request.POST
-
-    title = escape_html(title)
-    body = escape_html(body)
 
     subject = u'Пользователь %s написал вам сообщение' % unicode(request.profile)
     ctx = {
-        'title': title,
-        'body': body,
+        'title': escape_html(title),
+        'body': escape_html(body),
         'show_email': show_email,
         'sender': request.profile,
     }
-
-    # TODO: include link on the page to give answer
-    # TODO: set reply to user's email if he gave permission or write not to answer email
     send_email(recipient, subject, 'letters/message.html', ctx, 'message', 'noreply',
             reply_to=request.profile.user.email if show_email else None)
 
