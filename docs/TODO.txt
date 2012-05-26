@@ -1,22 +1,29 @@
 * site_settings deployment
 * in fabric script move reading config file to a separate method
 
-* share buttons
-
-*  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
-
-* Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
-
-Dialog forms:
-    * check form data for posts
-    * use django forms to generate forms in dialogs (fix officials)
-    * show_email checkbox in sending message doesn't work
-
-* bug with disqus wall when some users log in
+* deploy code to server
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
 * user's avatar, use it in disqus, emails
+
+* sitemaps
+
+* load tinymce fields faster (enable compression)
+
+Static files:
+    * move static and media files to a separate domain
+    * minification of static files (http://developer.yahoo.com/yui/compressor/)
+
+* share buttons
+
+*  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
+
+Dialog forms:
+    * check form data for posts
+    * use django forms to generate forms in dialogs (fix officials)
+
+* bug with disqus wall when some users log in
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 
@@ -27,14 +34,8 @@ Dialog forms:
 
 * link social likes to the page on which they are located
 
-* sitemaps
-
-* load tinymce fields faster (enable compression)
-
 Deployment:
-    * minification of static files (http://developer.yahoo.com/yui/compressor/)
     * switch to wsgi
-    * implement fabric deployment for developers (settings in deployment/config.json) + automate virtualenv
     * database backups
     * configure firewall (ufw)
 
@@ -48,6 +49,8 @@ Performance:
 
 * override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
+* Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
+
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 * reinstall pydkim on server
 

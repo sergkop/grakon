@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 from grakon.utils import authenticated_ajax_post, escape_html
 from elements.utils import table_data
 from services.email import send_email
-from users.forms import ProfileForm
+from users.forms import MessageForm, ProfileForm
 from users.models import Message, Profile
 
 class BaseProfileView(object):
@@ -103,14 +103,12 @@ def profile(request):
 # TODO: add points for sending message
 @authenticated_ajax_post
 def send_message(request):
-    title = request.POST.get('title', '')
-    body = request.POST.get('body', '')
-    if title == '':
-        return HttpResponse(u'Необходимо указать тему письма')
-    if body == '':
-        return HttpResponse(u'Сообщение не должно быть пустым')
+    form = MessageForm(request.POST)
 
-    # TODO: limit title to the maximum length allowed by model (use model form)
+    # TODO: what happens if title in post data is longer than model field max_length?
+    if not form.is_valid():
+        # TODO: show error messages u'Необходимо указать тему письма', u'Сообщение не должно быть пустым'
+        return HttpResponse('Форма заполнена неверно')
 
     try:
         recipient_id = int(request.POST.get('id', ''))
@@ -118,13 +116,14 @@ def send_message(request):
     except ValueError, Profile.DoesNotExist:
         return HttpResponse(u'Получатель указан неверно')
 
-    # TODO: fix it
-    show_email = 'show_email' in request.POST
+    title = escape_html(form.cleaned_data['title'])
+    body = escape_html(form.cleaned_data['body'])
+    show_email = form.cleaned_data['show_email']
 
     subject = u'Пользователь %s написал вам сообщение' % unicode(request.profile)
     ctx = {
-        'title': escape_html(title),
-        'body': escape_html(body),
+        'title': title,
+        'body': body,
         'show_email': show_email,
         'sender': request.profile,
     }

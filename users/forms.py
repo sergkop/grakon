@@ -5,7 +5,7 @@ from crispy_forms.layout import Fieldset, Layout
 
 from elements.resources.forms import resources_init
 from elements.utils import form_helper
-from users.models import Profile
+from users.models import Message, Profile
 
 @resources_init
 class ProfileForm(forms.ModelForm):
@@ -18,3 +18,8 @@ class ProfileForm(forms.ModelForm):
         Fieldset('', 'first_name', 'last_name', 'show_name',
                 'resources1', 'about'),
     )
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('title', 'body', 'show_email')

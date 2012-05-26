@@ -244,5 +244,5 @@ class Message(models.Model):
     receiver = models.ForeignKey(Profile, verbose_name=u'Получатель', related_name='received_messages')
     title = models.CharField(u'Тема', max_length=100)
     body = models.TextField(u'Сообщение')
-    show_email = models.BooleanField(u'Показать email получателю', default=False)
+    show_email = models.BooleanField(u'Показать email получателю', default=True)
     time = models.DateTimeField(auto_now=True)
