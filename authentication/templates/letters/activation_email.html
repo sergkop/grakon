@@ -1,9 +1,11 @@
 {% extends "letters/base.html" %}
 
 {% block content %}
-    Здравствуйте, {{ recipient }}!<br />
-
-    Чтобы активировать свой аккаунт на сайте Гракон,
-    пожалуйста, перейдите по <a href="{{ URL_PREFIX }}{% url activate_account activation_key %}">ссылке</a>.
-    Эта ссылка будет работать в течение двух дней.
+    Здравствуйте, {{ recipient }}!
+    <br/><br/>
+    Чтобы активировать ваш аккаунт <b>{{ recipient.username }}</b> на сайте Гракон перейдите по ссылке
+    <br/><br/>
+    <a href="{{ URL_PREFIX }}{% url activate_account activation_key %}">{{ URL_PREFIX }}{% url activate_account activation_key %}</a>
+    <br/><br/>
+    Эта ссылка будет работать в течение пяти дней.
 {% endblock %}

@@ -18,15 +18,12 @@ work as well, however automation script may not work.
 4. Install required packages::
 
     sudo aptitude install python python-setuptools git python-pip
-    sudo pip install fabric
+    sudo pip install fabric --upgrade
 
-5. Copy deployment/config.json.example to deployment/config.json and ...
-6. Run script which automates installation steps::
+5. Run script which automates installation steps::
 
     cd GRAKON_DIR/source/deployment
     fab developer_init
-
-7. Copy init_database.sqlite to database.sqlite
 
 Running development server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

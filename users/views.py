@@ -46,9 +46,17 @@ class BaseProfileView(object):
             'tabs': tabs,
             'profile': profile,
             'own_profile': own_profile,
-            'in_contacts': in_contacts,
+            'is_follower': in_contacts,
             'info': self.info,
             'administered_entities': profile.admin_of(),
+            'follow_button': {
+                'cancel_msg': u'Вы хотите удалить этого пользователя из списка контактов?',
+                'cancel_btn': u'Удалить',
+                'cancel_btn_long': u'Удалить из контактов',
+                'confirm_msg': u'Вы хотите добавить этого пользователя в список контактов?',
+                'confirm_btn': u'Добавить',
+                'confirm_btn_long': u'Добавить в контакты',
+            },
         })
         ctx.update(self.update_context())
         return ctx

@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -88,9 +89,12 @@ def social_registration(request):
 
 @authenticated_profile_redirect
 def activate(request, activation_key):
-    account = ActivationProfile.objects.activate_user(activation_key)
-    if account:
-        return redirect('activation_completed')
+    user = ActivationProfile.objects.activate_user(activation_key)
+    if user:
+        backend = auth.get_backends()[0] # TODO: is it ok?
+        user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
+        auth.login(request, user)
+        return redirect('login')
     return TemplateResponse(request, 'auth/activation_fail.html')
 
 # TODO: introduce shortcut for it or write it shorter

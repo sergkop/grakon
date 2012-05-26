@@ -1,51 +1,33 @@
 * site_settings deployment
 * in fabric script move reading config file to a separate method
 
-* add to contacts button on profile
-
-Account activation:
-    * specify username in account activation email
-    * in account activation email also provide plain url
-    * what happens when account activation link expires? is it possible to register again?
-    * increase expiration time of account activation link
-
-    * fix sending profile activation email via admin
-
 * share buttons
+
+*  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
+
+* How to respond to messages? (link to profile page with opened dialog + reply_to)
 
 Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs (fix officials)
 
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
-* reinstall pydkim on server
-
 * bug with disqus wall when some users log in
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
-* calculate ratings (similar to points - unify in one method?) - using info
-* sorting by ratings
-
-* after deleting official points are not updated
-
-* check admin rights in elements.views.check_permissions (check that it works)
-
-* override save() method of EntityProperty models to reset cache
+* user's avatar, use it in disqus, emails
 
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 
-* user's avatar, use it in disqus, emails
-
 * remove ideas-test
+* remove-after-launch
+* aw-showcase
 
 * link social likes to the page on which they are located
 
 * sitemaps
 
 * load tinymce fields faster (enable compression)
-
-* How to respond to messages? (link to profile page with opened dialog + reply_to)
 
 Deployment:
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
@@ -59,8 +41,25 @@ Performance:
     * activate compression for tinymce
 
 * in 'about' fields add target="_blank" to all external links (in HTMLField)
+
+* check admin rights in elements.views.check_permissions (check that it works)
+
+* override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* reinstall pydkim on server
+
+Account activation:
+    * fix sending profile activation email via admin
+    * what happens when account activation link expires? is it possible to register again?
+
+* text fields for resources + other option
+
 * README
+
+* show count of items in tables
+
+* adding urls about officials, events + universal entity feature for it
 
 Emails:
     * subscription configuration
@@ -73,6 +72,7 @@ Analytics:
     * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
     * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * use ga events to monitor pressing buttons, registration and other activities
+    * use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
 
 * system of notifications (show them in top panel + send accumulating email once a day)
 
@@ -82,11 +82,31 @@ Analytics:
 
 * ability to request entity deletion (like with profiles)
 
-* show count of items in tables
+* complaints
 
-* text fields for resources + other option
+* ability to add admins
 
-* adding urls about officials, events + universal entity feature for it
+* ability to read messages on website
+
+* Invite friends button under contacts in profile
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
+Registration
+    * configure registration with fb, vk, google
+    * consider case when user refuses to give rights to application
+    * create page for LOGIN_ERROR_URL
+    * configure django-social-auth
+    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+    * google allows to login automatically if account with this email already exists (is it ok?)
+    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
+    * create google oauth2 app from grakon account (?)
+    * file with all passwords, social applications (where to get them)
+    * add Facebook App ID to disqus
+---------------------------------------------------------------------------------
+* calculate ratings (similar to points - unify in one method?) - using info
+* sorting by ratings
+
+* after deleting official points are not updated
 
 * order events according to the date (side list and table)
 
@@ -95,8 +115,6 @@ Analytics:
   generalize tabs creation
 
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
-
-* solve issues with several locations and is_main, allow to restrict a single related location for entity model
 
 * make resources in registration not mandatory (?)
 
@@ -113,8 +131,6 @@ Analytics:
 
 * start using tables in side panels everywhere
 * rename participants to profiles?
-
-* complaints
 
 * Introduce FINAL_URL_PREFIX and use
 
@@ -160,8 +176,6 @@ Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
     * when two buttons are close to each other (e.g. profile edit) - line appears between them
     * unused skill icon in icons/badges.png
-    * remove-after-launch
-    * aw-showcase
     * share and share_horizontal overlap a lot
 
 Misc:
@@ -180,14 +194,10 @@ Misc:
 
 * add per_page selector in paginator
 
-* ability to add admins
-
 * ability to choose timezone/determine it from location
 
 * button creating event/official from location page should automatically fill in location in the form
   (get params in url)
-
-* ability to read messages on website
 --------------------------------------
 * calendar page with events
 
@@ -197,12 +207,8 @@ Misc:
 
 * can we speed up get_for by not taking all entities, just those within requested limit?
 
-* GA events to track buttons clicking
 * separate analytics of elections site
 * exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
-* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
-
-* Invite friends button under contacts in profile
 
 * use jinja instead of django templates (?) Check rendering time
 
@@ -255,18 +261,6 @@ Emails:
     * messages, subscription @grakon.org (send messages of different types from different emails)
     * analyze email postfixes, detect sending problems, configure properly
     * suggest users to add our emails to contacts lists
-
-Registration
-    * configure registration with fb, vk, google
-    * consider case when user refuses to give rights to application
-    * create page for LOGIN_ERROR_URL
-    * configure django-social-auth
-    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
-    * google allows to login automatically if account with this email already exists (is it ok?)
-    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
-    * create google oauth2 app from grakon account (?)
-    * file with all passwords, social applications (where to get them)
-    * add Facebook App ID to disqus
 
 Front-end
     * conventions file for front-end developer (docs about tabs and buttons, page layout)

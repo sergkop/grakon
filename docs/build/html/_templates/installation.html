@@ -68,17 +68,13 @@ work as well, however automation script may not work.</p>
 </li>
 <li><p class="first">Install required packages:</p>
 <div class="highlight-python"><pre>sudo aptitude install python python-setuptools git python-pip
-sudo pip install fabric</pre>
+sudo pip install fabric --upgrade</pre>
 </div>
-</li>
-<li><p class="first">Copy deployment/config.json.example to deployment/config.json and ...</p>
 </li>
 <li><p class="first">Run script which automates installation steps:</p>
 <div class="highlight-python"><pre>cd GRAKON_DIR/source/deployment
 fab developer_init</pre>
 </div>
-</li>
-<li><p class="first">Copy init_database.sqlite to database.sqlite</p>
 </li>
 </ol>
 </div>

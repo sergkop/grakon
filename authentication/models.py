@@ -77,7 +77,7 @@ class ActivationProfile(models.Model):
 
     def activation_key_expired(self):
         """ Boolean showing whether this activation key has expired """
-        expiration_date = (self.user.date_joined+datetime.timedelta(days=2)).replace(tzinfo=None)
+        expiration_date = (self.user.date_joined+datetime.timedelta(days=5)).replace(tzinfo=None)
         return self.activation_key==ACTIVATED or (expiration_date<=datetime.datetime.utcnow())
 
     def send_activation_email(self):
