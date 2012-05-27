@@ -64,6 +64,9 @@ class BaseProfileView(object):
 class ProfileView(BaseProfileView, TemplateView):
     tab = 'view'
 
+    def update_context(self):
+        return {'message_form': MessageForm()}
+
 class ProfileContactsView(BaseProfileView, TemplateView):
     tab = 'contacts'
 

@@ -1,15 +1,15 @@
-* site_settings deployment
-* in fabric script move reading config file to a separate method
-
 * deploy code to server
+* site_settings deployment
+
+* load tinymce fields faster (enable compression)
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
 * user's avatar, use it in disqus, emails
 
-* sitemaps
+* inline editing
 
-* load tinymce fields faster (enable compression)
+* sitemaps
 
 Static files:
     * move static and media files to a separate domain
@@ -43,12 +43,20 @@ Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * activate compression for tinymce
 
+* text fields for resources + other option
+
 * in 'about' fields add target="_blank" to all external links (in HTMLField)
 
 * check admin rights in elements.views.check_permissions (check that it works)
 
 * override save() method of EntityProperty models to reset cache
 -------------------------------------------------------------------------------
+* introduce separate server for db, static and media files, memcached
+
+* describe deployment process in docs
+
+* ability to edit html in message
+
 * Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
@@ -57,8 +65,6 @@ Performance:
 Account activation:
     * fix sending profile activation email via admin
     * what happens when account activation link expires? is it possible to register again?
-
-* text fields for resources + other option
 
 * README
 

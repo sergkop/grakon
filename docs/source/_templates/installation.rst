@@ -13,11 +13,11 @@ work as well, however automation script may not work.
 2. Create a folder which will contain all grakon-related files (path - GRAKON_DIR)
 3. Get source code::
 
-    git clone git://github.com/sergkop/grakon.git GRAKON_DIR/source
+    git clone git@github.com:sergkop/grakon.git GRAKON_DIR/source
 
 4. Install required packages::
 
-    sudo aptitude install python python-setuptools git python-pip
+    sudo aptitude install python python-setuptools git python-pip gcc
     sudo pip install fabric --upgrade
 
 5. Run script which automates installation steps::

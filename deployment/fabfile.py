@@ -6,26 +6,30 @@ from fabric.api import cd, env, get, local, prefix, put, run, sudo
 from fabric.contrib.files import sed
 
 REPOSITORY = 'git@github.com:sergkop/grakon.git'
-CONFIG_FILE_PATH = '/home/serg/data/grakon/passwords/config.json' # TODO: take it as an argument
 
-# TODO: set env attributes like in http://stackoverflow.com/questions/1180411/activate-a-virtualenv-via-fabric-as-deploy-user
 # TODO: start using roles
 # TODO: command to upgrade requirements.txt packages
 
-conf = json.load(open(CONFIG_FILE_PATH))
+def web_server_conf():
+    config_path = '/home/serg/data/grakon/passwords/config.json' # TODO: take it as an argument
+    conf = json.load(open(config_path))
 
-USERNAME = conf['username']
+    env.hosts = conf['servers'].keys()
+    env.passwords = conf['servers'] # set passwords for accessing servers
 
-env.hosts = conf['servers'].keys()
-env.passwords = conf['servers'] # set passwords for accessing servers
+    env.deploy_user = conf['username']
 
-conf['path'] = os.path.join('/home/%s' % USERNAME, conf['path']+'/')
-conf['code_path'] = os.path.join(conf['path'], 'source/')
-conf['env_path'] = os.path.join(conf['path'], 'env/')
-conf['static_path'] = os.path.join(conf['path'], 'static/')
-conf['STATIC_ROOT'] = os.path.join(conf['static_path'], 'static/')
+    # Paths
+    proj_path = os.path.join('/home/%s' % env.deploy_user, conf['path']+'/') # project dir
+    env.code_path = os.path.join(proj_path, 'source/') # source code dir
+    env.env_path = os.path.join(proj_path, 'env/') # virtualenv dir
+    env.manage_path = os.path.join(env.code_path, 'manage.py') # path to manage.py
 
-manage_path = os.path.join(conf['code_path'], 'manage.py')
+    # Static files
+    env.static_path = os.path.join(proj_path, 'static/')
+    env.STATIC_ROOT = os.path.join(env.static_path, 'static/')
+
+    return conf
 
 UBUNTU_PACKAGES = [
     # Python
@@ -37,30 +41,29 @@ UBUNTU_PACKAGES = [
     # Libraries
     'libxslt-dev', 'graphviz-dev', 'python-dev', 'python-pygraphviz',
     'libmemcached-dev', 'postgresql-server-dev-all', # 'libmysqlclient-dev',
-    'libjpeg', 'libjpeg-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev',
+    'libjpeg8', 'libjpeg8-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev',
 ]
 
-def virtualenv(command, run_local=False):
-    with prefix('source %s' % os.path.join(conf['env_path'], 'bin', 'activate')):
-        if run_local:
-            local(command)
-        else:
-            cmd(command)
+def virtualenv(command):
+    with prefix('source %s' % os.path.join(env.env_path, 'bin', 'activate')):
+        cmd(command)
 
 def cmd(command):
-    # TODO: solve 'mesg: /dev/pts/1: Operation not permitted'
-    return sudo(command, user=USERNAME)
+    # TODO: solve 'mesg: /dev/pts/1: Operation not permitted' issue
+    return sudo(command, user=env.deploy_user)
 
 # TODO: option - is root the owner of the file
-def file_from_template(template_path, dest_path):
+def file_from_template(template_path, dest_path, data):
     template = StringIO.StringIO()
     get(template_path, template)
-    put(StringIO.StringIO(template.getvalue() % conf), dest_path)
+    put(StringIO.StringIO(template.getvalue() % data), dest_path)
 
 # TODO: run it on the server with another role
 # TODO: configure db backups
 # Use 'sudo su postgres', 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
 def init_data_server():
+    conf = web_server_conf() # TODO: data_server_conf should be here
+
     ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
 
     sudo('aptitude -y install %s' % ' '.join(ubuntu_packages))
@@ -82,6 +85,8 @@ def init_data_server():
             conf['database.USER'], conf['database.PASSWORD']), user='postgres')
 
 def init_system():
+    conf = web_server_conf()
+
     # TODO: block password access (for all accounts), add server ip to mysql's server whitelist,
     #       close ports, activate firewall, add server to load balancer list, reboot server after upgrade (optional),
     #       set files permissions, install sentry
@@ -98,129 +103,143 @@ def init_system():
     # TODO: this user can't switch to sudoer mode
     # Create user
     sudo('useradd -s /bin/bash -d /home/%(user)s -m %(user)s -p %(password)s' % {
-            'user': USERNAME, 'password': env.passwords[env.host_string]})
+            'user': env.deploy_user, 'password': env.passwords[env.host_string]})
 
     # Set default text editor
-    cmd('echo "SELECTED_EDITOR=\"/usr/bin/mcedit\"" > /home/%s/.selected_editor' % USERNAME)
+    cmd('echo "SELECTED_EDITOR=\"/usr/bin/mcedit\"" > /home/%s/.selected_editor' % env.deploy_user)
     sudo('echo "SELECTED_EDITOR=\"/usr/bin/mcedit\"" > /root/.selected_editor')
 
     # Make user sudoer
-    sudo('echo "%s ALL=(ALL:ALL) ALL" >> /etc/sudoers' % USERNAME)
+    sudo('echo "%s ALL=(ALL:ALL) ALL" >> /etc/sudoers' % env.deploy_user)
 
     # Generate ssh key
-    cmd('mkdir /home/%s/.ssh' % USERNAME)
+    cmd('mkdir /home/%s/.ssh' % env.deploy_user)
     cmd('ssh-keygen -t rsa -f /home/%s/.ssh/id_rsa -N %s -C "%s"' % (
-            USERNAME, conf['SSH_KEY_PASSPHRASE'], conf['GITHUB_EMAIL']))
+            env.deploy_user, conf['SSH_KEY_PASSPHRASE'], conf['GITHUB_EMAIL']))
 
     # TODO: change text color
     print "Copy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)"
-    cmd('cat /home/%s/.ssh/id_rsa.pub' % USERNAME)
+    cmd('cat /home/%s/.ssh/id_rsa.pub' % env.deploy_user)
 
     # TODO: stop here to wait while key is added to github
     # Test access to repo
     cmd('ssh -T git@github.com') # TODO: make sure this test is positive
 
     # Add developers ssh keys to access account
-    cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), USERNAME))
+    cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), env.deploy_user))
 
 def restart_web_server():
+    web_server_conf()
+
     sudo('/etc/init.d/nginx restart')
-    sudo(os.path.join(conf['code_path'], 'deployment', 'server.sh'))
+    sudo(os.path.join(env.code_path, 'deployment', 'server.sh'))
 
     # TODO: commands for data server
     # sudo('/etc/init.d/postgresql restart')
     sudo('/etc/init.d/memcached restart')
 
 def init_db():
-    virtualenv('python %s syncdb --all' % manage_path) # TODO: don't create superuser before migrate
-    virtualenv('python %s migrate --fake' % manage_path)
-    virtualenv('python %s import_locations' % manage_path)
+    web_server_conf()
+
+    virtualenv('python %s syncdb --all' % env.manage_path) # TODO: don't create superuser before migrate
+    virtualenv('python %s migrate --fake' % env.manage_path)
+    virtualenv('python %s import_locations' % env.manage_path)
 
 def prepare_code():
-    env.user = USERNAME # TODO: do we need it?
+    conf = web_server_conf()
 
-    cmd('mkdir -p %s %s %s' % (conf['code_path'], conf['env_path'], conf['STATIC_ROOT']))
+    env.user = env.deploy_user # TODO: do we need it?
 
-    cmd('git clone %s %s' % (REPOSITORY, conf['code_path']))
+    cmd('mkdir -p %s %s %s' % (env.code_path, env.env_path, env.STATIC_ROOT))
+
+    cmd('git clone %s %s' % (REPOSITORY, env.code_path))
     # TODO: detect if requirements.txt was updated in git pull and run pip install -r requirements.txt
     # TODO: how to pass ssh-key password?
 
     # TODO: move updating settings to separate method + do backup
     # Create settings file
-    file_from_template(os.path.join(conf['code_path'], 'grakon', 'site_settings.py.template'),
-            os.path.join(conf['code_path'], 'grakon', 'site_settings.py'))
+    file_from_template(os.path.join(env.code_path, 'grakon', 'site_settings.py.template'),
+            os.path.join(env.code_path, 'grakon', 'site_settings.py'), conf)
     # TODO: site_settings.py is owned by root
 
     # Create virtualenv
-    cmd('virtualenv --no-site-packages %s' % conf['env_path'])
+    cmd('virtualenv --no-site-packages %s' % env.env_path)
 
     # TODO: pygraphviz may require creating soft link to be used in virtualenv
-    virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'))
+    virtualenv('pip install -r %s' % os.path.join(env.code_path, 'deployment', 'requirements.txt'))
 
     # PIL requires custom installation to activate JPEG support
     virtualenv('pip install -I pil --no-install')
-    sed(os.path.join(conf['env_path'], 'build', 'pil', 'setup.py'),
+    sed(os.path.join(env.env_path, 'build', 'pil', 'setup.py'),
             '# standard locations',
             'add_directory(library_dirs, "/usr/lib/x86_64-linux-gnu")')
     virtualenv('pip install -I pil --no-download')
 
     # fcgi starting script
-    file_from_template(os.path.join(conf['code_path'], 'deployment', 'server.sh.template'),
-            os.path.join(conf['code_path'], 'deployment', 'server.sh'))
+    file_from_template(os.path.join(env.code_path, 'deployment', 'server.sh.template'),
+            os.path.join(env.code_path, 'deployment', 'server.sh'), conf)
     # TODO: make it executable
 
     # TODO: change socket file owner to nginx user (www-data)
 
-    # TODO: wsgi deployment
+    # TODO: uwsgi deployment
 
     # Nginx configuration
     sudo('cp /etc/nginx/nginx.conf /etc/nginx/nginx-prev.conf')
-    file_from_template(os.path.join(conf['code_path'], 'deployment', 'nginx.conf.template'),
-            '/etc/nginx/nginx.conf')
+    file_from_template(os.path.join(env.code_path, 'deployment', 'nginx.conf.template'),
+            '/etc/nginx/nginx.conf', conf)
 
     deploy_static_files()
 
 # TODO: all static files must be hosted on one server
 def deploy_static_files():
     # TODO: delete old files (?), minify static files
-    virtualenv('python %s collectstatic -c --noinput' % manage_path)
-    virtualenv('cp %sfavicon.ico %sfavicon.ico' % (conf['STATIC_ROOT'], conf['static_path']))
+    virtualenv('python %s collectstatic -c --noinput' % env.manage_path)
+    virtualenv('cp %sfavicon.ico %sfavicon.ico' % (env.STATIC_ROOT, env.static_path))
     virtualenv('cp %s %srobots.txt' % (
-            os.path.join(conf['code_path'], 'grakon', 'templates', 'robots.txt'), conf['static_path']))
-    virtualenv('python %s code_data %sjs/code_data.js' % (manage_path, conf['STATIC_ROOT']))
+            os.path.join(env.code_path, 'grakon', 'templates', 'robots.txt'), env.static_path))
+    virtualenv('python %s code_data %sjs/code_data.js' % (env.manage_path, env.STATIC_ROOT))
 
 # TODO: optionally run pip install -r requirements.txt (with upgrade?)
 def update_code():
-    with cd(conf['code_path']):
+    web_server_conf()
+    with cd(env.code_path):
         cmd('git pull')
-    virtualenv('python %s migrate' % manage_path)
+    virtualenv('python %s migrate' % env.manage_path)
     deploy_static_files()
     restart_web_server()
 
 def developer_init():
-    # TODO: make it independent on conf
-    conf['code_path'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    conf['env_path'] = os.path.abspath(os.path.join(conf['code_path'], '..', 'env'))
+    code_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    envpath = os.path.abspath(os.path.join(code_path, '..', 'env'))
 
-    sudo('aptitude -y install %s' % ' '.join(UBUNTU_PACKAGES))
+    local('sudo aptitude -y install %s' % ' '.join(UBUNTU_PACKAGES))
 
     # Copy settings file
-    local('cp %s %s' % (os.path.join(conf['code_path'], 'grakon', 'site_settings.py.example'),
-            os.path.join(conf['code_path'], 'grakon', 'site_settings.py'))
+    local('cp %s %s' % (os.path.join(code_path, 'grakon', 'site_settings.py.example'),
+            os.path.join(code_path, 'grakon', 'site_settings.py')))
 
     # Create virtualenv
-    local('virtualenv --no-site-packages %s' % conf['env_path'])
+    local('virtualenv --no-site-packages %s' % env_path)
+
+    virtualenv_cmd = "/bin/bash -l -c 'source %s && %%s'" % \
+            os.path.join(env_path, 'bin', 'activate')
 
     # TODO: pygraphviz may require creating soft link to be used in virtualenv
-    virtualenv('pip install -r %s' % os.path.join(conf['code_path'], 'deployment', 'requirements.txt'), True)
+    local(virtualenv_cmd % ('pip install -r %s' % os.path.join(code_path, 'deployment', 'requirements.txt')))
 
     # PIL requires custom installation to activate JPEG support
-    virtualenv('pip install -I pil --no-install', True)
-    sed(os.path.join(conf['env_path'], 'build', 'pil', 'setup.py'),
-            '# standard locations',
-            'add_directory(library_dirs, "/usr/lib/x86_64-linux-gnu")')
-    virtualenv('pip install -I pil --no-download', True)
+    local(virtualenv_cmd % 'pip install -I pil --no-install')
+
+    # Insert line in setup.py
+    setuppy_path = os.path.join(env_path, 'build', 'pil', 'setup.py')
+    lines = list(open(setuppy_path).readlines())
+    line_index = [i for i in range(len(lines)) if '# standard locations' in lines[i]][0]
+    lines.insert(line_index+1, '        add_directory(library_dirs, "/usr/lib/x86_64-linux-gnu")\n')
+    open(setuppy_path, 'w').writelines(lines)
+
+    local(virtualenv_cmd % 'pip install -I pil --no-download')
 
     # Copy database file
-    local('cp %s %s' % (os.path.join(conf['code_path'], 'init_database.sqlite'),
-            os.path.join(conf['code_path'], 'database.sqlite'))
+    local('cp %s %s' % (os.path.join(code_path, 'init_database.sqlite'),
+            os.path.join(code_path, 'database.sqlite')))
