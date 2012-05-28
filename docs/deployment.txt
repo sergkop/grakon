@@ -8,3 +8,5 @@ Using fabric:
         * prepare_code
         * init_db
         * restart_web_server
+
+    To run a command use 'fab web_server command_name'

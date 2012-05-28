@@ -10,17 +10,17 @@ REPOSITORY = 'git@github.com:sergkop/grakon.git'
 # TODO: start using roles
 # TODO: command to upgrade requirements.txt packages
 
-def web_server_conf():
+def web_server():
     config_path = '/home/serg/data/grakon/passwords/config.json' # TODO: take it as an argument
-    conf = json.load(open(config_path))
+    env.conf = json.load(open(config_path))
 
-    env.hosts = conf['servers'].keys()
-    env.passwords = conf['servers'] # set passwords for accessing servers
+    env.hosts = env.conf['servers'].keys()
+    env.passwords = env.conf['servers'] # set passwords for accessing servers
 
-    env.deploy_user = conf['username']
+    env.deploy_user = env.conf['username']
 
     # Paths
-    proj_path = os.path.join('/home/%s' % env.deploy_user, conf['path']+'/') # project dir
+    proj_path = os.path.join('/home/%s' % env.deploy_user, env.conf['path']+'/') # project dir
     env.code_path = os.path.join(proj_path, 'source/') # source code dir
     env.env_path = os.path.join(proj_path, 'env/') # virtualenv dir
     env.manage_path = os.path.join(env.code_path, 'manage.py') # path to manage.py
@@ -29,7 +29,7 @@ def web_server_conf():
     env.static_path = os.path.join(proj_path, 'static/')
     env.STATIC_ROOT = os.path.join(env.static_path, 'static/')
 
-    return conf
+    return env.conf
 
 UBUNTU_PACKAGES = [
     # Python
@@ -62,14 +62,12 @@ def file_from_template(template_path, dest_path, data):
 # TODO: configure db backups
 # Use 'sudo su postgres', 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
 def init_data_server():
-    conf = web_server_conf() # TODO: data_server_conf should be here
-
     ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
 
     sudo('aptitude -y install %s' % ' '.join(ubuntu_packages))
 
-    sudo('createuser -l -E -S -D -R %s' % conf['database.USER'], user='postgres')
-    sudo('createdb -O %s %s' % (conf['database.USER'], conf['database.NAME']), user='postgres')
+    sudo('createuser -l -E -S -D -R %s' % env.conf['database.USER'], user='postgres')
+    sudo('createdb -O %s %s' % (env.conf['database.USER'], env.conf['database.NAME']), user='postgres')
 
     postgres_conf = {
         'client_encoding': "'UTF8'",
@@ -79,14 +77,12 @@ def init_data_server():
 
     for param, value in postgres_conf.iteritems():
         sudo('echo "ALTER ROLE %s in DATABASE %s SET %s = %s;" | psql' % (
-                conf['database.USER'], conf['database.NAME'], param, value), user='postgres')
+                env.conf['database.USER'], env.conf['database.NAME'], param, value), user='postgres')
 
     sudo("echo \"ALTER USER %s WITH PASSWORD '%s';\" | psql" % (
-            conf['database.USER'], conf['database.PASSWORD']), user='postgres')
+            env.conf['database.USER'], env.conf['database.PASSWORD']), user='postgres')
 
 def init_system():
-    conf = web_server_conf()
-
     # TODO: block password access (for all accounts), add server ip to mysql's server whitelist,
     #       close ports, activate firewall, add server to load balancer list, reboot server after upgrade (optional),
     #       set files permissions, install sentry
@@ -115,7 +111,7 @@ def init_system():
     # Generate ssh key
     cmd('mkdir /home/%s/.ssh' % env.deploy_user)
     cmd('ssh-keygen -t rsa -f /home/%s/.ssh/id_rsa -N %s -C "%s"' % (
-            env.deploy_user, conf['SSH_KEY_PASSPHRASE'], conf['GITHUB_EMAIL']))
+            env.deploy_user, env.conf['SSH_KEY_PASSPHRASE'], env.conf['GITHUB_EMAIL']))
 
     # TODO: change text color
     print "Copy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)"
@@ -126,11 +122,9 @@ def init_system():
     cmd('ssh -T git@github.com') # TODO: make sure this test is positive
 
     # Add developers ssh keys to access account
-    cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(conf['developers_ssh_pubkey']), env.deploy_user))
+    cmd('echo "%s" >> /home/%s/.ssh/authorized_keys' % ('\n'.join(env.conf['developers_ssh_pubkey']), env.deploy_user))
 
 def restart_web_server():
-    web_server_conf()
-
     sudo('/etc/init.d/nginx restart')
     sudo(os.path.join(env.code_path, 'deployment', 'server.sh'))
 
@@ -139,15 +133,11 @@ def restart_web_server():
     sudo('/etc/init.d/memcached restart')
 
 def init_db():
-    web_server_conf()
-
     virtualenv('python %s syncdb --all' % env.manage_path) # TODO: don't create superuser before migrate
     virtualenv('python %s migrate --fake' % env.manage_path)
     virtualenv('python %s import_locations' % env.manage_path)
 
 def prepare_code():
-    conf = web_server_conf()
-
     env.user = env.deploy_user # TODO: do we need it?
 
     cmd('mkdir -p %s %s %s' % (env.code_path, env.env_path, env.STATIC_ROOT))
@@ -178,7 +168,7 @@ def prepare_code():
     # fcgi starting script
     file_from_template(os.path.join(env.code_path, 'deployment', 'server.sh.template'),
             os.path.join(env.code_path, 'deployment', 'server.sh'), conf)
-    # TODO: make it executable
+    # TODO: make it executable (chmod +x server.sh)
 
     # TODO: change socket file owner to nginx user (www-data)
 
@@ -202,7 +192,7 @@ def deploy_static_files():
 
 # TODO: optionally run pip install -r requirements.txt (with upgrade?)
 def update_code():
-    web_server_conf()
+    # TODO: perform db backup
     with cd(env.code_path):
         cmd('git pull')
     virtualenv('python %s migrate' % env.manage_path)

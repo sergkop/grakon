@@ -164,6 +164,7 @@ AUTHENTICATION_BACKENDS = (
 from grakon.public_site_settings import *
 from grakon.site_settings import *
 
+# TODO: remove unlink button?
 TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'libs', 'tiny_mce')
 TINYMCE_DEFAULT_CONFIG = {

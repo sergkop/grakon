@@ -53,11 +53,11 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
 
     from_str = u'%s <%s>' % settings.EMAILS[from_email]
     to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
-    
+
     headers = {}
     if reply_to:
         headers['Reply-To'] = reply_to
-    
+
     msg = EmailMultiAlternatives(subject, text, from_str, [to_email], headers=headers)
     msg.attach_alternative(html, "text/html")
 
@@ -72,7 +72,7 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     """
     # TODO: test it
     sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,
-            include_headers=['From', 'To', 'Cc', 'Subject'], debuglog=open('/home/serg/data/grakon/debug.txt', 'w'))
+            include_headers=['From', 'To', 'Cc', 'Subject'])
     message = sig + message
 
     # TODO: set priority

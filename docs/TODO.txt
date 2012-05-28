@@ -1,7 +1,4 @@
-* deploy code to server
-* site_settings deployment
-
-* load tinymce fields faster (enable compression)
+* fix bug with data in lists of participants
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
@@ -9,11 +6,15 @@
 
 * inline editing
 
+* in breadcrumbs selected location must be a link
+
 * sitemaps
 
 Static files:
     * move static and media files to a separate domain
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
+
+* Hide star near location form field where it is not required
 
 * share buttons
 
@@ -35,7 +36,7 @@ Dialog forms:
 * link social likes to the page on which they are located
 
 Deployment:
-    * switch to wsgi
+    * switch to uwsgi
     * database backups
     * configure firewall (ufw)
 

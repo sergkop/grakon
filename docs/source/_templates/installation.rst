@@ -17,7 +17,7 @@ work as well, however automation script may not work.
 
 4. Install required packages::
 
-    sudo aptitude install python python-setuptools git python-pip gcc
+    sudo aptitude install python python-setuptools git python-pip
     sudo pip install fabric --upgrade
 
 5. Run script which automates installation steps::

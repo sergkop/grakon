@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DIR=/backup/psql
+DB_NAME=grakon
+
+#[ ! $DIR ] && mkdir -p $DIR || :
+
+# TODO: Cron jobs - https://help.ubuntu.com/community/CronHowto
+# TODO: http://wiki.postgresql.org/wiki/Automated_Backup_on_Linux
+
+# Create a backup
+sudo -u postgres pg_dump $DB_NAME | gzip -c > $DIR/backup.sql.gz
+
+# Restore a backup
+gunzip $DIR/backup.sql.gz
+psql -d $DB_NAME -f $DIR/backup.sql
