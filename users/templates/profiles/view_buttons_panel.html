@@ -11,14 +11,6 @@
         <p>Отправить сообщение пользователю <strong>{{ profile }}</strong>:</p>
 
         <form id="send_message_form" method="post">
-            <div><label for="title">Тема:</label></div>
-            <div><input type="text" name="title" value="" size="30" /></div>
-            <div><label for="body">Сообщение:</label></div>
-            <div><textarea name="body" rows="4" cols="30"></textarea></div>
-            <div>
-                <label for="show_email">Показать email получателю</label>
-                <input type="checkbox" name="show_email" checked="checked" />
-            </div>
             {{ message_form.as_p }}
         </form>
     </div>
