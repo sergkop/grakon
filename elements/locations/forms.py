@@ -45,13 +45,15 @@ def location_init(required, label):
         # TODO: location_init should take parameter, which controls whether location is added or updated
         save = new_cls.save
         def new_save(form):
+            is_create_form = form.instance.id is None
+
             entity = save(form)
 
             # TODO: what about is_main (take decorator params to control it)
-            if form.instance.id:
-                EntityLocation.objects.update_location(entity, form.location)
-            else:
+            if is_create_form:
                 EntityLocation.objects.add(entity, form.location, params={'is_main': True})
+            else:
+                EntityLocation.objects.update_location(entity, form.location)
 
             return entity
         new_cls.save = new_save
