@@ -17,7 +17,7 @@ from services.models import Email
 
 # TODO: ability to attach files
 # TODO: check user's subscription settings? (some emails should be sent anyway)
-def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None):
+def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None, to_email=None):
     """ To send emails to admin account set recipient=None """
     # TODO: generate unsubscribe link with hash (page with confirmation); default place for it in base template
     context = project_settings()
@@ -52,7 +52,8 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     html = tostring(xml)
 
     from_str = u'%s <%s>' % settings.EMAILS[from_email]
-    to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
+    if to_email is None:
+        to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
 
     headers = {}
     if reply_to:
@@ -76,7 +77,8 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     message = sig + message
 
     # TODO: set priority
-    email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email, priority=0)
+    email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email,
+            to_email=to_email, priority=0)
     email.save()
 
     send_email_task(email) # TODO: run it in celery (use select_related)
@@ -87,9 +89,8 @@ def send_email_task(email):
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
 
     try:
-        # TODO: use select_related
         response = conn.send_raw_email(raw_message=email.raw_msg,
-                destinations=email.recipient.user.email if email.recipient else settings.ADMIN_EMAIL,
+                destinations=email.to_email,
                 source=settings.EMAILS[email.from_email][1])
     except SESConnection.ResponseError, err:
         error_keys = ['status', 'reason', 'body', 'request_id',

@@ -22,6 +22,7 @@ class Email(models.Model):
     type = models.CharField(max_length=20, db_index=True)
     raw_msg = models.TextField()
     from_email = models.CharField(max_length=15, db_index=True) # key to get email from EMAILS
+    to_email = models.EmailField(db_index=True)
 
     time = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(max_length=9, choices=EMAIL_STATUSES, default='unsent', db_index=True)
