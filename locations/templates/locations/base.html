@@ -8,23 +8,8 @@
     {% include "locations/breadcrumbs.html" %}
 {% endblock %}
 
-{% block left_column %}
-    <h3>Инструменты<i>&nbsp;</i></h3>
-    <div class="gr-side-item">
-        <h4 class="gr-officials">
-            <a href="http://elections.grakon.org" target="_blank">Выборы</a>
-            <i title="результаты выборов президента">&nbsp;</i>
-        </h4>
-        <ul>
-            <li>Интернет-площадка, посвященная выборам, переехала на&nbsp;<a href="http://elections.grakon.org" target="_blank">сайт о&nbsp;выборах</a>.</li>
-        </ul>
-    </div>
-
-    {% include "officials/side_block.html" %}
-
-    {% include "events/side_block.html" %}
-
-    {% include "tasks/side_block.html" %}
+{% block top %}
+    <h1>{{ location.name }}</h1>
 {% endblock %}
 
 {% block right_column %}
@@ -35,18 +20,18 @@
     {% endif %}
 
     <div class="gr-side-item gr-light-back">
-        <h4 class="gr-participants"><a href="{% url location_participants location.id %}">Участники&nbsp;({{ info.participants.count }})</a> <i title="пользователи, следящие за этим регионом">&nbsp;</i></h4>
-        <table width="100%" class="gr-side-table">
-            {% for person in info.participants.entities %}
-                {% include "elements/person.html" %}
-            {% endfor %}
+        <div class="gr-side-item">
+            <h4>Участники&nbsp;({{ info.participants.count }}):</h4>
+            <p>
+                {% for person in info.participants.entities %}
+                    <a href="{{ person.instance.get_absolute_url }}">{{ person.instance }}</a>{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </p>
             {% if info.participants.count > LIST_COUNT.participants %}
-                <tr>
-                    <td><a href="{% url location_participants location.id %}">Показать всех...</a></td>
-                    <td></td><td></td><td></td>
-                </tr>
+                <a href="{% url location_participants location.id %}">Показать всех...</a>
             {% endif %}
-        </table>
+        </div>
+
         {% if is_lowest_level and not is_participant %}
             <div align="center">
                 <a id="become_participant_btn" class="ym-button">Стать участником</a>
@@ -60,6 +45,5 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ location.name }}</h1>
-    {% tabs tabs tab %}
+    {% include template_path %}
 {% endblock %}

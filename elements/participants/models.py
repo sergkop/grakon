@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
+from elements.models import BaseEntityProperty, BaseEntityPropertyManager, ENTITIES_MODELS, feature_model
 
 # TODO: avoid importing profile in many places
 # TODO: user should not follow himself
@@ -116,24 +116,33 @@ def get_participants(role):
         }
     return func
 
-# TODO: take params for pagination
-def participant_in(role):
-    def func(profile):
-        # Return {'count': count, 'entities': [top_entities_info]}
-        entities_data = list(profile.participates_in.filter(role=role).values_list('content_type', 'entity_id'))
+# TODO: optimize it - don't get full list of ids. get count and ids separatelly, cache count
+def participant_in(profile, role, entity_type):
+    # Return lambda profile: {'count': count, 'entities': [top_entities_info]}
+    def func(start=0, limit=None, sort_by=('-task__rating',)):
+        entity_ids = list(profile.participates_in.filter(role=role,
+                content_type=ContentType.objects.get_for_model(ENTITIES_MODELS[entity_type])) \
+                .order_by(*sort_by).values_list('entity_id', flat=True))
 
-        entities_by_ct = {}
-        for ct_id, e_id in entities_data:
-            entities_by_ct.setdefault(ct_id, []).append(e_id)
+        return {'count': len(entity_ids),
+                'ids': entity_ids[slice(start, start+limit if limit else settings.LIST_COUNT['administered'])]}
 
-        entities = []
-        for ct_id in entities_by_ct:
-            model = ContentType.objects.get_for_id(ct_id).model_class()
-            entities += model.objects.info_for(entities_by_ct[ct_id], related=False).values()
-
-        return {'count': len(entities_data),
-                'entities': sorted(entities, key=lambda e: -e['instance'].rating)[:settings.LIST_COUNT['administered']]}
     return func
+
+"""
+entities_data = list(profile.participates_in.filter(role=role).values_list('content_type', 'entity_id'))
+
+entities_by_ct = {}
+for ct_id, e_id in entities_data:
+    entities_by_ct.setdefault(ct_id, []).append(e_id)
+
+entities = []
+for ct_id in entities_by_ct:
+    model = ContentType.objects.get_for_id(ct_id).model_class()
+    entities += model.objects.info_for(entities_by_ct[ct_id], related=False).values()
+
+count = len(entities_data)
+"""
 
 ROLE_TYPES = (
     ('admin', u'Админ', u'Админы'),
@@ -162,7 +171,7 @@ class EntityParticipant(BaseEntityProperty):
 
         if entity_model.entity_name == 'participants':
             for role, title in ROLE_CHOICES:
-                methods[role+'_of'] = participant_in(role)
+                methods[role+'_of'] = lambda profile, entity_type: participant_in(profile, role, entity_type)
 
         return methods
 

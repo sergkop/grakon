@@ -1,15 +1,21 @@
+# -*- coding:utf-8 -*-
+from django.db import models
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
+from elements.models import HTMLField
 from elements.participants.models import EntityParticipant, ROLE_TYPES
-from elements.utils import table_data
+from elements.utils import check_permissions, clean_html, entity_post_method, table_data
 
-def entity_base_view(view, entity_model, id):
-    view.entity = get_object_or_404(entity_model, id=id)
+# TODO: if there is a single location - add to ctx (admin as well?)
+def entity_base_view(view, entity_model, selector):
+    """ selector is a dict uniquely identifying the entity """
+    view.entity = get_object_or_404(entity_model, **selector)
 
     ctx = {
-        'tools_menu_item': True,
         'tab': view.tab,
-        'participants_url': view.participants_url,
+        'tabs': view.tabs,
+        'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][4],
         'info': view.entity.info(),
     }
 
@@ -23,6 +29,7 @@ def entity_base_view(view, entity_model, id):
     ctx.update(view.update_context())
     return ctx
 
+# TODO: fix it
 def participants_view(view):
     roles = type(view.entity).roles
 
@@ -41,11 +48,26 @@ def participants_view(view):
     })
     return ctx
 
-#from django.http import HttpResponse
-#from elements.utils import check_permissions, entity_post_method
-# TODO: depricate or move to resources
-#@entity_post_method
-#@check_permissions
-#def update_resources(request, entity):
-#    EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
-#    return HttpResponse('ok')
+@entity_post_method
+@check_permissions
+def update_text_field(request, entity):
+    field = request.POST.get('field', '')
+    if field not in type(entity).editable_fields:
+        return HttpResponse(u'Это поле нельзя редактировать')
+
+    value = request.POST.get('value', '')
+
+    model_field = type(entity)._meta.get_field(field)
+    if type(model_field) is models.CharField:
+        value = value[:model_field.max_length]
+    elif type(model_field) is HTMLField:
+        value = clean_html(value)
+    else:
+        assert False, "Field %s of entity model %s should not be editable" % (field, model_field.__name__)
+
+    print value
+    setattr(entity, field, value)
+    entity.save()
+    print entity
+
+    return HttpResponse('ok')

@@ -14,7 +14,7 @@ class TabsNode(template.Node):
     def __init__(self, *args):
         """
         args is a sequence of tabs, active_tab.
-        tabs is a list of tuples (name, title, url, template, css_class).
+        tabs is a list of tuples (name, title, url, css_class).
         """
         self.args = [template.Variable(arg) for arg in args]
 
@@ -26,7 +26,6 @@ class TabsNode(template.Node):
 
         context.update({
             'tabs': tabs,
-            'template_path': active_tabs[0][3],
             'active': active
         })
         return render_to_string('elements/tabs.html', context)

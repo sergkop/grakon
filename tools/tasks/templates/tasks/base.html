@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 
-{% load elements %}
-
 {% block title %}{{ task.title }} - Гракон{% endblock %}
 
-{% block page_class %}gr-right-sidebar{% endblock %}
+{% block breadcrumbs %}
+    {% include "locations/breadcrumbs.html" %}
+{% endblock %}
+
+{% block top %}
+    <h1>Задача: {{ task.title }}</h1>
+{% endblock %}
 
 {% block right_column %}
-    {% include "participants/admins_side_block.html" %}
+    <div align="center" class="gr-mb70">
+        <a class="gr-follow-button" href="">Добавить идею</a>
+    </div>
+
+    <div class="gr-side-item gr-mb10">
+        <h4>Поддержали ресурсами:</h4>
+        <p>
+            <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>
+        </p>
+    </div>
+
+    <div class="gr-side-item gr-mb10">
+        <h4>Авторы идей:</h4>
+        <p>
+            <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>
+        </p>
+    </div>
 
     {% include "participants/followers_side_block.html" %}
 
@@ -15,6 +35,5 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Задачи &mdash; {{ task.title }}</h1>
-    {% tabs tabs tab %}
+    {% include template_path %}
 {% endblock %}

@@ -37,7 +37,6 @@ class BaseEventView(object):
         ctx.update({
             'tabs': tabs,
             'event': self.entity,
-            'admins_title': u'Организаторы', # TODO: maybe it should be Админы as everywhere else?
             'follow_button': {
                 'cancel_msg': u'Вы хотите отписаться от новостей об этом мероприятии?',
                 'cancel_btn': u'Отписаться',

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - Гракон{% endblock %}
+
+{% block breadcrumbs %}
+    {% include "locations/breadcrumbs.html" %}
+{% endblock %}
+
+{% block top %}
+    <h1>Проект: {{ project.title }}</h1>
+{% endblock %}
+
+{% block right_column %}
+    <!--div class="dimmed gr-mb20">11 декабря 2012</div-->
+    <div align="center" class="gr-mb20">
+        <a class="gr-follow-button" href="/register">Следить за проектом</a>
+    </div>
+
+    <div class="gr-side-item gr-mb15">
+        <h4>Требуется:</h4>
+
+        <div class="gr-resoure-item">
+            <a href="">
+                <h2>5 000 р</h2>
+                <p>Описание , для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
+            </a>
+        </div>
+
+        <div class="gr-resoure-item">
+            <a href="">
+                <h2>Машина: 2</h2>
+                <p>Описани, для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
+            </a>
+        </div>
+    </div>
+
+    {% include "disqus/counter.html" %}
+{% endblock %}
+
+{% block content %}
+    {% include template_path %}
+{% endblock %}

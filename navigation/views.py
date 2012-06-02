@@ -8,24 +8,14 @@ from locations.views import BaseLocationView
 from navigation.forms import FeedbackForm
 from services.cache import cache_view
 
-class MainView(BaseLocationView, TemplateView):
-    tab = 'main'
-
-    def get_context_data(self, **kwargs):
-        kwargs['loc_id'] = Location.objects.country().id
-        return super(MainView, self). get_context_data(**kwargs)
-
-main = MainView.as_view()
-
-#def main(request):
-#    country_id = Location.objects.country().id
-#    return WallLocationView.as_view()(request, loc_id=country_id)
+def main(request):
+    return render_to_response('main.html', context_instance=RequestContext(request, {}))
 
 # TODO: how to utilise caching for logged in users?
 #@cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
 def static_page(request, **kwargs):
     """ 
-    kwargs must contain the following keys: 'tab', 'template', 'tabs', 'menu_item'.
+    kwargs must contain the following keys: 'tab', 'template', 'tabs'.
     kwargs['tabs']=[(name, url, template, css_class), ...]
     """
     return render_to_response(kwargs['template'], context_instance=RequestContext(request, kwargs))
@@ -45,4 +35,4 @@ def feedback(request, **kwargs):
 
 def feedback_thanks(request):
     return render_to_response('feedback/thanks.html',
-            context_instance=RequestContext(request, {'menu_item': 'help'}))
+            context_instance=RequestContext(request, {}))

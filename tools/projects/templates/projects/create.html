@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Создать проект - Гракон{% endblock %}
+
+{% block top %}
+    <h1>Создать проект</h1>
+{% endblock %}
+
+{% block content %}
+    {% crispy form form.helper %}
+{% endblock %}

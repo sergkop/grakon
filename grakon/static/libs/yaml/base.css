@@ -30,7 +30,7 @@
 	/* (en) Correction:margin/padding reset caused too small select boxes. */
 	/* (de) Korrektur:Das Zurücksetzen der Abstände verursacht zu kleine Selectboxen. */
 	option { padding-left:0.4em; } /* LTR */
-	select { padding:1px; }
+	select { padding:1px; border: 1px solid #d4d0c8;}
 
 	/**
 	* (en) Global fix of the Italics bugs in IE 5.x and IE 6
@@ -52,7 +52,7 @@
 
 		/* (en) Standard values for colors and text alignment */
 		/* (de) Vorgabe der Standardfarben und Textausrichtung */
-		background:#f3f3f3;
+		background:#e8eaed;
 		color:#000;
 		text-align:left; /* LTR */
 	}
@@ -70,9 +70,9 @@
 	
 	header, footer, nav, .ym-column {text-align:center;}
 	
-	nav {margin-bottom: 0.8em; padding-top: 2.5em}
+	nav {margin-bottom: .5em; padding-top: 2.5em}
 	
-	footer {height: 3.5em; position: relative; padding: .8em 0 1em; min-width: 1024px;}
+	footer {height: 3em; position: relative; padding: .8em 0 1em; font-size: .9em;}
 		footer a {margin-right: 0.7em;}
 	
 	header {padding: 0.1em 0; position: fixed; width: 100%; z-index:1000;}
@@ -134,7 +134,7 @@
 	* @section Float Handling Module
 	*/
 	
-	.ym-wrapper {min-width: 960px; max-width: 1200px; text-align:left; margin: 0 auto; padding: 0 20px}
+	.ym-wrapper {width: 900px; text-align:left; margin: 0 auto;}
 
 	/* (en) clearfix method for clearing floats */
 	/* (de) Clearfix-Methode zum Clearen der Float-Umgebungen */
@@ -203,7 +203,7 @@
 		width:100%;
 	}
 	
-	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3.5em 0; padding: 0;  min-width: 1024px;}
+	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3em 0; padding: 0;  min-width: 1024px;}
 	.gr-footer {height: 3.5em;}
 }
 
@@ -219,18 +219,12 @@
 	* |-------------------------------|
 	*/
 	
-	
-
 	.ym-column { display:table; width:100%;}
 
-	.ym-col1 { width: 60%; float:left; margin-left: 20%; padding: 1em 0 0 0} /* center column */
-	.ym-col2 { width: 20%; float:left;  margin-left: -80%; padding: 1em 1em 0 0} /* left column */
-	.ym-col3 {  float:right; width: 20%; margin-left: -5px; margin-right: 0%; padding: 1em 0 0 1em} /* right column */
+	.ym-col1 { width: 70%; float:left; padding: 3em 2em 0 1em;} /* center column */
+	.ym-col2 { width: 30%; float:left;  margin-left: -100%; padding: 1em 1em 0 0;} /* left column */
+	.ym-col3 {  float:right; width: 30%; margin-left: -5px; margin-right: 0%; padding: 3em 0 0 2em;} /* right column */
 	
-	.gr-left-sidebar .ym-col1 {margin-right: 0; width: 80%}
-	.gr-left-sidebar .ym-col2 {margin-left: -100%;}
-	.gr-right-sidebar .ym-col1 {margin-left: 0; width: 80%}
-
 	.ym-cbox { padding: 0 10px }
 	.ym-cbox-left { padding: 0 10px 0 0 }
 	.ym-cbox-right { padding: 0 0 0 10px }
@@ -308,6 +302,8 @@
 	* (en) Styling of forms where both label and input/select/textarea are styled with display:block;
 	* (de) Formulargestaltung, bei der sowohl label als auch input/select/textarea mit display:block; gestaltet werden
 	*/
+	
+	textarea {border: 1px solid #ccc;}
 
 	.ym-form,
 	.ym-form fieldset { overflow:hidden; }
@@ -365,7 +361,7 @@
 	.ym-form textarea {
 		display:block;
 		position:relative;
-		width:58.5%;
+		/*width:58.5%;*/
 	}
 
 	.ym-form .ym-fbox-check input {
@@ -459,7 +455,7 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content {background-color: #fff; padding: 20px; margin: 0 0 1em;}
+	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -3px; padding-bottom: 3em;}
 }
 
 @media print {

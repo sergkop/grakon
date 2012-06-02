@@ -1,77 +1,34 @@
-{% if not own_profile %}
-    {% include "profiles/view_buttons_panel.html" %}
-{% endif %}
+<div class="gr-descr">
+    {% with title="Кто я такой" field="intro" css_class="gr-mt0" text=profile.intro %}
+        {% include "elements/text_block.html" %}
+    {% endwith %}
 
-<div class="gr-fl gr-photo">
-    <img src="{{ STATIC_URL }}images/icons/nophoto.jpg">
-</div>
-
-<div class="gr-user-charts">
-    <div class="gr-user-chart gr-leader">
-        <strong><big>{{ info.points.leader }}</big>/100</strong>
-        <div class="gr-chart-back">
-            <span style="width: {{ info.points.leader }}%">&nbsp;</span>
+    {% if not is_admin %}
+        <div class="gr-mt20">
+            {% include "dialogs/send_message.html" %}
+            {% include "participants/follower_button.html" %}
+            <!--a class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a-->
         </div>
-        <small>Лидер</small>
-        <i>&nbsp;</i>
-    </div>
-    <div class="gr-user-chart gr-offline-activity">
-        <strong><big>{{ info.points.offline }}</big>/100</strong>
-        <div class="gr-chart-back">
-            <span style="width: {{ info.points.offline }}%">&nbsp;</span>
-        </div> 
-        <small>Оффлайн активист</small>
-        <i>&nbsp;</i>
-    </div>
-    <div class="gr-user-chart gr-online-activity">
-        <strong><big>{{ info.points.online }}</big>/100</strong>
-        <div class="gr-chart-back">
-            <span style="width: {{ info.points.online }}%">&nbsp;</span>
-        </div> 
-        <small>Онлайн активист</small>  
-        <i>&nbsp;</i>
-    </div>
-</div>
-
-<div class="ym-clearfix">&nbsp;</div>
-
-{% if profile.about %}
-    {{ profile.about|safe }}
-{% else %}
-    {% if own_profile %}
-        <p><i><a href="{% url edit_profile profile.username %}">Добавьте</a> информацию о себе.</i></p>
-    {% else %}
-        <p><i>Пользователь еще не добавил информацию о себе.</i></p>
     {% endif %}
-{% endif %}
 
-{% comment %}
-<dl class="gr-inline-dl">
-    <dt class="dimmed">Сайт:</dt>
-    <dd><a href="">http://www.wix.com/html5/now-on-wix</a></dd>
+    {% with title="О себе" field="about" html=profile.about %}
+        {% include "elements/html_block.html" %}
+    {% endwith %}
 
-    <dt class="dimmed">E-mail:</dt>
-    <dd><a href="mailto:mikpanko@gmail.com">mikpanko@gmail.com</a></dd>
-
-    <dt class="dimmed">Skype:</dt>
-    <dd>MPanko <a href="" class="gr-skype">&nbsp;</a></dd>
-</dl>
-{% endcomment %}
-
-<h5>Ресурсы <span class="gr-resources">&nbsp;</span></h5>
-<ul id="resources">
+    <h2>Ресурсы:{% if is_admin %}<i class="gr-editing">&nbsp;</i>{% endif %}</h2>
     {% for resource in info.resources %}
-        <li>{{ resource.title }}</li>
+        <div class="gr-resource-item">{{ resource.title }}</div>
+        <!--p>2000 рублей. Могу перекинуть на яндекс-кошелек</p-->
     {% endfor %}
-</ul>
 
-<h5>География участия <span class="gr-geography">&nbsp;</span></h5>
-{% with locations_data=info.locations.entities %}
-    {% include "locations/list.html" %}
-{% endwith %}
+    <h2>География участия:{% if is_admin %}<i class="gr-editing">&nbsp;</i>{% endif %}</h2>
+    {% with locations_data=info.locations.entities %}
+        {% include "locations/list.html" %}
+    {% endwith %}
 
-{% if own_profile %}
-    <script type="text/javascript">
-        locations_list_editing({{ info.ct }}, {{ request.profile.id }});
-    </script>
-{% endif %}
+    {% if is_admin %}
+        <script type="text/javascript">
+            locations_list_editing({{ info.ct }}, {{ request.profile.id }});
+        </script>
+    {% endif %}
+</div>

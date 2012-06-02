@@ -180,4 +180,4 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('location_wall', (), {'loc_id': str(self.id)})
+        return ('location_tasks', (), {'loc_id': str(self.id)})

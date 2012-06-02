@@ -27,10 +27,12 @@ def reset_cache(func):
     return new_func
 
 # TODO: sync it with tinymce and test
+# TODO: remove all <p></p>. Replace them with
+# TODO: add target="_blank" to all external links
 def clean_html(html):
     """ Clean html fields edited by tinymce """
-    tags = ['a', 'address', 'b', 'big', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'li', 
-                'ol', 'p', 'pre', 's', 'span', 'strike', 'strong', 'sub', 'sup', 'u', 'ul']
+    tags = ['a', 'b', 'big', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'li', 
+                'ol', 'p', 's', 'span', 'strike', 'strong', 'u', 'ul']
 
     attributes = ['align', 'alt', 'border', 'class', 'dir', 'data', 'height', 'href', 'id', 'lang', 'longdesc', 'media', 'multiple',
                 'nowrap', 'rel', 'rev', 'span', 'src', 'style', 'target', 'title', 'type', 'valign', 'vspace', 'width']
@@ -53,7 +55,7 @@ def table_data(request, entity_type, selector, limit=20):
 
     from elements.models import ENTITIES_MODELS
     entity_model = ENTITIES_MODELS[entity_type]
-    entities_data = selector((page-1)*per_page, limit=per_page)
+    entities_data = selector(start=(page-1)*per_page, limit=per_page)
     entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
     entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
 

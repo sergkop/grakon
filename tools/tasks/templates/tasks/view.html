@@ -1,24 +1,40 @@
-<div>
-    {{ task.about|safe }}
+<div class="gr-descr">
+    <p class="small">
+        {% with person=admin %}
+            {% include "participants/person.html" %}
+        {% endwith %}
+    </p>
 
-    {% include "tasks/view_buttons_panel.html" %}
+    <div>
+        {{ task.about|safe }}
+        <a href="" class="gr-editing">&nbsp;</a>
+    </div>
+    <div class="gr-info-bar">
+        <a href="{% url task_wall task.id %}" class="dimmed">Комментарии</a>
+        <span class="gr-bullet">&nbsp;</span>
+        <a href="" class="dimmed">Следят: ({{ info.participants.follower.count }})</a>
+        <span class="gr-bullet">&nbsp;</span>
+        <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
+        <span class="gr-fr dimmed">{{ task.time|date:"j b Y H:i" }}</span>
+    </div>
 </div>
 
-<div class="ym-clearfix">&nbsp;</div>
+<h2>Идеи</h2>
 
-<ul class="gr-source-list-slider">
-    {% for post in pagination_entities %}
-        <li>
-            <p>{{ post.instance.content }}</p>
-            <div class="gr-source-list-context">
-                {% if post.instance.url %}<a href="{{ post.instance.url }}" target="_blank">Источник</a>{% endif %}
-                <span class="dimmed">{{ post.instance.time|date:"j.n.y G:i" }}</span>
-                <a href="{{ post.instance.profile.get_absolute_url }}">{{ post.instance.profile }}</a>
-            </div>
-        </li>
+<div class="gr-ideas-list">
+    {% for info in ideas %}
+        {% include "ideas/item.html" %}
     {% endfor %}
-</ul>
 
-{% include "elements/paginator.html" %}
-
-<!--p class="gr-aw-showcase_additional"><a class="gr-icon-link gr-abuse" href="">Пожаловаться</a></p-->
+    {% if request.user.is_authenticated %}
+        <div class="gr-ideas-answer">
+            <div class="gr-user">
+                <strong><a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a></strong>
+            </div>
+            <textarea rows="6" class="gr-mt10 gr-mb10" style="width:100%"></textarea>
+            <div align="right">
+                <a href="" class="ym-button">Добавить идею</a>
+            </div>
+        </div>
+    {% endif %}
+</div>

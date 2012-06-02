@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),
 )
 
-def static_tabs_urls(base_template, menu_item, tabs_short):
+def static_tabs_urls(base_template, tabs_short):
     """
     tabs_short=[(name, title, temsplate, css_class, view), ...]
     name here coincides with url slug.
@@ -16,20 +16,26 @@ def static_tabs_urls(base_template, menu_item, tabs_short):
 
     urls = []
     for name, title, template, css_class, view in tabs_short:
+        kwargs = {
+            'tab': name,
+            'template': base_template,
+            'tabs': tabs,
+            'template_path': template,
+        }
         urls.append(url(r'^'+name+'$', view or 'navigation.views.static_page',
-                {'tab': name, 'template': base_template, 'tabs': tabs, 'menu_item': menu_item}, name=name))
+                kwargs, name=name))
 
     return urls
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/about/base.html', 'about', [
+    *static_tabs_urls('static_pages/about/base.html', [
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
     ])
 )
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/how_to_help/base.html', 'help', [
+    *static_tabs_urls('static_pages/how_to_help/base.html', [
         ('how_to_help', u'...мозгами', 'static_pages/how_to_help/join_us.html', '', ''),
         ('donate', u'...деньгами', 'static_pages/how_to_help/donate.html', '', ''),
         ('volunteer', u'... как волонтер', 'static_pages/how_to_help/volunteer.html', '', ''),
@@ -38,20 +44,14 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/partners/base.html', 'partners', [
+    *static_tabs_urls('static_pages/partners/base.html', [
         ('partners', u'Наши партнеры', 'static_pages/partners/partners.html', '', ''),
     ])
 )
 
 urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/feedback/base.html', 'feedback', [
+    *static_tabs_urls('static_pages/feedback/base.html', [
         ('feedback', u'Обратная связь', 'feedback/feedback.html', '',
                 'navigation.views.feedback'),
-    ])
-)
-
-urlpatterns += patterns('',
-    *static_tabs_urls('static_pages/ideas-test/base.html', '', [
-        ('ideas-test', u'Описание', 'static_pages/ideas-test/test.html', '', ''),
     ])
 )

@@ -7,7 +7,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
 from grakon.utils import authenticated_ajax_post, escape_html
+from elements.participants.models import participant_in
 from elements.utils import table_data
+from elements.views import entity_base_view
 from services.email import send_email
 from users.forms import MessageForm, ProfileForm
 from users.models import Message, Profile
@@ -21,34 +23,34 @@ class BaseProfileView(object):
 
     def get_context_data(self, **kwargs):
         ctx = super(BaseProfileView, self).get_context_data(**kwargs)
-        profile = self.profile = get_object_or_404(Profile, username=self.kwargs.get('username'))
 
-        own_profile = (profile==self.request.profile)
+        username = self.kwargs.get('username')
 
-        tabs = [
-            ('view', u'Профиль', profile.get_absolute_url(), 'profiles/view.html', ''),
-            ('contacts', u'В контактах у', reverse('profile_contacts', args=[profile.username]), 'elements/table.html', ''),
+        # TODO: must be taken from cached
+        # TODO: fix it
+        tasks_count = 0 #participant_in(profile, 'admin', 'tasks')(limit=0)['count']
+        ideas_count = 0 #participant_in(profile, 'admin', 'ideas')(limit=0)['count']
+        projects_count = 0 #participant_in(profile, 'admin', 'projects')(limit=0)['count']
+
+        self.tabs = [
+            ('view', u'Инфо', reverse('profile', args=[username]), '', 'profiles/view.html'),
+            ('tasks', u'Задачи (%i)' % tasks_count, reverse('profile_tasks', args=[username]), '', 'tasks/list.html'),
+            ('projects', u'Проекты (%i)' % projects_count, reverse('profile_projects', args=[username]), '', 'projects/list.html'),
+            ('ideas', u'Идеи (%i)' % ideas_count, reverse('profile_ideas', args=[username]), '', 'ideas/list.html'),
+            #('contacts', u'В контактах у', reverse('profile_contacts', args=[username]), '', 'elements/table.html'),
         ]
 
-        if own_profile:
-            tabs.append(('edit', u'Редактировать', reverse('edit_profile', args=[profile.username]),
-                    'profiles/edit.html', ''))
+        ctx.update(entity_base_view(self, Profile, {'username': username}))
+
+        self.own_profile = (self.entity==self.request.profile)
 
         in_contacts = False
         if self.request.user.is_authenticated():
-            in_contacts = self.request.profile.has_contact(profile)
-
-        self.info = profile.info()
+            in_contacts = self.request.profile.has_contact(self.entity)
 
         ctx.update({
-            'participants_menu_item': True,
-            'tab': self.tab,
-            'tabs': tabs,
-            'profile': profile,
-            'own_profile': own_profile,
-            'is_follower': in_contacts,
-            'info': self.info,
-            'administered_entities': profile.admin_of(),
+            'profile': self.entity,
+            'is_admin': self.own_profile,
             'follow_button': {
                 'cancel_msg': u'Вы хотите удалить этого пользователя из списка контактов?',
                 'cancel_btn': u'Удалить',
@@ -67,25 +69,29 @@ class ProfileView(BaseProfileView, TemplateView):
     def update_context(self):
         return {'message_form': MessageForm()}
 
-class ProfileContactsView(BaseProfileView, TemplateView):
-    tab = 'contacts'
+class ProfileTasksView(BaseProfileView, TemplateView):
+    tab = 'tasks'
 
     def update_context(self):
-        return table_data(self.request, 'participants', self.profile.get_follower)
+        return table_data(self.request, 'tasks', participant_in(self.entity, 'admin', 'tasks'))
 
-# TODO: test that only user can edit his own profile
-class EditProfileView(BaseProfileView, UpdateView):
-    form_class = ProfileForm
-    tab = 'edit'
+class ProfileProjectsView(BaseProfileView, TemplateView):
+    tab = 'projects'
 
-    def get_object(self):
-        return self.request.profile
+    def update_context(self):
+        return table_data(self.request, 'projects', participant_in(self.entity, 'admin', 'projects'))
 
-    def get_success_url(self):
-        return reverse('profile', kwargs={'username': self.request.profile.username})
+class ProfileIdeasView(BaseProfileView, TemplateView):
+    tab = 'ideas'
 
-# TODO: need more strict condition
-edit_profile = login_required(EditProfileView.as_view())
+    def update_context(self):
+        return table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas'))
+
+#class ProfileContactsView(BaseProfileView, TemplateView):
+#    tab = 'contacts'
+#
+#    def update_context(self):
+#        return table_data(self.request, 'participants', self.entity.get_follower)
 
 def remove_account(request):
     if request.user.is_authenticated():

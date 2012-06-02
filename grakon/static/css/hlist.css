@@ -35,7 +35,8 @@
 	
 	.ym-hlist .gr-breadcrumbs ul {
 		float: none;
-		padding: 0;		
+		padding: 0;	
+		font-size: .9em;
 	}
 
 	.ym-hlist ul li {
@@ -44,8 +45,11 @@
 		float:left; /* LTR */
 		line-height:1em;
 		list-style-type:none;
-		margin: 0 0.1em 0 0;
-        position: relative;
+		margin: 0 5px 0 0;
+        position: relative;		
+	}
+	.ym-hlist ul li:last-child {
+		background: none;		
 	}
 
 	.ym-hlist ul li a,
@@ -55,27 +59,20 @@
 		font-weight:normal;
 		text-decoration:none;
 		width:auto;
-		padding: 0.5em 1.3em;
-	}
-		
-	.ym-hlist ul li.active a, .ym-hlist ul li a:hover {
-		border-radius: 1em;
-	}
-	
-	.ym-hlist .gr-breadcrumbs ul li a,
-	.ym-hlist .gr-breadcrumbs ul li strong {
-		padding: .8em .8em .75em 1.8em;	
-		border-radius: 0;
+		padding: 0.60em 1.3em .7em 2.4em;
+		background:url(../images/bg-breadcrumbs.png) 0 0 no-repeat;		
 	}
 	
 	.ym-hlist .gr-breadcrumbs ul li select {
-		margin: 0.6em 1.3em 0;		
+		margin: 0.1em 1.3em 0;		
 		width: 13em;	
+		font-size: 1.1em;
+		height: 23px;
+		overflow: hidden;
 	}
 	
 	.ym-hlist .gr-breadcrumbs ul li strong {
-		color: #fff;
-        height: 35px;
+		color: #009ec5;
 	}
 
 

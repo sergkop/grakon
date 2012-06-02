@@ -4,10 +4,11 @@
 
 {% block title %}О проекте - Гракон{% endblock %}
 
-{% block page_class %} gr-right-sidebar{% endblock %}
+{% block top %}
+    <h1>О проекте</h1>
+{% endblock %}
 
 {% block right_column %}
-
     <h3 class="column_header column_header_icon"><span class="team">Команда</span> <i>&nbsp;</i></h3>
     <div class="gr-side-item">
         <ul class="gr-nomargin">
@@ -28,7 +29,5 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-header">О проекте</h1>
-
-    {% tabs tabs tab %}
+    {% include template_path %}
 {% endblock %}

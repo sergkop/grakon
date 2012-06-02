@@ -13,6 +13,7 @@ class Command(BaseCommand):
             emails = [line.strip() for line in f]
 
         for email in emails:
+            print email
             send_email(None, u'Объединенная Группа Общественного Наблюдения в Москве',
                     'letters/OGON.html', {}, 'ogon_letter', 'noreply', to_email=email)
-            sleep(0.25)
+            sleep(0.2)

@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     url(r'^', include('tools.events.urls')),
     url(r'^', include('tools.officials.urls')),
     url(r'^', include('tools.tasks.urls')),
+    url(r'^', include('tools.ideas.urls')),
+    url(r'^', include('tools.projects.urls')),
     url(r'^', include('posts.urls')),
 
     url(r'', include('social_auth.urls')),

@@ -99,6 +99,8 @@ INSTALLED_APPS = (
     'tools.officials',
     'tools.events',
     'tools.tasks',
+    'tools.ideas',
+    'tools.projects',
     'services',
 )
 
@@ -172,7 +174,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'relative_urls': False,
     'width': '100%',
     'height': 300,
-    'theme_advanced_buttons1': "bold,italic,underline,|,bullist,numlist,|,link,unlink,|,fontsizeselect,fontselect,|,charmap,code",
+    'theme_advanced_buttons1': "bold,italic,underline,|,bullist,numlist,|,link,unlink,|,fontsizeselect,|,charmap,code",
     'theme_advanced_buttons2': "",
     'theme_advanced_buttons3': "",
     'theme_advanced_toolbar_location': "top",

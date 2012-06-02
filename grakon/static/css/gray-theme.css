@@ -31,7 +31,7 @@
 		-moz-box-sizing: border-box;
 		-ms-box-sizing: border-box;
 		box-sizing: border-box;
-		width:60%;
+		/*width:60%;*/
 	}
 
 	.ym-columnar label {
@@ -103,7 +103,7 @@
 	.ym-form div.ym-fbox-select,
 	.ym-form div.ym-fbox-check,
 	.ym-form div.ym-fbox-button {
-		padding: 0.3em 1em;
+		padding: 0;
 		margin-bottom: 0.5em;
 	}
 
@@ -137,7 +137,6 @@
 	.ym-form .ym-fbox-text textarea {
 		line-height: 1em;
 		padding: 0.25em 0.3em;
-		margin-top: -2px;
 	}
 
 	.ym-form .ym-fbox-select select {
@@ -244,54 +243,27 @@
 	.ym-form input[type="submit"] {
 		display: inline-block;
 		white-space: nowrap;
-		border-radius: 1.2em;
+		border-radius: .4em;
         border: none;
 		cursor: pointer;
-		font: normal 1em/2em Tahoma, Helvetica;
 		margin: 0 0.75em 0 0;
-		padding: 0.1em 1em;
+		padding: .3em 1em .5em;
 		overflow: visible; /* removes extra side spacing in IE */
 		text-decoration: none !important;
 		position: relative;
+		background-color: #009ec5;
+		color: #fff;
+		font-weight: bold
 	}
 	
 	a.ym-button {
-		color: #000;	
+		color: #fff;	
 	}
 	
 	.gr-side-item .ym-button
 	{
 		margin: .5em 0 1em;
 		text-align:center;		
-	}
-	
-	.gr-big-button div {
-        margin: 0 auto;
-        display: inline-block;
-        font-size: 1.2em;
-        background-color: #fff;
-        padding: 1.1em;
-        border-radius: 2.2em;
-        margin-bottom: .5em;
-        box-shadow:  0 1px 1px #DEDEDE inset;
-        
-    }
-     .gr-big-button .ym-button{
-        margin-right: 0;         
-     }
-
-	.ym-form button:hover,
-	.ym-form input[type="button"]:hover,
-	.ym-form input[type="reset"]:hover,
-	.ym-form input[type="submit"]:hover,
-	.ym-button:hover {
-		background-color: #ddd;
-		background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
-		background-image: -moz-linear-gradient(top, #fafafa, #ddd);
-		background-image: -ms-linear-gradient(top, #fafafa, #ddd);
-		background-image: -o-linear-gradient(top, #fafafa, #ddd);
-		background-image: linear-gradient(top, #fafafa, #ddd);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');
 	}
 
 	.ym-form button:active,

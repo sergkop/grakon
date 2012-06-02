@@ -42,7 +42,6 @@ class BasePostView(object):
         ctx.update({
             'tabs': tabs,
             'post': self.entity,
-            'admins_title': u'Админы',
             'follow_button': {
                 'cancel_msg': u'Вы хотите отписаться от новостей об этой идее?',
                 'cancel_btn': u'Отписаться',

@@ -1,0 +1,14 @@
+{% if text or is_admin %}
+    <h2 class="{{ css_class }}">{{ title }}:{% if is_admin %}<i class="gr-editing" id="{{ field }}_edit_btn">&nbsp;</i>{% endif %}</h2>
+{% endif %}
+
+<p id="{{ field }}_text">{{ text }}</p>
+
+{% if not text and is_admin %}
+    <p><i><a href="">Добавить</a></i></p>
+{% endif %}
+
+<script type="text/javascript">
+    new TextFieldEditor({el: $("#{{ field }}_text"), btn: $("#{{ field }}_edit_btn"),
+            ct: {{ info.ct }}, entity_id: {{ info.instance.id }}, field: "{{ field }}", type: "text"});
+</script>

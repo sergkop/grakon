@@ -1,0 +1,30 @@
+<div class="gr-descr">
+    <p class="small"><a href="">Shweta Karwa,</a> PhD student, Chemical Engg at Georgia Tech Graduate School</p>
+
+    {% with title="Дедлайн" field="deadline" css_class="gr-mt0" text=project.deadline %}
+        {% include "elements/text_block.html" %}
+    {% endwith %}
+
+    {% with title="Цели" field="goals" html=project.goals %}
+        {% include "elements/html_block.html" %}
+    {% endwith %}
+
+    {% with title="Этапы" field="stages" html=project.stages %}
+        {% include "elements/html_block.html" %}
+    {% endwith %}
+
+    {% with title="Суть" field="about" html=project.about %}
+        {% include "elements/html_block.html" %}
+    {% endwith %}
+
+    {% with title="Кто уже помог проекту" field="team" html=project.team %}
+        {% include "elements/html_block.html" %}
+    {% endwith %}
+
+    <h2 class="gr-bb-grey">Идеи:</h2>
+    <p>
+        <a href="">http://www.quora.com/home/open.</a><br />
+        <a href="">http://www.quora.com/home/open.</a><br />
+        <a href="">http://www.quora.com/home/open.</a>
+    </p>
+</div>

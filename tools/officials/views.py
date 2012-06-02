@@ -39,7 +39,6 @@ class BaseOfficialView(object):
         ctx.update({
             'tabs': tabs,
             'official': self.entity,
-            'admins_title': u'Админы', # TODO: this should be defined in entity model
             'follow_button': {
                 'cancel_msg': u'Вы хотите отписаться от новостей об этом чиновнике?',
                 'cancel_btn': u'Отписаться',

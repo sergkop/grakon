@@ -45,6 +45,7 @@ class Profile(BaseEntityModel):
     show_name = models.BooleanField(u'Показывать настоящее имя', default=True,
             help_text=u'Снимите эту галку, чтобы скрыть свое имя от других пользователей')
 
+    intro = models.CharField(u'Кратко о себе', max_length=100)
     about = HTMLField(u'О себе', default='', blank=True)
 
     objects = ProfileManager()
@@ -52,6 +53,8 @@ class Profile(BaseEntityModel):
     entity_name = 'participants'
     entity_title = u'Участники'
     cache_prefix = 'user_info/'
+    editable_fields = ['first_name', 'last_name', 'intro', 'about']
+
     table_header = 'profiles/table_header.html'
     table_line = 'profiles/table_line.html'
 

@@ -7,3 +7,4 @@ _.each(RESOURCES, function(resource){
 
 GET_SUBREGIONS_URL = "{% url get_subregions %}";
 REMOVE_LOCATION_URL = "{% url remove_location %}";
+UPDATE_TEXT_FIELD = "{% url update_text_field %}";

@@ -1,22 +1,51 @@
+* Extend text_block and html_block with "Добавить" button in case content is still empty + fix js
+
+* rewrite tinymce widget
+* use tinymce parameters from settings.py in js
+
+* bug with contacts counter on profile page
+
+Design:
+    * in breadcrumbs selected location must be a link
+    * slidedown menu under user name in main menu is not closing if mouse is moved up, remove extra item
+    * inline text editor is not displayed properly when start from empty string
+    * inline editing of html
+
+* block at the bottom of the page (for scripts)
+
+* template for inline text editing
+
+* fix follow button (detach window from button itself)
+
+* tinymce can be loaded twice due to inclusion in base.html
+
+Yulia:
+    * highlighting items in main menu, not underlining
+    * in breadcrumbs allow element to be either selected and be a link
+
+* share buttons
+
+* separate getting counters and pagination entities/ids
+
+* how to edit locations of tasks, projects? do we need breadcrumbs on these pages?
+
 * fix bug with data in lists of participants
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
 * user's avatar, use it in disqus, emails
 
-* inline editing
-
-* in breadcrumbs selected location must be a link
+* set of permissions (verified users)
 
 * sitemaps
+
+* settings page
 
 Static files:
     * move static and media files to a separate domain
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
 
 * Hide star near location form field where it is not required
-
-* share buttons
 
 *  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
 
@@ -26,11 +55,6 @@ Dialog forms:
 
 * bug with disqus wall when some users log in
 
-* move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-
-* remove ideas-test
-* remove-after-launch
-* aw-showcase
 * depricate account activated page and registration failed page
 
 * link social likes to the page on which they are located
@@ -39,6 +63,8 @@ Deployment:
     * switch to uwsgi
     * database backups
     * configure firewall (ufw)
+    * introduce separate server for db, static and media files, memcached
+    * describe deployment process in docs
 
 Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
@@ -51,14 +77,31 @@ Performance:
 * check admin rights in elements.views.check_permissions (check that it works)
 
 * override save() method of EntityProperty models to reset cache
--------------------------------------------------------------------------------
-* introduce separate server for db, static and media files, memcached
 
-* describe deployment process in docs
-
-* ability to edit html in message
+* ability to edit html in message (special filtering of html for emails)
 
 * Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
+
+* button for creating new entity on entities pages
+
+* ability to request entity deletion (like with profiles)
+
+* Invite friends button under contacts in profile
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
+* fill in create form fields with grey example values
+-------------------------------------------------------------------------------
+* move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+
+* dashboard like google account reports; view email statistics by type; date boundaries
+* 3 lists of old emails - active, unknown, inactive; unsent emails
+* email blacklist
+
+* 'Новости' tab for all entities
+
+* popup with user info when mouse is over the link
+
+* Activating compessing in tinymce breaks popups (on development server only)
 
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 * reinstall pydkim on server
@@ -78,7 +121,7 @@ Emails:
     * page with form for writing messages (put link on it in emails)
     * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
     * send email notifying that user has been added to contacts (+ ability to unsubscribe)
-    * Ability to send mails to unregistered users (add email field to Email model)
+    * redirect url to track pressing on external links in emails
 
 Analytics:
     * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
@@ -88,11 +131,7 @@ Analytics:
 
 * system of notifications (show them in top panel + send accumulating email once a day)
 
-* button for creating new entity on entities pages
-
 * unsubscribe from location button on location page; put this button in the center as with officials, events
-
-* ability to request entity deletion (like with profiles)
 
 * complaints
 
@@ -100,10 +139,7 @@ Analytics:
 
 * ability to read messages on website
 
-* Invite friends button under contacts in profile
-* solve issues with several locations and is_main, allow to restrict a single related location for entity model
-
-Registration
+Social registration
     * configure registration with fb, vk, google
     * consider case when user refuses to give rights to application
     * create page for LOGIN_ERROR_URL

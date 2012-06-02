@@ -70,7 +70,7 @@ function login_dialog_init(){
 }
 
 // Widget for choosing location path using several select elements
-// Usage: (new SelectLocation({el: $(div), path: []})).render();
+// Usage: (new SelectLocation({el: $(div), path: []})).render()
 var SelectLocation = Backbone.View.extend({
     selectors: ['[name="region"]', '[name="district"]', '[name="location"]'],
 
@@ -178,7 +178,7 @@ var SelectLocation = Backbone.View.extend({
 // TODO: add "add location" button
 // Takes ct_id and id of the entity, to which locations are related
 function locations_list_editing(ct_id, id){
-    $(".locations-ul li").each(function(index){
+    $(".gr-locations-ul li").each(function(index){
         var li = $(this);
 
         $("<span/>")
@@ -208,3 +208,96 @@ function prevent_enter_in_form(selector){
         }
     });
 }
+
+// TODO: take max_length into account (for text type)
+// TODO: visual bug when there is no text (for text type)
+// Widget for inline editing of text fields
+// Usage: new TextFieldEditor({el: $(div), btn: $(btn), ct: ct_id, entity_id: entity_id,
+//            field: field, type: "text" or "html"})
+var TextFieldEditor = Backbone.View.extend({
+    initialize: function(){
+        this.btn = this.options.btn;
+        var editor = this;
+
+        editor.btn.click(function(){
+            editor.btn.hide();
+
+            // Add cancel and save buttons
+            var cancel_btn = $("<span/>").text("Отмена")
+                    .addClass("gr-text-editor-cancel")
+                    .click(function(){editor.recover();});
+            editor.$el.after(cancel_btn);
+
+            var save_btn = $("<span/>").text("Сохранить")
+                    .addClass("gr-text-editor-save")
+                    .click(function(){
+                        if (editor.options.type == "text")
+                            var value = editor.$el.text();
+                        else
+                            // TODO: take related editor, not active
+                            var value = tinyMCE.activeEditor.getContent();
+
+                        dialog_post_shortcut(UPDATE_TEXT_FIELD, {
+                            ct: editor.options.ct,
+                            id: editor.options.entity_id,
+                            field: editor.options.field,
+                            value: value
+                        }, function(){
+                            editor.old_value = value;
+                            editor.recover();
+                        })();
+                    });
+            editor.$el.after(save_btn);
+
+            // Create editor widget
+            if (editor.options.type == "text"){
+                editor.old_value = editor.$el.text();
+                editor.$el.attr("contenteditable", "true").addClass("gr-text-editor");
+            } else {
+                editor.$el.hide();
+                editor.old_value = editor.$el.html();
+
+                // TODO: html must be escaped
+                editor.textarea = $("<textarea/>")
+                        .attr("id", "id_"+editor.options.field)
+                        .html(editor.old_value);
+
+                editor.$el.after(editor.textarea);
+
+                // TODO: use values from settings.py
+                tinyMCE.init({
+                    "elements": "id_"+editor.options.field,
+                    "width": "100%",
+                    "height": 300,
+
+                    "relative_urls": false,
+                    "theme_advanced_toolbar_location": "top",
+                    "theme_advanced_toolbar_align": "left",
+                    "language": "ru",
+                    "theme_advanced_buttons1": "bold,italic,underline,|,bullist,numlist,|,link,unlink,|,fontsizeselect,|,charmap,code",
+                    "theme_advanced_buttons3": "",
+                    "theme_advanced_buttons2": "",
+                    "theme": "advanced",
+                    "strict_loading_mode": 1,
+                    "directionality": "ltr",
+                    "mode": "exact",
+                    "extended_valid_elements": "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],"
+                });
+            }
+        });
+    },
+
+    // Hide editor widget and show updated content
+    recover: function(){
+        this.btn.show();
+        this.$el.next().remove();
+        this.$el.next().remove();
+        if (this.options.type == "text"){
+            this.$el.removeAttr("contenteditable").removeClass("gr-text-editor").text(this.old_value);
+        } else {
+            this.$el.html(this.old_value).show();
+            this.$el.next().remove();
+            this.$el.next().remove();
+        }
+    }
+});

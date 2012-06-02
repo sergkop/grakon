@@ -187,6 +187,8 @@ class BaseEntityModel(models.Model):
     cache_prefix = ''
     features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
 
+    editable_fields = [] # Names of model text fields, which can be updated by ajax requests
+
     # Paths to templates constructing tables
     table_header = ''
     table_line = ''
@@ -220,6 +222,7 @@ class BaseEntityModel(models.Model):
 
 ENTITIES_MODELS = {}
 
+# TODO: set ct_id attribute for entity model
 def entity_class(features):
     """ Return decorator for entity model """
     def decorator(cls):

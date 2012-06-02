@@ -4,10 +4,10 @@
 
 {% block title %}Добавить задачу - Гракон{% endblock %}
 
-{% block content %}
+{% block top %}
     <h1>Добавить задачу</h1>
+{% endblock %}
 
-    <div class="gr-content">
-        {% crispy form form.helper %}
-    </div>
+{% block content %}
+    {% crispy form form.helper %}
 {% endblock %}

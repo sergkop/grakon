@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load elements %}
+
+{% block title %}Идея - Гракон{% endblock %}
+
+{% block top %}
+    <h1>Идея: {{ idea.title }}</h1>
+{% endblock %}
+
+{% block right_column %}
+    {% include "disqus/counter.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="gr-content">
+        Задача: <a href="{{ idea.task.get_absolute_url }}">{{ idea.task.title }}</a>
+
+        {{ idea.description|safe }}
+
+        {% include "disqus/comments.html" %}
+    </div>
+{% endblock %}

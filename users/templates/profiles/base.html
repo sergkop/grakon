@@ -2,8 +2,12 @@
 
 {% load elements %}
 
+{% block top %}
+    <h1>{{ profile }}</h1>
+{% endblock %}
+
 {% block left_column %}
-    <h3>Активность<i>&nbsp;</i></h3>
+    <!--h3>Активность<i>&nbsp;</i></h3>
     <div class="gr-side-item">
         <h4 class="gr-officials">
             <a>Админ&nbsp;({{ administered_entities.count }})</a>
@@ -17,39 +21,33 @@
                 <li><a href="">Показать все...</a></li>
             {% endif %}
         </ul>
-    </div>
+    </div-->
 {% endblock %}
 
 {% block right_column %}
-    <div class="gr-side-item">
-        <h4 class="gr-contacts">
-            Контакты ({{ info.contacts.count }})
-            <i title="пользователь добавил в контакты">&nbsp;</i>
-        </h4>
-        <table width="100%" class="gr-side-table">
-            {% for person in info.contacts.entities %}
-                {% include "elements/person.html" %}
-            {% endfor %}
-        </table>
+    <div class="gr-mb15">
+        <h4>Контакты ({{ info.contacts.count }}):</h4>
+        <p>
+            {% with person_entities=info.contacts.entities %}
+                {% include "participants/list.html" %}
+            {% endwith %}
+        </p>
     </div>
 
-    <div class="gr-side-item">
-        <h4 class="gr-followers gr-long-title">
-            <a href="{% url profile_contacts profile.username %}">Добавлен в&nbsp;контакты&nbsp;({{ info.participants.follower.count }})</a>
-            <i title="пользователя добавили в контакты">&nbsp;</i>
-        </h4>
-        <table width="100%" class="gr-side-table">
-            {% for person in info.participants.follower.entities %}
-                {% include "elements/person.html" %}
-            {% endfor %}
-            {% if info.participants.follower.count > LIST_COUNT.follower %}
-                <td colspan="4"><a href="{% url profile_contacts profile.username %}">Показать всеx...</a></td>
-            {% endif %}
-        </table>
+    <div class="gr-mb15">
+        <h4>Добавлен в контакты ({{ info.participants.follower.count }}):</h4>
+        <p>
+            {% with person_entities=info.participants.follower.entities %}
+                {% include "participants/list.html" %}
+            {% endwith %}
+        </p>
+
+        <!--{% if info.participants.follower.count > LIST_COUNT.follower %}
+            <a href="">Показать всеx...</a>
+        {% endif %}-->
     </div>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ profile }}</h1>
-    {% tabs tabs tab %}
+    {% include template_path %}
 {% endblock %}

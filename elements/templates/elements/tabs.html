@@ -1,21 +1,13 @@
-<div class="jquery_tabs">
-    <ul class="clearfix tabs-list">
-        {% for tab in tabs %}
-            {% if tab.0 == active %}
-                <li class="current {{ tab.4 }}">
-                    <a href="{{ tab.2 }}">{{ tab.1 }}</a>
-                </li>
-            {% else %}
-                <li class="{{ tab.4 }}">
-                    <a href="{{ tab.2 }}">{{ tab.1 }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
-    <div class="content">
-        <div class="tabbody" style="display: block;">
-            {% include template_path %}
-        </div>
-    </div>
-</div>
+<ul class="tabs-list">
+    {% for tab in tabs %}
+        {% if tab.0 == active %}
+            <li class="current {{ tab.3 }}">
+                <a href="{{ tab.2 }}">{{ tab.1 }}</a>
+            </li>
+        {% else %}
+            <li class="{{ tab.3 }}">
+                <a href="{{ tab.2 }}">{{ tab.1 }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

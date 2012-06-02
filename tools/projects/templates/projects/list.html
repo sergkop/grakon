@@ -1,0 +1,22 @@
+<div>
+    {% for info in pagination_entities %}
+        <div> 
+            <div>
+                <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
+                <p class="small">
+                    {% with person=info.participants.admin.entities.0.instance %}
+                        {% include "participants/person.html" %}
+                    {% endwith %}
+                </p>
+                <div>
+                    {{ info.instance.about|safe }}
+                </div>
+            </div>
+            <div class="gr-info-bar">
+                <a href="{% url project_wall info.instance.id %}" class="dimmed">Комментарии</a>
+                <span class="gr-bullet">&nbsp;</span>
+                <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y H:i" }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>

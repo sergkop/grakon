@@ -5,10 +5,11 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
+from elements.locations.utils import subregion_list
 from elements.models import ENTITIES_MODELS
+from elements.participants.models import participant_in
 from elements.utils import table_data
 from locations.models import Location
-from locations.utils import subregion_list
 from services.disqus import disqus_page_params
 
 class BaseLocationView(object):
@@ -33,59 +34,70 @@ class BaseLocationView(object):
 
         self.info = location.info(related=True)
 
-        self.tools_url = reverse('location_tools', args=[location.id])
+        # TODO: take it from cache
+        tasks_count = location.get_entities('tasks')(limit=0)['count']
 
         tabs = [
-            ('wall', u'Стена', reverse('location_wall', args=[location.id]), 'locations/wall.html', 'wall-tab'),
-            #('map', u'Карта', reverse('location_map', args=[location.id]), 'locations/map.html', ''),
-            ('tools', u'Инструменты', self.tools_url, 'locations/tools.html', ''),
-            ('participants', u'Участники', reverse('location_participants', args=[location.id]), 'locations/participants.html', ''),
+            #('map', u'Карта', reverse('location_map', args=[location.id]), '', 'locations/map.html'),
+            #('tools', u'Инструменты', self.tools_url, '', 'locations/tools.html'),
+            ('tasks', u'Задачи (%i)' % tasks_count, reverse('location_tasks', args=[location.id]), '', 'tasks/list.html'),
+            ('projects', u'Проекты (%i)' % tasks_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
+            ('wall', u'Комментарии', reverse('location_wall', args=[location.id]), 'wall-tab', 'locations/wall.html'),
+            ('participants', u'Участники', reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
         ]
 
-        if location.is_country():
-            tabs = [('main', u'Добро пожаловать', reverse('main'), 'main/base.html', '')] + tabs
-
         ctx.update({
-            'menu_item': 'geography',
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
             'tab': self.tab,
             'tabs': tabs,
+            'template_path': filter(lambda t: t[0]==self.tab, tabs)[0][4],
             'location': location,
             'subregions': subregion_list(location),
             'info': self.info,
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
             'is_lowest_level': location.is_lowest_level(),
-            'tools_url': self.tools_url,
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))
         return ctx
 
-class WallLocationView(BaseLocationView, TemplateView):
-    tab = 'wall'
-
-class MapLocationView(BaseLocationView, TemplateView):
-    tab = 'map'
-
-class ToolsLocationView(BaseLocationView, TemplateView):
-    tab = 'tools'
+class LocationTasksView(BaseLocationView, TemplateView):
+    tab = 'tasks'
 
     def update_context(self):
-        entity_types = sorted(set(ENTITIES_MODELS.keys()) - set(['participants', 'posts']),
-                key=lambda em: ENTITIES_MODELS[em].entity_title)
+        return table_data(self.request, 'tasks', self.location.get_entities('tasks'))
 
-        entity_type = self.request.GET.get('type', '')
-        if entity_type not in entity_types:
-            entity_type = 'officials'
+class LocationProjectsView(BaseLocationView, TemplateView):
+    tab = 'projects'
 
-        ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
-        ctx.update({
-            'table_cap_choices': map(lambda em: (self.tools_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
-            'table_cap_title': ENTITIES_MODELS[entity_type].entity_title,
-            'table_cap_template': ENTITIES_MODELS[entity_type].table_cap,
-        })
-        return ctx
+    def update_context(self):
+        return table_data(self.request, 'projects', self.location.get_entities('projects'))
+
+class LocationWallView(BaseLocationView, TemplateView):
+    tab = 'wall'
+
+#class MapLocationView(BaseLocationView, TemplateView):
+#    tab = 'map'
+
+#class ToolsLocationView(BaseLocationView, TemplateView):
+#    tab = 'tools'
+#
+#    def update_context(self):
+#        entity_types = sorted(set(ENTITIES_MODELS.keys()) - set(['participants', 'posts']),
+#                key=lambda em: ENTITIES_MODELS[em].entity_title)
+#
+#        entity_type = self.request.GET.get('type', '')
+#        if entity_type not in entity_types:
+#            entity_type = 'officials'
+#
+#        ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
+#        ctx.update({
+#            'table_cap_choices': map(lambda em: (self.tools_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
+#            'table_cap_title': ENTITIES_MODELS[entity_type].entity_title,
+#            'table_cap_template': ENTITIES_MODELS[entity_type].table_cap,
+#        })
+#        return ctx
 
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'
@@ -118,5 +130,5 @@ def goto_location(request):
     except ValueError:
         return HttpResponseRedirect(reverse('main')) # TODO: redirect to country page?
 
-    url = reverse('location_wall', args=[loc_id])
+    url = reverse('location_tasks', args=[loc_id])
     return HttpResponseRedirect(url)

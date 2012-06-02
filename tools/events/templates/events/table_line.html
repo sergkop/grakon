@@ -1,4 +1,4 @@
 <td><a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance.title }}</a></td>
 <td>{{ entity.instance.place }}</td>
-<td align="center">{{ entity.instance.event_time }}</td>
+<td align="center">{{ entity.instance.event_time|date:"j b Y H:i" }}</td>
 <td align="center"></td>

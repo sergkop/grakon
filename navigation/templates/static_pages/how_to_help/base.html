@@ -4,29 +4,14 @@
 
 {% block title %}Как помочь - Гракон{% endblock %}
 
-{% block page_class %} gr-right-sidebar{% endblock %}
+{% block top %}
+    <h1>Как помочь</h1>
+{% endblock %}
 
 {% block right_column %}
 
-    <h3 class="column_header column_header_icon"><span class="team">Команда</span> <i>&nbsp;</i></h3>
-    <div class="gr-side-item">
-        <ul class="gr-nomargin">
-            <li><a href="https://www.facebook.com/mikpanko" target="_blank">Михаил Панько</a> <br/> <em>координатор проекта</em></li>
-                <li><a href="https://www.facebook.com/sergey.kopylov"  target="_blank">Сергей Копылов</a> <br/> <em>главный разработчик</em></li>
-                <li><a href="http://www.facebook.com/profile.php?id=100001093316533" target="_blank">Юлия Котова</a> <br/> <em>front-end разработчик</em></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100001256049867"  target="_blank">Леонид Хайлов</a> <br/> <em>разработка интерактивных карт</em></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100001101092669" target="_blank">Оксана Васильева</a> <br/> <em>дизайн</em></li>
-                <li><a href="http://koder.posterous.com/" target="_blank">Григорий Соловьев</a> <br/> <em>информационная безопасность</em></li>
-                <li><a href="https://www.facebook.com/maria.gaidar" target="_blank">Мария Гайдар</a> <br/> <em>информационная работа и интеграция</em></li>
-                <li><a href="http://www.facebook.com/Ilia.Boykov" target="_blank">Илья Бойков</a> <br/> <em>продвижение, официальный представитель в России</em></li>
-                <li><a href="http://www.facebook.com/profile.php?id=589927701" target="_blank">Мария Чарная</a> <br/> <em>информационный контент</em></li>
-                <li><a href="http://www.facebook.com/profile.php?id=100000559544517" target="_blank">Ирина Хряева</a> <br/> <em>ведение блога проекта</em></li>
-                <li><a href="https://www.facebook.com/dukovsky" target="_blank">Антон Дуковский</a> <br/> <em>позиционирование проекта</em></li>
-                <li><a href="https://www.facebook.com/dobryanskaya" target="_blank">Александра Добрянская</a> <br/> <em>профессиональный идеалист, специалист по буквам</em></li>
-        </ul>
-    </div> 
 {% endblock %}
 
 {% block content %}
-    {% tabs tabs tab %}
+    {% include template_path %}
 {% endblock %}

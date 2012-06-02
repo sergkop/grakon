@@ -1,0 +1,26 @@
+<div class="gr-ideas-item"> 
+    <div class="gr-ideas-content">
+        <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
+        <div class="gr-add gr-idea-selected" title="Предоставить ресурсы">
+            <a href="" class="gr-add-icon">&nbsp;</a>
+            <a href="">1123</a>
+        </div>
+        <p class="small">
+            {% with person=info.participants.admin.entities.0.instance %}
+                {% include "participants/person.html" %}
+            {% endwith %}
+        </p>
+        <div>
+            {{ info.instance.description|safe }}
+            <a href="" class="gr-editing">&nbsp;</a>
+        </div>
+    </div>
+    <div class="gr-info-bar">
+        <a href="{% url idea info.instance.id %}" class="dimmed">Комментарии</a>
+        <span class="gr-bullet">&nbsp;</span>
+        <!--a href="" class="dimmed">Проекты: 11</a>
+        <span class="gr-bullet">&nbsp;</span-->
+        <a href="" class="highlighted"><strong>Связать с проектом</strong></a>
+        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.time|date:"j b Y H:i" }}</a></span>
+    </div>
+</div>

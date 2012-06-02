@@ -4,7 +4,7 @@ from users.models import Message, Points, Profile
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender', 'receiver', 'title', 'show_email', 'time')
-    ordering = ('sender__username', 'receiver__username')
+    ordering = ('-time',)
     search_fields = ('sender__username', 'receiver__username')
     raw_id_fields = ('sender', 'receiver')
 

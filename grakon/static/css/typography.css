@@ -28,7 +28,7 @@
 
 	/* (en) reset font size for all elements to standard (16 Pixel) */
 	/* (de) Alle Schriftgrößen auf Standardgröße (16 Pixel) zurücksetzen */
-	html * { font-size:100%; outline: none; }
+	html * { /*font-size:100%;*/ outline: none; }
 
 	/**
 	* (en) reset monospaced elements to font size 16px in all browsers
@@ -71,9 +71,9 @@
 	}
 
 	h1 {
-		font-size:2em;
+		font-size:1.8em;
 		font-weight: bold;
-		margin: 0 0 .5em;
+		margin: 0;
 	}
 	
 	h1 small {
@@ -82,41 +82,35 @@
 	}
 
 	h2 {
-		font-size:250%;
-		line-height: 1.2em;
-		padding: 0.6em 0 0 0;
+		font-size: 1.9em;
+		font-weight: bold;
+		margin: 1em 0 .2em;
+		padding: 0 0 .1em;
 	}
 
 	h3 {
-		font-size: 1.15em;
+		font-size: 1.8em;
+		margin-bottom: .8em;  
 	}
 	
-	.content h3 {
-        margin-bottom: .5em;    
-    }
-		
-	.ym-col2 h3, .ym-col3 h3 {
-		margin: 0 0 5px;
-		text-align:center;	
-		color: #fff;				
+	.gr-ideas-item h3 {
+		font-size: 1.4em;
 	}
 
 	h4 {
-		font-size:133.33%;
+		font-size:1.2em;
 		line-height: 1.125em;
-		margin:1.125em 0 0 0;
+		margin:1em 0;
 	}
 	
 	.ym-col2 h4, .ym-col3 h4  {
-		margin: 0;
+		margin: 0 0 .5em;
 		font-size: 1em;
-		text-transform: uppercase;
 		font-weight: bold;
-		color: #5a4e4e;		
 	}
 	
 	.ym-col2 h4 a, .ym-col3 h4 a{
-        color: #5A4E4E;        
+        color: #000;        
     }
 
 	h5 {
@@ -173,7 +167,7 @@
 
 	p {
 		font-size:1em;
-		line-height:1.4em;
+		line-height:1.6em;
 		margin: 0 0 1em 0;
 	}
 
@@ -183,7 +177,7 @@
 	}
 
 	blockquote {
-		margin:1.5em 0 0;
+		margin:0 0 0 2em;
 		color:#666;
 	}
 
@@ -195,8 +189,8 @@
 		font-size:116.667%;
 	}
 
-	small {
-		font-size: .75em;
+	small, .small {
+		font-size: .9em !important;
 	}
 
 	pre,
@@ -259,7 +253,7 @@
 	/*--- Links ----------------------------------------------------------------------------------------- */
 
 	a {
-		color:#4D87C7;
+		color:#009ec5;
 		background:transparent;
 		text-decoration: none;
         cursor: pointer;
@@ -273,6 +267,8 @@
 	a:focus {
 		text-decoration:underline
 	}
+	
+	.gr-pseudolink {color:#4D87C7; border-bottom: 1px dotted; cursor: pointer}
 	
 	header a {color: #fff;}
 	.ym-hlist ul li a {color: #000;}
@@ -316,13 +312,9 @@
 	* @section content-generic-classes
 	*/
 	.highlight {
-		color:#c30;
+		color:#009EC5;
 	}
 	
-	.ym-col2 .highlight {
-		color: #9dc133;
-	}
-
 	.dimmed {
 		color:#888;
 	}
@@ -513,7 +505,6 @@
 	.gr-offline-activity big, .gr-online-activity big {color: #3290bf;}
 	.gr-icons {color: #8b8787; font-size: .95em;}
 	.gr-icons big {font-weight: bold; font-size: 1.8em; color: #85ac14;}
-	.gr-side-item ul {font-size: .9em;}
 	.gr-source-list-slider {font-size: .95em;}
 	.gr-icon-link { color: #85ac14;}
 	.gr-user-chart small {font-size: 0.9em;}

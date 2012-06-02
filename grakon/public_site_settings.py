@@ -25,4 +25,6 @@ DISQUS_CATEGORIES = {
     'events': 1456479,
     'tasks': 1470945,
     'posts': 1471343,
+    'ideas': 1482947,
+    'projects': 1490095,
 }

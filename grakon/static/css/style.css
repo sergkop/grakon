@@ -1,143 +1,54 @@
 .gr-breadcrumbs {margin: 1em 0 0; clear: both;}
-    .gr-breadcrumbs i {position: absolute; top:0; right: -15px; width: 16px; height: 35px; overflow: hidden; z-index:1;}
+    .gr-breadcrumbs i {position: absolute; top:0; right: -11px; width: 12px; height: 23px; background:url(../images/bg-breadcrumbs.png) right -23px no-repeat; z-index:1;}
 
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right;}
 .gr-fl {float: left;}
 .gr-dt {display: table;}
+.gr-mt0 {margin-top: 0 !important;}
 .gr-mt10 {margin-top: 1em !important;}
+.gr-mb3 {margin-bottom: .3em !important;}
 .gr-mb10 {margin-bottom: 1em !important;}
+.gr-mb15 {margin-bottom: 1.5em !important;}
+.gr-mt20 {margin-top: 2em !important;}
 .gr-mb20 {margin-bottom: 2em !important;}
-.gr-bb-grey {border-bottom: 1px dotted #a5a5a5;}
+.gr-mb70 {margin-bottom: 7em !important;}
+.gr-pt20 {padding-top: 2em !important;}
+.gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
 
 /*Элементы header*/
+.gr-logo {margin-left: -45px;}
 .gr-login-info {float: right;}
-    .gr-login-info a {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em;; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0;}
-        .gr-login-info a:hover {text-decoration: none; background-color: rgba(100, 100, 100, .4)}
-        .gr-login-info a:last-child {border: none; box-shadow: none;}
+    .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
+		.gr-login-info div.gr-login-user{ position: relative; border: none; box-shadow: none; display: inline; cursor: pointer; padding-bottom: 1em;}
         .gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-geography {display: block; padding-right: 1.25em }
         header .gr-activity, header .gr-web-activity, header .gr-leader {padding-right: 1.7em; display: inline;}
-        .gr-job {float: left; background:url(../images/icons/search.png) 0 0 no-repeat; color: #fff; padding: .7em 0 .7em 35px; margin-left: 3em;}
+        .gr-job {float: left; background:url(../images/icons/search.png) 0 7px no-repeat; color: #fff; padding: 0 0 0 10px;}
+		.gr-login-user-sub {position: absolute; top: 35px; left: 0; width: 100%; background-color: #000; box-shadow: inset 0 0 3px #000; display: none;}
+			.gr-login-user-sub a {display: block; width: 100%; border: none; box-shadow: none; border-bottom: 1px solid #242424; box-shadow: inset 0 -1px 0 #3e3d3d;}	
 
-nav .ym-wrapper {padding: 1.8em 20px 1em;}
+nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Sidebars*/
-.ym-col2 h3, .ym-col3 h3 {border-radius: .2em; padding: .45em 0 .6em; margin-bottom: 5px; position: relative; border-top: 1px solid #cbdd8b;}
-    .ym-col2 h3 i, .ym-col3 h3 i {position: absolute; bottom: -3px; left: 50%; margin-left: -4px; width: 7px; height: 3px; background: url(../images/bg-green-header.gif) 0 0 no-repeat;}
-
-
-.gr-side-item {border-radius: .2em; border: 1px solid #ded5d5; border-width: 0 1px 1px; box-shadow: inset 0 1px 0 #fff; background-color: #edeaea; position: relative; overflow: hidden;} 
-    .gr-side-item h4 {background: #dfd9d9 url(../images/icons/side-headers.png) 0 3px no-repeat; padding: 1.5em 1em 1.55em 58px; position: relative;}
-        .gr-side-item h4.gr-long-title {padding-top: 1em; padding-bottom: 1.05em;}
-        .gr-side-item h4 i, .ym-col3 h3 i.gr-question, .gr-question i {position: absolute; top: 5px; right: 5px; left:auto;  width: 18px; height: 20px; background: url(../images/icons/question.png) 0 0 no-repeat; cursor: pointer; padding-right: 0;}
+.gr-side-item {position: relative; overflow: hidden;} 
+    .gr-side-item h4 {position: relative;}
+        .gr-side-item h4 i, .ym-col3 h3 i.gr-question, .gr-question i {position: absolute; top: .4em; right: 5px; left:auto;  width: 18px; height: 20px; background: url(../images/icons/question.png) 0 0 no-repeat; cursor: pointer; padding-right: 0;}
         .gr-question {padding-right: 30px;}
         .gr-side-item ul, .gr-side-item li, .gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none;}           
             .gr-source-list-slider {border: 1px solid #f3f3f3;}
-            .gr-side-item li, .gr-source-list-slider li {padding: .7em .5em .7em 3.5em; position: relative; color: #887a7a}
+            .gr-side-item li, .gr-source-list-slider li {padding: .5em .5em; position: relative; color: #887a7a}
                 .gr-source-list-slider li {color: #000; padding: 1em .5em 1em 3em;}
                 .gr-side-item .gr-nomargin li {padding-left: 1em;}
-                .gr-side-item li:nth-child(2n+1), .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
-                .gr-side-item li i, .gr-source-list-slider li i {position: absolute; top: .8em; left: 0; width: 3em; text-align: right; font-style: normal;}
-                .gr-source-list-slider li i {top: 1.3em; width: 2em;} 
-                .gr-orange-arrow-up, .gr-orange-arrow-down { top: .9em;}
-                .gr-side-item li:first-child {border-top: 1px solid #ded5d5;}
+                .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
+                .gr-side-item li i, .gr-source-list-slider li i, .gr-orange-arrow-up, .gr-add {position: relative; margin-bottom: .7em;}
+                .gr-orange-arrow-up, .gr-orange-arrow-down{ top: .9em;}
                 .gr-disabled h4 {text-shadow: 0 1px 1px #fff; }
                 .gr-disabled-back {position: absolute; top: 0; left: 0; z-index: 1; width: 100%; background-color: rgba(0,0,0,0.1); height: 300px;}
-                .gr-side-item h4.gr-eureka
 
-        .gr-side-item h4.gr-officials {background-position: 0 -182px;}
-        .gr-side-item h4.gr-events {background-position: 0 -61px;}
-        .gr-side-item h4.gr-agitators {background-position: 0 -118px;}
-        .gr-side-item h4.gr-followers {background-position: 0 -240px;}
-        .gr-side-item h4.gr-participants{background-position: 0 -300px;}
-        .gr-side-item h4.gr-contacts{background-position: 0 -358px;}
-        .gr-side-item h4.gr-followers{background-position: 0 -406px;}
-        .gr-side-item h4.gr-eureka{background-position: 0 -466px;}
-            .gr-disabled h4.gr-eureka {background-position: 0 -517px;}
+.gr-ideas-item .gr-add a.gr-add-icon {background:url(../images/icons/add.png) right 0 no-repeat; position: absolute; left: -35px; top: -5px; width: 30px; height: 30px;}
+	.gr-add-icon:hover {text-decoration: none; border-bottom: none !important;}	
+	.gr-ideas-item .gr-idea-selected a.gr-add-icon {background-position: right -73px;}
 
-.gr-orange-arrow-up, .gr-orange-arrow-down {background: url(../images/icons/sort-orange-arrows.png) right 0 no-repeat; width: 12px; height: 11px;}  
-.gr-orange-arrow-down {background-position: right bottom;}  
-
-.gr-side-table {border: none; margin: 0; font-size: 0.9em;} 
-    .gr-side-table td {padding: .4em .2em .4em .5em; background-color: #edeaea;}
-
-/*Оформление кнопок*/
-.gr-add span, .gr-remove span, .gr-mail span, .gr-complaint span, .gr-look span, .gr-agit span {background: url(../images/icons/btns.png) 0 3px no-repeat; padding-left: 1.3em;}	
-    .gr-add span {background-position: -1px -19px;}
-    .gr-remove span {background-position: -1px -40px;}
-    .gr-complaint  span {background-position: -3px -64px; padding-left: 1.15em}
-    .gr-look span {background-image: url(../images/icons/look.png); padding-left: 1.6em;}
-    .gr-agit span {background-image: url(../images/icons/agit.png);}
-
-/*Страница location*/
-.gr-location-tool {background-color: #b1ddf3; border-radius: 0.2em; box-shadow: 0 0 1px #f5f5f5;  height: 62px; overflow: hidden;}
-    .gr-location-tool h3 {float: left; margin: 0 20px 0 0; font-size: 1.1em; font-weight: bold; font-style:italic; background: #fff url(../images/bg-location-tool.png) right 0 no-repeat; height: 62px; overflow: hidden; padding: 15px 65px 0 20px; position: relative; cursor: pointer;}
-    .gr-location-tool h3 small {color: #989495; font-style: normal; font-weight: normal; display: block; font-size: 0.9em; margin-top: 0.2em}
-    .gr-location-tool .gr-icon-state {padding: 7px 0 0 32px; display: block;}
-    .gr-select-arrow {position: absolute; top: 18px; right: 38px; width:21px; height: 22px;} 
-    .gr-location-tool .gr-add {margin-left: 1em; margin-right: 1.2em;}
-    .gr-location-tool .gr-fr {margin-top: 1.5em;}
-    
-    .gr-select-list {position: absolute; padding: 10px 10px 0; z-index:1; margin-top: 40px; left: 50px;}
-    .gr-select-list ul, .gr-select-list li {list-style-type: none; margin: 0; padding: 0;}
-    .gr-select-list ul {background-color: #fff; border: 1px solid #eaeaea;  box-shadow: 1px 1px 2px #d7d7d7; border-radius: .3em; display: none;}
-    .gr-select-list li a {display: block; padding: 5px 10px;}
-        .gr-select-list li a:hover {background-color: #f6f6f6; text-decoration: none;}
-        .gr-select-list li:first-child a {padding-top: 10px;}
-        .gr-select-list li:last-child a {padding-bottom: 10px;}
-
-.gr-sort {position: relative; padding-right: 20px;} 
-    .gr-up, .gr-down, .gr-up-active, .gr-down-active {position: absolute; top: .3em; margin-left:.8em; width: 7px; height: 5px; background: url(../images/icons/sort-arrows.png) 0 0 no-repeat; cursor: pointer;}	
-    .gr-down {background-position: 0 bottom; top: .8em;}
-    .gr-down-active {background-position: right bottom; top: .8em;}
-    .gr-up-active {background-position: right 0;}
-
-/*Страница профиля*/
-.gr-photo {margin: 0 1em 1em 0;}	
-.gr-next-arrow {background:url(../images/icons/right-arrow-blue.gif) 0 5px no-repeat; width: 5px; margin: 0 5px;}	
-.gr-skype  {width: 20px; line-height:1.6em; display: inline-block; text-decoration: none;}	
-
-.gr-user-charts {margin: 2em 1em 1em 210px;}
-.gr-user-chart {position: relative; margin: 0 0 1.5em; padding-right: 10em; height: 44px; text-align:center; background: none; width: 300px; float:right;}  
-    .gr-user-chart i {position: absolute; top: -1em; right: 4.5em; width: 44px; height: 44px; background: url(../images/icons/profile.png) 0 0 no-repeat;}
-    .gr-offline-activity i {background-position: 0 -65px;}
-    .gr-online-activity i {background-position: 0 -134px;}
-    .gr-chart-back {height: 11px; overflow: hidden; border-radius: 1em; margin: .3em 0 0 0; padding: 1px 2px}   
-        .gr-chart-back span  {border-radius: .5em; display: block; height: 9px; overflow: hidden;}
-    .gr-user-chart strong {position: absolute; top: -.4em; right: 0; width: 6em; text-align: right;}    
-    .gr-user-chart small {float: right; color: #807270; margin-top: .2em;}
-
-.gr-inline-dl {overflow: hidden; margin-bottom: 1em;}
-    .gr-inline-dl dt {clear: left; float: left;}
-        .gr-inline-dl dd {float: left;}
-
-h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
-
-
-/*Страница инструмента*/
-.gr-icons, gr-icons li {margin: 0; padding: 0; list-style-type: none;}
-    .gr-icons {margin: 0 2em 2em;}
-    .gr-icons big {display: block;}
-    .gr-icons li {margin-bottom: 1em; padding: .8em 0 .4em 60px; background-repeat: no-repeat; background-position: 0 0;}
-    .gr-icons-like {background-image:url(../images/icons/like.png);}	
-    .gr-icons-otchet {background-image:url(../images/icons/otchet.png);}
-
-.gr-icon-link {padding: 0 1em .1em 1.5em; background-position: 0 .3em; background-repeat: no-repeat;}
-    .gr-upload {background-image:url(../images/icons/upload-small.gif); background-position: 0 .1em;}
-    .gr-like {background-image:url(../images/icons/like-small.gif);}
-    .gr-abuse {background-image:url(../images/icons/abuse-small.gif); padding-left: .9em; color: #769fb5;}
-
-.gr-aw-showcase_additional {font-size: .95em; margin-top: 1em; float: right; position: relative; z-index:1;}
-.gr-source-list-slider p {margin: 0;}
-.gr-source-list-context {margin: 0.3em 0 0;}
-
-
-/* Страница чиновника */
-
-.gr-tags {margin: .3em 0 1em 0;}
-    .gr-tags a {margin-left: 6px; margin-right: 1em; background-color: #d8edf8; padding: .3em .8em .4em .6em; text-transform: uppercase; font-weight: bold; text-shadow: 1px 1px 0 #fff; position: relative;}   
-    .gr-tags a:before { content: ""; position: absolute; width: 0; height: 0; border-top: 1em solid #fff; border-right: 6px solid #d8edf8; border-bottom: .95em solid #fff; top: 0; left: -6px;}
-    
 /*Кнопки соцсетей*/
 .gr-social {margin: 1em 0 0; text-align:center;}
     .gr-left-sidebar .gr-social {margin: 0;}
@@ -148,21 +59,57 @@ h5 .gr-resources, h5 .gr-geography {display: inline; padding: .4em .8em ;}
 
 /*pagination*/
 .gr-pagination {clear: both; margin-top: 10px; text-align: center; font-size: .95em;}
-.gr-pagination span {cursor: pointer; color: #a9c93e;}
-.gr-pagination span.active {color: #000; font-weight: bold;}
-.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(../images/icons/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
-.gr-pagination-arrow-previous {margin-right: 5px;}
-.gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
-.gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}
-.gr-pagination-arrow-next:hover {background-position: 0 -59px;}
+	.gr-pagination span {cursor: pointer; color: #a9c93e;}
+		.gr-pagination span.active {color: #000; font-weight: bold;}
+	.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(../images/icons/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
+	.gr-pagination-arrow-previous {margin-right: 5px;}
+	.gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
+	.gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}
+	.gr-pagination-arrow-next:hover {background-position: 0 -59px;}
+
+
+/* Страница задачи */
+.gr-bullet {background:url(../images/icons/bullet.gif) center center no-repeat; padding: 0 1em;}
+	.gr-info-bar .ym-button {margin-top: -.7em;}
+.gr-ideas-list {}
+	.gr-ideas-item {position: relative; padding: 25px 0 0; margin: 0 0 20px 0; border-top: 4px solid #e0e2e6}
+		.gr-ideas-item-first {border: none; padding-top: 0;}
+	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #e8eaed; padding: 10px; border-bottom: 3px solid #e0e2e6}
+	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5;}
+		.gr-add a, .gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 .8em;}
+			.gr-ideas-item .gr-add span {color: #000; background-position: -9px -63px;}
+			.gr-add a:hover {text-decoration: none; border-bottom: 1px solid;}
+	.gr-ideas-content {margin: 0 0 20px; position: relative;}
+	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
+	.gr-resource-item {padding: .5em 1.3em .65em; margin: 1em 0 .5em; display: inline-block; color: #000; border: 1px solid #c5c9d2; font-weight: bold;}
+	ul.gr-user li  {padding: 0.5em 0.2em;}
+	.gr-follow-button {font-size: 1.6em; font-weight: bold; border: 2px solid #c5c9d2; padding: .8em 1em; color: #000; display: block;}
+		.gr-follow-button:hover {text-decoration: none;}
+	.gr-editing {background:url(../images/icons/editing.gif) 0 0 no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block;}
+	
+	
+.gr-descr .gr-user {margin: 0 0 1.2em;}
+	h1 .gr-user {font-size: .5em; margin: .2em 0 0 0;}
+	
+	
+/* Страница проекта */
+
+.gr-resoure-item {border: 2px solid #c5c9d2; margin-bottom: 1em;}
+	.gr-resoure-item a {display: block; padding: 1em 1.2em; text-decoration: none; color: #333 !important;}
+	.gr-resoure-item  h2 {margin: 0 0 .4em;}
+	.gr-resoure-item  p {margin:  1em 0 0;}
 
 
 /* ----- Переиспользуемые элементы ----- */
 
 /* List of locations */
-.locations-ul {
-    margin-right: 10px;
+.gr-locations-ul {
+	list-style-type: none; margin: 1em 0 0 0; padding: 0; font-size: 1.1em;
 }
+
+.gr-locations-ul li {list-style-type: none; margin: 0 0 1em; padding: 0;}
+
+.gr-next-arrow {background:url(../images/icons/add.png) -10px -32px no-repeat; display: inline-block; width: 8px; height: 15px; margin: 0 .3em;}
 .remove-li-btn {
     text-decoration: none;
     float: right;

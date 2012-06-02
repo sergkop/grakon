@@ -1,9 +1,7 @@
 # -*- coding:utf-8 -*-
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
-from posts.models import EntityPost
 
 class TaskManager(BaseEntityManager):
     def get_info(self, data, ids):

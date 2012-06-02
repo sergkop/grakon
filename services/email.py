@@ -17,6 +17,7 @@ from services.models import Email
 
 # TODO: ability to attach files
 # TODO: check user's subscription settings? (some emails should be sent anyway)
+# TODO: not all tags are allowed in emails (e.g. avoid <p/>) - check and warn
 def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None, to_email=None):
     """ To send emails to admin account set recipient=None """
     # TODO: generate unsubscribe link with hash (page with confirmation); default place for it in base template
@@ -54,6 +55,7 @@ def send_email(recipient, subject, template, ctx, type, from_email, reply_to=Non
     from_str = u'%s <%s>' % settings.EMAILS[from_email]
     if to_email is None:
         to_email = recipient.user.email if recipient else settings.ADMIN_EMAIL
+    # TODO: check that email has appropriate format (like no dot at the end)
 
     headers = {}
     if reply_to:
