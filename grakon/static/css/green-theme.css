@@ -1,0 +1,15 @@
+.gr-green-theme .ym-column a {color: #96BC2C;}
+.gr-green-theme .jquery_tabs ul.tabs-list li.current a, .gr-green-theme .jquery_tabs ul.tabs-list li.current a:focus, .gr-green-theme .jquery_tabs ul.tabs-list li.current a:hover, .gr-green-theme .jquery_tabs ul.tabs-list li.current a:active { border-color: #B0CE45; color: #333; background-image:url(../images/bg-active-tab-green.gif);}
+
+.gr-green-theme  .ym-button {color: #000 !important;}
+	
+.gr-green-theme .gr-breadcrumbs i {background-image:url(../images/bg-breadcrumbs-green.png);}	
+
+.gr-green-theme .ym-hlist .gr-breadcrumbs ul li strong{
+	background: -moz-linear-gradient(top, #c9de80, #b7d256 55%, #a0bb3f);
+	background: -ms-linear-gradient(top, #c9de80, #b7d256 55%, #a0bb3f);
+	background: -o-linear-gradient(top, #c9de80, #b7d256 55%, #a0bb3f);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#c9de80), color-stop(0.55, #b7d256), to(#a0bb3f));
+	background: -webkit-linear-gradient(top, #c9de80, #b7d256 55%, #a0bb3f);
+	background: linear-gradient(top, #c9de80, #b7d256 55%, #a0bb3f);
+	box-shadow: inset 0 -1px 0 #859b36;}

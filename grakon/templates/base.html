@@ -31,18 +31,9 @@
         VK.init({apiId: {{ VK_APP_ID }}, onlyWidgets: true});
     </script>
 
-    {% block head %}{% endblock %}
+    {% include "disqus/config_js.html" %}
 
-    {% if is_admin %}
-        {% if TINYMCE_COMPRESSOR %}
-            <script type="text/javascript" src="{% url tinymce-compressor %}"></script>
-            <script type="text/javascript">
-                tinyMCE_GZ.init({"themes": "advanced", "languages": "ru", "debug": false, "diskcache": true, "plugins": ""});
-            </script>
-        {% else %}
-            <script type="text/javascript" src="{{ TINYMCE_JS_URL }}"></script>
-        {% endif %}
-    {% endif %}
+    {% block head %}{% endblock %}
 
     {% if not DEBUG %}
         {% include "services/google-analytics.html" %}
@@ -50,9 +41,8 @@
 
     <style type="text/css">
         /* TODO: should be moved to .css files */
-        .gr-text-editor {border: 1px solid;}
-        .gr-text-editor-cancel {cursor: pointer; font-weight: bold;}
-        .gr-text-editor-save {cursor: pointer; font-weight: bold; margin-right: 0.5em;}
+        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px;}
+        .gr-editor-btn {cursor: pointer; font-weight: bold; margin-right: 1em;}
     </style>
 </head>
 <body>
@@ -101,7 +91,7 @@
                         {% tabs tabs tab %}
                     {% endif %}
 
-                    <div class="gr-fr gr-mb10">
+                    <div class="gr-share-icons">
                         {% include "elements/share_buttons.html" %}
                     </div>
                 </div>
@@ -142,7 +132,7 @@
                     </td>
 
                     <td width="40%">
-                        <div class="gr-fr"><a href="{% url main %}">Гракон</a> ©2012. &ndash; Верстка выполнена с помощью <a href="http://www.yaml.de">YAML</a></div>
+                        <div class="gr-fr"><a href="{% url main %}">Гракон</a> ©2012 &ndash; Верстка выполнена с помощью <a href="http://www.yaml.de">YAML</a></div>
                     </td>
                 </tr>
             </table>

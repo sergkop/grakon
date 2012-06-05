@@ -6,12 +6,14 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
 from elements.resources.models import RESOURCE_CHOICES
+from grakon.utils import project_settings
 from services.cache import cache_view
 
 def code_data(request):
     ctx = {
         'resources': json.dumps(RESOURCE_CHOICES, ensure_ascii=False),
     }
+    ctx.update(project_settings())
     return render_to_response('code_data.js', ctx, mimetype='application/javascript')
 
 @cache_view('1x1image', 1000, only_anonym=False)

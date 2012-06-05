@@ -1,10 +1,44 @@
-<div class="gr-ideas-item"> 
+<div class="gr-ideas-item">
     <div class="gr-ideas-content">
-        <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
-        <div class="gr-add gr-idea-selected" title="Предоставить ресурсы">
-            <a href="" class="gr-add-icon">&nbsp;</a>
-            <a href="">1123</a>
+        <div class="gr-slider gr-slider-inactive">
+            <div class="gr-close js-close-inactive">&nbsp;</div>
+            <div class="gr-add gr-idea-selected">
+                <span href="" class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
+                <span class="js-resources-list">1123</span>
+            </div>
+
+            <div class="gr-small-popup gr-add-popup">
+                <div class="gr-close js-close">&nbsp;</div>
+                <div class="ym-clearfix">&nbsp;</div>
+                <select class="gr-mb10 gr-mt10" style="width:100%">
+                    <option>Выбрать ресурс</option>
+                </select>
+                <textarea style="width:100%">Описание (не более 140 символов)</textarea>
+                <div align="right" class="gr-mt5">
+                    <span class="highlighted">100</span>
+                    <span class="highlight">Сохранить</span>
+                </div>
+            </div>
+
+            <ul class="gr-source-list-slider js-resource-items">
+                {% for provider_resources in info.resources.values %}
+                    <li>
+                        <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                        {% for resource in provider_resources.data %}
+                            <span class="gr-resource-item {% if resource.description %}gr-resource-item-active{% endif %}" descr="{{ resource.description }}">{{ resource.title }}</span>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="gr-small-popup gr-hover-popup">
+                <i>&nbsp;</i>
+                <div></div>
+            </div>
+
         </div>
+
+        <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
         <p class="small">
             {% with person=info.participants.admin.entities.0.instance %}
                 {% include "participants/person.html" %}
@@ -16,7 +50,7 @@
         </div>
     </div>
     <div class="gr-info-bar">
-        <a href="{% url idea info.instance.id %}" class="dimmed">Комментарии</a>
+        <a class="dimmed" onclick="show_idea_comments($(this), 'idea/{{ info.instance.id }}', '{{ info.instance.get_absolute_url }}', 'ideas');">Комментарии</a>
         <span class="gr-bullet">&nbsp;</span>
         <!--a href="" class="dimmed">Проекты: 11</a>
         <span class="gr-bullet">&nbsp;</span-->

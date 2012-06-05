@@ -8,3 +8,29 @@ header {
 	background: linear-gradient(#3e3e3e, #222223);
 }
 
+.gr-follow-button {
+	background-color: #7aaa51;
+	background: -moz-linear-gradient(top, #95bc53, #7aaa51);
+	background: -ms-linear-gradient(top, #95bc53, #7aaa51);
+	background: -o-linear-gradient(top, #95bc53, #7aaa51);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#95bc53), to(#7aaa51));
+	background: -webkit-linear-gradient(top, #95bc53, #7aaa51);
+	background: linear-gradient(top, #95bc53, #7aaa51);
+}
+
+.ym-hlist ul li strong, .ym-button {
+	background-color: #4aa9d7;	
+	background: -moz-linear-gradient(top, #66c3f0, #4aa9d7);
+	background: -ms-linear-gradient(top, #66c3f0, #4aa9d7);
+	background: -o-linear-gradient(top, #66c3f0, #4aa9d7);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#66c3f0), to(#4aa9d7));
+	background: -webkit-linear-gradient(top, #66c3f0, #4aa9d7);
+	background: linear-gradient(top, #66c3f0, #4aa9d7);	
+}
+
+.gr-green-button {
+	background: none;
+	background-color: #94bb53;	
+}
+
+

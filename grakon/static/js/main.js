@@ -1,6 +1,25 @@
 $(function(){
-    $("form.uniForm").uniform();
-    $(".gr-side-item h4 i, .gr-login-info a").tipsy({gravity: 'n', opacity: .8});
+    //$("form.uniForm").uniform();
+    //$(".gr-side-item h4 i, .gr-login-info a").tipsy({gravity: 'n', opacity: .8});
+
+    // Show/hide resources provided for idea
+    $(".js-resources-list").click(function(){
+        var slider = $(this).parent().parent();
+        slider.toggleClass("gr-slider-inactive");
+        slider.children(".gr-source-list-slider").slideToggle(100);
+    })
+
+    // Show/hide popups with descriptions of idea resources
+    $(".js-resource-items span.gr-resource-item-active")
+            .hover(function(){
+                var label = $(this);
+                var resource_popup = $(".gr-hover-popup");
+                resource_popup.children("div").text(label.attr("descr"));
+                var dx = (label.position().left+label.width()/2) - (resource_popup.width()/2);
+                var dy = label.position().top + label.height() + 10;
+                resource_popup.css("top", dy).css("left", dx).show();
+            })
+            .mouseleave(function(){$(".gr-hover-popup").hide();});
 });
 
 // Default tipsy settings
@@ -175,30 +194,89 @@ var SelectLocation = Backbone.View.extend({
     }
 });
 
-// TODO: add "add location" button
-// Takes ct_id and id of the entity, to which locations are related
-function locations_list_editing(ct_id, id){
-    $(".gr-locations-ul li").each(function(index){
-        var li = $(this);
+// TODO: add "add location" button and save
+// Widget for inline editing of the list of locations
+// Usage: new LocationEditor({el: $(div), edit_btn: $(edit_btn), ct: ct_id, entity_id: entity_id})
+var LocationEditor = Backbone.View.extend({
+    initialize: function(){
+        this.edit_btn = this.options.edit_btn;
+        var editor = this;
 
-        $("<span/>")
-                .attr("title", "Отказаться от участия")
-                .addClass("remove-li-btn ui-icon ui-icon-close")
-                .tipsy({gravity: 'n'})
+        editor.edit_btn.click(function(){editor.edit();});
+    },
+
+    edit: function(){
+        var editor = this;
+        editor.edit_btn.hide();
+
+        editor.$el.addClass("gr-editor");
+
+        // Add cancel and save buttons
+        var cancel_btn = $("<span/>").text("Отмена")
+                .addClass("gr-editor-btn")
+                .click(function(){editor.recover();});
+        editor.$el.after(cancel_btn);
+
+        var add_location_btn = $("<span/>").text("Добавить территорию")
+                .addClass("gr-editor-btn")
                 .click(function(){
-                    li.css("background-color", "#D9BDFF");
+                    // TODO: implement it
+                });
 
-                    var confirmation = confirm("Вы действительно хотите отказаться от участия в этом районе?");
-                    li.css("background-color", "#FFFFFF");
+        var save_btn = $("<span/>").text("Сохранить")
+                .addClass("gr-editor-btn")
+                .click(function(){
+                    editor.recover();
+                    /*dialog_post_shortcut(UPDATE_TEXT_FIELD_URL, {
+                        ct: editor.options.ct,
+                        id: editor.options.entity_id,
+                        field: editor.options.field,
+                        value: value
+                    }, function(){
+                        editor.old_value = value;
+                        editor.recover();
+                    })();*/
+                });
+        editor.$el.after(save_btn);
 
-                    // TODO: use model dialog here?
-                    if (confirmation)
-                        dialog_post_shortcut(REMOVE_LOCATION_URL, {"loc_id": li.attr("loc_id"), "ct": ct_id, "id": id,
-                                "csrfmiddlewaretoken": get_cookie("csrftoken")}, function(){li.remove();})();
-                })
-                .prependTo(li);
-    });
-}
+        editor.$el.children("li").each(function(index){
+            var li = $(this);
+
+            $("<span/>")
+                    .attr("title", "Отказаться от участия")
+                    .addClass("remove-li-btn ui-icon ui-icon-close")
+                    .tipsy({gravity: 'n'})
+                    .click(function(){
+                        li.css("background-color", "#D9BDFF");
+
+                        var confirmation = confirm("Вы действительно хотите отказаться от участия в этом районе?");
+                        li.css("background-color", "#FFFFFF");
+
+                        // TODO: use model dialog here?
+                        if (confirmation){
+                            var params = {
+                                "loc_id": li.attr("loc_id"),
+                                "ct": editor.options.ct,
+                                "id": editor.options.entity_id
+                            }
+                            dialog_post_shortcut(REMOVE_LOCATION_URL, params, function(){li.remove();})();
+                        }
+                    })
+                    .prependTo(li);
+        });
+    },
+
+    recover: function(){
+        this.edit_btn.show();
+        this.$el.removeClass("gr-editor");
+        this.$el.next().remove();
+        this.$el.next().remove();
+
+        this.$el.children("li").each(function(index){
+            $(this).children(":first").remove();
+        });
+    }
+});
 
 function prevent_enter_in_form(selector){
     $(selector).keydown(function(event){
@@ -211,93 +289,107 @@ function prevent_enter_in_form(selector){
 
 // TODO: take max_length into account (for text type)
 // TODO: visual bug when there is no text (for text type)
+// TODO: set focus on editing element
+// TODO: on save use text/html filtered on server? (for security)
 // Widget for inline editing of text fields
-// Usage: new TextFieldEditor({el: $(div), btn: $(btn), ct: ct_id, entity_id: entity_id,
-//            field: field, type: "text" or "html"})
+// Usage: new TextFieldEditor({el: $(div), edit_btn: $(edit_btn), add_btn: $(add_btn),
+//            ct: ct_id, entity_id: entity_id, field: field, type: "text" or "html"})
 var TextFieldEditor = Backbone.View.extend({
     initialize: function(){
-        this.btn = this.options.btn;
+        this.edit_btn = this.options.edit_btn;
+        this.add_btn = this.options.add_btn;
         var editor = this;
 
-        editor.btn.click(function(){
-            editor.btn.hide();
+        editor.edit_btn.click(function(){editor.edit();});
+        editor.add_btn.click(function(){editor.edit();});
+    },
 
-            // Add cancel and save buttons
-            var cancel_btn = $("<span/>").text("Отмена")
-                    .addClass("gr-text-editor-cancel")
-                    .click(function(){editor.recover();});
-            editor.$el.after(cancel_btn);
+    edit: function(){
+        var editor = this;
 
-            var save_btn = $("<span/>").text("Сохранить")
-                    .addClass("gr-text-editor-save")
-                    .click(function(){
-                        if (editor.options.type == "text")
-                            var value = editor.$el.text();
-                        else
-                            // TODO: take related editor, not active
-                            var value = tinyMCE.activeEditor.getContent();
+        editor.edit_btn.hide();
+        editor.add_btn.hide();
 
-                        dialog_post_shortcut(UPDATE_TEXT_FIELD, {
-                            ct: editor.options.ct,
-                            id: editor.options.entity_id,
-                            field: editor.options.field,
-                            value: value
-                        }, function(){
-                            editor.old_value = value;
-                            editor.recover();
-                        })();
-                    });
-            editor.$el.after(save_btn);
+        // Add cancel and save buttons
+        var cancel_btn = $("<span/>").text("Отмена")
+                .addClass("gr-editor-btn")
+                .click(function(){editor.recover();});
+        editor.$el.after(cancel_btn);
 
-            // Create editor widget
-            if (editor.options.type == "text"){
-                editor.old_value = editor.$el.text();
-                editor.$el.attr("contenteditable", "true").addClass("gr-text-editor");
-            } else {
-                editor.$el.hide();
-                editor.old_value = editor.$el.html();
+        var save_btn = $("<span/>").text("Сохранить")
+                .addClass("gr-editor-btn")
+                .click(function(){
+                    if (editor.options.type == "text")
+                        var value = editor.$el.text();
+                    else
+                        // TODO: take related editor, not active
+                        var value = tinyMCE.activeEditor.getContent();
 
-                // TODO: html must be escaped
-                editor.textarea = $("<textarea/>")
-                        .attr("id", "id_"+editor.options.field)
-                        .html(editor.old_value);
-
-                editor.$el.after(editor.textarea);
-
-                // TODO: use values from settings.py
-                tinyMCE.init({
-                    "elements": "id_"+editor.options.field,
-                    "width": "100%",
-                    "height": 300,
-
-                    "relative_urls": false,
-                    "theme_advanced_toolbar_location": "top",
-                    "theme_advanced_toolbar_align": "left",
-                    "language": "ru",
-                    "theme_advanced_buttons1": "bold,italic,underline,|,bullist,numlist,|,link,unlink,|,fontsizeselect,|,charmap,code",
-                    "theme_advanced_buttons3": "",
-                    "theme_advanced_buttons2": "",
-                    "theme": "advanced",
-                    "strict_loading_mode": 1,
-                    "directionality": "ltr",
-                    "mode": "exact",
-                    "extended_valid_elements": "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],"
+                    dialog_post_shortcut(UPDATE_TEXT_FIELD_URL, {
+                        ct: editor.options.ct,
+                        id: editor.options.entity_id,
+                        field: editor.options.field,
+                        value: value
+                    }, function(){
+                        editor.old_value = value;
+                        editor.recover();
+                    })();
                 });
-            }
-        });
+        editor.$el.after(save_btn);
+
+        // Create editor widget
+        if (editor.options.type == "text"){
+            editor.old_value = editor.$el.text();
+            editor.$el.attr("contenteditable", "true").addClass("gr-editor");
+        } else {
+            editor.$el.hide();
+            editor.old_value = editor.$el.html();
+
+            editor.textarea = $("<textarea/>")
+                    .attr("id", "id_"+editor.options.field)
+                    .html(editor.old_value);
+            editor.$el.after(editor.textarea);
+
+            tinymce_editor("id_"+editor.options.field);
+        }
     },
 
     // Hide editor widget and show updated content
     recover: function(){
-        this.btn.show();
+        this.edit_btn.show();
         this.$el.next().remove();
         this.$el.next().remove();
         if (this.options.type == "text"){
-            this.$el.removeAttr("contenteditable").removeClass("gr-text-editor").text(this.old_value);
+            this.$el.removeAttr("contenteditable").removeClass("gr-editor").text(this.old_value);
         } else {
             this.$el.html(this.old_value).show();
             this.$el.next().remove();
             this.$el.next().remove();
         }
+        if (this.old_value == "")
+            this.add_btn.show();
     }
 });
+
+// TODO: use backbone view and hide comments on second click
+// TODO: comments for second idea don't load
+function show_idea_comments(btn, id, url, category){
+    $("#disqus_thread").remove();
+
+    var disqus_div = $("<div/>").attr("id", "disqus_thread")
+            .css("background-color", "#D8E6ED").css("padding", "1em");
+    btn.parent().after(disqus_div);
+
+    // TODO: try not using reset, but moving div, changing global js settings and reloading script
+    if (typeof DISQUS === "undefined")
+        $.getScript("http://"+disqus_shortname+".disqus.com/embed.js");
+    else
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                this.page.identifier = id;  
+                this.page.url = url;
+                this.page.category = category;
+            }
+        });
+}

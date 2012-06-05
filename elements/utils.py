@@ -111,21 +111,20 @@ def entity_post_method(func):
         return func(request, entity)
     return new_func
 
+def is_entity_admin(entity, profile):
+    from users.models import Profile
+    if type(entity) is Profile:
+        return entity == profile
+    elif 'participants' in type(entity).features and 'admin' in type(entity).roles:
+        from elements.participants.models import EntityParticipant
+        return EntityParticipant.objects.is_participant(entity, profile, 'admin')
+    else:
+        return False
+
 def check_permissions(func):
     """ Check if user has permissions to modify entity """
-    from elements.participants.models import EntityParticipant
-    from users.models import Profile
     def new_func(request, entity):
-        if type(entity) is Profile:
-            has_perm = (entity==request.profile)
-        elif 'participants' in type(entity).features and 'admin' in type(entity).roles:
-            has_perm = EntityParticipant.objects.is_participant(entity, request.profile, 'admin')
-        else:
-            has_perm = False
-
-        if not has_perm:
+        if not is_entity_admin(entity, request.profile):
             return HttpResponse(u'У вас нет прав на выполнение этой операции')
-
         return func(request, entity)
-
     return new_func

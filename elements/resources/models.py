@@ -5,7 +5,6 @@ from django.db import models
 from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
 from elements.utils import reset_cache
 
-# TODO: add subcategories (?)
 # (name, title)
 RESOURCE_CHOICES = (
     ('money', u'спонсор/деньги'),
@@ -43,15 +42,57 @@ RESOURCE_CHOICES = (
 
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)
 
+# TODO: take entity model parameter, which specifies the necessaty of provider value
 class EntityResourceManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
-        """ Return {id: [resources]} """
-        res = dict((id, []) for id in ids)
-        for id, resource in self.filter(content_type=ContentType.objects.get_for_model(model),
-                entity_id__in=ids).values_list('entity_id', 'resource'):
-            res[id].append({'name': resource, 'title': RESOURCE_DICT[resource]})
+        """ Return {id: {provider_id: {'name': name, 'title': title, 'description': description}}} """
+        res = dict((id, {}) for id in ids)
+
+        resources_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
+                entity_id__in=ids).values_list('entity_id', 'resource', 'description', 'provider'))
+
+        # TODO: sort by provider and by resource
+        for id, resource, descr, provider_id in resources_data:
+            resource_data = {'name': resource, 'title': RESOURCE_DICT[resource], 'description': descr}
+            res[id].setdefault(provider_id if provider_id else 'none', {'data': []})['data'].append(resource_data)
+
         return res
 
+    def _add_remove(self, entity, resource, add, description='', provider=None):
+        if self.model.feature not in type(entity).features:
+            return
+
+        if resource not in RESOURCE_DICT.keys():
+            return
+
+        if add:
+            entity_resource, created = self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
+                    resource=resource, provider=provider, defaults={'description': description})
+            if not created:
+                entity_resource.description = description
+                entity_resource.save()
+        else:
+            # Use generic relation to filter related feature instances
+            getattr(entity, self.model.feature).filter(resource=resource, provider=provider).delete()
+
+        #if self.model.points_sources:
+        #    from users.models import Profile
+        #    profiles = [x for x in [entity, provider] if type(x) is Profile]
+        #    for profile in profiles:
+        #        for source in self.model.points_sources:
+        #            profile.update_source_points(source)
+
+        entity.clear_cache()
+        if provider:
+            provider.clear_cache()
+
+    def add_or_update(self, entity, resource, description='', provider=None):
+        self._add_remove(entity, resource, True, description, provider)
+
+    def remove(self, entity, resource, provider=None):
+        self._add_remove(entity, resource, False, provider=provider)
+
+    # TODO: update resources with descriptions
     def update(self, entity, resources):
         if self.model.feature not in type(entity).features:
             return
@@ -79,10 +120,12 @@ class EntityResourceManager(BaseEntityPropertyManager):
 def update_resources(entity, resources):
     EntityResource.objects.update(entity, resources)
 
-# TODO: ability to add text, describing resources + custom resources (in case of other)
+# TODO: add 'other' option for resource type
 @feature_model
 class EntityResource(BaseEntityProperty):
     resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
+    description = models.CharField(u'Описание', max_length=140, blank=True)
+    provider = models.ForeignKey('users.Profile', blank=True, null=True, related_name='provided_resources')
 
     objects = EntityResourceManager()
 
@@ -91,7 +134,7 @@ class EntityResource(BaseEntityProperty):
     entity_methods = {'update_resources': update_resources}
 
     class Meta:
-        unique_together = ('content_type', 'entity_id', 'resource')
+        unique_together = ('content_type', 'entity_id', 'resource', 'provider')
 
     def __unicode__(self):
         return unicode(self.entity) + ': ' + unicode(self.resource)

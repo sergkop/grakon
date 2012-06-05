@@ -11,12 +11,13 @@ from elements.utils import check_permissions, clean_html, entity_post_method, ta
 def entity_base_view(view, entity_model, selector):
     """ selector is a dict uniquely identifying the entity """
     view.entity = get_object_or_404(entity_model, **selector)
+    view.info = view.entity.info()
 
     ctx = {
         'tab': view.tab,
         'tabs': view.tabs,
         'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][4],
-        'info': view.entity.info(),
+        'info': view.info,
     }
 
     # TODO: all data can be recieved in one db query
@@ -65,9 +66,7 @@ def update_text_field(request, entity):
     else:
         assert False, "Field %s of entity model %s should not be editable" % (field, model_field.__name__)
 
-    print value
     setattr(entity, field, value)
     entity.save()
-    print entity
 
     return HttpResponse('ok')

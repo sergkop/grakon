@@ -3,9 +3,19 @@ from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
 from tools.tasks.models import Task
+from users.models import Profile
 
 class IdeaManager(BaseEntityManager):
-    pass
+    def get_related_info(self, data, ids):
+        provider_ids = set(p_id for id in ids for p_id in data[id]['resources'])
+        if 'none' in provider_ids:
+            provider_ids.remove('none')
+
+        providers_info = Profile.objects.info_for(provider_ids, related=False)
+        for id in ids:
+            for p_id in data[id]['resources']:
+                if p_id != 'none':
+                    data[id]['resources'][p_id]['provider'] = providers_info[p_id]
 
 @entity_class(['participants', 'resources'])
 class Idea(BaseEntityModel):

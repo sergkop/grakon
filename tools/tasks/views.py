@@ -62,6 +62,9 @@ class TaskView(BaseTaskView, TemplateView):
         ideas_ids = list(self.entity.ideas.all().values_list('id', flat=True))
         ideas = Idea.objects.info_for(ideas_ids, True).values()
 
+        from pprint import pprint
+        pprint(ideas)
+
         ctx = {'ideas': ideas}
         return ctx
 

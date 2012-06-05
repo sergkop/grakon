@@ -4,11 +4,13 @@
 
 <div id="{{ field }}_html">{{ html|safe }}</div>
 
-{% if not html and is_admin %}
-    <p><i><a href="">Добавить</a></i></p>
+{% if is_admin %}
+    <p id="{{ field }}_add_btn" {% if html %}style="display:none;"{% endif %}><i><a>Добавить</a></i></p>
 {% endif %}
 
 <script type="text/javascript">
-    new TextFieldEditor({el: $("#{{ field }}_html"), btn: $("#{{ field }}_edit_btn"),
-            ct: {{ info.ct }}, entity_id: {{ info.instance.id }}, field: "{{ field }}", type: "html"});
+    new TextFieldEditor({el: $("#{{ field }}_html"), edit_btn: $("#{{ field }}_edit_btn"),
+            add_btn: $("#{{ field }}_add_btn"),
+            ct: {{ info.ct }}, entity_id: {{ info.instance.id }},
+            field: "{{ field }}", type: "html"});
 </script>

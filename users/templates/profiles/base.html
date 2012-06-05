@@ -6,8 +6,7 @@
     <h1>{{ profile }}</h1>
 {% endblock %}
 
-{% block left_column %}
-    <!--h3>Активность<i>&nbsp;</i></h3>
+{% comment %}
     <div class="gr-side-item">
         <h4 class="gr-officials">
             <a>Админ&nbsp;({{ administered_entities.count }})</a>
@@ -21,10 +20,15 @@
                 <li><a href="">Показать все...</a></li>
             {% endif %}
         </ul>
-    </div-->
-{% endblock %}
+    </div>
+{% endcomment %}
 
 {% block right_column %}
+    {% if not is_admin %}
+        {% include "dialogs/send_message.html" %}
+        {% include "participants/follower_button.html" %}
+    {% endif %}
+
     <div class="gr-mb15">
         <h4>Контакты ({{ info.contacts.count }}):</h4>
         <p>

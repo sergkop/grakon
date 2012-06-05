@@ -8,5 +8,7 @@ urlpatterns = patterns('',
     url(r'^remove_location$', 'elements.locations.views.remove_location', name='remove_location'),
 
     url(r'^update_text_field$', 'elements.views.update_text_field', name='update_text_field'),
-    #url(r'^update_resources$', 'update_resources', name='update_resources'),
+
+    url(r'^add_resource$', 'add_resource', name='add_resource'),
+    url(r'^remove_resource$', 'remove_resource', name='remove_resource'),
 )

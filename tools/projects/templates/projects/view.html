@@ -1,5 +1,9 @@
 <div class="gr-descr">
-    <p class="small"><a href="">Shweta Karwa,</a> PhD student, Chemical Engg at Georgia Tech Graduate School</p>
+    <p class="small">
+        {% with person=admin %}
+            {% include "participants/person.html" %}
+        {% endwith %}
+    </p>
 
     {% with title="Дедлайн" field="deadline" css_class="gr-mt0" text=project.deadline %}
         {% include "elements/text_block.html" %}

@@ -1,55 +1,46 @@
-.gr-breadcrumbs {margin: 1em 0 0; clear: both;}
-    .gr-breadcrumbs i {position: absolute; top:0; right: -11px; width: 12px; height: 23px; background:url(../images/bg-breadcrumbs.png) right -23px no-repeat; z-index:1;}
+.gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
+    .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
+	.gr-breadcrumbs strong i {background-position: 0 -26px;}
 
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right;}
 .gr-fl {float: left;}
 .gr-dt {display: table;}
 .gr-mt0 {margin-top: 0 !important;}
+.gr-mt5 {margin-top: .5em !important;}
 .gr-mt10 {margin-top: 1em !important;}
 .gr-mb3 {margin-bottom: .3em !important;}
 .gr-mb10 {margin-bottom: 1em !important;}
 .gr-mb15 {margin-bottom: 1.5em !important;}
 .gr-mt20 {margin-top: 2em !important;}
 .gr-mb20 {margin-bottom: 2em !important;}
-.gr-mb70 {margin-bottom: 7em !important;}
+.gr-mb30 {margin-bottom: 3em !important;}
 .gr-pt20 {padding-top: 2em !important;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
+.gr-bb-blue {border-bottom: 2px solid #82d1fa; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
+.gr-noborder {border: none !important; box-shadow: none !important;}
 
 /*Элементы header*/
 .gr-logo {margin-left: -45px;}
 .gr-login-info {float: right;}
     .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
 		.gr-login-info div.gr-login-user{ position: relative; border: none; box-shadow: none; display: inline; cursor: pointer; padding-bottom: 1em;}
-        .gr-activity, .gr-web-activity, .gr-leader, .gr-icon-state, .gr-select-arrow, .gr-resources, .gr-geography {display: block; padding-right: 1.25em }
-        header .gr-activity, header .gr-web-activity, header .gr-leader {padding-right: 1.7em; display: inline;}
         .gr-job {float: left; background:url(../images/icons/search.png) 0 7px no-repeat; color: #fff; padding: 0 0 0 10px;}
 		.gr-login-user-sub {position: absolute; top: 35px; left: 0; width: 100%; background-color: #000; box-shadow: inset 0 0 3px #000; display: none;}
 			.gr-login-user-sub a {display: block; width: 100%; border: none; box-shadow: none; border-bottom: 1px solid #242424; box-shadow: inset 0 -1px 0 #3e3d3d;}	
-
 nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Sidebars*/
-.gr-side-item {position: relative; overflow: hidden;} 
-    .gr-side-item h4 {position: relative;}
-        .gr-side-item h4 i, .ym-col3 h3 i.gr-question, .gr-question i {position: absolute; top: .4em; right: 5px; left:auto;  width: 18px; height: 20px; background: url(../images/icons/question.png) 0 0 no-repeat; cursor: pointer; padding-right: 0;}
-        .gr-question {padding-right: 30px;}
-        .gr-side-item ul, .gr-side-item li, .gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none;}           
-            .gr-source-list-slider {border: 1px solid #f3f3f3;}
-            .gr-side-item li, .gr-source-list-slider li {padding: .5em .5em; position: relative; color: #887a7a}
-                .gr-source-list-slider li {color: #000; padding: 1em .5em 1em 3em;}
-                .gr-side-item .gr-nomargin li {padding-left: 1em;}
-                .gr-source-list-slider li:nth-child(2n)  {background-color: #f3f3f3;}
-                .gr-side-item li i, .gr-source-list-slider li i, .gr-orange-arrow-up, .gr-add {position: relative; margin-bottom: .7em;}
-                .gr-orange-arrow-up, .gr-orange-arrow-down{ top: .9em;}
-                .gr-disabled h4 {text-shadow: 0 1px 1px #fff; }
-                .gr-disabled-back {position: absolute; top: 0; left: 0; z-index: 1; width: 100%; background-color: rgba(0,0,0,0.1); height: 300px;}
+.gr-side-item {position: relative;} 
 
-.gr-ideas-item .gr-add a.gr-add-icon {background:url(../images/icons/add.png) right 0 no-repeat; position: absolute; left: -35px; top: -5px; width: 30px; height: 30px;}
+.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add.png) -3px -80px no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px;}
 	.gr-add-icon:hover {text-decoration: none; border-bottom: none !important;}	
-	.gr-ideas-item .gr-idea-selected a.gr-add-icon {background-position: right -73px;}
+	.gr-ideas-item .gr-idea-selected span.gr-add-icon {background-position: -3px 0;}
 
 /*Кнопки соцсетей*/
+.gr-share-icons {float: right; margin: 10px 0;}
+	.gr-share-icons img {opacity: .5;}
+	.gr-share-icons img:hover {opacity: 1;}
 .gr-social {margin: 1em 0 0; text-align:center;}
     .gr-left-sidebar .gr-social {margin: 0;}
 .gr-twitter {width: 90px; overflow: hidden; margin-bottom: 9px; margin-right: .9em; display: inline-block;} 
@@ -69,35 +60,61 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 
 /* Страница задачи */
+.gr-info-bar {font-size: .95em; margin-bottom: 1em;}
 .gr-bullet {background:url(../images/icons/bullet.gif) center center no-repeat; padding: 0 1em;}
 	.gr-info-bar .ym-button {margin-top: -.7em;}
+	.gr-info-bar .gr-active-link {font-weight: bold; color: #000;}
 .gr-ideas-list {}
-	.gr-ideas-item {position: relative; padding: 25px 0 0; margin: 0 0 20px 0; border-top: 4px solid #e0e2e6}
+	.gr-ideas-item {position: relative; padding: 0 0 15px; margin: 0 0 15px 0; border-bottom: 2px solid #82d1fa; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
 		.gr-ideas-item-first {border: none; padding-top: 0;}
-	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #e8eaed; padding: 10px; border-bottom: 3px solid #e0e2e6}
-	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5;}
-		.gr-add a, .gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 .8em;}
-			.gr-ideas-item .gr-add span {color: #000; background-position: -9px -63px;}
-			.gr-add a:hover {text-decoration: none; border-bottom: 1px solid;}
+	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
+	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
+		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -50px no-repeat;  padding: 0 0 0 1em; cursor: pointer;}
+			.gr-ideas-item .gr-idea-selected span {color: #000; background-position: -9px -64px;}
+			.gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .5em 1.3em .65em; margin: 1em 0 .5em; display: inline-block; color: #000; border: 1px solid #c5c9d2; font-weight: bold;}
+	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em;}
+		.gr-resource-item-active {background: #b5d188 url(../images/icons/add.png) right -116px no-repeat; padding-right: 1.5em;}
+		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
-	.gr-follow-button {font-size: 1.6em; font-weight: bold; border: 2px solid #c5c9d2; padding: .8em 1em; color: #000; display: block;}
-		.gr-follow-button:hover {text-decoration: none;}
-	.gr-editing {background:url(../images/icons/editing.gif) 0 0 no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block;}
+	.gr-follow-button {font-size: 1.6em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
+	.gr-editing {background:url(../images/icons/editing.gif) 0 0 no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
+.gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; font-size: .9em; line-height: 1.8em; margin-bottom: 1em;}	
+	.gr-close { float: right; width: 13px; height: 13px; background:url(../images/icons/add.png) -8px -104px no-repeat; cursor: pointer; z-index:1;}
+	.gr-slider-inactive {border-color: #fff; background-color: #fff;}
+		.gr-slider-inactive .gr-close {display: none;}
 	
+	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   
+	.gr-source-list-slider {margin-top: 1em; font-size: .9em}        
+	.gr-source-list-slider li {margin: 0 0 1em;}
+	
+	.gr-ideas-resources .gr-source-list-slider {display: block; margin-top: 0;}
+	
+	.gr-links-list, .gr-links-list li {list-style-type: none; margin: 0; padding: 0;}
+		.gr-links-list li {margin-bottom: .7em; font-size: 1.2em}	
 	
 .gr-descr .gr-user {margin: 0 0 1.2em;}
 	h1 .gr-user {font-size: .5em; margin: .2em 0 0 0;}
 	
 	
 /* Страница проекта */
-
-.gr-resoure-item {border: 2px solid #c5c9d2; margin-bottom: 1em;}
-	.gr-resoure-item a {display: block; padding: 1em 1.2em; text-decoration: none; color: #333 !important;}
-	.gr-resoure-item  h2 {margin: 0 0 .4em;}
-	.gr-resoure-item  p {margin:  1em 0 0;}
+.gr-resource-needs {border: 2px solid #c5c9d2; margin-bottom: 1em; position: relative; padding: 1em 1.2em 1em 2.5em; }
+	.gr-resource-needs  h2 {margin: 0 0 .4em;}
+	.gr-resource-needs  p {margin:  1em 0 0;}
+	.gr-small-popup  {position: absolute; z-index: 1; top: 0; left: 0; background: #f7fcff; border: 3px solid #b5d188; padding: .7em; border-radius: .5em; box-shadow: 1px 1px 2px #c6d3db; line-height: 1.3em; width: 100%;}
+		.gr-hover-popup {width: 135px;}
+		.gr-add-popup {top: -10px; left: -50px; width: 250px; position: absolute; z-index:2;}
+		.gr-small-popup i {position: absolute; top: -7px; left: 50%; margin-left: -5px; width: 10px; height: 7px; background:url(../images/icons/add.png) -10px -138px no-repeat;}
+		.gr-join {background:url(../images/icons/add.png) 0 -149px no-repeat; padding: 0 0 .2em 2em;} 
+		.gr-small-popup .highlight {cursor: pointer;}
+	.gr-resource-highlighted {background-color: #f0f9ff; border: 1px solid #009ec5; box-shadow: 1px 1px 0 #e4e4e4;} 
+		.gr-resource-highlighted h2 {color: #009ec5;}	
+	.gr-resource-needs .gr-add {position: absolute; top: 1.2em; left: .5em; background: url(../images/icons/add.png) 0 -165px no-repeat; width: 13px; height: 13px; cursor: pointer; display: none}
+		.gr-resource-needs:hover .gr-add, .gr-add-popup .gr-close {display: block;}
+		.ym-col3 .gr-small-popup {font-size: .9em;}
+		.ym-col3 .gr-small-popup input, .ym-col3 .gr-small-popup textarea {font-size: 1.1em;}
+		
 
 
 /* ----- Переиспользуемые элементы ----- */
@@ -120,3 +137,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
     cursor: pointer;
     opacity: 1;
 }
+
+
+/* JS стили */
+
+.js-follow-content, .js-projects-content, .js-resource-items, .gr-small-popup {display: none;}

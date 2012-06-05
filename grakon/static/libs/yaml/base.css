@@ -52,7 +52,7 @@
 
 		/* (en) Standard values for colors and text alignment */
 		/* (de) Vorgabe der Standardfarben und Textausrichtung */
-		background:#e8eaed;
+		background:#fff;
 		color:#000;
 		text-align:left; /* LTR */
 	}
@@ -303,7 +303,7 @@
 	* (de) Formulargestaltung, bei der sowohl label als auch input/select/textarea mit display:block; gestaltet werden
 	*/
 	
-	textarea {border: 1px solid #ccc;}
+	textarea {border: 1px solid #ccc; padding: .2em .3em;}
 
 	.ym-form,
 	.ym-form fieldset { overflow:hidden; }
@@ -455,7 +455,8 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -3px; padding-bottom: 3em;}
+	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -4px; padding-bottom: 3em;
+	box-shadow: 0 -10px 100px #e0e2e6}
 }
 
 @media print {

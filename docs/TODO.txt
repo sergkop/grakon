@@ -1,31 +1,49 @@
-* Extend text_block and html_block with "Добавить" button in case content is still empty + fix js
+* bug with contacts counter on profile page
+* counters in tabs
+* separate getting counters and pagination entities/ids
 
-* rewrite tinymce widget
+* project-ideas connection
+
+* share buttons
+
+* idea page
+* remove idea following
+
+* adding ideas
+
+* other option for resources
+* resources editing
+
+* new widget for location editor; add location in location list editor
+
+* fix follow button (detach window from button itself) + button on location
+
+* loading lists of participants with ajax
+
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
 * use tinymce parameters from settings.py in js
 
-* bug with contacts counter on profile page
+* settings page
 
 Design:
     * in breadcrumbs selected location must be a link
-    * slidedown menu under user name in main menu is not closing if mouse is moved up, remove extra item
     * inline text editor is not displayed properly when start from empty string
-    * inline editing of html
-
-* block at the bottom of the page (for scripts)
-
-* template for inline text editing
-
-* fix follow button (detach window from button itself)
 
 * tinymce can be loaded twice due to inclusion in base.html
+* rewrite tinymce widget
+
+* disqus inline
 
 Yulia:
     * highlighting items in main menu, not underlining
     * in breadcrumbs allow element to be either selected and be a link
+    * reimplement slidedown menu
+    * underline between share buttons
+    * disqus counter in tabs
+    * buttons for removing locations from a list
 
-* share buttons
-
-* separate getting counters and pagination entities/ids
+* bug with disqus wall when some users log in
 
 * how to edit locations of tasks, projects? do we need breadcrumbs on these pages?
 
@@ -39,8 +57,6 @@ Yulia:
 
 * sitemaps
 
-* settings page
-
 Static files:
     * move static and media files to a separate domain
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
@@ -52,8 +68,6 @@ Static files:
 Dialog forms:
     * check form data for posts
     * use django forms to generate forms in dialogs (fix officials)
-
-* bug with disqus wall when some users log in
 
 * depricate account activated page and registration failed page
 
@@ -70,8 +84,6 @@ Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * activate compression for tinymce
 
-* text fields for resources + other option
-
 * in 'about' fields add target="_blank" to all external links (in HTMLField)
 
 * check admin rights in elements.views.check_permissions (check that it works)
@@ -87,10 +99,10 @@ Performance:
 * ability to request entity deletion (like with profiles)
 
 * Invite friends button under contacts in profile
-* solve issues with several locations and is_main, allow to restrict a single related location for entity model
 
 * fill in create form fields with grey example values
 -------------------------------------------------------------------------------
+* block at the bottom of the page (for scripts)
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 
 * dashboard like google account reports; view email statistics by type; date boundaries
@@ -128,6 +140,7 @@ Analytics:
     * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
     * use ga events to monitor pressing buttons, registration and other activities
     * use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
+    * analyze average time spent on site, how often user returns, what he does
 
 * system of notifications (show them in top panel + send accumulating email once a day)
 

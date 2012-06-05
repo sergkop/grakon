@@ -3,32 +3,27 @@
         {% include "elements/text_block.html" %}
     {% endwith %}
 
-    {% if not is_admin %}
-        <div class="gr-mt20">
-            {% include "dialogs/send_message.html" %}
-            {% include "participants/follower_button.html" %}
-            <!--a class="ym-button gr-blue-button gr-complaint"><span>Пожаловаться</span></a-->
-        </div>
-    {% endif %}
-
     {% with title="О себе" field="about" html=profile.about %}
         {% include "elements/html_block.html" %}
     {% endwith %}
 
-    <h2>Ресурсы:{% if is_admin %}<i class="gr-editing">&nbsp;</i>{% endif %}</h2>
-    {% for resource in info.resources %}
-        <div class="gr-resource-item">{{ resource.title }}</div>
-        <!--p>2000 рублей. Могу перекинуть на яндекс-кошелек</p-->
-    {% endfor %}
+    <h2>Ресурсы:{% if is_admin %}<i id="resources_edit_btn" class="gr-editing">&nbsp;</i>{% endif %}</h2>
+    <div id="resources_list">
+        {% for resource in info.resources.none.data %}
+            <div class="gr-resource-item small">{{ resource.title }}</div>
+            <p>{{ resource.description }}</p>
+        {% endfor %}
+    </div>
 
-    <h2>География участия:{% if is_admin %}<i class="gr-editing">&nbsp;</i>{% endif %}</h2>
+    <h2>География участия:{% if is_admin %}<i id="location_edit_btn" class="gr-editing">&nbsp;</i>{% endif %}</h2>
     {% with locations_data=info.locations.entities %}
         {% include "locations/list.html" %}
     {% endwith %}
 
     {% if is_admin %}
         <script type="text/javascript">
-            locations_list_editing({{ info.ct }}, {{ request.profile.id }});
+            new LocationEditor({el: $(".gr-locations-ul"), edit_btn: $("#location_edit_btn"),
+                    ct: {{ info.ct }}, entity_id: {{ request.profile.id }}})
         </script>
     {% endif %}
 </div>

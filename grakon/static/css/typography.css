@@ -45,6 +45,7 @@
 	var,
 	tt {
 		font-family: Tahoma, Geneva, sans-serif;
+		resize: none;
 	}
 
 	/* (en) base layout gets standard font size 14px */
@@ -103,6 +104,8 @@
 		margin:1em 0;
 	}
 	
+		
+	
 	.ym-col2 h4, .ym-col3 h4  {
 		margin: 0 0 .5em;
 		font-size: 1em;
@@ -114,10 +117,12 @@
     }
 
 	h5 {
-		font-size:1em;
+		font-size:1.2em;
 		font-weight: bold;
-		margin: 1em 0 .7em;
+		margin: 0 0 .5em;
 	}
+	
+		.gr-descr h5 {margin: 1em 0 .5em;}
 
 	h6 {
 		font-weight: bold;
@@ -170,6 +175,9 @@
 		line-height:1.6em;
 		margin: 0 0 1em 0;
 	}
+	
+		.gr-descr p, .gr-descr li, .gr-ideas-list p, .gr-ideas-list li {font-size: 1.1em;}
+			.gr-descr li li, .gr-ideas-list li li {font-size: 1em;}
 
 	blockquote, cite, q {
 		font-family: Tahoma, Geneva, sans-serif;
@@ -268,7 +276,8 @@
 		text-decoration:underline
 	}
 	
-	.gr-pseudolink {color:#4D87C7; border-bottom: 1px dotted; cursor: pointer}
+	.gr-pseudolink {color:#4D87C7; cursor: pointer}
+		.gr-pseudolink:hover {border-bottom: 1px dotted;}
 	
 	header a {color: #fff;}
 	.ym-hlist ul li a {color: #000;}
@@ -311,6 +320,10 @@
 	*
 	* @section content-generic-classes
 	*/
+	.gr-dark {
+		color: #000 !important;
+	}
+	
 	.highlight {
 		color:#009EC5;
 	}
@@ -499,15 +512,6 @@
 	/*grakon styles*/
 	
 	.gr-login-info {font-size: 0.9em;}
-	.gr-user-chart strong {color: #e1dfdd;}
-	.gr-user-chart big {font-size: 1.5em;}
-	.gr-leader big {color: #85ac14;}
-	.gr-offline-activity big, .gr-online-activity big {color: #3290bf;}
-	.gr-icons {color: #8b8787; font-size: .95em;}
-	.gr-icons big {font-weight: bold; font-size: 1.8em; color: #85ac14;}
-	.gr-source-list-slider {font-size: .95em;}
-	.gr-icon-link { color: #85ac14;}
-	.gr-user-chart small {font-size: 0.9em;}
 	
     .clickable:hover {
         color: #c77405;
