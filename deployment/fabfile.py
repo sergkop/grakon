@@ -20,14 +20,14 @@ def web_server():
     env.deploy_user = env.conf['username']
 
     # Paths
-    proj_path = os.path.join('/home/%s' % env.deploy_user, env.conf['path']+'/') # project dir
-    env.code_path = os.path.join(proj_path, 'source/') # source code dir
-    env.env_path = os.path.join(proj_path, 'env/') # virtualenv dir
+    proj_path = env.conf['path'] = os.path.join('/home/%s' % env.deploy_user, env.conf['path']+'/') # project dir
+    env.code_path = env.conf['code_path'] = os.path.join(proj_path, 'source/') # source code dir
+    env.env_path = env.conf['env_path'] = os.path.join(proj_path, 'env/') # virtualenv dir
     env.manage_path = os.path.join(env.code_path, 'manage.py') # path to manage.py
 
     # Static files
-    env.static_path = os.path.join(proj_path, 'static/')
-    env.STATIC_ROOT = os.path.join(env.static_path, 'static/')
+    env.static_path = env.conf['static_path'] = os.path.join(proj_path, 'static/')
+    env.STATIC_ROOT = env.conf['STATIC_ROOT'] = os.path.join(env.static_path, 'static/')
 
     return env.conf
 
@@ -113,12 +113,12 @@ def init_system():
     cmd('ssh-keygen -t rsa -f /home/%s/.ssh/id_rsa -N %s -C "%s"' % (
             env.deploy_user, env.conf['SSH_KEY_PASSPHRASE'], env.conf['GITHUB_EMAIL']))
 
-    # TODO: change text color
-    print "Copy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)"
+    print "\033[92mCopy the following public key and add it to the list of deploy keys on github (https://github.com/sergkop/grakon/admin/keys)\033[0m"
     cmd('cat /home/%s/.ssh/id_rsa.pub' % env.deploy_user)
 
     # TODO: stop here to wait while key is added to github
     # Test access to repo
+    # TODO: this command causes error
     cmd('ssh -T git@github.com') # TODO: make sure this test is positive
 
     # Add developers ssh keys to access account
@@ -149,7 +149,7 @@ def prepare_code():
     # TODO: move updating settings to separate method + do backup
     # Create settings file
     file_from_template(os.path.join(env.code_path, 'grakon', 'site_settings.py.template'),
-            os.path.join(env.code_path, 'grakon', 'site_settings.py'), conf)
+            os.path.join(env.code_path, 'grakon', 'site_settings.py'), env.conf)
     # TODO: site_settings.py is owned by root
 
     # Create virtualenv
@@ -166,9 +166,10 @@ def prepare_code():
     virtualenv('pip install -I pil --no-download')
 
     # fcgi starting script
+    server_sh_path = os.path.join(env.code_path, 'deployment', 'server.sh')
     file_from_template(os.path.join(env.code_path, 'deployment', 'server.sh.template'),
-            os.path.join(env.code_path, 'deployment', 'server.sh'), conf)
-    # TODO: make it executable (chmod +x server.sh)
+            server_sh_path, env.conf)
+    sudo("chmod +x %s" % server_sh_path)
 
     # TODO: change socket file owner to nginx user (www-data)
 
@@ -177,7 +178,7 @@ def prepare_code():
     # Nginx configuration
     sudo('cp /etc/nginx/nginx.conf /etc/nginx/nginx-prev.conf')
     file_from_template(os.path.join(env.code_path, 'deployment', 'nginx.conf.template'),
-            '/etc/nginx/nginx.conf', conf)
+            '/etc/nginx/nginx.conf', env.conf)
 
     deploy_static_files()
 

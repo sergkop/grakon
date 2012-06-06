@@ -23,6 +23,7 @@
 * solve issues with several locations and is_main, allow to restrict a single related location for entity model
 
 * use tinymce parameters from settings.py in js
+* remove tinymce buttons opening popups
 
 * settings page
 
