@@ -31,3 +31,10 @@ class Project(BaseEntityModel):
 
     def __unicode__(self):
         return self.title
+
+class ProjectIdeas(models.Model):
+    project = models.ForeignKey(Project, related_name='ideas')
+    idea = models.ForeignKey('ideas.Idea', related_name='projects')
+
+    class Meta:
+        unique_together = ('project', 'idea')

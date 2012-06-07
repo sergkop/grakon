@@ -13,10 +13,14 @@ def idea_view(request, id):
 
     info = entity.info()
 
+    projects = [pi.project for pi in entity.projects.select_related('project')]
+
     ctx = {
         'info': info,
         'idea': entity,
         'admin': info['participants']['admin']['entities'][0]['instance'],
+        'projects': projects,
+        'projects_count': len(projects),
     }
 
     # TODO: all data can be recieved in one db query

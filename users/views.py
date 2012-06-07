@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 from grakon.utils import authenticated_ajax_post, escape_html
 from elements.participants.models import participant_in
 from elements.utils import table_data
-from elements.views import entity_base_view
+from elements.views import entity_base_view, entity_tabs_view
 from services.email import send_email
 from users.forms import MessageForm, ProfileForm
 from users.models import Message, Profile
@@ -26,11 +26,12 @@ class BaseProfileView(object):
 
         username = self.kwargs.get('username')
 
+        ctx.update(entity_base_view(self, Profile, {'username': username}))
+
         # TODO: must be taken from cached
-        # TODO: fix it
-        tasks_count = 0 #participant_in(profile, 'admin', 'tasks')(limit=0)['count']
-        ideas_count = 0 #participant_in(profile, 'admin', 'ideas')(limit=0)['count']
-        projects_count = 0 #participant_in(profile, 'admin', 'projects')(limit=0)['count']
+        tasks_count = participant_in(self.entity, 'admin', 'tasks')(limit=0)['count']
+        ideas_count = participant_in(self.entity, 'admin', 'ideas')(limit=0)['count']
+        projects_count = participant_in(self.entity, 'admin', 'projects')(limit=0)['count']
 
         self.tabs = [
             ('view', u'Инфо', reverse('profile', args=[username]), '', 'profiles/view.html'),
@@ -40,13 +41,15 @@ class BaseProfileView(object):
             #('contacts', u'В контактах у', reverse('profile_contacts', args=[username]), '', 'elements/table.html'),
         ]
 
-        ctx.update(entity_base_view(self, Profile, {'username': username}))
+        ctx.update(entity_tabs_view(self))
 
         self.own_profile = (self.entity==self.request.profile)
 
-        in_contacts = False
-        if self.request.user.is_authenticated():
-            in_contacts = self.request.profile.has_contact(self.entity)
+        # TODO: UX_HACK
+        if len(ctx['info']['locations']['entities']) > 0:
+            location = ctx['info']['locations']['entities'][0]['location']
+        else:
+            location = None
 
         ctx.update({
             'profile': self.entity,
@@ -59,6 +62,7 @@ class BaseProfileView(object):
                 'confirm_btn': u'Добавить',
                 'confirm_btn_long': u'Добавить в контакты',
             },
+            'location': location,
         })
         ctx.update(self.update_context())
         return ctx

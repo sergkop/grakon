@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from elements.locations.utils import subregion_list
 from elements.participants.models import EntityParticipant
-from elements.views import entity_base_view, participants_view
+from elements.views import entity_base_view, entity_tabs_view
 from services.disqus import disqus_page_params
 from tools.projects.forms import ProjectForm
 from tools.projects.models import Project
@@ -25,12 +25,14 @@ class BaseProjectView(object):
 
         id = int(self.kwargs.get('id'))
 
+        ctx.update(entity_base_view(self, Project, {'id': id}))
+
         self.tabs = [
             ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
             ('wall', u'Комментарии', reverse('project_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
         ]
 
-        ctx.update(entity_base_view(self, Project, {'id': id}))
+        ctx.update(entity_tabs_view(self))
 
         # TODO: select_related it needed
         location = ctx['info']['locations']['entities'][0]['location'] # TODO: looks hacky
@@ -58,11 +60,18 @@ class ProjectView(BaseProjectView, TemplateView):
     tab = 'view'
 
     def update_context(self):
-        ctx = {}
-        return ctx
+        return {
+            'ideas': [pi.idea for pi in self.entity.ideas.select_related('idea')],
+        }
 
 class ProjectWallView(BaseProjectView, TemplateView):
     tab = 'wall'
+
+class ProjectParticipantsView(BaseProjectView, TemplateView):
+    tab = 'participants'
+
+    def update_context(self):
+        pass
 
 class CreateProjectView(CreateView):
     template_name = 'projects/create.html'

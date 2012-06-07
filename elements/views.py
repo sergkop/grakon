@@ -13,12 +13,7 @@ def entity_base_view(view, entity_model, selector):
     view.entity = get_object_or_404(entity_model, **selector)
     view.info = view.entity.info()
 
-    ctx = {
-        'tab': view.tab,
-        'tabs': view.tabs,
-        'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][4],
-        'info': view.info,
-    }
+    ctx = {'info': view.info}
 
     # TODO: all data can be recieved in one db query
     for role in entity_model.roles:
@@ -29,6 +24,13 @@ def entity_base_view(view, entity_model, selector):
 
     ctx.update(view.update_context())
     return ctx
+
+def entity_tabs_view(view):
+    return {
+        'tab': view.tab,
+        'tabs': view.tabs,
+        'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][4],
+    }
 
 # TODO: fix it
 def participants_view(view):

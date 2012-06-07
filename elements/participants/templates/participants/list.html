@@ -1,5 +1,5 @@
 <p>
-    {% for person in info.participants.follower.entities %}
+    {% for person in person_entities %}
         <a href="{{ person.instance.get_absolute_url }}">{{ person.instance }}</a>{% if not forloop.last %},{% endif %}
     {% endfor %}
 </p>

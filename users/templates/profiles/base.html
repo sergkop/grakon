@@ -6,22 +6,11 @@
     <h1>{{ profile }}</h1>
 {% endblock %}
 
-{% comment %}
-    <div class="gr-side-item">
-        <h4 class="gr-officials">
-            <a>Админ&nbsp;({{ administered_entities.count }})</a>
-            <i title="страницы администрируемые пользователем">&nbsp;</i>
-        </h4>
-        <ul>
-            {% for entity in administered_entities.entities %}
-                <li><a href="{{ entity.instance.get_absolute_url }}">{{ entity.instance }}</a></li>
-            {% endfor %}
-            {% if administered_entities.count > LIST_COUNT.administered %}
-                <li><a href="">Показать все...</a></li>
-            {% endif %}
-        </ul>
-    </div>
-{% endcomment %}
+{% block breadcrumbs %}
+    {% if location %}
+        {% include "locations/breadcrumbs.html" %}
+    {% endif %}
+{% endblock %}
 
 {% block right_column %}
     {% if not is_admin %}
@@ -30,7 +19,7 @@
     {% endif %}
 
     <div class="gr-mb15">
-        <h4>Контакты ({{ info.contacts.count }}):</h4>
+        <h4>Контакты:</h4>
         <p>
             {% with person_entities=info.contacts.entities %}
                 {% include "participants/list.html" %}
@@ -39,7 +28,7 @@
     </div>
 
     <div class="gr-mb15">
-        <h4>Добавлен в контакты ({{ info.participants.follower.count }}):</h4>
+        <h4>Добавлен в контакты:</h4>
         <p>
             {% with person_entities=info.participants.follower.entities %}
                 {% include "participants/list.html" %}

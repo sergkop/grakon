@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load elements %}
-
 {% block title %}Идея - Гракон{% endblock %}
 
 {% block top %}
@@ -9,15 +7,35 @@
 {% endblock %}
 
 {% block right_column %}
-    {% include "disqus/counter.html" %}
+    <div align="center" class="gr-mb20">
+        <a class="gr-follow-button" href="{{ idea.task.get_absolute_url }}">Вернуться к задаче</a>
+    </div>
+    <div class="dimmed gr-mb15">{{ idea.time|date:"j b Y" }}</div>
 {% endblock %}
 
 {% block content %}
-    <div class="gr-content">
-        Задача: <a href="{{ idea.task.get_absolute_url }}">{{ idea.task.title }}</a>
+    {{ idea.description|safe }}
 
-        {{ idea.description|safe }}
+    <div class="gr-descr">
+        <p class="small">
+            {% with person=admin %}
+                {% include "participants/person.html" %}
+            {% endwith %}
+        </p>
 
-        {% include "disqus/comments.html" %}
+        <div class="gr-mt10">
+            <p>Учитывая постоянное перемещение оппозиционных лагерей по всей Москве, постоянно меняющихся людей, как можно организовать постоянную качественную видеотрансляцию?<i class="gr-editing">&nbsp;</i></p>
+        </div>
+
+        {% if projects %}
+            <h5>Связанные проекты ({{ projects_count }}):</h5>
+            <ul class="gr-links-list gr-mb20">
+                {% for project in projects %}
+                    <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
+
+    {% include "disqus/comments.html" %}
 {% endblock %}

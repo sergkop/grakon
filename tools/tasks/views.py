@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from elements.locations.utils import subregion_list
 from elements.participants.models import EntityParticipant
-from elements.views import entity_base_view, participants_view
+from elements.views import entity_base_view, entity_tabs_view
 from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
 from tools.tasks.forms import TaskForm
@@ -26,12 +26,14 @@ class BaseTaskView(object):
 
         id = int(self.kwargs.get('id'))
 
-        self.tabs = [
-            ('view', u'Идеи', reverse('task', args=[id]), '', 'tasks/view.html'),
-            ('wall', u'Обсуждение', reverse('task_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
-        ]
-
         ctx.update(entity_base_view(self, Task, {'id': id}))
+
+        #self.tabs = [
+        #    ('view', u'Идеи', reverse('task', args=[id]), '', 'tasks/view.html'),
+        #    ('wall', u'Обсуждение', reverse('task_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
+        #]
+
+        #ctx.update(entity_tabs_view(self))
 
         # TODO: select_related it needed
         location = ctx['info']['locations']['entities'][0]['location'] # TODO: looks hacky
@@ -62,14 +64,17 @@ class TaskView(BaseTaskView, TemplateView):
         ideas_ids = list(self.entity.ideas.all().values_list('id', flat=True))
         ideas = Idea.objects.info_for(ideas_ids, True).values()
 
-        from pprint import pprint
-        pprint(ideas)
-
-        ctx = {'ideas': ideas}
+        ctx = {
+            'ideas': ideas,
+            'template_path': 'tasks/view.html',
+        }
         return ctx
 
 class TaskWallView(BaseTaskView, TemplateView):
     tab = 'wall'
+
+    def update_context(self):
+        return {'template_path': 'disqus/comments.html'}
 
 #class TaskParticipantsView(BaseTaskView, TemplateView):
 #    tab = 'participants'

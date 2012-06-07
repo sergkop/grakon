@@ -9,6 +9,7 @@ from elements.locations.utils import subregion_list
 from elements.models import ENTITIES_MODELS
 from elements.participants.models import participant_in
 from elements.utils import table_data
+from elements.views import entity_tabs_view
 from locations.models import Location
 from services.disqus import disqus_page_params
 
@@ -36,21 +37,21 @@ class BaseLocationView(object):
 
         # TODO: take it from cache
         tasks_count = location.get_entities('tasks')(limit=0)['count']
+        projects_count = location.get_entities('projects')(limit=0)['count']
 
-        tabs = [
+        self.tabs = [
             #('map', u'Карта', reverse('location_map', args=[location.id]), '', 'locations/map.html'),
             #('tools', u'Инструменты', self.tools_url, '', 'locations/tools.html'),
             ('tasks', u'Задачи (%i)' % tasks_count, reverse('location_tasks', args=[location.id]), '', 'tasks/list.html'),
-            ('projects', u'Проекты (%i)' % tasks_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
+            ('projects', u'Проекты (%i)' % projects_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
             ('wall', u'Комментарии', reverse('location_wall', args=[location.id]), 'wall-tab', 'locations/wall.html'),
             ('participants', u'Участники', reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
         ]
 
+        ctx.update(entity_tabs_view(self))
+
         ctx.update({
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
-            'tab': self.tab,
-            'tabs': tabs,
-            'template_path': filter(lambda t: t[0]==self.tab, tabs)[0][4],
             'location': location,
             'subregions': subregion_list(location),
             'info': self.info,

@@ -1,7 +1,3 @@
-* bug with contacts counter on profile page
-* counters in tabs
-* separate getting counters and pagination entities/ids
-
 * project-ideas connection
 
 * share buttons
@@ -14,16 +10,13 @@
 * other option for resources
 * resources editing
 
+* fix login page
+
 * new widget for location editor; add location in location list editor
 
 * fix follow button (detach window from button itself) + button on location
 
-* loading lists of participants with ajax
-
 * solve issues with several locations and is_main, allow to restrict a single related location for entity model
-
-* use tinymce parameters from settings.py in js
-* remove tinymce buttons opening popups
 
 * settings page
 
@@ -31,6 +24,8 @@ Design:
     * in breadcrumbs selected location must be a link
     * inline text editor is not displayed properly when start from empty string
 
+* use tinymce parameters from settings.py in js
+* remove tinymce buttons opening popups
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
 
@@ -48,9 +43,11 @@ Yulia:
 
 * how to edit locations of tasks, projects? do we need breadcrumbs on these pages?
 
-* fix bug with data in lists of participants
-
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
+
+* Hide star near location form field where it is not required
+-------------------------------------------------------------------------------
+* fix bug with data in lists of participants
 
 * user's avatar, use it in disqus, emails
 
@@ -61,8 +58,6 @@ Yulia:
 Static files:
     * move static and media files to a separate domain
     * minification of static files (http://developer.yahoo.com/yui/compressor/)
-
-* Hide star near location form field where it is not required
 
 *  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
 
@@ -99,10 +94,12 @@ Performance:
 
 * ability to request entity deletion (like with profiles)
 
+* fill in create form fields with grey example values
+
 * Invite friends button under contacts in profile
 
-* fill in create form fields with grey example values
--------------------------------------------------------------------------------
+* separate getting counters and pagination entities/ids
+
 * block at the bottom of the page (for scripts)
 * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
 
