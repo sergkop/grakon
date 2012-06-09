@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from elements.locations.utils import subregion_list
-from elements.participants.models import EntityParticipant
+from elements.participants.models import EntityParticipant, participant_in
 from elements.views import entity_base_view, entity_tabs_view
 from services.disqus import disqus_page_params
 from tools.ideas.models import Idea

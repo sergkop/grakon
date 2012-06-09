@@ -61,10 +61,11 @@
                     <a title="онлайн активность"><strong class="gr-web-activity">{{ request.profile_info.points.online }}</strong></a-->
 
                     {% if request.user.is_authenticated %}
-                        <div class="gr-login-user" onmouseover="$('.gr-login-user-sub').show();">
-                            {{ request.profile.first_name }} {{ request.profile.last_name }}
-                            <div class="gr-login-user-sub" onmouseout="$('.gr-login-user-sub').hide();">
-                                <a href="{{ request.profile.get_absolute_url }}">Профиль</a>
+                        <a href="{{ request.profile.get_absolute_url }}">{{ request.profile.first_name }} {{ request.profile.last_name }}</a>
+                        <div class="gr-login-user">
+                            <span>&nbsp;</span>
+                            <div class="gr-login-user-sub">
+                                <a href="">Настройки</a>
                                 {% if request.profile_info.locations.main_id %}<a href="{% url location_wall request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                                 <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                             </div>

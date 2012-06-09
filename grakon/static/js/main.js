@@ -20,6 +20,38 @@ $(function(){
                 resource_popup.css("top", dy).css("left", dx).show();
             })
             .mouseleave(function(){$(".gr-hover-popup").hide();});
+
+    // Show/hide projects related to idea
+    $(".js-projects").click(function(){
+        $(this).parent().parent().children(".js-projects-content").toggle();
+        $(this).toggleClass("gr-active-link");
+    });
+
+    // Show/hide followers of the task
+    $(".js-follow").click(function(){
+        $(this).parents().children(".js-follow-content").toggle();
+        $(this).toggleClass("gr-active-link");
+    });
+
+    // Close list of 
+    $(".js-slide-close").click(function(){
+        $(this).parent().hide();
+        $(this).parent().parent().children(".gr-info-bar").children().removeClass("gr-active-link");
+    });
+
+    // Slide-down profile menu
+    $(".gr-login-user").click(function(){
+        $(".gr-login-user-sub").toggle();
+    });
+
+    // Hide list of idea resources
+    $(".js-close-inactive").click(function(){
+        var slider = $(this).parent();
+        slider.children(".gr-small-popup").hide();
+        slider.addClass("gr-slider-inactive");
+        slider.children(".gr-source-list-slider").hide();
+        $(".js-resource-items span").removeClass("gr-resource-item-active");
+    });
 });
 
 // Default tipsy settings

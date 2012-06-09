@@ -20,13 +20,31 @@ class ProfileManager(BaseEntityManager):
             data[id]['contacts'] = contacts[id]
 
         # Get user points
-        for id in ids:
-            data[id]['points'] = {'online': 0, 'offline': 0, 'leader': 0}
+        #for id in ids:
+        #    data[id]['points'] = {'online': 0, 'offline': 0, 'leader': 0}
 
-        points_data = Points.objects.filter(profile__id__in=ids).values_list('profile', 'type', 'points')
+        #points_data = Points.objects.filter(profile__id__in=ids).values_list('profile', 'type', 'points')
 
-        for id, type, points in points_data:
-            data[id]['points'][type] += points
+        #for id, type, points in points_data:
+        #    data[id]['points'][type] += points
+
+        participants_data = list(EntityParticipant.objects.filter(person__in=ids).values_list('content_type', 'entity_id', 'role', 'person'))
+
+        # TODO: use ratings to sort entities
+
+        for entity_name in ('ideas', 'tasks', 'projects'):
+            model = ENTITIES_MODELS[entity_name]
+
+            for id in ids:
+                data[id][entity_name] = dict((role, {'ids': []}) for role in model.roles)
+
+            model_ct_id = ContentType.objects.get_for_model(model).id
+            for ct_id, e_id, role, id in filter(lambda p: p[0]==model_ct_id, participants_data):
+                data[id][entity_name][role]['ids'].append(e_id)
+
+            for id in ids:
+                for role in model.roles:
+                    data[id][entity_name][role]['count'] = len(data[id][entity_name][role]['ids'])
 
     def get_related_info(self, data, ids):
         contacts_ids = set(c_id for id in ids for c_id in data[id]['contacts']['ids'])

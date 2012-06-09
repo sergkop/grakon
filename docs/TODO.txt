@@ -1,4 +1,12 @@
+* profile info should contain counts and ids for projects, ideas and tasks
+
+* disqus inline
+
+* update design + location page
+
 * project-ideas connection
+
+* deactivate points system
 
 * share buttons
 
@@ -29,8 +37,6 @@ Design:
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
 
-* disqus inline
-
 Yulia:
     * highlighting items in main menu, not underlining
     * in breadcrumbs allow element to be either selected and be a link
@@ -46,6 +52,8 @@ Yulia:
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
 * Hide star near location form field where it is not required
+
+* consider all the cases for showing lists under task/idea (press one button first, then another)
 -------------------------------------------------------------------------------
 * fix bug with data in lists of participants
 

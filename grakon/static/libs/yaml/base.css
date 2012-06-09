@@ -221,7 +221,7 @@
 	
 	.ym-column { display:table; width:100%;}
 
-	.ym-col1 { width: 70%; float:left; padding: 3em 2em 0 1em;} /* center column */
+	.ym-col1 { width: 70%; float:left; padding: 3em 2em 0 0;} /* center column */
 	.ym-col2 { width: 30%; float:left;  margin-left: -100%; padding: 1em 1em 0 0;} /* left column */
 	.ym-col3 {  float:right; width: 30%; margin-left: -5px; margin-right: 0%; padding: 3em 0 0 2em;} /* right column */
 	

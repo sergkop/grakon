@@ -51,10 +51,24 @@
     </div>
     <div class="gr-info-bar">
         <a class="dimmed" onclick="show_idea_comments($(this), 'idea/{{ info.instance.id }}', '{{ info.instance.get_absolute_url }}', 'ideas');">Комментарии</a>
+
+        {% if info.projects.entities %}
+            <span class="gr-bullet">&nbsp;</span>
+            <span class="dimmed gr-pseudolink js-projects">Проекты: {{ info.projects.count }}</span>
+        {% endif %}
+
         <span class="gr-bullet">&nbsp;</span>
-        <!--a href="" class="dimmed">Проекты: 11</a>
-        <span class="gr-bullet">&nbsp;</span-->
         <a href="" class="highlighted"><strong>Связать с проектом</strong></a>
+
         <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.time|date:"j b Y H:i" }}</a></span>
+    </div>
+
+    <div class="gr-slider js-projects-content">
+        <div class="gr-close js-slide-close">&nbsp;</div>
+        <ul class="gr-links-list">
+            {% for project in info.projects.entities %}
+                <li><a href="{{ project.instance.get_absolute_url }}">{{ project.instance.title }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 </div>

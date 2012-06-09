@@ -32,7 +32,7 @@
 
 	.jquery_tabs ul.tabs-list li a {
 		line-height: 1.5em;
-		padding: .5em 2em .8em;
+		padding: .5em 2em 1em;
 	}
 
 	.jquery_tabs .tabhead {

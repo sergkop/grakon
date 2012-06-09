@@ -1,7 +1,7 @@
-<p align="center">
-    <a href="{% url register %}" title="Зарегистрироваться"><img src="{{ STATIC_URL }}images/main-diagramma.jpg" style="border: 1px solid #ccc;" /></a>
-</p>
+{% extends "base.html" %}
 
-
-<p>Чтобы просмотреть презентацию в полноэкранном режиме, нажмите на иконку  <img align="absmiddle" style="padding: 3px; border: 1px solid #ccc; border-radius: 3px;" src="{{ STATIC_URL }}images/icons/fullscreen.gif"> в правом нижнем углу.<br> Будем рады партнерам, спонсорам и конструктивному фидбэку! </p>
-<div align="center" id="__ss_12251744"><iframe src="http://www.slideshare.net/slideshow/embed_code/12251744" width="550" height="449" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>
+{% block content %}
+    <p align="center">
+        <a href="{% url register %}">Зарегистрироваться</a>
+    </p>
+{% endblock %}

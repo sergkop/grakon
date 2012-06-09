@@ -28,16 +28,11 @@ class BaseProfileView(object):
 
         ctx.update(entity_base_view(self, Profile, {'username': username}))
 
-        # TODO: must be taken from cached
-        tasks_count = participant_in(self.entity, 'admin', 'tasks')(limit=0)['count']
-        ideas_count = participant_in(self.entity, 'admin', 'ideas')(limit=0)['count']
-        projects_count = participant_in(self.entity, 'admin', 'projects')(limit=0)['count']
-
         self.tabs = [
             ('view', u'Инфо', reverse('profile', args=[username]), '', 'profiles/view.html'),
-            ('tasks', u'Задачи (%i)' % tasks_count, reverse('profile_tasks', args=[username]), '', 'tasks/list.html'),
-            ('projects', u'Проекты (%i)' % projects_count, reverse('profile_projects', args=[username]), '', 'projects/list.html'),
-            ('ideas', u'Идеи (%i)' % ideas_count, reverse('profile_ideas', args=[username]), '', 'ideas/list.html'),
+            ('tasks', u'Задачи (%i)' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[username]), '', 'tasks/list.html'),
+            ('projects', u'Проекты (%i)' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[username]), '', 'projects/list.html'),
+            ('ideas', u'Идеи (%i)' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[username]), '', 'ideas/list.html'),
             #('contacts', u'В контактах у', reverse('profile_contacts', args=[username]), '', 'elements/table.html'),
         ]
 
@@ -77,6 +72,7 @@ class ProfileTasksView(BaseProfileView, TemplateView):
     tab = 'tasks'
 
     def update_context(self):
+        # TODO: take data from cache?
         return table_data(self.request, 'tasks', participant_in(self.entity, 'admin', 'tasks'))
 
 class ProfileProjectsView(BaseProfileView, TemplateView):
