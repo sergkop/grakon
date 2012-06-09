@@ -14,8 +14,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ idea.description|safe }}
-
     <div class="gr-descr">
         <p class="small">
             {% with person=admin %}
@@ -24,7 +22,7 @@
         </p>
 
         <div class="gr-mt10">
-            <p>Учитывая постоянное перемещение оппозиционных лагерей по всей Москве, постоянно меняющихся людей, как можно организовать постоянную качественную видеотрансляцию?<i class="gr-editing">&nbsp;</i></p>
+            {{ idea.description|safe }}
         </div>
 
         {% if projects %}
@@ -35,7 +33,21 @@
                 {% endfor %}
             </ul>
         {% endif %}
+
+        <h5>Ресурсы ():</h5>
+        <ul class="gr-source-list-slider">
+            {% for provider_resources in info.resources.values %}
+                <li>
+                    <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                    {% with resources=provider_resources.data %}
+                        {% include "resources/list.html" %}
+                    {% endwith %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
+
+    {% include "resources/description_popup.html" %}
 
     {% include "disqus/comments.html" %}
 {% endblock %}

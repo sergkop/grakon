@@ -1,1 +1,16 @@
-{% include "elements/table.html" %}
+{% for entity in pagination_entities %}
+    <div>
+        {% with person=entity.instance %}
+            {% include "participants/person.html" %}
+        {% endwith %}
+        <div>
+            {% with resources=entity.resources.none.data %}
+                {% include "resources/list.html" %}
+            {% endwith %}
+        </div>
+    </div>
+{% endfor %}
+
+{% include "resources/description_popup.html" %}
+
+{% include "elements/paginator.html" %}

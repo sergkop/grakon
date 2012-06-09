@@ -34,18 +34,19 @@ class BaseProjectView(object):
 
         ctx.update(entity_tabs_view(self))
 
-        # TODO: select_related it needed
-        location = ctx['info']['locations']['entities'][0]['location'] # TODO: looks hacky
+        # TODO: select_related it needed (?)
+        location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
 
         ctx.update({
             'project': self.entity,
             'follow_button': {
-                'cancel_msg': u'Вы хотите отписаться от новостей об этой задаче?',
+                'cancel_msg': u'Вы хотите отписаться от новостей об этом проекте?',
                 'cancel_btn': u'Отписаться',
                 'cancel_btn_long': u'Отписаться',
-                'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
+                'confirm_msg': u'Вы хотите следить за этим проектом?',
                 'confirm_btn': u'Следить',
-                'confirm_btn_long': u'Следить',
+                'confirm_btn_long': u'Следить за проектом',
+                'btn_class': 'gr-follow-button',
             },
             'location': location,
             'subregions': subregion_list(location),

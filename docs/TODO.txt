@@ -1,12 +1,20 @@
-* profile info should contain counts and ids for projects, ideas and tasks
+* follow button at location page (fix)
+
+* use entity_base_view in idea and location
+
+* participants tab on project
+
+* counter for people provided resources for idea in info
 
 * disqus inline
 
-* update design + location page
+* location page
 
 * project-ideas connection
 
 * deactivate points system
+
+* idea and task editing for admin
 
 * share buttons
 
@@ -14,6 +22,8 @@
 * remove idea following
 
 * adding ideas
+
+* add task and add project forms should open with initialized location
 
 * other option for resources
 * resources editing
@@ -38,12 +48,11 @@ Design:
 * rewrite tinymce widget
 
 Yulia:
-    * highlighting items in main menu, not underlining
-    * in breadcrumbs allow element to be either selected and be a link
-    * reimplement slidedown menu
     * underline between share buttons
     * disqus counter in tabs
     * buttons for removing locations from a list
+    * location participants tab
+    * pointer cursor on resource labels
 
 * bug with disqus wall when some users log in
 

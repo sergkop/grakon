@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.db import models
@@ -32,9 +33,10 @@ class LocationManager(models.Manager):
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
 
+            ct_id = ContentType.objects.get_for_model(self.model).id
             locations = self.filter(id__in=other_ids).select_related()
             for loc in locations:
-                other_res[loc.id] = {'location': loc}
+                other_res[loc.id] = {'instance': loc, 'ct': ct_id}
 
                 # TODO: separate participants and tools
                 for name, model in ENTITIES_MODELS.iteritems():
@@ -70,12 +72,17 @@ class Location(models.Model):
     district = models.ForeignKey('self', null=True, blank=True, related_name='district_related')
 
     okato_id = models.CharField(u'Идентификатор ОКАТО', max_length=11, db_index=True)
-
     name = models.CharField(max_length=150, db_index=True)
 
     objects = LocationManager()
 
+    participants = generic.GenericRelation('participants.EntityParticipant', object_id_field='entity_id')
+
     cache_prefix = 'location_info'
+
+    # A hack to implement participants
+    features = ['participants']
+    roles = ['follower']
 
     def level(self):
         if self.country_id is None:

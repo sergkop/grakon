@@ -24,7 +24,7 @@ class EntityLocationManager(BaseEntityPropertyManager):
 
         for id in ids:
             id_data = data[id][self.model.feature]
-            id_data['main'] = (filter(lambda d: d['location'].id==id_data['main_id'],
+            id_data['main'] = (filter(lambda d: d['instance'].id==id_data['main_id'],
                     id_data['entities']) or [None])[0]
 
     def update_location(self, entity, location):

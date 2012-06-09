@@ -135,13 +135,16 @@ class BaseEntityManager(models.Manager):
         if len(other_ids) > 0:
             # TODO: what if some ids are not available anymore (here or in one of get_for)?
             #       (drop id if data for at least one feature is missing? - here and in get_info())
-            content_type_id = ContentType.objects.get_for_model(self.model).id
-            other_res = dict((id, {'ct': content_type_id}) for id in other_ids)
 
             # Get entity instances
+            other_res = {}
+            content_type_id = ContentType.objects.get_for_model(self.model).id
             entities_by_id = self.in_bulk(other_ids)
             for id in other_ids:
-                other_res[id]['instance'] = entities_by_id[id]
+                other_res[id] = {
+                    'ct': content_type_id,
+                    'instance': entities_by_id[id],
+                }
 
             for feature in features:
                 feature_data = FEATURES_MODELS[feature].objects.get_for(self.model, other_ids)

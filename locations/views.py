@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 
 from elements.locations.utils import subregion_list
 from elements.models import ENTITIES_MODELS
-from elements.participants.models import participant_in
+from elements.participants.models import EntityParticipant, participant_in
 from elements.utils import table_data
 from elements.views import entity_tabs_view
 from locations.models import Location
@@ -35,7 +35,7 @@ class BaseLocationView(object):
 
         self.info = location.info(related=True)
 
-        # TODO: take it from cache
+        # TODO: take it from cache (should be in location info)
         tasks_count = location.get_entities('tasks')(limit=0)['count']
         projects_count = location.get_entities('projects')(limit=0)['count']
 
@@ -45,10 +45,15 @@ class BaseLocationView(object):
             ('tasks', u'Задачи (%i)' % tasks_count, reverse('location_tasks', args=[location.id]), '', 'tasks/list.html'),
             ('projects', u'Проекты (%i)' % projects_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
             ('wall', u'Комментарии', reverse('location_wall', args=[location.id]), 'wall-tab', 'locations/wall.html'),
-            ('participants', u'Участники', reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
+            ('participants', u'Участники (%i)' % self.info['participants']['count'], reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
         ]
 
         ctx.update(entity_tabs_view(self))
+
+        if self.request.user.is_authenticated():
+            ctx['is_follower'] = EntityParticipant.objects.is_participant(self.location, self.request.profile, 'follower')
+        else:
+            ctx['is_follower'] = False
 
         ctx.update({
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
@@ -58,6 +63,15 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
             'is_lowest_level': location.is_lowest_level(),
+            'follow_button': {
+                'cancel_msg': u'Вы хотите отписаться от новостей об этом проекте?',
+                'cancel_btn': u'Отписаться',
+                'cancel_btn_long': u'Отписаться',
+                'confirm_msg': u'Вы хотите стать участником в этом районе?',
+                'confirm_btn': u'Участвовать',
+                'confirm_btn_long': u'Стать участником',
+                'btn_class': 'gr-follow-button gr-follow-button-blue',
+            },
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))

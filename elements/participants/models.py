@@ -86,7 +86,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
                     entity_id=entity.id, role=role, defaults=params, **{self.model.fk_field: instance})
         else:
             # Use generic relation to filter related feature instances
-            getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}) \
+            getattr(entity, self.model.feature).filter(role=role, **{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
         if self.model.points_sources:

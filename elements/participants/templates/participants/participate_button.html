@@ -1,7 +1,7 @@
 {% if is_participant %}
-    <a id="cancel_{{ role }}_btn" class="ym-button gr-green-button gr-mb10"><span>{{ cancel_btn_long }}</span><i>&nbsp;</i></a>
+    <a id="cancel_{{ role }}_btn" class="{{ btn_class }}"><span>{{ cancel_btn_long }}</span><i>&nbsp;</i></a>
 {% else %}
-    <a id="confirm_{{ role }}_btn" class="ym-button gr-green-button gr-mb10"><span>{{ confirm_btn_long }}</span><i>&nbsp;</i></a>
+    <a id="confirm_{{ role }}_btn" class="{{ btn_class }}"><span>{{ confirm_btn_long }}</span><i>&nbsp;</i></a>
 {% endif %}
 
 {% if request.user.is_authenticated %}

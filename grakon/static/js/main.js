@@ -10,13 +10,13 @@ $(function(){
     })
 
     // Show/hide popups with descriptions of idea resources
-    $(".js-resource-items span.gr-resource-item-active")
+    $(".gr-resource-item-active")
             .hover(function(){
                 var label = $(this);
                 var resource_popup = $(".gr-hover-popup");
                 resource_popup.children("div").text(label.attr("descr"));
-                var dx = (label.position().left+label.width()/2) - (resource_popup.width()/2);
-                var dy = label.position().top + label.height() + 10;
+                var dx = (label.offset().left+label.width()/2) - (resource_popup.width()/2);
+                var dy = label.offset().top + label.height() + 10;
                 resource_popup.css("top", dy).css("left", dx).show();
             })
             .mouseleave(function(){$(".gr-hover-popup").hide();});
@@ -50,6 +50,8 @@ $(function(){
         slider.children(".gr-small-popup").hide();
         slider.addClass("gr-slider-inactive");
         slider.children(".gr-source-list-slider").hide();
+
+        // TODO: is it correct?
         $(".js-resource-items span").removeClass("gr-resource-item-active");
     });
 });

@@ -36,7 +36,7 @@ class BaseTaskView(object):
         #ctx.update(entity_tabs_view(self))
 
         # TODO: select_related it needed
-        location = ctx['info']['locations']['entities'][0]['location'] # TODO: looks hacky
+        location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
 
         ctx.update({
             'task': self.entity,
@@ -46,7 +46,8 @@ class BaseTaskView(object):
                 'cancel_btn_long': u'Отписаться',
                 'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
                 'confirm_btn': u'Следить',
-                'confirm_btn_long': u'Следить',
+                'confirm_btn_long': u'Следить за задачей',
+                'btn_class': 'bold',
             },
             'location': location,
             'subregions': subregion_list(location),

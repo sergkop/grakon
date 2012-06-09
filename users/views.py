@@ -42,7 +42,7 @@ class BaseProfileView(object):
 
         # TODO: UX_HACK
         if len(ctx['info']['locations']['entities']) > 0:
-            location = ctx['info']['locations']['entities'][0]['location']
+            location = ctx['info']['locations']['entities'][0]['instance']
         else:
             location = None
 
@@ -56,6 +56,7 @@ class BaseProfileView(object):
                 'confirm_msg': u'Вы хотите добавить этого пользователя в список контактов?',
                 'confirm_btn': u'Добавить',
                 'confirm_btn_long': u'Добавить в контакты',
+                'btn_class': 'ym-button gr-green-button gr-mb10',
             },
             'location': location,
         })

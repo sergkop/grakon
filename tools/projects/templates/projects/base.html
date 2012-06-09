@@ -12,7 +12,7 @@
 
 {% block right_column %}
     <div align="center" class="gr-mb20">
-        <a class="gr-follow-button" href="/register">Следить за проектом</a>
+        {% include "participants/follower_button.html" %}
     </div>
 
     <div class="dimmed gr-mb15">{{ project.time|date:"j b Y" }}</div>

@@ -14,7 +14,9 @@
         <span class="gr-bullet">&nbsp;</span>
         <span class="dimmed gr-pseudolink js-follow">Следят: ({{ info.participants.follower.count }})</span>
         <span class="gr-bullet">&nbsp;</span>
-        <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
+
+        {% include "participants/follower_button.html" %}
+
         <span class="gr-fr dimmed">{{ task.time|date:"j b Y H:i" }}</span>
     </div>
 
@@ -27,6 +29,8 @@
             {% endwith %}
         </div>
     </div>
+
+    <div class="gr-mt10 gr-bb-blue">&nbsp;</div>
 </div>
 
 <h2>Идеи</h2>
@@ -35,6 +39,8 @@
     {% for info in ideas %}
         {% include "ideas/item.html" %}
     {% endfor %}
+
+    {% include "resources/description_popup.html" %}
 
     {% if request.user.is_authenticated %}
         <a name="add_idea" />
