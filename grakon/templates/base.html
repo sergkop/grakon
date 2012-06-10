@@ -46,7 +46,7 @@
         .bold {font-weight: bold;}
     </style>
 </head>
-<body>
+<body {% if is_main %}id="main"{% endif %}>
     <div class="gr-wrapper">
         <header>
             <div class="ym-wrapper">
@@ -79,27 +79,29 @@
             </div>
         </header>
 
-        <nav class="ym-hlist">
-            <div class="ym-wrapper">
-                {% block breadcrumbs %}{% endblock %}
-            </div>
-        </nav>
-
-        <div class="ym-column" onmouseover="$('.gr-login-user-sub').hide();">
-            <div class="ym-wrapper">
-                {% block top %}{% endblock %}
-                <div class="jquery_tabs">
-                    {% if tabs %}
-                        {% tabs tabs tab %}
-                    {% endif %}
-
-                    <div class="gr-share-icons">
-                        {% include "elements/share_buttons.html" %}
-                    </div>
+        {% block top_line %}
+            <nav class="ym-hlist">
+                <div class="ym-wrapper">
+                    {% block breadcrumbs %}{% endblock %}
                 </div>
-                <div class="ym-clearfix">&nbsp;</div>
+            </nav>
+
+            <div class="ym-column">
+                <div class="ym-wrapper">
+                    {% block top %}{% endblock %}
+                    <div class="jquery_tabs">
+                        {% if tabs %}
+                            {% tabs tabs tab %}
+                        {% endif %}
+
+                        <div class="gr-share-icons">
+                            {% include "elements/share_buttons.html" %}
+                        </div>
+                    </div>
+                    <div class="ym-clearfix">&nbsp;</div>
+                </div>
             </div>
-        </div>
+        {% endblock %}
 
         <div class="ym-column gr-content">
             <div class="ym-wrapper {% block page_class %}{% endblock %}">

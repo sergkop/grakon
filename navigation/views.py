@@ -11,7 +11,7 @@ from services.cache import cache_view
 def main(request):
     if request.user.is_authenticated():
         return redirect(Location.objects.country().get_absolute_url())
-    return render_to_response('main.html', context_instance=RequestContext(request, {}))
+    return render_to_response('main.html', context_instance=RequestContext(request, {'is_main': True}))
 
 # TODO: how to utilise caching for logged in users?
 #@cache_view(lambda args, kwargs: 'static_page/'+kwargs['tab'], 60)
