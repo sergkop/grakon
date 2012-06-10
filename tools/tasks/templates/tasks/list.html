@@ -1,21 +1,28 @@
 {% if pagination_entities %}
-    {% for info in pagination_entities %}
-        <div class="gr-descr">
-            <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
-            <div>
-                {{ info.instance.about|safe }}
-            </div>
-            <div class="gr-info-bar">
-                <a href="{% url task_wall info.instance.id %}" class="dimmed">Комментарии</a>
-                <span class="gr-bullet">&nbsp;</span>
-                <a href="" class="dimmed">Следят: {{ info.participants.follower.count }}</a>
-                <span class="gr-bullet">&nbsp;</span>
-                <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
-                <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y H:i" }}</span>
-            </div>
-        </div>
-        <hr/>
+    <div class="gr-ideas-list">
+    {% for info in pagination_entities %}       
+              <div class="gr-ideas-item"> 
+                <div class="gr-ideas-content">      
+                  <div class="gr-add gr-idea-selected"><span>1123</span></div>                  
+                  <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
+                  <div class="gr-mb10"><a href="">Shweta Karwa,</a> PhD student, Chemical Engg at Georgia Tech Graduate School</div>
+                  <p>{{ info.instance.about|safe }}</p>
+                </div>
+                 <div class="gr-info-bar"> 
+                    <a href="" class="dimmed">Комментарии: 10</a> <span class="gr-bullet">&nbsp;</span> <a href="" class="dimmed">Идеи: 14</a> <span class="gr-bullet">&nbsp;</span> <span class="dimmed gr-pseudolink js-follow" >Следят: {{ info.participants.follower.count }}</span> <span class="gr-bullet">&nbsp;</span> <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
+                    <a href="" class="gr-fr dimmed">{{ info.instance.time|date:"j b Y H:i" }}</a></div>
+                 <div class="gr-slider js-follow-content"> 
+                    <div class="gr-close js-slide-close">&nbsp;</div>           
+                    <div><a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">еще 50...</a></div>
+                  </div>   
+              </div>            
     {% endfor %}
+    </div>
 {% else %}
-    Пока задач нет.
+    <div class="gr-blank">
+        <i class="gr-left-icon">&nbsp;</i>
+        <i class="gr-right-icon">&nbsp;</i>
+        <h2>Как благоустроить свой двор?</h2>
+        <p><a href="/create_task">На этот и много других вопросов Вы можете получить ответ, просто, задав его</a></p>
+    </div>
 {% endif %}

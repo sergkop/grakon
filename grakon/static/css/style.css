@@ -73,7 +73,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-info-bar .ym-button {margin-top: -.7em;}
 	.gr-info-bar .gr-active-link {font-weight: bold; color: #000;}
 .gr-ideas-list {}
-	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 2px solid #82d1fa; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
+	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #eee; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
 		.gr-ideas-item-last {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}

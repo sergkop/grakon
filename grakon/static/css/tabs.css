@@ -34,6 +34,15 @@
 		line-height: 1.5em;
 		padding: .5em 2em 1em;
 	}
+	
+	.jquery_tabs ul.tabs-list li.wall-tab a {
+        padding: .5em .3em 1em 2em;
+    }
+	
+	.jquery_tabs ul.tabs-list li a.disqus-counter {
+        line-height: 1.5em;
+        padding: .5em 2em 1em 0;
+    }
 
 	.jquery_tabs .tabhead {
 		position:absolute;
