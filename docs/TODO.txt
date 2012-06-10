@@ -1,3 +1,13 @@
+* пока нет in case when there is no contacts or participants
+* editing title of task and description (+idea)
+* redirect logged in user from main to russia
+* remove time under task
+* http://test.grakon.org/task/3 = russia link is incorrect
+* number of comments in brackets
+* hide feature of hiding real name
+* use semicolon instead of () in tab headers
+* remove buttons from tinymce
+
 * follow button at location page (fix)
 
 * use entity_base_view in idea and location
@@ -17,9 +27,6 @@
 * idea and task editing for admin
 
 * share buttons
-
-* idea page
-* remove idea following
 
 * adding ideas
 
@@ -63,12 +70,16 @@ Yulia:
 * Hide star near location form field where it is not required
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
+
+* set of permissions (verified users)
 -------------------------------------------------------------------------------
+* in User admin table show is_active field
+
+* when text field text is longer than 140 - text is cut
+
 * fix bug with data in lists of participants
 
 * user's avatar, use it in disqus, emails
-
-* set of permissions (verified users)
 
 * sitemaps
 

@@ -135,6 +135,7 @@
 	*/
 	
 	.ym-wrapper {width: 900px; text-align:left; margin: 0 auto;}
+		
 
 	/* (en) clearfix method for clearing floats */
 	/* (de) Clearfix-Methode zum Clearen der Float-Umgebungen */
@@ -203,7 +204,7 @@
 		width:100%;
 	}
 	
-	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3em 0; padding: 0;  min-width: 1024px;}
+	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3em 0; padding: 0;  min-width: 950px;}
 	.gr-footer {height: 3.5em;}
 }
 
@@ -457,6 +458,9 @@
 	
 	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -4px; padding-bottom: 3em;
 	box-shadow: 0 -10px 100px #e0e2e6}
+		#main .gr-content {box-shadow: none; border-top: none; background-color: #f0f9ff; padding: 1em 0}
+		#main .gr-content .ym-wrapper {background: url(../../images/bg-main-icons.jpg) 0 0;}
+	
 }
 
 @media print {

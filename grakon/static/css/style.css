@@ -1,6 +1,7 @@
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
-	.gr-breadcrumbs li.on a i {background-position: 0 -26px;}
+	.gr-breadcrumbs li.on a:hover  i {background-position: 0 -79px;} 
+	.gr-breadcrumbs li.on a i, .gr-breadcrumbs li.on a:active i {background-position: 0 -26px;}
 	.gr-breadcrumbs li.on a {color: #fff;}
 
 /*Общие стили для постоянного использования*/
@@ -23,6 +24,7 @@
 
 /*Элементы header*/
 .gr-logo {margin-left: -45px;}
+	#main .gr-logo {margin-left: 0;} 
 .gr-login-info {float: right;}
     .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
 		.gr-login-info a:hover, .gr-login-info div.gr-login-user:hover {text-decoration: none; background-color: rgba(255,255,255, 0.1);}
@@ -75,20 +77,24 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 		.gr-ideas-item-last {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
-		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -50px no-repeat;  padding: 0 0 0 1em;}
-			.gr-ideas-item .gr-idea-selected span {color: #000; background-position: -9px -64px;}
+		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 1em;}
+			.gr-ideas-item .gr-idea-selected span {color: #000; background-position: -9px -63px;}
 			 .gr-slider .gr-add span {cursor: pointer;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em;}
-		.gr-resource-item-active {background: #b5d188 url(../images/icons/add.png) right -116px no-repeat; padding-right: 1.5em;}
+	.gr-resource-item {padding: .2em .4em .3em .7em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em; position: relative;}
+		.gr-resource-item-active {padding-right: .2em;} 
+		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
+		.gr-resource-item b {background:url(../images/icons/add.png) -3px -124px no-repeat; padding: 0 .3em; position: absolute; top: .2em; right: -.1em;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
-	.gr-editing {background:url(../images/icons/editing.gif) 0 0 no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
+	.gr-editing {background: url(../images/icons/add.png) 0 -206px no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
+		.gr-editing:hover {background-position: 0 -225px;}
 .gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;}	
-	.gr-close { float: right; width: 13px; height: 13px; background:url(../images/icons/add.png) -8px -104px no-repeat; cursor: pointer; z-index:1;}
+	.gr-close { float: right; width: 15px; height: 15px; background:url(../images/icons/add.png) -7px -104px no-repeat; cursor: pointer; z-index:1;}
+		.gr-close:hover {background-position: 0 -191px;}
 	.gr-slider-inactive {border-color: #fff; background-color: #fff;}
 		.gr-slider-inactive .gr-close {display: none;}
 	
@@ -118,7 +124,63 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-resource-highlighted {background-color: #f0f9ff; border: 1px solid #009ec5; box-shadow: 1px 1px 0 #e4e4e4; cursor: pointer;} 
 		.gr-resource-highlighted h2 {color: #009ec5;}	
 	.gr-resource-needs .gr-add {position: absolute; top: 1.2em; left: .5em; background: url(../images/icons/add.png) 0 -165px no-repeat; width: 13px; height: 13px; cursor: pointer;}
+		.gr-resource-needs:hover .gr-add {background-position: 0 -244px;}
+		.gr-resource-needs .gr-add:active {background-position: 0 -165px;}
 		.gr-add-popup .gr-close {display: block;}
+
+
+/* Заглушки для пустых страниц */
+		
+.gr-blank {font-size: 1.2em; position: relative; padding: 0 75px; }
+	.gr-blank h2 {text-transform: uppercase; font-size: 1.4em;}	
+	.gr-blank .gr-left-icon,.gr-blank .gr-right-icon {position: absolute; top: -1em; left: 0; width: 65px; height: 70px; background:url(../images/icons/blank.jpg) 0 -35px no-repeat}
+	.gr-blank .gr-right-icon {left: auto; right: 0; height: 33px; background-position: 0 0; top: 0;}
+	.gr-blank .gr-left-icon-list {background-position: 0 -106px; height: 90px;} 
+	
+/* Главная страница */
+.gr-main-steps {background-color: #dbedcd; padding-top: 55px;}
+	.gr-main-steps h1 {font-size: 1.4em; color: #a5be85; text-align: center; margin-bottom: 1.53em;}
+.gr-step-bg {background: url(../images/bg-main-steps.png) 0 0 no-repeat; width: 1005px; height: 420px; position: relative; list-style-type: none; margin-left: 0;}
+#main .ym-wrapper {width: 1000px;}
+@media screen and (max-width:1024px) { 
+	.gr-step-bg {overflow: hidden; margin-left: -30px; width: 995px;} 
+	#main .gr-main-steps .ym-wrapper {width: 945px;}
+	.gr-wrapper {overflow: hidden;}
+	#main .ym-wrapper {width: 900px;}
+}
+	.gr-step-bg li {position: absolute; list-style-type: none; top: 0; left: 0;}
+		.gr-step-bg li h3 {text-transform: uppercase; font-size: 1.2em}
+		.gr-step-bg li.gr-step-1 {width: 115px; top: 95px; left: 150px;}
+		.gr-step-bg li.gr-step-2 {width: 215px; top: 95px; left: 285px;}
+		.gr-step-bg li.gr-step-3 {width: 135px; top: 45px; left: 590px;}
+		.gr-step-bg li.gr-step-4 {width: 250px; top: 295px; left: 725px;}
+#main h2 {text-transform: uppercase; text-align: center; color: #029ec7; font-size: 1.5em;}	
+	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .7em}
+#main .gr-follow-button {width: 300px; margin: 1.5em 0 1em;}
+#main .markup {font-size: 1.3em;}
+	#main .markup a {text-decoration: underline;}
+.gr-popular-list {background-color: #aad8dd; border-radius: .1em; width: 268px; line-height: 1.3em; text-align:left;}	
+	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px;}
+		.gr-popular-list h3 i {position: absolute; top: 0; left: 0px; width: 80px; height: 80px; background:url(../images/icons/blank.jpg) 0 bottom no-repeat;}
+		.gr-icon-tasks h3 {padding-left: 65px;}
+		.gr-icon-tasks h3 i {background-position: 0  -200px; top: 5px; width: 65px;}
+		.gr-icon-ideas {margin: 0 auto;}
+		.gr-icon-ideas h3 {padding-left: 90px;}
+		.gr-icon-ideas h3 i {background-position: 0  -282px; top: 5px;}
+		.gr-icon-projects h3 i {background-position: 0  -365px; top: 5px; width: 75px;}
+	.gr-popular-list ul, .gr-popular-list li {list-style-type: none; margin: 0; padding: 0;}
+		.gr-popular-list ul {padding: 0 1em .5em;}
+		#main .markup .gr-popular-list ul a {text-decoration: none;}
+			#main .markup .gr-popular-list ul a:hover {text-decoration: underline;}
+		.gr-popular-list li {font-size: .9em; background:url(../images/icons/main-bullet.png) 0 0 repeat-x; padding-top: 1em;}
+			.gr-popular-list li .gr-info-bar {font-size: .9em; color: #fff;}
+		.gr-popular-list .gr-info-bar {margin-top: .5em;}		
+		.gr-popular-list li a {color: #000;}		
+	
+		
+	
+	
+		
 		
 
 

@@ -34,7 +34,7 @@
             </ul>
         {% endif %}
 
-        <h5>Ресурсы ():</h5>
+        <h5>Ресурсы ({{ info.resources|length }}):</h5>
         <ul class="gr-source-list-slider">
             {% for provider_resources in info.resources.values %}
                 <li>

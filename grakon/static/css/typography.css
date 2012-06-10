@@ -172,7 +172,7 @@
 
 	p {
 		font-size:1em;
-		line-height:1.6em;
+		line-height:1.5em;
 		margin: 0 0 1em 0;
 	}
 	
@@ -199,6 +199,14 @@
 
 	small, .small {
 		font-size: .9em !important;
+	}
+	
+	.xsmall {
+		font-size: .85em !important;	
+	}
+	
+	big, .big {
+		font-size: 1.1em !important;	
 	}
 
 	pre,
@@ -412,7 +420,6 @@
 	*/
 
 	table {
-		width:100%;
 		border-collapse:collapse;
 		margin: 1.3571em 0 0 0;
 		color:#333;
