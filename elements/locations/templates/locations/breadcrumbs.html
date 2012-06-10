@@ -1,8 +1,14 @@
 <div class="gr-breadcrumbs">
     <ul>
-        <li {% if not location.country %}class="on"{% endif %}>
-            <a href="{{ location.country.get_absolute_url }}">Россия<i>&nbsp;</i></a>
-        </li>
+        {% if location.country %}
+            <li>
+                <a href="{{ location.country.get_absolute_url }}">Россия<i>&nbsp;</i></a>
+            </li>
+        {% else %}
+            <li class="on">
+                <a href="{{ location.get_absolute_url }}">Россия<i>&nbsp;</i></a>
+            </li>
+        {% endif %}
 
         {% if location.region %}
             <li>

@@ -1,14 +1,6 @@
-* пока нет in case when there is no contacts or participants
-* editing title of task and description (+idea)
-* redirect logged in user from main to russia
-* remove time under task
-* http://test.grakon.org/task/3 = russia link is incorrect
-* number of comments in brackets
-* hide feature of hiding real name
-* use semicolon instead of () in tab headers
-* remove buttons from tinymce
-
 * follow button at location page (fix)
+
+* main page
 
 * use entity_base_view in idea and location
 
@@ -19,6 +11,9 @@
 * disqus inline
 
 * location page
+
+* пока нет in case when there is no contacts or participants
+* editing title of task and description (+idea)
 
 * project-ideas connection
 
@@ -73,6 +68,8 @@ Yulia:
 
 * set of permissions (verified users)
 -------------------------------------------------------------------------------
+* how to edit task/project location?
+
 * in User admin table show is_active field
 
 * when text field text is longer than 140 - text is cut

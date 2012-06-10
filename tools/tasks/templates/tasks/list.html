@@ -8,7 +8,7 @@
             <div class="gr-info-bar">
                 <a href="{% url task_wall info.instance.id %}" class="dimmed">Комментарии</a>
                 <span class="gr-bullet">&nbsp;</span>
-                <a href="" class="dimmed">Следят: ({{ info.participants.follower.count }})</a>
+                <a href="" class="dimmed">Следят: {{ info.participants.follower.count }}</a>
                 <span class="gr-bullet">&nbsp;</span>
                 <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
                 <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y H:i" }}</span>

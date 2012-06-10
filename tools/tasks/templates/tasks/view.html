@@ -12,12 +12,12 @@
     <div class="gr-info-bar">
         <a href="{% url task_wall task.id %}" class="dimmed">Комментарии</a>
         <span class="gr-bullet">&nbsp;</span>
-        <span class="dimmed gr-pseudolink js-follow">Следят: ({{ info.participants.follower.count }})</span>
+        <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
         <span class="gr-bullet">&nbsp;</span>
 
         {% include "participants/follower_button.html" %}
 
-        <span class="gr-fr dimmed">{{ task.time|date:"j b Y H:i" }}</span>
+        <span class="gr-fr dimmed">{{ task.time|date:"j b Y" }}</span>
     </div>
 
     <div class="gr-slider js-follow-content">

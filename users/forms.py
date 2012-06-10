@@ -11,12 +11,11 @@ from users.models import Message, Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'username')
+        exclude = ('user', 'username', 'show_name')
 
     helper = form_helper('', u'Сохранить')
     helper.layout = Layout(
-        Fieldset('', 'first_name', 'last_name', 'show_name',
-                'resources1', 'about'),
+        Fieldset('', 'first_name', 'last_name', 'resources1', 'about'),
     )
 
 class MessageForm(forms.ModelForm):

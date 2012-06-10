@@ -31,7 +31,7 @@ class BaseRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('username', 'last_name', 'first_name', 'show_name')
+        fields = ('username', 'last_name', 'first_name')
 
 @resources_init
 @location_init(True, u'Место жительства')
@@ -43,8 +43,7 @@ class RegistrationForm(BaseRegistrationForm):
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
-        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select',
-                'resources1', 'show_name'),
+        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'email', 'location_select', 'resources1'),
         Fieldset(u'Аккаунт', 'username', 'password1', 'password2')
     )
 

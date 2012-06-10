@@ -21,7 +21,7 @@ function create_tinymce_widget(textarea_id){
         "theme_advanced_toolbar_location": "top",
         "theme_advanced_toolbar_align": "left",
         "language": "ru",
-        "theme_advanced_buttons1": "bold,italic,underline,|,bullist,numlist,|,link,unlink,|,fontsizeselect,|,charmap,code",
+        "theme_advanced_buttons1": "bold,italic,underline,|,bullist,numlist,|,link,unlink,",
         "theme_advanced_buttons3": "",
         "theme_advanced_buttons2": "",
         "theme": "advanced",
