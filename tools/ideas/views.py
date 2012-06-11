@@ -20,7 +20,6 @@ def idea_view(request, id):
         'idea': entity,
         'admin': info['participants']['admin']['entities'][0]['instance'],
         'projects': projects,
-        'projects_count': len(projects),
     }
 
     # TODO: all data can be recieved in one db query

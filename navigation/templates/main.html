@@ -55,66 +55,36 @@
                     <div class="gr-popular-list gr-icon-tasks gr-fl">
                         <h3>Популярные задачи <i>&nbsp;</i></h3>
                         <ul>
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
+                            {% for info in lists_data.tasks %}
+                                <li>
+                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <div class="gr-info-bar">
+                                        Комментарии:
+                                        <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
+                                        <span class="gr-bullet">&nbsp;</span>
+                                        Следят: {{ info.participants.follower.count }}
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </td>
 
                 <td width="34%" align="center">
                     <div class="gr-popular-list gr-icon-ideas">
-                        <h3 class="">Популярные идеи <i>&nbsp;</i></h3>
+                        <h3>Популярные идеи <i>&nbsp;</i></h3>
                         <ul>
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
+                            {% for info in lists_data.ideas %}
+                                <li>
+                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <div class="gr-info-bar">
+                                        Комментарии:
+                                        <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
+                                        <span class="gr-bullet">&nbsp;</span>
+                                        Следят: {{ info.participants.follower.count }}
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </td>
@@ -122,36 +92,24 @@
                     <div class="gr-popular-list gr-icon-projects gr-fr">
                         <h3>Популярные проекты <i>&nbsp;</i></h3>
                         <ul>
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
-
-                            <li>
-                                <a href="">Как организовать постоянную прямую трансляцию с «народных гуляний»?</a>
-                                <div class="gr-info-bar">
-                                    Комментарии: 10
-                                    <span class="gr-bullet">&nbsp;</span>
-                                    Следят: 11
-                                </div>
-                            </li>
+                            {% for info in lists_data.projects %}
+                                <li>
+                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <div class="gr-info-bar">
+                                        Комментарии:
+                                        <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
+                                        <span class="gr-bullet">&nbsp;</span>
+                                        Следят: {{ info.participants.follower.count }}
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </td>
             </tr>
         </table>
     </div>
+
+{% include "disqus/counter.html" %}
+
 {% endblock %}

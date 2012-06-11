@@ -1,5 +1,3 @@
-* data for lists on the main page
-
 * follow button in lists of projects and tasks
 * counter for people provided resources for idea, task, project in info
 

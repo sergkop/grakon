@@ -3,20 +3,28 @@ from django.template import RequestContext
 from django.template.response import TemplateResponse
 from django.views.generic.base import TemplateView
 
+from elements.models import ENTITIES_MODELS
 from locations.models import Location
 from locations.views import BaseLocationView
 from navigation.forms import FeedbackForm
 from services.cache import cache_view
 
 def main(request):
-    country_url = Location.objects.country().get_absolute_url()
+    country = Location.objects.country()
 
     if request.user.is_authenticated():
-        return redirect(country_url)
+        return redirect(country.get_absolute_url())
+
+    data = {}
+    for entity_type in ('tasks', 'ideas', 'projects'):
+        ids = ENTITIES_MODELS[entity_type].objects.order_by('-rating').values_list('id', flat=True)[:3]
+        entities_info =  ENTITIES_MODELS[entity_type].objects.info_for(ids, related=False)
+        data[entity_type] = [entities_info[id] for id in ids]
 
     ctx = {
         'is_main': True,
-        'country_url': country_url,
+        'country_url': country.get_absolute_url(),
+        'lists_data': data,
     }
     return render_to_response('main.html', context_instance=RequestContext(request, ctx))
 
