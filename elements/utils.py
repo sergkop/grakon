@@ -56,7 +56,7 @@ def table_data(request, entity_type, selector, limit=20):
     from elements.models import ENTITIES_MODELS
     entity_model = ENTITIES_MODELS[entity_type]
     entities_data = selector(start=(page-1)*per_page, limit=per_page)
-    entities_info = entity_model.objects.info_for(entities_data['ids'], related=False)
+    entities_info = entity_model.objects.info_for(entities_data['ids'], related=True)
     entities = [entities_info[id] for id in entities_data['ids'] if id in entities_info]
 
     # TODO: allow to choose limit (?)

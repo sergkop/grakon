@@ -13,7 +13,6 @@
 {% endblock %}
 
 {% block right_column %}
-
     <div align="center" class="gr-mb10">
         <a href="{% url create_task %}" class="gr-follow-button">Добавить задачу</a>
     </div>
@@ -21,14 +20,13 @@
     <div align="center" class="gr-mb10">
         <a href="{% url create_project %}" class="gr-follow-button">Добавить проект</a>
     </div>
-    
-    <div align="center" class="gr-mb30">
-        <a href="{% url create_project %}" class="gr-follow-button gr-follow-button-blue">Стать участником</a>
-    </div>
 
     {% if is_lowest_level %}
-        <div align="center" class="gr-mb30">
-            {% include "participants/follower_button.html" %}
+        <div align="center" class="gr-mb10">
+            <a id="become_participant_btn" class="gr-follow-button gr-follow-button-blue">
+                {% if is_participant %}Отписаться{% else %}Стать участником{% endif %}
+            </a>
+            {% include "dialogs/become_participant.html" %}
         </div>
     {% endif %}
 

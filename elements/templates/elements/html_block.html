@@ -1,16 +1,14 @@
-{% if html or is_admin %}
-    <h5 class="{{ css_class }}">{{ title }}:{% if is_admin %}<i class="gr-editing" id="{{ field }}_edit_btn">&nbsp;</i>{% endif %}</h5>
+<div id="{{ field }}_html">{{ html|safe }}</div>
 
-    <div id="{{ field }}_html">{{ html|safe }}</div>
+{% if is_admin %}
+    <p id="{{ field }}_add_btn" {% if html %}style="display:none;"{% endif %}><i><a>Добавить</a></i></p>
 
-    {% if is_admin %}
-        <p id="{{ field }}_add_btn" {% if html %}style="display:none;"{% endif %}><i><a>Добавить</a></i></p>
-
-        <script type="text/javascript">
+    <script type="text/javascript">
+        $(function(){
             new TextFieldEditor({el: $("#{{ field }}_html"), edit_btn: $("#{{ field }}_edit_btn"),
                     add_btn: $("#{{ field }}_add_btn"),
                     ct: {{ info.ct }}, entity_id: {{ info.instance.id }},
                     field: "{{ field }}", type: "html"});
-        </script>
-    {% endif %}
+        });
+    </script>
 {% endif %}

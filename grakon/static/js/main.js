@@ -407,7 +407,7 @@ var TextFieldEditor = Backbone.View.extend({
 
 // TODO: use backbone view and hide comments on second click
 // TODO: comments for second idea don't load
-function show_idea_comments(btn, id, url, category){
+function show_comments(btn, id, url, category){
     $("#disqus_thread").remove();
 
     var disqus_div = $("<div/>").attr("id", "disqus_thread")

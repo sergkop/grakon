@@ -1,53 +1,42 @@
-* follow button at location page (fix)
+* data for lists on the main page
 
-* main page
+* follow button in lists of projects and tasks
+* counter for people provided resources for idea, task, project in info
 
-* use entity_base_view in idea and location
+* fix login/registration/etc. pages layout
 
-* participants tab on project
+* editing title of task, project, idea, profile
 
-* counter for people provided resources for idea in info
-
-* disqus inline
-
-* location page
-
-* пока нет in case when there is no contacts or participants
-* editing title of task and description (+idea)
-
-* project-ideas connection
-
-* deactivate points system
-
-* idea and task editing for admin
-
-* share buttons
-
-* adding ideas
-
-* add task and add project forms should open with initialized location
+* disqus inline (first time disqus loads with task id instead of idea)
+* comments don't work in lists of tasks, ideas, projects
 
 * other option for resources
 * resources editing
+* participants tab on project (show resources)
 
-* fix login page
+* project-ideas connection (editing ideas of the project)
+
+* idea title is not always a link
+
+* adding ideas
+
+* use entity_base_view in idea and location
+
+PT:
+* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
+* Убрать пустые параграфы из описания задачи/проекта. Мы можем как-то это контролировать?
+
+* пока нет in case when there is no contacts or participants
+
+* deactivate points system
+
+* share buttons
 
 * new widget for location editor; add location in location list editor
+* resources editor on profile page
 
-* fix follow button (detach window from button itself) + button on location
-
-* solve issues with several locations and is_main, allow to restrict a single related location for entity model
-
-* settings page
-
-Design:
-    * in breadcrumbs selected location must be a link
-    * inline text editor is not displayed properly when start from empty string
-
-* use tinymce parameters from settings.py in js
-* remove tinymce buttons opening popups
-* tinymce can be loaded twice due to inclusion in base.html
-* rewrite tinymce widget
+* fill in resource in registration when redirected from main page
+* add task and add project forms should open with initialized location
 
 Yulia:
     * underline between share buttons
@@ -55,28 +44,49 @@ Yulia:
     * buttons for removing locations from a list
     * location participants tab
     * pointer cursor on resource labels
-
-* bug with disqus wall when some users log in
-
-* how to edit locations of tasks, projects? do we need breadcrumbs on these pages?
-
-* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
-
-* Hide star near location form field where it is not required
+    * format static pages, registration form, etc.
+    * login popup
+    * in text/html editing widget set background for buttons
+    * inline text editor is not displayed properly when start from empty string
+    * remove icon in profile locations editor
+    * style of comments counter for idea, task, project
+    * labels with text don't have arrows anymore
+    * dialog for adding ideas
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
-* set of permissions (verified users)
+* bug with disqus wall when some users log in
+
+* settings page
+
+* use tinymce parameters from settings.py in js
+* remove tinymce buttons opening popups
+* tinymce can be loaded twice due to inclusion in base.html
+* rewrite tinymce widget
 -------------------------------------------------------------------------------
+* Hide star near location form field where it is not required
+
+* do disqus counters for ideas work?
+
+* disqus id for entity should be obtained from entity model
+
+* make ideas, tasks editable in lists
+
+* display data for logged in user at main page (no redirect)
+
+* set of permissions (verified users)
+
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
 * how to edit task/project location?
 
 * in User admin table show is_active field
 
 * when text field text is longer than 140 - text is cut
 
-* fix bug with data in lists of participants
-
 * user's avatar, use it in disqus, emails
+
+* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
 * sitemaps
 

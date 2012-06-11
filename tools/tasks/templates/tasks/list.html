@@ -1,21 +1,41 @@
 {% if pagination_entities %}
     <div class="gr-ideas-list">
-    {% for info in pagination_entities %}       
-              <div class="gr-ideas-item"> 
-                <div class="gr-ideas-content">      
-                  <div class="gr-add gr-idea-selected"><span>1123</span></div>                  
-                  <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
-                  <div class="gr-mb10"><a href="">Shweta Karwa,</a> PhD student, Chemical Engg at Georgia Tech Graduate School</div>
-                  <p>{{ info.instance.about|safe }}</p>
+    {% for info in pagination_entities %}
+        <div class="gr-ideas-item"> 
+            <div class="gr-ideas-content">
+                <div class="gr-add gr-idea-selected"><span>1123</span></div>
+                <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
+                <div class="gr-mb10">
+                    {% with person=info.participants.admin.entities.0.instance %}
+                        {% include "participants/person.html" %}
+                    {% endwith %}
                 </div>
-                 <div class="gr-info-bar"> 
-                    <a href="" class="dimmed">Комментарии: 10</a> <span class="gr-bullet">&nbsp;</span> <a href="" class="dimmed">Идеи: 14</a> <span class="gr-bullet">&nbsp;</span> <span class="dimmed gr-pseudolink js-follow" >Следят: {{ info.participants.follower.count }}</span> <span class="gr-bullet">&nbsp;</span> <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
-                    <a href="" class="gr-fr dimmed">{{ info.instance.time|date:"j b Y H:i" }}</a></div>
-                 <div class="gr-slider js-follow-content"> 
-                    <div class="gr-close js-slide-close">&nbsp;</div>           
-                    <div><a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">Tracy Chou</a>, <a href="">Jon Rodriguez</a>, <a href="">Casey Allen</a>, <a href="">еще 50...</a></div>
-                  </div>   
-              </div>            
+                <div>{{ info.instance.about|safe }}</div>
+            </div>
+
+            <div class="gr-info-bar">
+                {% include "elements/comments.html" %}
+
+                <span class="gr-bullet">&nbsp;</span>
+                <a href="{{ info.instance.get_absolute_url }}" class="dimmed">Идеи: {{ info.ideas.count }}</a>
+
+                <span class="gr-bullet">&nbsp;</span>
+                <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
+
+                <span class="gr-bullet">&nbsp;</span>
+                <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
+
+                <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y" }}</span>
+            </div>
+            <div class="gr-slider js-follow-content">
+                <div class="gr-close js-slide-close">&nbsp;</div>
+                <div>
+                    {% with person_entities=info.participants.follower.entities %}
+                        {% include "participants/list.html" %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
     {% endfor %}
     </div>
 {% else %}

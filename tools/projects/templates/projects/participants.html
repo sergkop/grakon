@@ -1,0 +1,25 @@
+<div class="gr-descr">
+    <h5 class="gr-mt0">Автор:</h5>
+    <div class="gr-mb10">
+        {% with person=admin %}
+            {% include "participants/person.html" %}
+        {% endwith %}
+    </div>
+
+    <h5>Готовы помочь:</h5>
+    <ul class="gr-source-list-slider  js-resource-items-visible">
+        <li><a href="">Shweta Karwa</a> <span class="gr-resource-item gr-resource-item-active">Деньги</span>  <span class="gr-resource-item">Время</span>   <span class="gr-resource-item">Машина</span></li>
+        <li><a href="">Shweta Karwa</a> <span class="gr-resource-item">Деньги</span>  <span class="gr-resource-item gr-resource-item-active">Время</span>   <span class="gr-resource-item">Машина</span></li>
+    </ul>
+    <div style="top: 89px; left: 35px;" class="gr-small-popup gr-hover-popup">
+        <i>&nbsp;</i>
+        <div>в мае я свободна только по вторникам, после 13:00, после мая - в любое время</div>
+    </div>
+
+    <h5>Следят:</h5>
+    <div>
+        {% with person_entities=info.participants.follower.entities %}
+            {% include "participants/list.html" %}
+        {% endwith %}
+    </div>
+</div>

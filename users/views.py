@@ -86,6 +86,9 @@ class ProfileIdeasView(BaseProfileView, TemplateView):
     tab = 'ideas'
 
     def update_context(self):
+        from pprint import pprint
+        pprint(table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas')))
+        
         return table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas'))
 
 #class ProfileContactsView(BaseProfileView, TemplateView):

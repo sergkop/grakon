@@ -38,13 +38,11 @@
                 {% include "participants/person.html" %}
             {% endwith %}
         </p>
-        <div>
-            {{ info.instance.description|safe }}
-            <a href="" class="gr-editing">&nbsp;</a>
-        </div>
+        <div>{{ info.instance.description|safe }}</div>
     </div>
+
     <div class="gr-info-bar">
-        <a class="dimmed" onclick="show_idea_comments($(this), 'idea/{{ info.instance.id }}', '{{ info.instance.get_absolute_url }}', 'ideas');">Комментарии</a>
+        {% include "elements/comments.html" %}
 
         {% if info.projects.entities %}
             <span class="gr-bullet">&nbsp;</span>

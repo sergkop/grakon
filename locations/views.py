@@ -50,11 +50,6 @@ class BaseLocationView(object):
 
         ctx.update(entity_tabs_view(self))
 
-        if self.request.user.is_authenticated():
-            ctx['is_follower'] = EntityParticipant.objects.is_participant(self.location, self.request.profile, 'follower')
-        else:
-            ctx['is_follower'] = False
-
         ctx.update({
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
             'location': location,
@@ -63,15 +58,6 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
             'is_lowest_level': location.is_lowest_level(),
-            'follow_button': {
-                'cancel_msg': u'Вы хотите отписаться от новостей об этом проекте?',
-                'cancel_btn': u'Отписаться',
-                'cancel_btn_long': u'Отписаться',
-                'confirm_msg': u'Вы хотите стать участником в этом районе?',
-                'confirm_btn': u'Участвовать',
-                'confirm_btn_long': u'Стать участником',
-                'btn_class': 'gr-follow-button gr-follow-button-blue',
-            },
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))

@@ -52,6 +52,14 @@ class Idea(BaseEntityModel):
 
     roles = ['admin']
 
+    disqus_category = 'ideas'
+
+    def disqus_id(self):
+        return 'idea/' + str(self.id)
+
+    def disqus_url(self):
+        return self.get_absolute_url()
+
     @models.permalink
     def get_absolute_url(self):
         return ('idea', [self.id])

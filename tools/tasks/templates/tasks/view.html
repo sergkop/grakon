@@ -6,11 +6,15 @@
     </p>
 
     <div>
-        {{ task.about|safe }}
-        <a href="" class="gr-editing">&nbsp;</a>
+        {% with field="about" html=task.about %}
+            {% include "elements/html_block.html" %}
+            {% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}
+        {% endwith %}
     </div>
+
     <div class="gr-info-bar">
-        <a href="{% url task_wall task.id %}" class="dimmed">Комментарии</a>
+        {% include "elements/comments.html" %}
+
         <span class="gr-bullet">&nbsp;</span>
         <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
         <span class="gr-bullet">&nbsp;</span>
@@ -23,7 +27,6 @@
     <div class="gr-slider js-follow-content">
         <div class="gr-close js-slide-close">&nbsp;</div>
         <div>
-            Следят:
             {% with person_entities=info.participants.follower.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}

@@ -10,6 +10,7 @@
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 
+    // TODO: move it to a separate template
     // Add counter in the header of the wall tab
     var display_counter = $("<a/>")
             .attr("data-disqus-identifier", "{{ disqus_identifier }}")

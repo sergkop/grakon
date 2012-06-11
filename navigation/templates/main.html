@@ -5,22 +5,26 @@
         <div class="ym-wrapper">
             <h1>Cоцсеть активистов, где виртуальные лайки становятся реальными ресурсами</h1>
             <ul class="gr-step-bg">
-                <li class="gr-step-1"><h3>Выявить проблему</h3>
+                <li class="gr-step-1">
+                    <h3>Выявить проблему</h3>
                     <div>&laquo;Как недорого обустроить свой двор?&raquo;</div>
                 </li>
 
-                <li class="gr-step-2"><h3>Предложить<br />решение</h3>
+                <li class="gr-step-2">
+                    <h3>Предложить<br />решение</h3>
                     <div>&laquo; &mdash; собраться всем двором на&nbsp;покупку и&nbsp;установку турников и&nbsp;качелей<br /><br />
                     &mdash;&nbsp;вместе с&nbsp;соседями своими руками соорудить футбольную коробку&raquo;</div>
                 </li>
 
-                <li class="gr-step-3"><h3>Собрать ресурсы</h3>
+                <li class="gr-step-3">
+                    <h3>Собрать ресурсы</h3>
                     <div>&laquo; &mdash; деньги<br />
-                &mdash;&nbsp;волонтеры<br />
-                &mdash;&nbsp;материалы для футбольной коробки&raquo;</div>
+                    &mdash;&nbsp;волонтеры<br />
+                    &mdash;&nbsp;материалы для футбольной коробки&raquo;</div>
                 </li>
 
-                <li class="gr-step-4"><h3>Запустить проект</h3>
+                <li class="gr-step-4">
+                    <h3>Запустить проект</h3>
                     <div>&laquo;Совет жителей двора для строительства футбольной коробки&raquo;</div>
                 </li>
             </ul>
@@ -37,11 +41,11 @@
     </h2>
 
     <div align="center">
-        <a href="" class="gr-follow-button">Поехали!</a>
+        <a href="{% url register %}" class="gr-follow-button">Поехали!</a>
         <table width="500" class="markup gr-mb30">
             <tr>
-                <td width="50%" align="center"><a href="">Посмотреть площадку</a></td>
-                <td align="center"><a href="">Подробнее о проекте</a></td>
+                <td width="50%" align="center"><a href="{{ country_url }}">Посмотреть площадку</a></td>
+                <td align="center"><a href="{% url about %}">Подробнее о проекте</a></td>
             </tr>
         </table>
 
@@ -150,9 +154,4 @@
             </tr>
         </table>
     </div>
-
-
-    <p align="center">
-        <a href="{% url register %}">Зарегистрироваться</a>
-    </p>
 {% endblock %}

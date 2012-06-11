@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
@@ -24,6 +25,14 @@ class Project(BaseEntityModel):
     editable_fields = ['title', 'deadline', 'goals', 'stages', 'about', 'team']
 
     roles = ['admin', 'follower']
+
+    disqus_category = 'projects'
+
+    def disqus_id(self):
+        return 'project/' + str(self.id)
+
+    def disqus_url(self):
+        return reverse('project_wall', args=[self.id])
 
     @models.permalink
     def get_absolute_url(self):
