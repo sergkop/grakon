@@ -245,7 +245,7 @@
 	.ym-form button,
 	.ym-form input[type="button"],
 	.ym-form input[type="reset"],
-	.ym-form input[type="submit"] {
+	.ym-form input[type="submit"]{
 		display: inline-block;
 		white-space: nowrap;
 		border-radius: .4em;
@@ -291,27 +291,9 @@
 	.ym-form input[type="submit"]:focus,
 	.ym-button:focus {
 		outline: 0;
-		background: #fafafa;
 	}
 
 	/* pseudo elements don't work on input */
-	.ym-form button:before,
-	.ym-button:before {
-		background: #ccc;
-		background: rgba(0,0,0,.1);
-		float: left;
-		width: 1em;
-		text-align: center;
-		font-size: 1.5em;
-		padding: 0 .2em;
-		-moz-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
-		-webkit-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
-		box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
-		-moz-border-radius: .15em 0 0 .15em;
-		-webkit-border-radius: .15em 0 0 .15em;
-		border-radius: .15em 0 0 .15em;
-		pointer-events: none;
-	}
 
 	.ym-add:before { content: "\271A"; }
 	.ym-delete:before { content: "\2718"; }
