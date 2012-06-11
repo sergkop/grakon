@@ -457,7 +457,7 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -4px; padding-bottom: 3em;
+	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -5px; padding-bottom: 3em;
 	box-shadow: 0 -10px 100px #e0e2e6}
 		#main .gr-content {box-shadow: none; border-top: none; background-color: #f0f9ff; padding: 1em 0}
 		#main .gr-content .ym-wrapper {background: url(../../images/bg-main-icons.jpg) 0 0;}

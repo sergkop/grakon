@@ -2,10 +2,12 @@
 
 {% block title %}Ваша учетная запись активирована{% endblock %}
 
-{% block content %}
+{% block top %}
     <h1>Ваша учетная запись активирована</h1>
+{% endblock %}
 
-    <div class="gr-content">
+{% block content %}
+    <div class="gr-descr">
         <p>Спасибо за регистрацию! Теперь вы можете <a href="{% url login %}">войти</a> в систему.</p>
     </div>
 {% endblock %}

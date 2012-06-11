@@ -27,7 +27,7 @@ class BaseRegistrationForm(forms.ModelForm):
             help_text=u'4-20 символов (латинские буквы, цифры, подчеркивания и точки). Регистр не учитывается.')
 
     email = forms.EmailField(label=u'Электронная почта (email)',
-            help_text=u'<b>Вам будет выслано письмо со ссылкой для активации аккаунта</b>')
+            help_text=u'Вам будет выслано письмо со ссылкой для активации аккаунта')
 
     class Meta:
         model = Profile
