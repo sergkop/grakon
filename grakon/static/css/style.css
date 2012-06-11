@@ -1,3 +1,5 @@
+input[type=text], input[type=password], textarea {border: 1px solid #eee;}
+
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
 	.gr-breadcrumbs li.on a:hover  i {background-position: 0 -79px;} 
@@ -19,7 +21,7 @@
 .gr-mb30 {margin-bottom: 3em !important;}
 .gr-pt20 {padding-top: 2em !important;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
-.gr-bb-blue {border-bottom: 2px solid #82d1fa; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
+.gr-bb-grey-lt {border-bottom: 1px solid #eee;}
 .gr-noborder {border: none !important; box-shadow: none !important;}
 
 /*Элементы header*/
@@ -176,13 +178,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			.gr-popular-list li .gr-info-bar {font-size: .9em; color: #fff;}
 		.gr-popular-list .gr-info-bar {margin-top: .5em;}		
 		.gr-popular-list li a {color: #000;}		
-	
-		
-	
-	
-		
-		
 
+/* Disqus bugs */
+#dsq-content .dsq-show-tools .dsq-post-tools  {height: 34px !important;}
+#dsq-content #dsq-messagesx-toolbar-icon {height: 22px !important; width: auto !important;}
 
 /* ----- Переиспользуемые элементы ----- */
 

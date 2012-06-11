@@ -2,10 +2,13 @@
 
 {% block title %}Не удалось отправить письмо{% endblock %}
 
-{% block content %}
+{% block top %}
     <h1>Не удалось отправить письмо на ваш электронный адрес</h1>
 
-    <div class="gr-content">
+{% endblock %}
+
+{% block content %}
+    <div class="gr-desr">
         <p>Возможно вы неправильно указали ваш email при регистрации. Пожалуйста, попробуйте
         <a href="{% url register %}">зарегистрироваться</a> снова.</p>
     </div>

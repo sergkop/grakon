@@ -4,10 +4,12 @@
 
 {% block title %}Регистрация нового пользователя{% endblock %}
 
-{% block content %}
+{% block top %}
     <h1>Регистрация нового пользователя</h1>
+{% endblock %}
 
-    <div class="gr-content">
+{% block content %}
+    <div class="gr-descr">
         <p>Поля отмеченные звездочкой (<span class="asteriskField">*</span>) обязательны для заполнения.</p>
 
         {% crispy form form.helper %}

@@ -33,7 +33,8 @@
     
     .uniForm legend{ font-weight: bold; font-size: 100%; margin: 0; padding: 1.5em 0; }
   
-    .uniForm .ctrlHolder{ padding: 1em 0; border-bottom: 1px solid #efefef; }
+    .uniForm .ctrlHolder{ padding: 1.5em 0; border-bottom: 1px solid #efefef; }
+    .uniForm .ctrlHolder:last-child {border: none;}
     .uniForm .ctrlHolder.focused{}
     
     .uniForm .inlineLabels .noLabel{}
@@ -81,7 +82,7 @@
       .uniForm .ctrlHolder .textInput:focus,
       .uniForm .ctrlHolder textarea:focus{ outline: none; }
       
-      .uniForm .formHint                    { font-size: .75em; color: #777; }
+      .uniForm .formHint                    { font-size: .9em; color: #777; }
       .uniForm .inlineLabels .formHint      { padding-top: .5em; }
       .uniForm .ctrlHolder.focused .formHint{ color: #333; }
       
