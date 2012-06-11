@@ -81,7 +81,7 @@
                                         Комментарии:
                                         <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
                                         <span class="gr-bullet">&nbsp;</span>
-                                        Следят: {{ info.participants.follower.count }}
+                                        Поддержали: {{ info.resources|length }}
                                     </div>
                                 </li>
                             {% endfor %}

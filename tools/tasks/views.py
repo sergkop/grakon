@@ -13,6 +13,7 @@ from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
 from tools.tasks.forms import TaskForm
 from tools.tasks.models import Task
+from users.models import Profile
 
 class BaseTaskView(object):
     template_name = 'tasks/base.html'
@@ -38,6 +39,12 @@ class BaseTaskView(object):
         # TODO: select_related it needed
         location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
 
+        supporters_ids = set(provider_id for idea_info in self.info['ideas']['entities'] for provider_id in idea_info['resources'])
+        supporters_info = Profile.objects.info_for(supporters_ids, related=False)
+
+        idea_admins_ids = set([idea_admin_id for idea_info in self.info['ideas']['entities'] for idea_admin_id in idea_info['participants']['admin']['ids']])
+        idea_admins_info = Profile.objects.info_for(idea_admins_ids, related=False)
+
         ctx.update({
             'task': self.entity,
             'follow_button': {
@@ -54,6 +61,9 @@ class BaseTaskView(object):
 
             # TODO: fix it
             'admin': ctx['info']['participants']['admin']['entities'][0]['instance'],
+
+            'supporters': [supporters_info[supporter_ids] for supporter_ids in supporters_ids],
+            'idea_admins': [idea_admins_info[idea_admin_ids] for idea_admin_ids in idea_admins_ids],
         })
         ctx.update(disqus_page_params('task/'+str(id), reverse('task_wall', args=[id]), 'tasks'))
         return ctx
@@ -62,14 +72,10 @@ class TaskView(BaseTaskView, TemplateView):
     tab = 'view'
 
     def update_context(self):
-        ideas_ids = list(self.entity.ideas.all().values_list('id', flat=True))
-        ideas = Idea.objects.info_for(ideas_ids, True).values()
-
-        ctx = {
-            'ideas': ideas,
+        return {
+            'ideas': Idea.objects.info_for(self.info['ideas']['ids'], True).values(),
             'template_path': 'tasks/view.html',
         }
-        return ctx
 
 class TaskWallView(BaseTaskView, TemplateView):
     tab = 'wall'

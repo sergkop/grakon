@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block top %}
-    <h1>Проект: {{ project.title }}</h1>
+    {% with title_name="Проект" text=project.title field="title" %}
+        {% include "elements/title_edit.html" %}
+    {% endwith %}
 {% endblock %}
 
 {% block right_column %}

@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block top %}
-    <h1>Задача: {{ task.title }}</h1>
+    {% with title_name="Задача" text=task.title field="title" %}
+        {% include "elements/title_edit.html" %}
+    {% endwith %}
 {% endblock %}
 
 {% block right_column %}
@@ -24,14 +26,18 @@
     <div class="gr-side-item gr-mb10">
         <h4>Поддержали ресурсами:</h4>
         <p>
-            <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>
+            {% with person_entities=supporters %}
+                {% include "participants/list.html" %}
+            {% endwith %}
         </p>
     </div>
 
     <div class="gr-side-item gr-mb10">
         <h4>Авторы идей:</h4>
         <p>
-            <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>, <a href="">Татьяна Белова</a>, <a href="">Дмитрий Левенец</a>, <a href="">Shweta Karwa</a>
+            {% with person_entities=idea_admins %}
+                {% include "participants/list.html" %}
+            {% endwith %}
         </p>
     </div>
 

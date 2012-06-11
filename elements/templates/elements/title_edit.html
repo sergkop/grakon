@@ -1,0 +1,16 @@
+<h1>
+    {{ title_name }}: <span id="{{ field }}_text">{{ text }}</span>
+
+    {% if is_admin %}
+        {% include "elements/edit_button.html" %}
+
+        <script type="text/javascript">
+            $(function(){
+                new TextFieldEditor({el: $("#{{ field }}_text"), edit_btn: $("#{{ field }}_edit_btn"),
+                        add_btn: $("#{{ field }}_add_btn"),
+                        ct: {{ info.ct }}, entity_id: {{ info.instance.id }},
+                        field: "{{ field }}", type: "text"});
+            });
+        </script>
+    {% endif %}
+</h1>

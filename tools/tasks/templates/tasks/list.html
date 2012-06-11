@@ -3,7 +3,7 @@
     {% for info in pagination_entities %}
         <div class="gr-ideas-item"> 
             <div class="gr-ideas-content">
-                <div class="gr-add gr-idea-selected"><span>1123</span></div>
+                <div class="gr-add gr-idea-selected"><span>{{ info.resources.count }}</span></div>
                 <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
                 <div class="gr-mb10">
                     {% with person=info.participants.admin.entities.0.instance %}
@@ -17,7 +17,7 @@
                 {% include "elements/comments.html" %}
 
                 <span class="gr-bullet">&nbsp;</span>
-                <a href="{{ info.instance.get_absolute_url }}" class="dimmed">Идеи: {{ info.ideas.count }}</a>
+                <a href="{{ info.instance.get_absolute_url }}#ideas" class="dimmed">Идеи: {{ info.ideas.count }}</a>
 
                 <span class="gr-bullet">&nbsp;</span>
                 <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>

@@ -6,17 +6,32 @@ from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HT
 
 class TaskManager(BaseEntityManager):
     def get_info(self, data, ids):
-        from tools.ideas.models import Idea
-        ideas_data = Idea.objects.filter(task__in=ids).values_list('id', 'task')
-
+        # Get related ideas
         for id in ids:
             data[id]['ideas'] = {'ids': []}
 
+        from tools.ideas.models import Idea
+        ideas_data = Idea.objects.filter(task__in=ids).values_list('id', 'task')
         for idea_id, id in ideas_data:
             data[id]['ideas']['ids'].append(idea_id)
 
         for id in ids:
-            data[id]['ideas'] = {'count': len(data[id]['ideas']['ids'])}
+            data[id]['ideas']['count'] = len(data[id]['ideas']['ids'])
+
+    def get_related_info(self, data, ids):
+        # Get ideas info
+        ideas_ids = [idea_id for id in ids for idea_id in data[id]['ideas']['ids']]
+        from tools.ideas.models import Idea
+        ideas_info = Idea.objects.info_for(ideas_ids, related=False)
+
+        for id in ids:
+            data[id]['ideas']['entities'] = [ideas_info[idea_id] for idea_id in data[id]['ideas']['ids']]
+
+        # Get resources data
+        for id in ids:
+            data[id]['resources'] = {
+                'count': len(set(provider_id for idea_info in data[id]['ideas']['entities'] for provider_id in idea_info['resources'])),
+            }
 
 # TODO: introduce choices for types
 @entity_class(['locations', 'participants', 'posts'])

@@ -3,7 +3,9 @@
 {% block title %}Идея - Гракон{% endblock %}
 
 {% block top %}
-    <h1>Идея: {{ idea.title }}</h1>
+    {% with title_name="Идея" text=idea.title field="title" %}
+        {% include "elements/title_edit.html" %}
+    {% endwith %}
 {% endblock %}
 
 {% block right_column %}

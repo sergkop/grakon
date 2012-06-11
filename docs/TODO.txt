@@ -1,24 +1,29 @@
-* follow button in lists of projects and tasks
-* counter for people provided resources for idea, task, project in info
+* disqus inline (first time disqus loads with task id instead of idea)
+* comments don't work in lists of tasks, ideas, projects
+* additional click on комментарии must hide comments
 
 * fix login/registration/etc. pages layout
 
-* editing title of task, project, idea, profile
+* list of participants on project tab
+* counter for people provided resources for project in info
 
-* disqus inline (first time disqus loads with task id instead of idea)
-* comments don't work in lists of tasks, ideas, projects
+* use entity_base_view in idea
+
+* project-ideas connection (editing ideas of the project)
 
 * other option for resources
 * resources editing
 * participants tab on project (show resources)
 
-* project-ideas connection (editing ideas of the project)
+
+
+* follow button in lists of projects and tasks
 
 * idea title is not always a link
 
 * adding ideas
 
-* use entity_base_view in idea and location
+* use entity_base_view in location
 
 PT:
 * Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
@@ -27,8 +32,12 @@ PT:
 * пока нет in case when there is no contacts or participants
 
 * deactivate points system
+* depricate posts
+* block officials, events
 
 * share buttons
+
+* on task list page get_related_info is called twice
 
 * new widget for location editor; add location in location list editor
 * resources editor on profile page
@@ -50,6 +59,7 @@ Yulia:
     * style of comments counter for idea, task, project
     * labels with text don't have arrows anymore
     * dialog for adding ideas
+    * save and cancel buttons in title editing
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
