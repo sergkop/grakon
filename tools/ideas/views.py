@@ -1,34 +1,27 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.views.generic.base import TemplateView
 
-from elements.participants.models import EntityParticipant
+from elements.views import entity_base_view
 from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
 
-# TODO: use entity_base_view
-def idea_view(request, id):
-    id = int(id)
-    entity = get_object_or_404(Idea, id=id)
+class IdeaView(TemplateView):
+    template_name = 'ideas/view.html'
 
-    info = entity.info()
+    def update_context(self):
+        return {}
 
-    projects = [pi.project for pi in entity.projects.select_related('project')]
+    def get_context_data(self, **kwargs):
+        ctx = super(IdeaView, self).get_context_data(**kwargs)
 
-    ctx = {
-        'info': info,
-        'idea': entity,
-        'admin': info['participants']['admin']['entities'][0]['instance'],
-        'projects': projects,
-    }
+        id = int(self.kwargs.get('id'))
+        ctx.update(entity_base_view(self, Idea, {'id': id}))
 
-    # TODO: all data can be recieved in one db query
-    for role in Idea.roles:
-        if request.user.is_authenticated():
-            ctx['is_'+role] = EntityParticipant.objects.is_participant(entity, request.profile, role)
-        else:
-            ctx['is_'+role] = False
-
-    ctx.update(disqus_page_params('idea/'+str(id), entity.get_absolute_url(), 'ideas'))
-
-    return render_to_response('ideas/view.html', context_instance=RequestContext(request, ctx))
+        projects = [pi.project for pi in self.entity.projects.select_related('project')]
+        ctx.update({
+            'idea': self.entity,
+            'admin': self.info['participants']['admin']['entities'][0]['instance'],
+            'projects': projects,
+        })
+        ctx.update(disqus_page_params('idea/'+str(id), self.entity.get_absolute_url(), 'ideas'))
+        return ctx

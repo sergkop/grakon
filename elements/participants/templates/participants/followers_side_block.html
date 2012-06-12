@@ -1,8 +1,10 @@
 <div class="gr-side-item">
     <h4>Следят:</h4>
-    {% with person_entities=info.participants.follower.entities %}
-        {% include "participants/list.html" %}
-    {% endwith %}
+    <p>
+        {% with person_entities=info.participants.follower.entities %}
+            {% include "participants/list.html" %}
+        {% endwith %}
+    </p>
 
     {% comment %}
         <a href="{{ participants_url }}?type=follower">Следят&nbsp;({{ info.participants.follower.count }})</a>

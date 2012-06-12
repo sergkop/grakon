@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('tools.ideas.views',
-    url(r'^idea/(?P<id>\d+)$', 'idea_view', name='idea'),
+from tools.ideas.views import IdeaView
+
+urlpatterns = patterns('',
+    url(r'^idea/(?P<id>\d+)$', IdeaView.as_view(), name='idea'),
 )

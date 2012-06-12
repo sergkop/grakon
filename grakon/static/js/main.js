@@ -405,19 +405,14 @@ var TextFieldEditor = Backbone.View.extend({
     }
 });
 
-// TODO: use backbone view and hide comments on second click
-// TODO: comments for second idea don't load
-function show_comments(btn, id, url, category){
-    $("#disqus_thread").remove();
+function load_disqus(id, url, category){
+    if (typeof DISQUS === "undefined"){
+        disqus_identifier = id;
+        disqus_url = url;
+        disqus_category_id = category;
 
-    var disqus_div = $("<div/>").attr("id", "disqus_thread")
-            .css("background-color", "#D8E6ED").css("padding", "1em");
-    btn.parent().after(disqus_div);
-
-    // TODO: try not using reset, but moving div, changing global js settings and reloading script
-    if (typeof DISQUS === "undefined")
         $.getScript("http://"+disqus_shortname+".disqus.com/embed.js");
-    else
+    } else
         DISQUS.reset({
             reload: true,
             config: function () {
@@ -426,4 +421,18 @@ function show_comments(btn, id, url, category){
                 this.page.category = category;
             }
         });
+}
+
+// TODO: use backbone view and hide comments on second click
+function show_comments(btn, id, url, category){
+    if ($("#disqus_thread").length > 0){
+        $("#disqus_thread").remove();
+        return;
+    }
+
+    var disqus_div = $("<div/>").attr("id", "disqus_thread")
+            .css("background-color", "#D8E6ED").css("padding", "1em");
+    btn.parent().after(disqus_div);
+
+    load_disqus(id, url, category);
 }

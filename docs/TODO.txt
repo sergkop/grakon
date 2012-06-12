@@ -1,32 +1,32 @@
-* disqus inline (first time disqus loads with task id instead of idea)
-* comments don't work in lists of tasks, ideas, projects
-* additional click on комментарии must hide comments
+* rewrite disqus_page_params to take instance only
 
-* fix login/registration/etc. pages layout
-
-* list of participants on project tab
-* counter for people provided resources for project in info
-
-* use entity_base_view in idea
-
-* project-ideas connection (editing ideas of the project)
+* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
 
 * other option for resources
 * resources editing
 * participants tab on project (show resources)
 
+* adding ideas
 
+* list of participants on project tab
+* counter for people provided resources for project in info
+
+* project-ideas connection (editing ideas of the project)
+
+* comments don't work in lists of tasks, ideas, projects
+* disqus counter - not link
 
 * follow button in lists of projects and tasks
 
-* idea title is not always a link
+* share buttons
 
-* adding ideas
+* idea title is not always a link
+* link to idea page with time - drop time, change color
+
+* resources editor on profile page (combine with editor in registration form)
 
 * use entity_base_view in location
 
-PT:
-* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
 * Убрать пустые параграфы из описания задачи/проекта. Мы можем как-то это контролировать?
 
 * пока нет in case when there is no contacts or participants
@@ -35,28 +35,21 @@ PT:
 * depricate posts
 * block officials, events
 
-* share buttons
-
 * on task list page get_related_info is called twice
 
 * new widget for location editor; add location in location list editor
-* resources editor on profile page
 
 * fill in resource in registration when redirected from main page
 * add task and add project forms should open with initialized location
 
 Yulia:
-    * underline between share buttons
-    * disqus counter in tabs
     * buttons for removing locations from a list
     * location participants tab
     * pointer cursor on resource labels
-    * format static pages, registration form, etc.
-    * login popup
+    * format static pages (about, how to help, partners)
+    * login popup on the main page
     * in text/html editing widget set background for buttons
     * inline text editor is not displayed properly when start from empty string
-    * remove icon in profile locations editor
-    * style of comments counter for idea, task, project
     * labels with text don't have arrows anymore
     * dialog for adding ideas
     * save and cancel buttons in title editing
@@ -72,6 +65,10 @@ Yulia:
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
 -------------------------------------------------------------------------------
+* when mouse is over the date - show exact time in hover
+
+* can admin unfollow an entity?
+
 * Hide star near location form field where it is not required
 
 * do disqus counters for ideas work?
