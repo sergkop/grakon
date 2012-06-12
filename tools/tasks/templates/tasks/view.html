@@ -1,11 +1,11 @@
 <div class="gr-descr">
-    <p class="small">
+    <div class="gr-mb10">
         {% with person=admin %}
             {% include "participants/person.html" %}
         {% endwith %}
-    </p>
+    </div>
 
-    <div>
+    <div class="gr-mb10">
         {% with field="about" html=task.about %}
             {% include "elements/html_block.html" %}
             {% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}
@@ -26,7 +26,7 @@
 
     <div class="gr-slider js-follow-content">
         <div class="gr-close js-slide-close">&nbsp;</div>
-        <div>
+        <div class="dimmed">
             {% with person_entities=info.participants.follower.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}

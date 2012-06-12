@@ -12,16 +12,17 @@
     <div align="center" class="gr-mb20">
         <a class="gr-follow-button" href="{{ idea.task.get_absolute_url }}">Вернуться к задаче</a>
     </div>
-    <div class="dimmed gr-mb15">{{ idea.time|date:"j b Y" }}</div>
 {% endblock %}
 
 {% block content %}
     <div class="gr-descr">
-        <p class="small">
+        <div class="gr-fl">
             {% with person=admin %}
                 {% include "participants/person.html" %}
             {% endwith %}
-        </p>
+        </div>
+        <div class="dimmed" align="right">{{ idea.time|date:"j b Y" }}</div>
+        <div class="ym-clearfix">&nbsp;</div>
 
         <div class="gr-mt10">
             {% with field="description" html=idea.description %}

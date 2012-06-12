@@ -39,7 +39,7 @@
     
     .uniForm .inlineLabels .noLabel{}
     
-    .uniForm .buttonHolder{ margin: 1.5em 0;}
+    .uniForm .buttonHolder{ margin: 0 0 1.5em;}
       .uniForm .buttonHolder .primaryAction{ padding: 10px 22px; line-height: 1; background: #254a86; border: 1px solid #163362; font-size: 12px; font-weight: bold; color: #fff;
                                              /* CSS3 */
                                              border-radius:         4px;
@@ -98,7 +98,7 @@
       .uniForm #errorMsg ol li i {poasition: absolute; top: 0; left: 0; width: 12px; height: 12px;  background: url(../../images/icons.png) 0 0 no-repeat;}
   
   .uniForm .ctrlHolder.error,
-  .uniForm .ctrlHolder.focused.error{ background: #ffdfdf; border: 1px solid #f3afb5;
+  .uniForm .ctrlHolder.focused.error{ background: #ffdfdf; border: 1px solid #f3afb5; padding: 1em; margin-bottom: 1em;
                                       /* CSS3 */
                                       border-radius:         4px;
                                       -webkit-border-radius: 4px;

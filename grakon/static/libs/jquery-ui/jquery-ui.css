@@ -95,7 +95,7 @@
 ----------------------------------*/
 
 /* states and images */
-.ui-icon { width: 19px; height: 19px; background-image: url(images/ui-icons_222222_256x240.png); }
+.ui-icon { width: 15px; height: 15px; background-image: url(images/ui-icons_222222_256x240.png); }
 .ui-widget-content .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
 .ui-widget-header .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
 .ui-state-default .ui-icon { background-image: url(images/ui-icons_888888_256x240.png); }

@@ -1,10 +1,12 @@
 <div class="gr-descr">
-    <p class="small">
-        {% with person=admin %}
+
+    <div class="gr-fl">
+    {% with person=admin %}
             {% include "participants/person.html" %}
         {% endwith %}
-    </p>
-
+    </div>
+    <div class="dimmed" align="right">{{ project.time|date:"j b Y" }}</div>
+    <div class="ym-clearfix">&nbsp;</div>
     {% if project.deadline or is_admin %}
         <h5 class="gr-mt0">Дедлайн:{% with field="deadline" text=project.deadline %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
             {% include "elements/text_block.html" %}

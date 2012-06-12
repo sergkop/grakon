@@ -278,7 +278,7 @@ var LocationEditor = Backbone.View.extend({
 
             $("<span/>")
                     .attr("title", "Отказаться от участия")
-                    .addClass("remove-li-btn ui-icon ui-icon-close")
+                    .addClass("remove-li-btn gr-close")
                     .tipsy({gravity: 'n'})
                     .click(function(){
                         li.css("background-color", "#D9BDFF");

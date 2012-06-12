@@ -1,4 +1,4 @@
-input[type=text], input[type=password], textarea {border: 1px solid #eee;}
+input[type=text], input[type=password], textarea {border: 1px solid #eee; padding: 0.2em;}
 
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
@@ -94,6 +94,14 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
 	.gr-editing {background: url(../images/icons/add.png) 0 -206px no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
 		.gr-editing:hover {background-position: 0 -225px;}
+		h1 .gr-editing {margin-left: 0;} 
+        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em;}
+        .gr-editor-btn {cursor: pointer; margin-right: 1em;  color: #009EC5;}
+
+        h1 .gr-editor-btn {cursor: pointer; font-weight: normal; margin-right: 1em; font-size: 0.6em;}
+
+        .bold {font-weight: bold;}
+		
 .gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;}	
 	.gr-close { float: right; width: 15px; height: 15px; background:url(../images/icons/add.png) -7px -104px no-repeat; cursor: pointer; z-index:1;}
 		.gr-close:hover {background-position: 0 -191px;}
@@ -159,10 +167,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 #main h2 {text-transform: uppercase; text-align: center; color: #029ec7; font-size: 1.5em;}	
 	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .7em}
 #main .gr-follow-button {width: 300px; margin: 1.5em 0 1em;}
-#main .markup {font-size: 1.3em;}
-	#main .markup a {text-decoration: underline;}
+#main .ym-col1 .markup {font-size: 1.3em;}
+	#main .ym-col1 .markup a {text-decoration: underline;}
 .gr-popular-list {background-color: #aad8dd; border-radius: .1em; width: 268px; line-height: 1.3em; text-align:left;}	
-	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px;}
+	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px; line-height: 1em;}
 		.gr-popular-list h3 i {position: absolute; top: 0; left: 0px; width: 80px; height: 80px; background:url(../images/icons/blank.jpg) 0 bottom no-repeat;}
 		.gr-icon-tasks h3 {padding-left: 65px;}
 		.gr-icon-tasks h3 i {background-position: 0  -200px; top: 5px; width: 65px;}
@@ -187,17 +195,17 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /* List of locations */
 .gr-locations-ul {
-	list-style-type: none; margin: 1em 0 0 0; padding: 0; font-size: 1.1em;
-}
+	list-style-type: none; margin: 1em 0 .5em -.5em; padding: .5em; font-size: 1.1em;}
 
-.gr-locations-ul li {list-style-type: none; margin: 0 0 1em; padding: 0;}
+.gr-locations-ul li {list-style-type: none; margin: 0; padding: 0;}
 
 .gr-next-arrow {background:url(../images/icons/add.png) -10px -32px no-repeat; display: inline-block; width: 8px; height: 15px; margin: 0 .3em;}
 .remove-li-btn {
     text-decoration: none;
     float: right;
-    margin-right: -16px;
-    opacity: 0.5;
+    margin-right: -25px;
+    width: 15px;
+    height: 15px;
 }
 .remove-li-btn:hover {
     cursor: pointer;

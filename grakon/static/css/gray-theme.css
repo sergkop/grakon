@@ -261,7 +261,9 @@
 	}
 	
 	a.ym-button {
-		color: #fff;	
+		color: #fff;
+        font-size: 0.95em; 
+        line-height: 1.4em;
 	}
 	
 	.gr-side-item .ym-button

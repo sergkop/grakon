@@ -8,7 +8,7 @@
 
 {% block top %}
     {% with title_name="Проект" text=project.title field="title" %}
-        {% include "elements/title_edit.html" %}
+    {% include "elements/title_edit.html" %}
     {% endwith %}
 {% endblock %}
 
@@ -17,23 +17,17 @@
         {% include "participants/follower_button.html" %}
     </div>
 
-    <div class="dimmed gr-mb15">{{ project.time|date:"j b Y" }}</div>
-
     <div class="gr-side-item gr-mb15">
         <h4>Требуется:</h4>
 
         <div class="gr-resource-needs">
-            <a href="">
-                <h2>5 000 р</h2>
-                <p>Описание , для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
-            </a>
+            <h2>5 000 р</h2>
+            <p>Описание , для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
         </div>
 
         <div class="gr-resource-needs">
-            <a href="">
-                <h2>Машина: 2</h2>
-                <p>Описани, для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
-            </a>
+            <h2>Машина: 2</h2>
+            <p>Описани, для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
         </div>
     </div>
 
