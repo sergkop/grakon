@@ -116,6 +116,7 @@
 	li {
 		margin-left:0.8em; /* LTR */
 	}
+        ul.gr-static li {margin-bottom: .7em;}
 
 	dd { margin:0 0 1em 0.8em; } /* LTR */
 
