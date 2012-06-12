@@ -89,17 +89,17 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em; position: relative;}
+	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default;}
 		.gr-resource-item-active {padding-right: .2em;} 
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
-		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px;}
+		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px; cursor: pointer;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
 	.gr-editing {background: url(../images/icons/add.png) 0 -206px no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
 		.gr-editing:hover {background-position: 0 -225px;}
 		h1 .gr-editing {margin-left: 0;} 
-        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em;}
+        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em; min-height: 1.6em;}
         .gr-editor-btn {cursor: pointer; margin-right: 1em;  color: #009EC5;}
 
         h1 .gr-editor-btn {cursor: pointer; font-weight: normal; margin-right: 1em; font-size: 0.6em;}
@@ -209,7 +209,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 .remove-li-btn {
     text-decoration: none;
     float: right;
-    margin-right: -25px;
+    margin-right: 0;
     width: 15px;
     height: 15px;
 }
