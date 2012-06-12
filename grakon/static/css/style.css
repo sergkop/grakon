@@ -80,7 +80,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-info-bar .gr-active-link {font-weight: bold; color: #000;}
 .gr-ideas-list {}
 	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #eee; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
-		.gr-ideas-item-last {border: none; padding-top: 0;}
+		.gr-ideas-item:last-child {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
 		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 1em;}
@@ -89,10 +89,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em .4em .3em .7em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em; position: relative;}
+	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em; position: relative;}
 		.gr-resource-item-active {padding-right: .2em;} 
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
-		.gr-resource-item b {background:url(../images/icons/add.png) -3px -124px no-repeat; padding: 0 .3em; position: absolute; top: .2em; right: -.1em;}
+		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
@@ -115,6 +115,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   
 	.gr-source-list-slider {margin-top: 1em; font-size: .9em}        
 	.gr-source-list-slider li {margin: 0 0 1em;}
+        .gr-bb-grey-list li {border-bottom: 1px solid #eee; padding-bottom: 1em !important;}
+        .gr-bb-grey-list li:last-child {border-bottom: none;}
 	
 	.gr-ideas-resources .gr-source-list-slider {display: block; margin-top: 0;}
 	

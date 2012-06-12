@@ -423,12 +423,15 @@
 		border-collapse:collapse;
 		margin: 1.3571em 0 0 0;
 		color:#333;
-		border: 1px #f6f6f6 solid;
 	}
 	
 	table.markup {
         border: none;
     }
+	
+        table.markup td {
+            vertical-align: top;
+        }
 	
 	footer table {
         margin: 0;
@@ -457,16 +460,9 @@
 		font-variant:small-caps;
 	}
 
-	tr:nth-child(2n+1) td {
-		background-color: #f6f6f6;	
-	}
-	
-	footer tr:nth-child(2n+1) td, .markup tr:nth-child(2n+1) td {
-        background: none;  
-    }
 
 	th, td {
-		vertical-align: top;
+		/*vertical-align: top;*/
 		padding: 0.7143em 0.5em;
 	}
 	

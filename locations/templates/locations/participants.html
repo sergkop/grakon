@@ -1,7 +1,7 @@
 <div class="gr-descr">
-    <ul class="gr-source-list-slider js-resource-items-visible">
+    <ul class="gr-source-list-slider js-resource-items-visible gr-bb-grey-list">
 {% for entity in pagination_entities %}
-        <li class="gr-mb20">
+        <li class="gr-mb10">
             <p>
                 {% with person=entity.instance %}
                     {% include "participants/person.html" %}
@@ -18,8 +18,6 @@
 {% include "resources/description_popup.html" %}
 
 {% include "elements/paginator.html" %}
+        <li><a href="" class="ym-button">Еще 20</a></li>
     </ul>
-    <div>
-        <a href="" class="ym-button">Еще 20</a>
-    </div>
 </div>
