@@ -14,6 +14,7 @@
 
 * don't reload page after adding resource to idea
 * adding resources on idea page
+* in text description for idea resource - make text grey and remove it on focus
 
 * project-ideas connection (editing ideas of the project)
 

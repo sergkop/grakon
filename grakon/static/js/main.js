@@ -92,7 +92,7 @@ $(function(){
                 "id": idea.attr("instance_id"),
                 "provider": "true",
                 "resource": resource,
-                "description": resource_popup.children("textarea").text()
+                "description": resource_popup.children("textarea").val()
             };
 
             dialog_post_shortcut(ADD_RESOURCE_URL, post_data, function(){
