@@ -1,15 +1,19 @@
-* rewrite disqus_page_params to take instance only
-
-* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
-
 * other option for resources
 * resources editing
 * participants tab on project (show resources)
 
-* adding ideas
-
 * list of participants on project tab
 * counter for people provided resources for project in info
+
+* insert text in forms
+* rules about grakon
+
+* rewrite disqus_page_params to take instance only
+
+* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
+
+* intro field in registration form
+
 
 * project-ideas connection (editing ideas of the project)
 
@@ -43,16 +47,10 @@
 * add task and add project forms should open with initialized location
 
 Yulia:
-    * buttons for removing locations from a list
-    * location participants tab
     * pointer cursor on resource labels
-    * format static pages (about, how to help, partners)
-    * login popup on the main page
-    * in text/html editing widget set background for buttons
-    * inline text editor is not displayed properly when start from empty string
-    * labels with text don't have arrows anymore
     * dialog for adding ideas
-    * save and cancel buttons in title editing
+    * send message dialog
+    * login dialog has scrolling again
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
@@ -64,6 +62,7 @@ Yulia:
 * remove tinymce buttons opening popups
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
+* getContent() should be taken for specific tinymce instances, not active
 -------------------------------------------------------------------------------
 * when mouse is over the date - show exact time in hover
 
@@ -162,8 +161,6 @@ Account activation:
 
 * README
 
-* show count of items in tables
-
 * adding urls about officials, events + universal entity feature for it
 
 Emails:
@@ -210,8 +207,6 @@ Social registration
 * order events according to the date (side list and table)
 
 * decorator to restrict permissions on access to edit/create views
-* process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
-  generalize tabs creation
 
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
@@ -227,9 +222,6 @@ Social registration
 * entity model must contain info on how to display its instances in side panels and tables
 
 * Class to standartize forms features
-
-* start using tables in side panels everywhere
-* rename participants to profiles?
 
 * Introduce FINAL_URL_PREFIX and use
 
@@ -273,8 +265,6 @@ Disqus:
 
 Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
-    * when two buttons are close to each other (e.g. profile edit) - line appears between them
-    * unused skill icon in icons/badges.png
     * share and share_horizontal overlap a lot
 
 Misc:

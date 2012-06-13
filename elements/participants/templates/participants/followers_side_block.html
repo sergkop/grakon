@@ -1,22 +1,14 @@
+<div class="gr-side-item">
+    <h4>Следят:</h4>
+    <p class="dimmed">
+        {% with person_entities=info.participants.follower.entities %}
+            {% include "participants/list.html" %}
+        {% endwith %}
+    </p>
 
-    <div class="gr-side-item">
-        <h4>Следят:</h4>
-        <p class="dimmed">
-            {% if info.participants.follower.entities %}
-                {% with person_entities=info.participants.follower.entities %}
-                    {% include "participants/list.html" %}
-                {% endwith %}
-            {% else %}
-                (пусто)
-            {% endif %}
-        </p>
-
-        {% comment %}
-            <a href="{{ participants_url }}?type=follower">Следят&nbsp;({{ info.participants.follower.count }})</a>
-
-            {% if info.participants.follower.count > LIST_COUNT.follower %}
-                <a href="{{ participants_url }}?type=follower">Показать всеx...</a>
-            {% endif %}
-        {% endcomment %}
-    </div>
-
+    {% comment %}
+        {% if info.participants.follower.count > LIST_COUNT.follower %}
+            <a href="{{ participants_url }}?type=follower">Показать всеx...</a>
+        {% endif %}
+    {% endcomment %}
+</div>

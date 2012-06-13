@@ -23,35 +23,23 @@
         </script>
     </div>
 
-    
     <div class="gr-side-item gr-mb10">
         <h4>Поддержали ресурсами:</h4>
         <p class="dimmed">
-            {% if supporters %}
             {% with person_entities=supporters %}
                 {% include "participants/list.html" %}
             {% endwith %}
-            {% else %}
-                (пусто)
-            {% endif %}
         </p>
     </div>
-    
-
 
     <div class="gr-side-item gr-mb10">
         <h4>Авторы идей:</h4>
         <p class="dimmed">
-            {% if idea_admins %}
-                {% with person_entities=idea_admins %}
-                    {% include "participants/list.html" %}
-                {% endwith %}            
-            {% else %}
-                (пусто)
-            {% endif %}
+            {% with person_entities=idea_admins %}
+                {% include "participants/list.html" %}
+            {% endwith %}
         </p>
     </div>
-
 
     {% include "participants/followers_side_block.html" %}
 

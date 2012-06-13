@@ -1,0 +1,19 @@
+<div id="add_idea_dialog" class="hidden">
+    <form id="add_idea_form" method="post">
+        <input type="text" name="title" value="" />
+        <input class="hidden" name="description" value="" />
+    </form>
+</div>
+
+<script type="text/javascript">
+    create_dialog("add_idea_dialog", 400, 250, "Добавить идею", "Отмена", {
+        "Добавить": dialog_post_shortcut("{% url add_idea %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
+                function(){}, true, "add_idea_form")
+    });
+    $("#add_idea_btn").click(function(){
+        $("#add_idea_dialog").dialog("open");
+
+        // TODO: take related editor, not active
+        $('#add_idea_form [name="description"]').attr("value", tinyMCE.activeEditor.getContent());
+    });
+</script>
