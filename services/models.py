@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.core.signing import Signer
 
 from django.db import models
+
 
 from users.models import Profile
 
@@ -47,3 +50,29 @@ class Email(models.Model):
     def send(self):
         from services.utils.email import send_email_task
         send_email_task(self)
+
+from services.email import send_email
+class Invite(models.Model):
+    sent_user = models.ForeignKey(User, related_name='sent_user')
+    email = models.CharField(max_length=150, db_index=True)
+    sent_time = models.DateTimeField(u'Время отправления приглашения',blank=True,null=True)
+    view_time = models.DateTimeField(u'Время первого визита на сайт',blank=True,null=True)
+    reg_time = models.DateTimeField(u'Время регистраци',blank=True,null=True)
+    reg_user = models.ForeignKey(User, related_name='reg_user',blank=True,null=True)
+
+
+    def token(self):
+        return Signer().sign(self.pk)
+
+    def send_invate(self):
+        ctx = {
+            'sender': self.sent_user.profile,
+            'token': self.token(),
+            }
+        send_email(self.sent_user.get_profile(), u'Приглашение от Вашего друга на grakon.org', 'letters/invite.html',
+            ctx, 'invite', 'noreply')
+        self.sent_time = datetime.now()
+        self.save()
+
+    def __unicode__(self):
+        return '%s invite %s' % (self.sent_user.profile, self.email)

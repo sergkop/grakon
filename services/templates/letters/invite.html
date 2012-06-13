@@ -1,0 +1,33 @@
+{% extends "letters/base.html" %}
+
+{% block content %}
+    <font face="Tahoma, Geneva, sans-serif">Пользователь <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank"><strong>{{ sender }}</strong></a>
+        отправил(а) вам приглашение</font><br /><br />
+
+    Для того, что-бы зарегистрироваться, Вам необходимо перейти по ссылке: <a href="{{ URL_PREFIX }}/register?inv={{ token }}"
+    <table cellpadding="20" cellspacing="0" width="100%" bgcolor="e9eff2">
+        <tr>
+            <td width="330">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <!--td width="58" valign="top"><img src="i/mail/avatar.jpg" /></td-->
+                        <td valign="top" align="left">
+                            <font size="3" face="Tahoma, Geneva, sans-serif"><strong>{{ title }}</strong></font></a>&nbsp;
+                            <br />
+                            <font size="2" face="Tahoma, Geneva, sans-serif">{{ body }}</font>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <!--td>&nbsp;</td>
+            <td valign="top" align="left" width="105">
+                <img src="i/mail/icon-leader.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="85ac14">20</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong><br />
+                <img src="i/mail/icon-offline.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="3290bf">15</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong>
+            </td-->
+        </tr>
+    </table>
+
+
+
+    <div style="border-bottom: 1px #a5a5a5 dotted">&nbsp;</div>
+{% endblock %}
