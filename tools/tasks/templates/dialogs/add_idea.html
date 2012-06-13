@@ -1,12 +1,19 @@
-<div id="add_idea_dialog" class="hidden">
+<div id="add_idea_dialog" class="hidden">    
     <form id="add_idea_form" method="post">
-        <input type="text" name="title" value="" />
+        <div class="gr-mb10 gr-mt10">
+            <label for="id_username">Название идеи <span class="dimmed">(не более 140 символов)</span>:<span class="asteriskField">*</span></label>
+        </div>
+        <textarea name="title" value="" style="width: 100%" rows="3"></textarea>
+        <div class="gr-mb10 gr-mt10">
+            <label for="id_username">Поддержите свою идею ресурсом:</label>
+        </div>
+        <input type="text" style="width: 100%"/>
         <input class="hidden" name="description" value="" />
     </form>
 </div>
 
 <script type="text/javascript">
-    create_dialog("add_idea_dialog", 400, 250, "Добавить идею", "Отмена", {
+    create_dialog("add_idea_dialog", 400, 300, "Добавить идею", "Отмена", {
         "Добавить": dialog_post_shortcut("{% url add_idea %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
                 function(){}, true, "add_idea_form")
     });

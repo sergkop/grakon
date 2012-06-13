@@ -46,6 +46,7 @@
 	tt {
 		font-family: Tahoma, Geneva, sans-serif;
 		resize: none;
+        font-size: .9em;
 	}
 
 	/* (en) base layout gets standard font size 14px */

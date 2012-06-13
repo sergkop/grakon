@@ -82,7 +82,7 @@
       .uniForm .ctrlHolder .textInput:focus,
       .uniForm .ctrlHolder textarea:focus{ outline: none; }
       
-      .uniForm .formHint                    { font-size: .9em; color: #777; }
+      .uniForm .formHint                    { font-size: 1em; color: #777; }
       .uniForm .inlineLabels .formHint      { padding-top: .5em; }
       .uniForm .ctrlHolder.focused .formHint{ color: #333; }
       

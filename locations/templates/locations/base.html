@@ -14,7 +14,7 @@
 
 {% block right_column %}
     {% if tab == "tasks" %}
-        <div align="center" class="gr-mb10">
+        <div align="center" class="gr-mb30">
             <a href="{% url create_task %}" class="gr-follow-button">Добавить задачу</a>
         </div>
     {% endif %}
@@ -26,7 +26,7 @@
     {% endif %}
 
     {% if is_lowest_level %}
-        <div align="center" class="gr-mb10">
+        <div align="center" class="gr-mb30">
             <a id="become_participant_btn" class="gr-follow-button gr-follow-button-blue">
                 {% if is_participant %}Отписаться{% else %}Стать участником{% endif %}
             </a>
