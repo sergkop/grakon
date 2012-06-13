@@ -3,9 +3,11 @@ import cookielib
 from random import choice
 import sys
 import urllib2
+from hashlib import md5
 
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.contenttypes.models import ContentType
 
 # TODO: add ie and chrome
 USER_AGENTS = [

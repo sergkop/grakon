@@ -65,6 +65,7 @@ class Profile(BaseEntityModel):
 
     intro = models.CharField(u'Кратко о себе', max_length=100, blank=True, help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
     about = HTMLField(u'О себе', default='', blank=True)
+    email_subscribe = models.BooleanField(u'Получать уведомления на e-mail', default=True, editable=False)
 
     objects = ProfileManager()
 

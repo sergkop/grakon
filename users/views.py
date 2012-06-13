@@ -1,10 +1,14 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
+from django.template.response import TemplateResponse
+from django.conf import settings
+
+from hashlib import md5
 
 from grakon.utils import authenticated_ajax_post, escape_html
 from elements.participants.models import participant_in
@@ -131,16 +135,35 @@ def send_message(request):
     show_email = form.cleaned_data['show_email']
 
     subject = u'Пользователь %s написал вам сообщение' % unicode(request.profile)
+    
+    unsubscribe_hash = md5('%s_%s_%s' % (recipient.id, recipient.user.date_joined, settings.SECRET_KEY)).hexdigest()
     ctx = {
         'title': title,
         'body': body,
         'show_email': show_email,
         'sender': request.profile,
+        'recipient': recipient,
+        'unsubscribe_hash': unsubscribe_hash,
     }
-    send_email(recipient, subject, 'letters/message.html', ctx, 'message', 'noreply',
+    
+    if recipient.email_subscribe:
+        send_email(recipient, subject, 'letters/message.html', ctx, 'message', 'noreply',
             reply_to=request.profile.user.email if show_email else None)
 
     Message.objects.create(sender=request.profile, receiver=recipient, title=title,
             body=body, show_email=show_email)
 
     return HttpResponse('ok')
+
+def email_unsubscribe(request, username, hash):
+
+    user = get_object_or_404(Profile, user__username=username)
+    unsubscribe_hash = md5('%s_%s_%s' % (user.id, user.user.date_joined, settings.SECRET_KEY)).hexdigest()
+    
+    if not unsubscribe_hash == hash:
+        raise Http404
+    
+    user.email_subscribe = False
+    user.save()
+    
+    return TemplateResponse(request, 'letters/email_unsubscribe.html', {'profile': user})

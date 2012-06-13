@@ -37,5 +37,7 @@
         <img src="{{ URL_PREFIX }}{{ STATIC_URL }}images/letters/btn-respond-to-message.png" border="0" />
     </a>
 
+    <p style="font-size:11px;">Чтобы отказаться от уведомлений, пожалуйста <a href="{{ URL_PREFIX }}{% url email_unsubscribe recipient.user.username unsubscribe_hash %}">нажмите тут</a></p>
+
     <div style="border-bottom: 1px #a5a5a5 dotted">&nbsp;</div>
 {% endblock %}
