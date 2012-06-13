@@ -67,7 +67,7 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         if add:
             entity_resource, created = self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
-                    resource=resource, provider=provider, defaults={'description': description})
+                    entity_id=entity.id, resource=resource, provider=provider, defaults={'description': description})
             if not created:
                 entity_resource.description = description
                 entity_resource.save()

@@ -54,6 +54,57 @@ $(function(){
         // TODO: is it correct?
         $(".js-resource-items span").removeClass("gr-resource-item-active");
     });
+
+    // Adding resources to idea
+    $(".js-add").click(function(){
+        var button = $(this);
+        var idea = button.parent().parent().parent().parent();
+        
+        var resource_popup = $("#add_resource_popup");
+
+        var select = resource_popup.children("select");
+        if (select.children("option").length == 0){
+            select.append($("<option/>").text("Выбрать ресурс").attr("value", ""));
+            _.each(RESOURCES, function(resource){
+                select.append($("<option/>").text(resource[1]).attr("value", resource[0]));
+            });
+        }
+
+        var dx = (button.offset().left+button.width()/2) - (resource_popup.width()/2);
+        var dy = button.offset().top + button.height() + 10;
+        resource_popup.css("top", dy).css("left", dx).show();
+
+        resource_popup.show();
+
+        //$(".gr-hover-popup").hide();
+        //$(".js-resource-items span").removeClass("gr-resource-item-active");
+
+        $("#add_idea_resource_btn").click(function(){
+            var resource = resource_popup.children("select").val();
+
+            if (resource == ""){
+                alert("Необходимо выбрать ресурс");
+                return;
+            }
+
+            var post_data = {
+                "ct": idea.attr("ct"),
+                "id": idea.attr("instance_id"),
+                "provider": "true",
+                "resource": resource,
+                "description": resource_popup.children("textarea").text()
+            };
+
+            dialog_post_shortcut(ADD_RESOURCE_URL, post_data, function(){
+                $("#add_resource_popup").hide();
+            }, true)();
+        });
+    });
+
+    // Closing resource adding popup
+    $(".js-close").click(function(){
+        $("#add_resource_popup").hide();
+    });
 });
 
 // Default tipsy settings

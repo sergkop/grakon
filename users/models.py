@@ -58,12 +58,12 @@ class Profile(BaseEntityModel):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=30, db_index=True)
 
-    first_name = models.CharField(u'Имя', max_length=40)
-    last_name = models.CharField(u'Фамилия', max_length=40)
+    first_name = models.CharField(u'Имя', max_length=40, help_text=u'на русском языке')
+    last_name = models.CharField(u'Фамилия', max_length=40, help_text=u'на русском языке')
     show_name = models.BooleanField(u'Показывать настоящее имя', default=True,
             help_text=u'Снимите эту галку, чтобы скрыть свое имя от других пользователей')
 
-    intro = models.CharField(u'Кратко о себе', max_length=100, blank=True)
+    intro = models.CharField(u'Кратко о себе', max_length=100, blank=True, help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
     about = HTMLField(u'О себе', default='', blank=True)
 
     objects = ProfileManager()

@@ -1,19 +1,19 @@
+* list of participants on project tab
+* counter for people provided resources for project in info
+
+* rewrite disqus_page_params to take instance only
+
+
+* descriptions of html fields in forms are not shown (show inside field as grey text)
+
+* remove cross from resource labels with text
+
 * other option for resources
 * resources editing
 * participants tab on project (show resources)
 
-* list of participants on project tab
-* counter for people provided resources for project in info
-
-* insert text in forms
-* rules about grakon
-
-* rewrite disqus_page_params to take instance only
-
-* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
-
-* intro field in registration form
-
+* don't reload page after adding resource to idea
+* adding resources on idea page
 
 * project-ideas connection (editing ideas of the project)
 

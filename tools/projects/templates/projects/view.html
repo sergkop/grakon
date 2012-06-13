@@ -19,20 +19,14 @@
         {% endwith %}
     {% endif %}
 
-    {% if project.stages or is_admin %}
-        <h5>Этапы:{% with field="stages" html=project.stages %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
-            {% include "elements/html_block.html" %}
-        {% endwith %}
-    {% endif %}
-
     {% if project.about or is_admin %}
-        <h5>Суть:{% with field="about" html=project.about %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
+        <h5>План:{% with field="about" html=project.about %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
             {% include "elements/html_block.html" %}
         {% endwith %}
     {% endif %}
 
     {% if project.team or is_admin %}
-        <h5>Кто уже помог проекту:{% with field="team" html=project.team %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
+        <h5>Команда:{% with field="team" html=project.team %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
             {% include "elements/html_block.html" %}
         {% endwith %}
     {% endif %}

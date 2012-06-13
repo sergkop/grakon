@@ -13,13 +13,17 @@
 {% endblock %}
 
 {% block right_column %}
-    <div align="center" class="gr-mb10">
-        <a href="{% url create_task %}" class="gr-follow-button">Добавить задачу</a>
-    </div>
+    {% if tab == "tasks" %}
+        <div align="center" class="gr-mb10">
+            <a href="{% url create_task %}" class="gr-follow-button">Добавить задачу</a>
+        </div>
+    {% endif %}
 
-    <div align="center" class="gr-mb30">
-        <a href="{% url create_project %}" class="gr-follow-button">Добавить проект</a>
-    </div>
+    {% if tab == "projects" %}
+        <div align="center" class="gr-mb30">
+            <a href="{% url create_project %}" class="gr-follow-button">Добавить проект</a>
+        </div>
+    {% endif %}
 
     {% if is_lowest_level %}
         <div align="center" class="gr-mb10">

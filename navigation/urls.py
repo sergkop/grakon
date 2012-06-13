@@ -30,6 +30,7 @@ def static_tabs_urls(base_template, tabs_short):
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/about/base.html', [
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
+        ('rules', u'Правила площадки', 'static_pages/about/rules.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
     ])
 )

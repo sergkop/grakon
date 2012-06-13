@@ -36,7 +36,7 @@ class TaskManager(BaseEntityManager):
 # TODO: introduce choices for types
 @entity_class(['locations', 'participants', 'posts'])
 class Task(BaseEntityModel):
-    title = models.CharField(u'Формулировка', max_length=250)
+    title = models.CharField(u'Формулировка', max_length=250, help_text=u'краткая формулировка гражданской задачи в виде вопроса. Лучше всего начать ее со слова "как", например: "как быстро и недорого обустроить свой двор?"')
     about = HTMLField(u'Описание', blank=True)
 
     objects = TaskManager()
