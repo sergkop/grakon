@@ -9,6 +9,8 @@
 * reimplement popup windows
 
 
+* follow button in lists of projects and tasks
+
 * rewrite disqus_page_params to take instance only
 
 * popup before admin removes project resource
@@ -25,8 +27,6 @@
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
 * deactivate disqus sso
-
-* follow button in lists of projects and tasks
 
 * share buttons
 
