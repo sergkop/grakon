@@ -1,25 +1,30 @@
+* provide resources for project
 * list of participants on project tab
 * counter for people provided resources for project in info
 
+* in text description for idea resource - make text grey and remove it on focus
+
+* adding resources on idea page
+
+* reimplement popup windows
+
+
 * rewrite disqus_page_params to take instance only
 
+* popup before admin removes project resource
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
 
-* remove cross from resource labels with text
-
 * other option for resources
 * resources editing
-* participants tab on project (show resources)
 
 * don't reload page after adding resource to idea
-* adding resources on idea page
-* in text description for idea resource - make text grey and remove it on focus
 
 * project-ideas connection (editing ideas of the project)
 
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
+* deactivate disqus sso
 
 * follow button in lists of projects and tasks
 
@@ -65,6 +70,8 @@ Yulia:
 * rewrite tinymce widget
 * getContent() should be taken for specific tinymce instances, not active
 -------------------------------------------------------------------------------
+* editing resources for idea
+
 * when mouse is over the date - show exact time in hover
 
 * can admin unfollow an entity?

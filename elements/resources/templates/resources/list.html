@@ -1,3 +1,6 @@
 {% for resource in resources %}
-    <span class="gr-resource-item {% if resource.description %}gr-resource-item-active{% endif %}" descr="{{ resource.description }}">{{ resource.title }}<i>&nbsp;</i><b>&nbsp;</b></span>
+    <span class="gr-resource-item {% if resource.description %}gr-resource-item-active{% endif %}" name="{{ resource.name }}" descr="{{ resource.description }}">
+        {{ resource.title }}<i>&nbsp;</i>
+        {% if resource_editable %}<b class="js-remove-resource">&nbsp;</b>{% endif %}
+    </span>
 {% endfor %}

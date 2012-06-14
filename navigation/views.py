@@ -4,6 +4,7 @@ from django.template.response import TemplateResponse
 from django.views.generic.base import TemplateView
 
 from elements.models import ENTITIES_MODELS
+from elements.resources.models import RESOURCE_DICT
 from locations.models import Location
 from locations.views import BaseLocationView
 from navigation.forms import FeedbackForm
@@ -25,6 +26,7 @@ def main(request):
         'is_main': True,
         'country_url': country.get_absolute_url(),
         'lists_data': data,
+        'RESOURCE_DICT': RESOURCE_DICT,
     }
     return render_to_response('main.html', context_instance=RequestContext(request, ctx))
 

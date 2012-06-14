@@ -12,7 +12,13 @@
                     <li>
                         <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
                         {% with resources=provider_resources.data %}
-                            {% include "resources/list.html" %}
+                            {% if provider_resources.provider.instance == request.profile %}
+                                {% with resource_editable="true" %}
+                                    {% include "resources/list.html" %}
+                                {% endwith %}
+                            {% else %}
+                                {% include "resources/list.html" %}
+                            {% endif %}
                         {% endwith %}
                     </li>
                 {% endfor %}
@@ -36,8 +42,8 @@
             <span class="dimmed gr-pseudolink js-projects">Проекты: {{ info.projects.count }}</span>
         {% endif %}
 
-        <span class="gr-bullet">&nbsp;</span>
-        <a href="" class="highlighted"><strong>Связать с проектом</strong></a>
+        <!--span class="gr-bullet">&nbsp;</span>
+        <a href="" class="highlighted"><strong>Связать с проектом</strong></a-->
 
         <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.time|date:"j b Y H:i" }}</a></span>
     </div>

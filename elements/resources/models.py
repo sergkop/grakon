@@ -53,7 +53,12 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         # TODO: sort by provider and by resource
         for id, resource, descr, provider_id in resources_data:
-            resource_data = {'name': resource, 'title': RESOURCE_DICT[resource], 'description': descr}
+            resource_data = {'name': resource, 'description': descr}
+            if model.entity_name == 'projects':
+                resource_data['title'] = resource
+            else:
+                resource_data['title'] = RESOURCE_DICT[resource]
+
             res[id].setdefault(provider_id if provider_id else 'none', {'data': []})['data'].append(resource_data)
 
         return res
@@ -62,8 +67,9 @@ class EntityResourceManager(BaseEntityPropertyManager):
         if self.model.feature not in type(entity).features:
             return
 
-        if resource not in RESOURCE_DICT.keys():
-            return
+        if type(entity).entity_name != 'projects':
+            if resource not in RESOURCE_DICT.keys():
+                return
 
         if add:
             entity_resource, created = self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
@@ -98,7 +104,8 @@ class EntityResourceManager(BaseEntityPropertyManager):
             return
 
         # Filter out resources not from the list
-        resources = set(RESOURCE_DICT.keys()) & set(resources)
+        if type(entity).entity_name != 'projects':
+            resources = set(RESOURCE_DICT.keys()) & set(resources)
 
         entity_resources = list(getattr(entity, self.model.feature).all())
         new_resources = resources - set(er.resource for er in entity_resources)
@@ -123,7 +130,7 @@ def update_resources(entity, resources):
 # TODO: add 'other' option for resource type
 @feature_model
 class EntityResource(BaseEntityProperty):
-    resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
+    resource = models.CharField(u'Ресурс', max_length=100, db_index=True)
     description = models.CharField(u'Описание', max_length=140, blank=True)
     provider = models.ForeignKey('users.Profile', blank=True, null=True, related_name='provided_resources')
 

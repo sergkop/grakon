@@ -8,7 +8,7 @@ class ProjectManager(BaseEntityManager):
     def get_info(self, data, ids):
         pass
 
-@entity_class(['locations', 'participants'])
+@entity_class(['locations', 'participants', 'resources'])
 class Project(BaseEntityModel):
     title = models.CharField(u'Формулировка', max_length=250, help_text=u'краткая формулировка сути проекта в одном предложении, например: "Постройка футбольной коробки во дворе домов таких-то"')
     deadline = models.CharField(u'Дедлайн', max_length=250, blank=True, help_text=u'дата, к которой необходимо собрать ресурсы на проект. Лучше не ставить ее слишком близко или далеко. Хороший диапазон от недели до месяца.')

@@ -20,16 +20,84 @@
     <div class="gr-side-item gr-mb15">
         <h4>Требуется:</h4>
 
-        <div class="gr-resource-needs">
-            <h2>5 000 р</h2>
-            <p>Описание , для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
-        </div>
+        {% for resource in info.resources.none.data %}
+            <div class="gr-resource-needs{% if not is_admin %} gr-resource-highlighted{% endif %}">
+                {% if is_admin %}
+                    <div class="gr-close" onclick="remove_project_resource({{ info.ct }}, {{ info.instance.id }}, '{{ resource.name }}')">&nbsp;</div>
+                {% else %}
+                    <i class="gr-add">&nbsp;</i>
 
-        <div class="gr-resource-needs">
-            <h2>Машина: 2</h2>
-            <p>Описани, для чего нужны деньги, Film Festival, Cape Fear Film Festival, Carrboro Film Festival, and 42 annual USA Film.</p>
-        </div>
+                    <div class="gr-small-popup ym-form js-provide-resource-popup">
+                        <div class="gr-close js-close">&nbsp;</div>
+                        <div class="ym-clearfix">&nbsp;</div>
+
+                        <h3 class="highlight">{{ resource.name }}</h3>
+                        <textarea style="width:100%" rows="5">Описание (не более 140 символов)</textarea> 
+                        <div align="right" class="gr-mt5">
+                            <!--span class="highlighted gr-fl">100</span-->
+                            <span class="highlight fr js-provide-resource-btn">Предоставить</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <h2>{{ resource.name }}</h2>
+                <p>{{ resource.description }}</p>
+                {% if is_admin %}
+                    <i class="gr-editing">&nbsp;</i>
+
+                    {% comment %}
+                    <script type="text/javascript">
+                        $(function(){
+                            new TextFieldEditor({el: $("#{{ field }}_text"), edit_btn: $("#{{ field }}_edit_btn"),
+                                    add_btn: $("#{{ field }}_add_btn"),
+                                    ct: {{ info.ct }}, entity_id: {{ info.instance.id }},
+                                    field: "{{ field }}", type: "text"});
+                        });
+                    </script>
+                    {% endcomment %}
+                {% endif %}
+
+                {% if request.user.is_authenticated %}
+                    <script type="text/javascript">
+                        $(".gr-resource-highlighted").click(function(){
+                            var popup = $(this).children(".js-provide-resource-popup");
+                            popup.show();
+
+                            // TODO: this is a hack
+                            popup.find(".js-provide-resource-btn").click(function(){
+                                dialog_post_shortcut(ADD_RESOURCE_URL, {
+                                    "ct": {{ info.ct }},
+                                    "id": {{ info.instance.id }},
+                                    "resource": popup.children("h3").text(),
+                                    "provider": "true"
+                                }, function(){}, false)();
+                            });
+                        });
+                    </script>
+                {% else %}
+                    <script type="text/javascript">
+                        $(".gr-resource-highlighted").click(login_dialog_init);
+                    </script>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
+
+    {% if is_admin %}
+        <div class="gr-side-item">
+            <span class="ym-button gr-green-button">Добавить ресурс</span>
+
+            <div id="add_project_resource_popup" class="gr-small-popup ym-form">
+                <div class="gr-close js-close">&nbsp;</div>
+                <div class="ym-clearfix">&nbsp;</div>
+                <input type="text" value="Название ресурса" style="width:100%" class="gr-mb10 gr-mt10"/>
+                <textarea style="width:100%" rows="5">Описание (не более 140 символов)</textarea>
+                <div align="right" class="gr-mt5">
+                    <span id="add_project_resource_btn" class="highlight" onclick="add_project_resource({{ info.ct }}, {{ info.instance.id }})">Добавить</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% include "disqus/counter.html" %}
 {% endblock %}
