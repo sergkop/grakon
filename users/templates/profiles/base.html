@@ -20,7 +20,7 @@
 
     <div class="gr-mb15">
         <h4>Контакты:</h4>
-        <p>
+        <p class="dimmed">
             {% with person_entities=info.contacts.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}
@@ -29,7 +29,7 @@
 
     <div class="gr-mb15">
         <h4>Добавлен в контакты:</h4>
-        <p>
+        <p class="dimmed">
             {% with person_entities=info.participants.follower.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}

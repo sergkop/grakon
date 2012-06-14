@@ -1,25 +1,33 @@
 <div class="gr-descr">
-    <h5 class="gr-mt0">Автор:</h5>
-    <div class="gr-mb10">
-        {% with person=admin %}
-            {% include "participants/person.html" %}
-        {% endwith %}
-    </div>
+    <div class="gr-ideas-list">
+        <div class="gr-ideas-item">
+            <h5 class="gr-mt0">Автор:</h5>
+            <div class="gr-mb10">
+                {% with person=admin %}
+                    {% include "participants/person.html" %}
+                {% endwith %}
+            </div>
+        </div>
 
-    <h5>Готовы помочь:</h5>
-    <ul class="gr-source-list-slider  js-resource-items-visible">
-        <li><a href="">Shweta Karwa</a> <span class="gr-resource-item gr-resource-item-active">Деньги</span>  <span class="gr-resource-item">Время</span>   <span class="gr-resource-item">Машина</span></li>
-        <li><a href="">Shweta Karwa</a> <span class="gr-resource-item">Деньги</span>  <span class="gr-resource-item gr-resource-item-active">Время</span>   <span class="gr-resource-item">Машина</span></li>
-    </ul>
-    <div style="top: 89px; left: 35px;" class="gr-small-popup gr-hover-popup">
-        <i>&nbsp;</i>
-        <div>в мае я свободна только по вторникам, после 13:00, после мая - в любое время</div>
-    </div>
+        <div class="gr-ideas-item">    
+            <h5>Готовы помочь:</h5>
+            <ul class="gr-source-list-slider  js-resource-items-visible">
+                <li><a href="">Shweta Karwa</a> <span class="gr-resource-item gr-resource-item-active">Деньги<i>&nbsp;</i></span>  <span class="gr-resource-item">Время<i>&nbsp;</i></span>   <span class="gr-resource-item">Машина</span><i>&nbsp;</i></li>
+                <li><a href="">Shweta Karwa</a> <span class="gr-resource-item">Деньги<i>&nbsp;</i></span>  <span class="gr-resource-item gr-resource-item-active">Время<i>&nbsp;</i></span>   <span class="gr-resource-item">Машина<i>&nbsp;</i></span></li>
+            </ul>
+            <div style="top: 89px; left: 35px;" class="gr-small-popup gr-hover-popup">
+                <i>&nbsp;</i>
+                <div>в мае я свободна только по вторникам, после 13:00, после мая - в любое время</div>
+            </div>
+        </div>
 
-    <h5>Следят:</h5>
-    <div>
-        {% with person_entities=info.participants.follower.entities %}
-            {% include "participants/list.html" %}
-        {% endwith %}
+        <div class="gr-ideas-item">    
+            <h5>Следят:</h5>
+            <div class="dimmed">
+                {% with person_entities=info.participants.follower.entities %}
+                    {% include "participants/list.html" %}
+                {% endwith %}
+            </div>
+        </div>
     </div>
 </div>
