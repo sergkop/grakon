@@ -3,3 +3,9 @@
         {% include "ideas/item.html" %}
     {% endfor %}
 </div>
+
+{% include "resources/description_popup.html" %}
+
+{% if request.user.is_authenticated %}
+    {% include "ideas/add_resources.html" %}
+{% endif %}

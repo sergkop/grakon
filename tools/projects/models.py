@@ -27,6 +27,16 @@ class Project(BaseEntityModel):
 
     disqus_category = 'projects'
 
+    follow_button = {
+        'role': 'follower',
+        'cancel_msg': u'Вы хотите отписаться от новостей об этом проекте?',
+        'cancel_btn': u'Отписаться',
+        'cancel_btn_long': u'Отписаться',
+        'confirm_msg': u'Вы хотите следить за этим проектом?',
+        'confirm_btn': u'Следить',
+        'confirm_btn_long': u'Следить за проектом',
+    }
+
     def disqus_id(self):
         return 'project/' + str(self.id)
 

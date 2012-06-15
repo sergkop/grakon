@@ -51,6 +51,17 @@ class Task(BaseEntityModel):
 
     roles = ['admin', 'follower']
 
+    follow_button = {
+        'role': 'follower',
+        'cancel_msg': u'Вы хотите отписаться от новостей об этой задаче?',
+        'cancel_btn': u'Отписаться',
+        'cancel_btn_long': u'Отписаться',
+        'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
+        'confirm_btn': u'Следить',
+        'confirm_btn_long': u'Следить за задачей',
+        #'btn_class': 'bold',
+    }
+
     disqus_category = 'tasks'
 
     def disqus_id(self):

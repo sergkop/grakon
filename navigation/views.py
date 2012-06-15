@@ -1,14 +1,11 @@
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from django.template.response import TemplateResponse
-from django.views.generic.base import TemplateView
 
+from elements.locations.utils import subregion_list
 from elements.models import ENTITIES_MODELS
 from elements.resources.models import RESOURCE_DICT
 from locations.models import Location
-from locations.views import BaseLocationView
 from navigation.forms import FeedbackForm
-from services.cache import cache_view
 
 def main(request):
     country = Location.objects.country()
@@ -37,7 +34,13 @@ def static_page(request, **kwargs):
     kwargs must contain the following keys: 'tab', 'template', 'tabs'.
     kwargs['tabs']=[(name, url, template, css_class), ...]
     """
-    return render_to_response(kwargs['template'], context_instance=RequestContext(request, kwargs))
+    location = Location.objects.country()
+    ctx = {
+        'location': location,
+        'subregions': subregion_list(location),
+    }
+    ctx.update(kwargs)
+    return render_to_response(kwargs['template'], context_instance=RequestContext(request, ctx))
 
 def feedback(request, **kwargs):
     if request.method == 'POST':
@@ -48,10 +51,9 @@ def feedback(request, **kwargs):
     else:
         form = FeedbackForm(request)
 
-    ctx = {'form': form}
+    ctx = {
+        'form': form,
+        'template': 'feedback/feedback.html',
+    }
     ctx.update(kwargs)
-    return TemplateResponse(request, 'static_pages/how_to_help/base.html', ctx)
-
-def feedback_thanks(request):
-    return render_to_response('feedback/thanks.html',
-            context_instance=RequestContext(request, {}))
+    return static_page(request, **ctx)

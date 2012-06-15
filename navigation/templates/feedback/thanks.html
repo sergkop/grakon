@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "static_pages/no_tabs_base.html" %}
 
 {% block title %}Обратная связь{% endblock %}
 
-{% block content %}
+{% block top %}
     <h1>Обратная связь</h1>
-    
-    <div class="gr-content">
-        <p>Ваше сообщение отправлено, спасибо!</p>
-        <p>Мы регулярно читаем сообщения и свяжемся с вами при необходимости.</p>
-    </div>
+{% endblock %}
+
+{% block content %}
+    <p>Ваше сообщение отправлено, спасибо!</p>
+    <p>Мы регулярно читаем сообщения и свяжемся с вами при необходимости.</p>
 {% endblock %}

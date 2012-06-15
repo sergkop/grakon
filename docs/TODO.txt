@@ -1,19 +1,20 @@
+* adding resources on idea page
+
+* resources in adding idea popup + prohibit empty description
+
+
 * provide resources for project
 * list of participants on project tab
 * counter for people provided resources for project in info
 
-* in text description for idea resource - make text grey and remove it on focus
-
-* adding resources on idea page
-
 * reimplement popup windows
-
-
-* follow button in lists of projects and tasks
-
-* rewrite disqus_page_params to take instance only
-
 * popup before admin removes project resource
+
+
+
+* hide follow/unfollow button for admin
+
+
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
 
@@ -22,18 +23,23 @@
 
 * don't reload page after adding resource to idea
 
-* project-ideas connection (editing ideas of the project)
+* idea title is not always a link (link was removed)
+
+* share buttons
 
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
 * deactivate disqus sso
-
-* share buttons
-
-* idea title is not always a link
-* link to idea page with time - drop time, change color
+* rewrite disqus_page_params to take instance only
 
 * resources editor on profile page (combine with editor in registration form)
+
+
+* count down counter under resource description
+
+* project-ideas connection (editing ideas of the project)
+
+
 
 * use entity_base_view in location
 
@@ -53,10 +59,11 @@
 * add task and add project forms should open with initialized location
 
 Yulia:
-    * pointer cursor on resource labels
-    * dialog for adding ideas
     * send message dialog
-    * login dialog has scrolling again
+    * feedback form formatting
+    * in chrome human icon above ideas on task page has blue top line
+    * top part of tabs is not clickable
+    * help text against location select in task create form is below widget
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 

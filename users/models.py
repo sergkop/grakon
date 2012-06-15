@@ -78,6 +78,16 @@ class Profile(BaseEntityModel):
 
     roles = ['follower']
 
+    follow_button = {
+        'role': 'follower',
+        'cancel_msg': u'Вы хотите удалить этого пользователя из списка контактов?',
+        'cancel_btn': u'Удалить',
+        'cancel_btn_long': u'Удалить из контактов',
+        'confirm_msg': u'Вы хотите добавить этого пользователя в список контактов?',
+        'confirm_btn': u'Добавить',
+        'confirm_btn_long': u'Добавить в контакты',
+    }
+
     def calc_rating(self):
         pass # TODO: implement it
 

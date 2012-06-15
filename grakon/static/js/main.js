@@ -2,6 +2,8 @@ $(function(){
     //$("form.uniForm").uniform();
     //$(".gr-side-item h4 i, .gr-login-info a").tipsy({gravity: 'n', opacity: .8});
 
+    $("input[placeholder], textarea[placeholder]").placeholder();
+
     // Show/hide resources provided for idea
     $(".js-resources-list").click(function(){
         var slider = $(this).parent().parent();
@@ -56,6 +58,11 @@ $(function(){
 
     // Adding resources to idea
     $(".js-add").click(function(){
+        if (USERNAME==""){
+            login_dialog_init();
+            return;
+        }
+
         var button = $(this);
         var idea = button.parent().parent().parent().parent();
 

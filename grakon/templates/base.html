@@ -59,7 +59,7 @@
                         <div class="gr-login-user">
                             <span>&nbsp;</span>
                             <div class="gr-login-user-sub">
-                                <a href="">Настройки</a>
+                                <!--a href="">Настройки</a-->
                                 {% if request.profile_info.locations.main_id %}<a href="{% url location_wall request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                                 <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                             </div>

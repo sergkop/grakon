@@ -47,15 +47,6 @@ class BaseTaskView(object):
 
         ctx.update({
             'task': self.entity,
-            'follow_button': {
-                'cancel_msg': u'Вы хотите отписаться от новостей об этой задаче?',
-                'cancel_btn': u'Отписаться',
-                'cancel_btn_long': u'Отписаться',
-                'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
-                'confirm_btn': u'Следить',
-                'confirm_btn_long': u'Следить за задачей',
-                'btn_class': 'bold',
-            },
             'location': location,
             'subregions': subregion_list(location),
 

@@ -22,9 +22,20 @@
                     <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
 
                     <span class="gr-bullet">&nbsp;</span>
-                    <a href="" class="highlighted"><strong>Следить за проектом</strong></a>
 
-                    <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y" }}</span>
+                    {% if request.user.is_authenticated %}
+                        {% if info.instance.id in request.profile_info.projects.follower.ids %}
+                            {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
+                                {% include "participants/participate_button.html" %}
+                            {% endwith %}
+                        {% else %}
+                            {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
+                                {% include "participants/participate_button.html" %}
+                            {% endwith %}
+                        {% endif %}
+                    {% endif %}
+
+                    <span class="gr-fr dimmed">{{ info.instance.time|date:"j F Y" }}</span>
                 </div>
                 <div class="gr-slider js-follow-content">
                     <div class="gr-close js-slide-close">&nbsp;</div>
@@ -38,14 +49,16 @@
         {% endfor %}
     </div>
 {% else %}
-    <div class="gr-blank">
-        <i class="gr-left-icon gr-left-icon-list">&nbsp;</i>
-        <i class="gr-right-icon">&nbsp;</i>
-        <h2>Благоустройство нашего двора</h2>
-        <p>
-            <strong class="highlight">Дата:</strong> <span class="xsmall">следующая суббота</span><br />
-            <strong class="highlight">Требуются:</strong> <span class="xsmall">волонтеры, саженцы, лопаты</span>
-        </p>
-        <p><a href="{% url create_project %}">Если у тебя есть идея и желание ее реализовать но не хватает ресурсов, ты просто можешь создать свой проект</a></p>
-    </div>
+    {% if is_location_page %}
+        <div class="gr-blank">
+            <i class="gr-left-icon gr-left-icon-list">&nbsp;</i>
+            <i class="gr-right-icon">&nbsp;</i>
+            <h2>Благоустройство нашего двора</h2>
+            <p>
+                <strong class="highlight">Дата:</strong> <span class="xsmall">следующая суббота</span><br />
+                <strong class="highlight">Требуются:</strong> <span class="xsmall">волонтеры, саженцы, лопаты</span>
+            </p>
+            <p><a href="{% url create_project %}">Если у тебя есть идея и желание ее реализовать но не хватает ресурсов, ты просто можешь создать свой проект</a></p>
+        </div>
+    {% endif %}
 {% endif %}

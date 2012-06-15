@@ -3,7 +3,7 @@
         <div class="gr-slider gr-slider-inactive">
             <div class="gr-close js-close-inactive">&nbsp;</div>
             <div class="gr-add gr-idea-selected">
-                <span href="" class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
+                <span class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
                 <span class="js-resources-list">{{ info.resources|length }}</span>
             </div>
 
@@ -25,12 +25,12 @@
             </ul>
         </div>
 
-        <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
-        <p class="small">
+        <h3>{{ info.instance.title }}</h3>
+        <div class="gr-mb10">
             {% with person=info.participants.admin.entities.0.instance %}
                 {% include "participants/person.html" %}
             {% endwith %}
-        </p>
+        </div>
         <div>{{ info.instance.description|safe }}</div>
     </div>
 
@@ -45,7 +45,7 @@
         <!--span class="gr-bullet">&nbsp;</span>
         <a href="" class="highlighted"><strong>Связать с проектом</strong></a-->
 
-        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}" class="dimmed">{{ info.instance.time|date:"j b Y" }}</a></span>
+        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}" class="dimmed">{{ info.instance.time|date:"j F Y" }}</a></span>
     </div>
 
     <div class="gr-slider js-projects-content">

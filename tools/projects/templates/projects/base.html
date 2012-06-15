@@ -14,7 +14,9 @@
 
 {% block right_column %}
     <div align="center" class="gr-mb20">
-        {% include "participants/follower_button.html" %}
+        {% with is_participant=is_follower button=project.follow_button btn_class="gr-follow-button" %}
+            {% include "participants/participate_button.html" %}
+        {% endwith %}
     </div>
 
     <div class="gr-side-item gr-mb15">
@@ -32,7 +34,7 @@
                         <div class="ym-clearfix">&nbsp;</div>
 
                         <h3 class="highlight">{{ resource.name }}</h3>
-                        <textarea style="width:100%" rows="5">Описание (не более 140 символов)</textarea> 
+                        <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)"></textarea> 
                         <div align="right" class="gr-mt5">
                             <!--span class="highlighted gr-fl">100</span-->
                             <span class="highlight fr js-provide-resource-btn">Предоставить</span>
@@ -85,13 +87,13 @@
 
     {% if is_admin %}
         <div class="gr-side-item">
-            <span class="ym-button gr-green-button">Добавить ресурс</span>
+            <span class="ym-button gr-green-button js-open-add-resource-button">Добавить ресурс</span>
 
             <div id="add_project_resource_popup" class="gr-small-popup ym-form">
                 <div class="gr-close js-close">&nbsp;</div>
                 <div class="ym-clearfix">&nbsp;</div>
-                <input type="text" value="Название ресурса" style="width:100%" class="gr-mb10 gr-mt10"/>
-                <textarea style="width:100%" rows="5">Описание (не более 140 символов)</textarea>
+                <input type="text" placeholder="Название ресурса" style="width:100%" class="gr-mb10 gr-mt10"/>
+                <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)"></textarea>
                 <div align="right" class="gr-mt5">
                     <span id="add_project_resource_btn" class="highlight" onclick="add_project_resource({{ info.ct }}, {{ info.instance.id }})">Добавить</span>
                 </div>

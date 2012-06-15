@@ -7,8 +7,8 @@ input[type=text], input[type=password], textarea {border: 1px solid #eee; paddin
 	.gr-breadcrumbs li.on a {color: #fff;}
 
 /*Общие стили для постоянного использования*/
-.gr-fr {float: right;}
-.gr-fl {float: left;}
+.gr-fr {float: right !important;}
+.gr-fl {float: left !important;}
 .gr-dt {display: table;}
 .gr-mt0 {margin-top: 0 !important;}
 .gr-mt5 {margin-top: .5em !important;}

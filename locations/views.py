@@ -58,6 +58,7 @@ class BaseLocationView(object):
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
             'is_lowest_level': location.is_lowest_level(),
+            'is_location_page': True,
         })
         ctx.update(self.update_context())
         ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))

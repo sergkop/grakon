@@ -15,12 +15,15 @@
 {% block right_column %}
     {% if not is_admin %}
         {% include "dialogs/send_message.html" %}
-        {% include "participants/follower_button.html" %}
+
+        {% with is_participant=is_follower button=profile.follow_button btn_class="ym-button gr-green-button gr-mb10" %}
+            {% include "participants/participate_button.html" %}
+        {% endwith %}
     {% endif %}
 
     <div class="gr-mb15">
         <h4>Контакты:</h4>
-        <p>
+        <p class="dimmed">
             {% with person_entities=info.contacts.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}
@@ -29,7 +32,7 @@
 
     <div class="gr-mb15">
         <h4>Добавлен в контакты:</h4>
-        <p>
+        <p class="dimmed">
             {% with person_entities=info.participants.follower.entities %}
                 {% include "participants/list.html" %}
             {% endwith %}
