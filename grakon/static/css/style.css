@@ -42,7 +42,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 /*Sidebars*/
 .gr-side-item {position: relative;} 
 
-.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add.png) -3px -80px no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px;}
+.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add.png) -3px -80px no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px; cursor: pointer;}
 	.gr-add-icon:hover {text-decoration: none; border-bottom: none !important;}	
 	.gr-ideas-item .gr-idea-selected span.gr-add-icon {background-position: -3px 0;}
 	

@@ -9,7 +9,7 @@ $(function(){
         var slider = $(this).parent().parent();
         slider.toggleClass("gr-slider-inactive");
         slider.children(".gr-source-list-slider").slideToggle(100);
-    })
+    });
 
     // Show/hide popups with descriptions of idea resources
     $(".gr-resource-item-active")
@@ -127,7 +127,9 @@ $(function(){
             "provider": "true"
         }, function(){
             label.remove();
-        }, false)();
+            $(".gr-small-popup").hide();
+            alert("Ваш ресурс удален");
+        }, true)();
     });
 });
 
@@ -195,6 +197,13 @@ function dialog_post_shortcut(url, params, on_success, reload_page, form_id){
 function login_dialog_init(){
     $("#login_dialog").dialog("open");
     $('#login_form [name="csrfmiddlewaretoken"]').val(get_cookie("csrftoken"));
+}
+
+function select_resources(input){
+    input.attr("data-placeholder", "Выберите навыки и ресурсы");
+    if (!input.hasClass("chzn-done"))
+        input.chosen();
+    input.trigger("liszt:updated");
 }
 
 // Widget for choosing location path using several select elements
@@ -321,16 +330,16 @@ var LocationEditor = Backbone.View.extend({
         editor.$el.addClass("gr-editor");
 
         // Add cancel and save buttons
-        var cancel_btn = $("<span/>").text("Отмена")
-                .addClass("gr-editor-btn")
-                .click(function(){editor.recover();});
-        editor.$el.after(cancel_btn);
+        //var cancel_btn = $("<span/>").text("Отмена")
+        //        .addClass("gr-editor-btn")
+        //        .click(function(){editor.recover();});
+        //editor.$el.after(cancel_btn);
 
-        var add_location_btn = $("<span/>").text("Добавить территорию")
-                .addClass("gr-editor-btn")
-                .click(function(){
-                    // TODO: implement it
-                });
+        //var add_location_btn = $("<span/>").text("Добавить территорию")
+        //        .addClass("gr-editor-btn")
+        //        .click(function(){
+        //            // TODO: implement it
+        //        });
 
         var save_btn = $("<span/>").text("Сохранить")
                 .addClass("gr-editor-btn")

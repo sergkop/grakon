@@ -1,7 +1,4 @@
-* adding resources on idea page
-
 * resources in adding idea popup + prohibit empty description
-
 
 * provide resources for project
 * list of participants on project tab
@@ -10,10 +7,9 @@
 * reimplement popup windows
 * popup before admin removes project resource
 
-
+* resource edit icon move to right bottom corner on profile for admin
 
 * hide follow/unfollow button for admin
-
 
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
@@ -21,16 +17,13 @@
 * other option for resources
 * resources editing
 
-* don't reload page after adding resource to idea
-
 * idea title is not always a link (link was removed)
-
-* share buttons
 
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
 * deactivate disqus sso
 * rewrite disqus_page_params to take instance only
+* disqus id for entity should be obtained from entity model
 
 * resources editor on profile page (combine with editor in registration form)
 
@@ -39,6 +32,9 @@
 
 * project-ideas connection (editing ideas of the project)
 
+
+* page title, image url and description should be specified as context variable
+* open share dialogs in popups (vk, fb, twitter)
 
 
 * use entity_base_view in location
@@ -55,6 +51,8 @@
 
 * new widget for location editor; add location in location list editor
 
+* editing resources for idea
+
 * fill in resource in registration when redirected from main page
 * add task and add project forms should open with initialized location
 
@@ -64,32 +62,31 @@ Yulia:
     * in chrome human icon above ideas on task page has blue top line
     * top part of tabs is not clickable
     * help text against location select in task create form is below widget
+    * idea page formatting, in particular - (пусто) when no resources are added
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
 * bug with disqus wall when some users log in
 
-* settings page
+* can admin unfollow an entity?
 
 * use tinymce parameters from settings.py in js
 * remove tinymce buttons opening popups
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
 * getContent() should be taken for specific tinymce instances, not active
+
+* make ideas, tasks editable in lists
+
+* fill in create form fields with grey example values
+
+* settings page
 -------------------------------------------------------------------------------
-* editing resources for idea
+* don't reload page after adding/removing resource to idea
 
 * when mouse is over the date - show exact time in hover
 
-* can admin unfollow an entity?
-
-* Hide star near location form field where it is not required
-
 * do disqus counters for ideas work?
-
-* disqus id for entity should be obtained from entity model
-
-* make ideas, tasks editable in lists
 
 * display data for logged in user at main page (no redirect)
 
@@ -144,11 +141,7 @@ Performance:
 
 * Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
 
-* button for creating new entity on entities pages
-
 * ability to request entity deletion (like with profiles)
-
-* fill in create form fields with grey example values
 
 * Invite friends button under contacts in profile
 

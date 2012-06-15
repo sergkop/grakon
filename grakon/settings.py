@@ -39,6 +39,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'grakon.context_processors.media_files',
+    'grakon.context_processors.page_url',
     'grakon.context_processors.proj_settings',
 )
 

@@ -23,9 +23,9 @@
         <h4>Требуется:</h4>
 
         {% for resource in info.resources.none.data %}
-            <div class="gr-resource-needs{% if not is_admin %} gr-resource-highlighted{% endif %}">
+            <div class="gr-resource-needs gr-resource-highlighted">
                 {% if is_admin %}
-                    <div class="gr-close" onclick="remove_project_resource({{ info.ct }}, {{ info.instance.id }}, '{{ resource.name }}')">&nbsp;</div>
+                    <!--div class="gr-close" onclick="remove_project_resource({{ info.ct }}, {{ info.instance.id }}, '{{ resource.name }}')">&nbsp;</div-->
                 {% else %}
                     <i class="gr-add">&nbsp;</i>
 

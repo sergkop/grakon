@@ -1,5 +1,4 @@
-<a href="http://www.facebook.com/grakonteam" title="Поделиться в Facebook" target="_blank"><img src="{{ STATIC_URL }}images/services/facebook.gif" align="bottom"></a>&nbsp;
-<a href="http://vk.com/grakonteam" title="Читайте нас во Вконтакте" target="_blank"><img src="{{ STATIC_URL }}images/services/vkontakte.gif" align="bottom"></a>&nbsp;
-<a href="https://twitter.com/#%21/grakonteam" title="Читайте нас в Твиттере" target="_blank"><img src="{{ STATIC_URL }}images/services/twitter.gif" align="bottom"></a>&nbsp;
-<a href="http://grakonteam.livejournal.com/" title="Читайте нас в ЖЖ" target="_blank"><img src="{{ STATIC_URL }}images/services/lj.png" align="bottom"></a>&nbsp;
-<a href="https://plus.google.com/109718115889781049624/" title="Читайте нас в Google+" target="_blank"><img src="{{ STATIC_URL }}images/services/g_plus.png" align="bottom"></a>
+<a href="https://www.facebook.com/sharer.php?u={{ full_page_url }}&t={{ title }}" title="Поделиться в Facebook" target="_blank"><img src="{{ STATIC_URL }}images/services/facebook.gif" align="bottom"/></a>&nbsp;
+<a href="http://vkontakte.ru/share.php?url={{ full_page_url }}" target="_blank"><img src="{{ STATIC_URL }}images/services/vkontakte.gif" align="bottom"/></a>&nbsp;
+<a href="https://twitter.com/share?&original_referer={{ full_page_url }}&url={{ full_page_url }}&text={{ title }}" title="Поделиться в Twitter" target="_blank"><img src="{{ STATIC_URL }}images/services/twitter.gif" align="bottom"/></a>&nbsp;
+<a href="https://plus.google.com/share?url={{ full_page_url }}" title="Поделиться в Google+" onclick="javascript:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="{{ STATIC_URL }}images/services/g_plus.png" align="bottom"/></a>

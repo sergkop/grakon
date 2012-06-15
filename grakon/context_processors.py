@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+from urllib import quote
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms.widgets import Media
@@ -60,3 +62,6 @@ def proj_settings(request):
         'OPINION_CHOICES': OPINION_CHOICES,
     })
     return ctx
+
+def page_url(request):
+    return {'full_page_url': quote(settings.URL_PREFIX+request.get_full_path())}
