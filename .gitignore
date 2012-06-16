@@ -1,3 +1,5 @@
+:w
+*.swp
 *~
 *.project*
 *.pydevproject*

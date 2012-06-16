@@ -16,5 +16,6 @@ boto
 flup
 google-api-python-client
 sphinx
+django-admin-tools
 #mysql-python
 #django-simple-captcha

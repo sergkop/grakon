@@ -1,0 +1,34 @@
+{% extends "admin_tools/dashboard/module.html" %}
+{% load i18n %}
+{% block module_content %}
+<div style="padding:20px 0px 20px 0px;">{% trans module.filter_title %}:
+    <form action="" method="get">
+    {{ module.periodForm.non_field_errors }}
+    <div style="padding-top:5px;">
+        <label for="id_start">{{ module.start_title }}: </label>
+        {{ module.periodForm.start }}&nbsp;
+        <label for="id_end">{{ module.end_title }}: </label>
+        {{ module.periodForm.end }}
+        </br>
+        {{ module.periodForm.start.errors }}
+        {{ module.periodForm.end.errors }}
+        <input type="submit" value = "{{ module.submit_title }}"/>
+    </div>    
+</form>
+</div>
+
+<ul>
+    {% spaceless %}
+    {% for child in module.children %}
+    <li class="{% cycle 'odd' 'even' %}">
+        <span class="float-right">{{ child.action_time|date }}</span>
+        {% if child.is_deletion %}
+        <span class="deletelink">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</span>
+        {% else %}
+        <a href="{{ admin_url }}{{ child.get_admin_url }}" class="{% if child.is_addition %} addlink{% endif %}{% if child.is_change %} changelink{% endif %}">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+    {% endspaceless %}
+</ul>
+{% endblock %}

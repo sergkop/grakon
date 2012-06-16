@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^location/', include('locations.urls')),
-
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^', include('authentication.urls')),
     url(r'^', include('elements.urls')),
     url(r'^', include('navigation.urls')),
