@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^location/', include('locations.urls')),
-    url(r'^admin_tools/', include('admin_tools.urls')),
+
     url(r'^', include('authentication.urls')),
     url(r'^', include('elements.urls')),
     url(r'^', include('navigation.urls')),
@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^img1x1$', 'grakon.views.img1x1', name='img1x1'), # used to trace emails opening
 
     url(r'^%s/' % settings.ADMIN_PREFIX, include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
 )
 
 if settings.DEBUG:
