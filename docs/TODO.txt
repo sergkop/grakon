@@ -1,4 +1,6 @@
 * separation lines on idea page
+* project resources counter is -1 if no resources specified by admin
+* sort resources in project right panel by creation time
 
 * resources in adding idea popup + prohibit empty description
 
