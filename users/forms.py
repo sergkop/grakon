@@ -19,6 +19,8 @@ class ProfileForm(forms.ModelForm):
     )
 
 class MessageForm(forms.ModelForm):
+    body = forms.CharField(label=u'Сообщение', widget=forms.Textarea(attrs={'rows': '6'}))
+
     class Meta:
         model = Message
         fields = ('title', 'body', 'show_email')

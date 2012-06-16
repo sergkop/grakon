@@ -30,8 +30,6 @@
 
 * count down counter under resource description
 
-* project-ideas connection (editing ideas of the project)
-
 
 * page title, image url and description should be specified as context variable
 * open share dialogs in popups (vk, fb, twitter)
@@ -63,6 +61,7 @@ Yulia:
     * top part of tabs is not clickable
     * help text against location select in task create form is below widget
     * idea page formatting, in particular - (пусто) when no resources are added
+    * popup for linking idea to project
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
@@ -82,6 +81,9 @@ Yulia:
 
 * settings page
 -------------------------------------------------------------------------------
+* project-ideas connection (editing ideas of the project)
+* linking idea to project on idea page
+
 * don't reload page after adding/removing resource to idea
 
 * when mouse is over the date - show exact time in hover

@@ -53,6 +53,18 @@ class ProfileManager(BaseEntityManager):
             data[id]['contacts']['entities'] = [contacts_info[c_id] for c_id in data[id]['contacts']['ids']
                             if c_id in contacts_info]
 
+        for entity_name in ('ideas', 'tasks', 'projects'):
+            model = ENTITIES_MODELS[entity_name]
+
+            entities_ids = set(e_id for id in ids for role in model.roles \
+                    for e_id in data[id][entity_name][role]['ids'])
+            entities_info = model.objects.info_for(entities_ids, related=False)
+
+            for id in ids:
+                for role in model.roles:
+                    data[id][entity_name][role]['entities'] = [entities_info[e_id] \
+                            for e_id in data[id][entity_name][role]['ids']]
+
 @entity_class(['resources', 'locations', 'participants'])
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)

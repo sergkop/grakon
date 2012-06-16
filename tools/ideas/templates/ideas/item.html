@@ -42,8 +42,8 @@
             <span class="dimmed gr-pseudolink js-projects">Проекты: {{ info.projects.count }}</span>
         {% endif %}
 
-        <!--span class="gr-bullet">&nbsp;</span>
-        <a href="" class="highlighted"><strong>Связать с проектом</strong></a-->
+        <span class="gr-bullet">&nbsp;</span>
+        <a class="bold js-link-to-project">Связать с проектом</a>
 
         <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}" class="dimmed">{{ info.instance.time|date:"j b Y" }}</a></span>
     </div>

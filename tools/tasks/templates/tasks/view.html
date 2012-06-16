@@ -48,28 +48,30 @@
 
     {% include "resources/description_popup.html" %}
 
-    {% if request.user.is_authenticated %}
-        <a name="add_idea" />
-        <div class="gr-ideas-answer">
-            <div class="gr-user">
-                <strong><a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a></strong>
-            </div>
+    {% include "ideas/link_to_project.html" %}
+</div>
 
-            <div class="gr-mt10 gr-mb10">
-                <textarea id="add_idea_textarea" rows="6" class="gr-mt10 gr-mb10" style="width:100%"></textarea>
-            </div>
-
-            <div align="right">
-                <a id="add_idea_btn" class="ym-button">Добавить идею</a>
-            </div>
+{% if request.user.is_authenticated %}
+    <a name="add_idea" />
+    <div class="gr-ideas-answer">
+        <div class="gr-user">
+            <strong><a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a></strong>
         </div>
 
-        <script type="text/javascript">
-            $(function(){tinymce_editor("add_idea_textarea")});
-        </script>
+        <div class="gr-mt10 gr-mb10">
+            <textarea id="add_idea_textarea" rows="6" class="gr-mt10 gr-mb10" style="width:100%"></textarea>
+        </div>
 
-        {% include "dialogs/add_idea.html" %}
+        <div align="right">
+            <a id="add_idea_btn" class="ym-button">Добавить идею</a>
+        </div>
+    </div>
 
-        {% include "ideas/add_resources.html" %}
-    {% endif %}
-</div>
+    <script type="text/javascript">
+        $(function(){tinymce_editor("add_idea_textarea")});
+    </script>
+
+    {% include "dialogs/add_idea.html" %}
+
+    {% include "ideas/add_resources.html" %}
+{% endif %}

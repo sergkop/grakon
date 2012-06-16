@@ -6,6 +6,8 @@
 
 {% include "resources/description_popup.html" %}
 
+{% include "ideas/link_to_project.html" %}
+
 {% if request.user.is_authenticated %}
     {% include "ideas/add_resources.html" %}
 {% endif %}
