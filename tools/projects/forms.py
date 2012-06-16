@@ -14,5 +14,5 @@ class ProjectForm(forms.ModelForm):
 
     helper = form_helper('', u'Сохранить')
     helper.layout = Layout(
-        Fieldset('', 'title', 'deadline', 'goals', 'about', 'team', 'location_select'),
+        Fieldset('', 'title', 'deadline', 'goals', 'about', 'stages', 'team', 'location_select'),
     )

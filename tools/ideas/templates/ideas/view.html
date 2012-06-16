@@ -2,10 +2,6 @@
 
 {% block title %}Идея - Гракон{% endblock %}
 
-{% block breadcrumbs %}
-    {% include "locations/breadcrumbs.html" %}
-{% endblock %}
-
 {% block top %}
     {% with title_name="Идея" text=idea.title field="title" %}
         {% include "elements/title_edit.html" %}
@@ -16,17 +12,16 @@
     <div align="center" class="gr-mb20">
         <a class="gr-follow-button" href="{{ idea.task.get_absolute_url }}">Вернуться к задаче</a>
     </div>
+    <div class="dimmed gr-mb15">{{ idea.time|date:"j b Y" }}</div>
 {% endblock %}
 
 {% block content %}
-    <div class="gr-descr" ct="{{ info.ct }}" instance_id="{{ idea.id }}">
-        <div class="gr-fl">
+    <div class="gr-descr">
+        <p class="small">
             {% with person=admin %}
                 {% include "participants/person.html" %}
             {% endwith %}
-        </div>
-        <div class="dimmed" align="right">{{ idea.time|date:"j b Y" }}</div>
-        <div class="ym-clearfix">&nbsp;</div>
+        </p>
 
         <div class="gr-mt10">
             {% with field="description" html=idea.description %}
@@ -45,33 +40,19 @@
         {% endif %}
 
         <h5>Ресурсы:</h5>
-        <div class="gr-ideas-item gr-ideas-resources gr-noborder">
-            <div class="gr-ideas-content">
-                <div class="gr-add gr-idea-selected">
-                    <span class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
-                </div>
-
-                {% if info.resources.values %}
-                    <ul class="gr-source-list-slider">
-                        {% for provider_resources in info.resources.values %}
-                            <li>
-                                <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
-                                {% with resources=provider_resources.data %}
-                                    {% include "resources/list.html" %}
-                                {% endwith %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    (пусто)
-                {% endif %}
-            </div>
-        </div>
-
-        {% include "resources/description_popup.html" %}
+        <ul class="gr-source-list-slider">
+            {% for provider_resources in info.resources.values %}
+                <li>
+                    <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                    {% with resources=provider_resources.data %}
+                        {% include "resources/list.html" %}
+                    {% endwith %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
-    {% include "ideas/add_resources.html" %}
+    {% include "resources/description_popup.html" %}
 
     {% include "disqus/comments.html" %}
 {% endblock %}

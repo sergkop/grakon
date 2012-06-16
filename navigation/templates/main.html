@@ -35,25 +35,13 @@
 {% block content %}
     <h2>
         Укажи, чем можешь помочь
-        <select id="resource_select">
-            <option value="">Выбери ресурс</option>
-            {% for name, title in RESOURCE_DICT.iteritems %}
-                <option value="{{ name }}">{{ title }}</option>
-            {% endfor %}
+        <select>
+            <option>Выбери ресурс</option>
         </select>
     </h2>
-    <script type="text/javascript">
-        $("#resource_select").change(function(){
-            var resource = $("#resource_select").val();
-            var url = "{% url register %}";
-            if (resource!="")
-                url += "?resource=" + resource;
-            $("#register_btn").attr("href", url);
-        });
-    </script>
 
     <div align="center">
-        <a id="register_btn" href="{% url register %}" class="gr-follow-button">Поехали!</a>
+        <a href="{% url register %}" class="gr-follow-button">Поехали!</a>
         <table width="500" class="markup gr-mb30">
             <tr>
                 <td width="50%" align="center"><a href="{{ country_url }}">Посмотреть площадку</a></td>

@@ -8,6 +8,10 @@ class ResourcesSelectWidget(SelectMultiple):
     def render(self, name, value, attrs=None):
         html = super(ResourcesSelectWidget, self).render(name, value, attrs)
         html += '<script type="text/javascript">' \
-                    'select_resources($("#id_%(name)s"));' \
+                    'var select = $("#id_%(name)s");' \
+                    u'select.attr("data-placeholder", "Выберите навыки и ресурсы");' \
+                    'if (!select.hasClass("chzn-done"))' \
+                        'select.chosen();' \
+                    'select.trigger("liszt:updated");' \
                 '</script>' % {'name': name}
         return mark_safe(html)

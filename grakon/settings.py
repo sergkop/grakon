@@ -44,7 +44,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     
     'grakon.context_processors.media_files',
-    'grakon.context_processors.page_url',
     'grakon.context_processors.proj_settings',
 )
 

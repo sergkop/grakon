@@ -1,6 +1,4 @@
 # -*- coding:utf-8 -*-
-from urllib import quote
-
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms.widgets import Media
@@ -48,7 +46,6 @@ def media_files(request):
         'libs/crispy-forms/uni-form.jquery.js',
         'libs/chosen/chosen.jquery.min.js',
         'libs/tipsy/jquery.tipsy.js',
-        'libs/jquery.placeholder.min.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
         'js/main.js',
     )
@@ -62,6 +59,3 @@ def proj_settings(request):
         'OPINION_CHOICES': OPINION_CHOICES,
     })
     return ctx
-
-def page_url(request):
-    return {'full_page_url': quote(settings.URL_PREFIX+request.get_full_path())}

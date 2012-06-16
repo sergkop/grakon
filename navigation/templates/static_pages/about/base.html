@@ -4,10 +4,6 @@
 
 {% block title %}О проекте - Гракон{% endblock %}
 
-{% block breadcrumbs %}
-    {% include "locations/breadcrumbs.html" %}
-{% endblock %}
-
 {% block top %}
     <h1>О проекте</h1>
 {% endblock %}
@@ -15,7 +11,7 @@
 {% block right_column %}
     <h3 class="column_header column_header_icon"><span class="team">Команда</span> <i>&nbsp;</i></h3>
     <div class="gr-side-item">
-        <ul class="gr-side-list">
+        <ul class="gr-nomargin">
             <li><a href="https://www.facebook.com/mikpanko" target="_blank">Михаил Панько</a> <br/> <em>координатор проекта</em></li>
                 <li><a href="https://www.facebook.com/sergey.kopylov"  target="_blank">Сергей Копылов</a> <br/> <em>главный разработчик</em></li>
                 <li><a href="http://www.facebook.com/profile.php?id=100001093316533" target="_blank">Юлия Котова</a> <br/> <em>front-end разработчик</em></li>
@@ -33,7 +29,5 @@
 {% endblock %}
 
 {% block content %}
-    <div class="gr-descr">
-        {% include template_path %}
-    </div>
+    {% include template_path %}
 {% endblock %}

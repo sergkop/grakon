@@ -16,14 +16,12 @@ class LocationSelectField(forms.CharField):
 def location_init(required, label):
     """ If required then the lowest possible level must be chosen """
     attrs = {
-        'location_select': LocationSelectField(label=label, required=required, initial=[],
+        'location_select': LocationSelectField(label=label, required=True, initial=[],
                 widget=LocationSelectWidget),
         'region': forms.CharField(required=False),
         'district': forms.CharField(required=False),
         'location': forms.CharField(required=False),
     }
-    if not required:
-        attrs['location_select'].help_text = u'если не выбрать место, то задача добавится на страницу России'
 
     def decorator(cls):
         new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)

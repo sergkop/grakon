@@ -1,17 +1,10 @@
 {% load elements %}
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru"  itemscope itemtype="http://schema.org/">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!--meta name="title" content="{{ title }}" />
-    <meta name="description" content="{{ description }}" />
-    <link rel="image_src" href="..." />
-
-    <meta itemprop="name" content="{{ title }}"/>
-    <meta itemprop="description" content="{{ description }}"/-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}{{ title }}{% endblock %}</title>
 
@@ -45,6 +38,16 @@
     {% if not DEBUG %}
         {% include "services/google-analytics.html" %}
     {% endif %}
+
+    <style type="text/css">
+        /* TODO: should be moved to .css files */
+        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px;}
+        .gr-editor-btn {cursor: pointer; font-weight: bold; margin-right: 1em;}
+
+        h1 .gr-editor-btn {cursor: pointer; font-weight: bold; margin-right: 1em; font-size: 0.9em;}
+
+        .bold {font-weight: bold;}
+    </style>
 </head>
 <body {% if is_main %}id="main"{% endif %}>
     <div class="gr-wrapper">
@@ -52,8 +55,7 @@
             <div class="ym-wrapper">
                 <a href="{% url main %}" class="gr-fl gr-logo"><img src="{{ STATIC_URL }}images/logos/header.png" /></a>
                 <div class="gr-login-info">
-                    <!--div class="gr-job"><a href="{% url how_to_help %}">Ищем специалистов!</a></div-->
-                    <a href="http://elections.grakon.org" target="_blank">Выборы</a>
+                    <div class="gr-job"><a href="{% url how_to_help %}">Ищем специалистов!</a></div>
                     <a href="{% url about %}">О проекте</a>
                     <a href="{% url how_to_help %}">Как помочь</a>
                     <a href="{% url partners %}">Партнеры</a>
@@ -67,7 +69,7 @@
                         <div class="gr-login-user">
                             <span>&nbsp;</span>
                             <div class="gr-login-user-sub">
-                                <!--a href="">Настройки</a-->
+                                <a href="">Настройки</a>
                                 {% if request.profile_info.locations.main_id %}<a href="{% url location_wall request.profile_info.locations.main_id %}">Мой район</a>{% endif %}
                                 <a href="{% url logout %}?next={{ request.get_full_path }}">Выйти</a>
                             </div>

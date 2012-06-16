@@ -8,5 +8,4 @@ urlpatterns = patterns('tools.projects.views',
     url(r'^project/(?P<id>\d+)/participants$', ProjectParticipantsView.as_view(), name='project_participants'),
 
     url(r'^create_project$', 'create_project', name='create_project'),
-    url(r'^link_idea_to_project$', 'link_idea_to_project', name='link_idea_to_project'),
 )

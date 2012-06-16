@@ -52,7 +52,10 @@ class AllRecentActions(modules.RecentActions):
         
 
         if len(request.GET)>0 and request.GET["start"] and request.GET["end"]:
-            qs = LogEntry.objects.filter(action_time__lte=datetime.strptime(request.GET["end"],'%d.%m.%Y %X'), action_time__gte=datetime.strptime(request.GET["start"], '%d.%m.%Y %X'))
+            enddate = datetime.strptime(request.GET["end"],'%d.%m.%Y %X')
+            startdate = datetime.strptime(request.GET["start"], '%d.%m.%Y %X')
+            self.periodForm = PeriodForm({"start":startdate,"end":enddate})
+            qs = LogEntry.objects.filter(action_time__lte=enddate, action_time__gte=startdate)
         else:
             qs = LogEntry.objects.all()
 

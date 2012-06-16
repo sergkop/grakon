@@ -8,7 +8,6 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from elements.locations.utils import subregion_list
 from elements.participants.models import EntityParticipant, participant_in
-from elements.resources.models import RESOURCE_CHOICES
 from elements.views import entity_base_view, entity_tabs_view
 from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
@@ -48,6 +47,15 @@ class BaseTaskView(object):
 
         ctx.update({
             'task': self.entity,
+            'follow_button': {
+                'cancel_msg': u'Вы хотите отписаться от новостей об этой задаче?',
+                'cancel_btn': u'Отписаться',
+                'cancel_btn_long': u'Отписаться',
+                'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
+                'confirm_btn': u'Следить',
+                'confirm_btn_long': u'Следить за задачей',
+                'btn_class': 'bold',
+            },
             'location': location,
             'subregions': subregion_list(location),
 
@@ -56,8 +64,6 @@ class BaseTaskView(object):
 
             'supporters': [supporters_info[supporter_ids] for supporter_ids in supporters_ids],
             'idea_admins': [idea_admins_info[idea_admin_ids] for idea_admin_ids in idea_admins_ids],
-
-            'RESOURCE_CHOICES': RESOURCE_CHOICES, # TODO: use idea form instead
         })
         ctx.update(disqus_page_params('task/'+str(id), reverse('task_wall', args=[id]), 'tasks'))
         return ctx
@@ -66,9 +72,8 @@ class TaskView(BaseTaskView, TemplateView):
     tab = 'view'
 
     def update_context(self):
-        ideas = Idea.objects.info_for(self.info['ideas']['ids'], True).values()
         return {
-            'ideas': sorted(ideas, key=lambda info: -len(info['resources'])),
+            'ideas': Idea.objects.info_for(self.info['ideas']['ids'], True).values(),
             'template_path': 'tasks/view.html',
         }
 

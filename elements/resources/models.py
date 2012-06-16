@@ -53,39 +53,21 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         # TODO: sort by provider and by resource
         for id, resource, descr, provider_id in resources_data:
-            resource_data = {'name': resource, 'description': descr}
-            if model.entity_name == 'projects':
-                resource_data['title'] = resource
-            else:
-                resource_data['title'] = RESOURCE_DICT[resource]
-
+            resource_data = {'name': resource, 'title': RESOURCE_DICT[resource], 'description': descr}
             res[id].setdefault(provider_id if provider_id else 'none', {'data': []})['data'].append(resource_data)
 
         return res
-
-    def get_related_info(self, data, ids):
-        provider_ids = set(p_id for id in ids for p_id in data[id]['resources'])
-        if 'none' in provider_ids:
-            provider_ids.remove('none')
-
-        from users.models import Profile
-        providers_info = Profile.objects.info_for(provider_ids, related=False)
-        for id in ids:
-            for p_id in data[id]['resources']:
-                if p_id != 'none':
-                    data[id]['resources'][p_id]['provider'] = providers_info[p_id]
 
     def _add_remove(self, entity, resource, add, description='', provider=None):
         if self.model.feature not in type(entity).features:
             return
 
-        if type(entity).entity_name != 'projects':
-            if resource not in RESOURCE_DICT.keys():
-                return
+        if resource not in RESOURCE_DICT.keys():
+            return
 
         if add:
             entity_resource, created = self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
-                    entity_id=entity.id, resource=resource, provider=provider, defaults={'description': description})
+                    resource=resource, provider=provider, defaults={'description': description})
             if not created:
                 entity_resource.description = description
                 entity_resource.save()
@@ -116,8 +98,7 @@ class EntityResourceManager(BaseEntityPropertyManager):
             return
 
         # Filter out resources not from the list
-        if type(entity).entity_name != 'projects':
-            resources = set(RESOURCE_DICT.keys()) & set(resources)
+        resources = set(RESOURCE_DICT.keys()) & set(resources)
 
         entity_resources = list(getattr(entity, self.model.feature).all())
         new_resources = resources - set(er.resource for er in entity_resources)
@@ -142,7 +123,7 @@ def update_resources(entity, resources):
 # TODO: add 'other' option for resource type
 @feature_model
 class EntityResource(BaseEntityProperty):
-    resource = models.CharField(u'Ресурс', max_length=100, db_index=True)
+    resource = models.CharField(u'Ресурс', max_length=20, choices=RESOURCE_CHOICES, db_index=True)
     description = models.CharField(u'Описание', max_length=140, blank=True)
     provider = models.ForeignKey('users.Profile', blank=True, null=True, related_name='provided_resources')
 

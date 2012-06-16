@@ -17,7 +17,7 @@
     </div>
 
     <p><span class="dimmed">Место:</span> {{ event.place }}</p>
-    <p><span class="dimmed">Время:</span> {{ event.event_time|date:"j F Y" }}</p>
+    <p><span class="dimmed">Время:</span> {{ event.event_time|date:"j b Y H:i" }}</p>
 
     {{ event.description|safe }}
 

@@ -1,18 +1,5 @@
-{% extends "static_pages/no_tabs_base.html" %}
-
 {% load crispy_forms_tags %}
 
-{% block title %}Обратная связь{% endblock %}
+<p>Вы можете заполнить форму или оставить отзыв, нажав зеленую кнопку на левой стороне экрана.</p>
 
-{% block top %}
-    <h1>Обратная связь</h1>
-{% endblock %}
-
-{% block content %}
-    <p>Вы можете заполнить форму или оставить отзыв, нажав зеленую кнопку на левой стороне экрана.</p>
-
-    {% crispy form form.helper %}
-{% endblock %}
-
-
-
+{% crispy form form.helper %}

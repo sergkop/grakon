@@ -6,7 +6,7 @@ from elements.utils import is_entity_admin, entity_post_method
 
 @entity_post_method
 def add_resource(request, entity):
-    if request.POST.get('provider') == 'true':
+    if request.POST.get('provider')=='true':
         provider = request.profile
     else:
         if not is_entity_admin(entity, request.profile):

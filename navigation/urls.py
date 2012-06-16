@@ -1,11 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('navigation.views',
-    url(r'^$', 'main', name='main'),
-    url(r'^feedback$', 'feedback', name='feedback'),
-    url('^feedback_thanks$', 'static_page', kwargs={'template': 'feedback/thanks.html'}, name='feedback_thanks'),
-    url('^partners$', 'static_page', kwargs={'template': 'static_pages/partners.html'}, name='partners'),
+urlpatterns = patterns('',
+    url(r'^$', 'navigation.views.main', name='main'),
+    url('^feedback_thanks$', 'navigation.views.feedback_thanks', name='feedback_thanks'),
 )
 
 def static_tabs_urls(base_template, tabs_short):
@@ -32,7 +30,6 @@ def static_tabs_urls(base_template, tabs_short):
 urlpatterns += patterns('',
     *static_tabs_urls('static_pages/about/base.html', [
         ('about', u'Описание', 'static_pages/about/about.html', '', ''),
-        ('rules', u'Правила площадки', 'static_pages/about/rules.html', '', ''),
         ('publications', u'О нас в СМИ', 'static_pages/about/publications.html', '', ''),
     ])
 )
@@ -43,5 +40,18 @@ urlpatterns += patterns('',
         ('donate', u'...деньгами', 'static_pages/how_to_help/donate.html', '', ''),
         ('volunteer', u'... как волонтер', 'static_pages/how_to_help/volunteer.html', '', ''),
         ('share', u'... распространить информацию', 'static_pages/how_to_help/share.html', '', ''),
+    ])
+)
+
+urlpatterns += patterns('',
+    *static_tabs_urls('static_pages/partners/base.html', [
+        ('partners', u'Наши партнеры', 'static_pages/partners/partners.html', '', ''),
+    ])
+)
+
+urlpatterns += patterns('',
+    *static_tabs_urls('static_pages/feedback/base.html', [
+        ('feedback', u'Обратная связь', 'feedback/feedback.html', '',
+                'navigation.views.feedback'),
     ])
 )

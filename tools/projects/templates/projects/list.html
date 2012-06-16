@@ -4,7 +4,7 @@
             <div class="gr-ideas-item">
                 <div class="gr-ideas-content">
                     <div class="gr-add gr-idea-selected">
-                        <span>{{ info.resources|length|add:"-1" }}</span>
+                        <span>1123</span>
                     </div>
                     <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
                     <div class="gr-mb10">
@@ -15,31 +15,20 @@
                     <div>{{ info.instance.about|safe }}</div>
                 </div>
 
-                <div class="gr-info-bar">
+                <div class="gr-info-bar"> 
                     {% include "elements/comments.html" %}
 
                     <span class="gr-bullet">&nbsp;</span>
                     <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
 
                     <span class="gr-bullet">&nbsp;</span>
-
-                    {% if request.user.is_authenticated %}
-                        {% if info.instance.id in request.profile_info.projects.follower.ids %}
-                            {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
-                                {% include "participants/participate_button.html" %}
-                            {% endwith %}
-                        {% else %}
-                            {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
-                                {% include "participants/participate_button.html" %}
-                            {% endwith %}
-                        {% endif %}
-                    {% endif %}
+                    <a href="" class="highlighted"><strong>Следить за проектом</strong></a>
 
                     <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y" }}</span>
                 </div>
                 <div class="gr-slider js-follow-content">
                     <div class="gr-close js-slide-close">&nbsp;</div>
-                    <div class="dimmed">
+                    <div>
                         {% with person_entities=info.participants.follower.entities %}
                             {% include "participants/list.html" %}
                         {% endwith %}
@@ -49,16 +38,14 @@
         {% endfor %}
     </div>
 {% else %}
-    {% if is_location_page %}
-        <div class="gr-blank">
-            <i class="gr-left-icon gr-left-icon-list">&nbsp;</i>
-            <i class="gr-right-icon">&nbsp;</i>
-            <h2>Благоустройство нашего двора</h2>
-            <p>
-                <strong class="highlight">Дата:</strong> <span class="xsmall">следующая суббота</span><br />
-                <strong class="highlight">Требуются:</strong> <span class="xsmall">волонтеры, саженцы, лопаты</span>
-            </p>
-            <p><a href="{% url create_project %}">Если у тебя есть идея и желание ее реализовать но не хватает ресурсов, ты просто можешь создать свой проект</a></p>
-        </div>
-    {% endif %}
+    <div class="gr-blank">
+        <i class="gr-left-icon gr-left-icon-list">&nbsp;</i>
+        <i class="gr-right-icon">&nbsp;</i>
+        <h2>Благоустройство нашего двора</h2>
+        <p>
+            <strong class="highlight">Дата:</strong> <span class="xsmall">следующая суббота</span><br />
+            <strong class="highlight">Требуются:</strong> <span class="xsmall">волонтеры, саженцы, лопаты</span>
+        </p>
+        <p><a href="{% url create_project %}">Если у тебя есть идея и желание ее реализовать но не хватает ресурсов, ты просто можешь создать свой проект</a></p>
+    </div>
 {% endif %}

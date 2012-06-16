@@ -9,8 +9,6 @@ from authentication.forms import LoginForm, RegistrationForm, SocialRegistration
 from authentication.models import ActivationProfile
 from authentication.utils import authenticated_profile_redirect
 
-from elements.resources.models import RESOURCE_DICT
-
 @authenticated_profile_redirect
 def register(request):
     if request.method == 'POST':
@@ -21,11 +19,6 @@ def register(request):
             return redirect('registration_completed')
     else:
         form = RegistrationForm()
-
-        # Resource can be passed as get parameter when user is coming from main page
-        resource = request.GET.get('resource', '')
-        if resource in RESOURCE_DICT:
-            form.fields['resources1'].initial = [resource]
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 
