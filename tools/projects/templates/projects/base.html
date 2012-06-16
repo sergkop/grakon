@@ -45,7 +45,7 @@
                 <h2>{{ resource.name }}</h2>
                 <p>{{ resource.description }}</p>
                 {% if is_admin %}
-                    <i class="gr-editing">&nbsp;</i>
+                    <div style="text-align: right;"><i class="gr-editing">&nbsp;</i></div>
 
                     {% comment %}
                     <script type="text/javascript">
@@ -62,17 +62,21 @@
                 {% if request.user.is_authenticated %}
                     <script type="text/javascript">
                         $(".gr-resource-highlighted").click(function(){
+                            console.log("here");
                             var popup = $(this).children(".js-provide-resource-popup");
                             popup.show();
 
                             // TODO: this is a hack
-                            popup.find(".js-provide-resource-btn").click(function(){
+                            popup.find(".js-provide-resource-btn").unbind('click').click(function(){
                                 dialog_post_shortcut(ADD_RESOURCE_URL, {
                                     "ct": {{ info.ct }},
                                     "id": {{ info.instance.id }},
                                     "resource": popup.children("h3").text(),
+                                    "description": popup.children("textarea").val(),
                                     "provider": "true"
-                                }, function(){}, false)();
+                                }, function(){
+                                    popup.hide();
+                                }, true)();
                             });
                         });
                     </script>

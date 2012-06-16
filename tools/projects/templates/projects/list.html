@@ -4,7 +4,7 @@
             <div class="gr-ideas-item">
                 <div class="gr-ideas-content">
                     <div class="gr-add gr-idea-selected">
-                        <span>1123</span>
+                        <span>{{ info.resources|length|add:"-1" }}</span>
                     </div>
                     <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
                     <div class="gr-mb10">
@@ -15,7 +15,7 @@
                     <div>{{ info.instance.about|safe }}</div>
                 </div>
 
-                <div class="gr-info-bar"> 
+                <div class="gr-info-bar">
                     {% include "elements/comments.html" %}
 
                     <span class="gr-bullet">&nbsp;</span>

@@ -9,19 +9,27 @@
             </div>
         </div>
 
-        <div class="gr-ideas-item">    
+        <div class="gr-ideas-item">
             <h5>Готовы помочь:</h5>
-            <ul class="gr-source-list-slider  js-resource-items-visible">
-                <li><a href="">Shweta Karwa</a> <span class="gr-resource-item gr-resource-item-active">Деньги<i>&nbsp;</i></span>  <span class="gr-resource-item">Время<i>&nbsp;</i></span>   <span class="gr-resource-item">Машина</span><i>&nbsp;</i></li>
-                <li><a href="">Shweta Karwa</a> <span class="gr-resource-item">Деньги<i>&nbsp;</i></span>  <span class="gr-resource-item gr-resource-item-active">Время<i>&nbsp;</i></span>   <span class="gr-resource-item">Машина<i>&nbsp;</i></span></li>
-            </ul>
-            <div style="top: 89px; left: 35px;" class="gr-small-popup gr-hover-popup">
-                <i>&nbsp;</i>
-                <div>в мае я свободна только по вторникам, после 13:00, после мая - в любое время</div>
-            </div>
+            {% if info.resources.values %}
+                <ul class="gr-source-list-slider js-resource-items-visible">
+                    {% for provider_resources in info.resources.values %}
+                        {% if provider_resources.provider %}
+                            <li>
+                                <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                                {% with resources=provider_resources.data %}
+                                    {% include "resources/list.html" %}
+                                {% endwith %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                (пусто)
+            {% endif %}
         </div>
 
-        <div class="gr-ideas-item">    
+        <div class="gr-ideas-item">
             <h5>Следят:</h5>
             <div class="dimmed">
                 {% with person_entities=info.participants.follower.entities %}
@@ -30,4 +38,6 @@
             </div>
         </div>
     </div>
+
+    {% include "resources/description_popup.html" %}
 </div>

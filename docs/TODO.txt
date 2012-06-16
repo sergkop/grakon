@@ -1,13 +1,7 @@
 * resources in adding idea popup + prohibit empty description
 
-* provide resources for project
-* list of participants on project tab
-* counter for people provided resources for project in info
-
 * reimplement popup windows
 * popup before admin removes project resource
-
-* resource edit icon move to right bottom corner on profile for admin
 
 * hide follow/unfollow button for admin
 
@@ -30,6 +24,7 @@
 
 * count down counter under resource description
 
+* special location placeholder for empty tasks and projects lists should be moved to templates in locations
 
 * page title, image url and description should be specified as context variable
 * open share dialogs in popups (vk, fb, twitter)

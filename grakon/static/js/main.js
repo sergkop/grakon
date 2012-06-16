@@ -109,6 +109,7 @@ $(function(){
     // Closing popups
     $(".js-close").click(function(){
         $(this).parent().hide();
+        return false;
     });
 
     $(".js-open-add-resource-button").click(function(){

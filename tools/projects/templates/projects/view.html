@@ -7,9 +7,9 @@
     </div>
     <div class="dimmed" align="right">{{ project.time|date:"j b Y" }}</div>
     <div class="ym-clearfix">&nbsp;</div>
-    
+
     <div class="gr-ideas-list">
-        {% if project.deadline or is_admin %}        
+        {% if project.deadline or is_admin %}
             <div class="gr-ideas-item">
                 <h5 class="gr-mt0">Дедлайн:{% with field="deadline" text=project.deadline %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
                     {% include "elements/text_block.html" %}

@@ -63,6 +63,18 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         return res
 
+    def get_related_info(self, data, ids):
+        provider_ids = set(p_id for id in ids for p_id in data[id]['resources'])
+        if 'none' in provider_ids:
+            provider_ids.remove('none')
+
+        from users.models import Profile
+        providers_info = Profile.objects.info_for(provider_ids, related=False)
+        for id in ids:
+            for p_id in data[id]['resources']:
+                if p_id != 'none':
+                    data[id]['resources'][p_id]['provider'] = providers_info[p_id]
+
     def _add_remove(self, entity, resource, add, description='', provider=None):
         if self.model.feature not in type(entity).features:
             return
