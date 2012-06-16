@@ -2,14 +2,14 @@
     <form id="login_form" method="post" action="{% url login %}?next={{ request.get_full_path }}">
         {% csrf_token %}
         <!--input type="hidden" value="" name="csrfmiddlewaretoken"/-->
-        <table class="markup" width="300">
+        <table class="markup" width="370">
             <tr>
-                <td><label for="id_username">Логин/email:</label></td>
-                <td><input id="id_username" type="text" name="username" width="40" /></td>
+                <td width="25%"><label for="id_username">Логин/email:</label></td>
+                <td><input id="id_username" type="text" name="username" style="width: 90%"/></td>
             </tr>
             <tr>
                 <td><label for="id_password">Пароль:</label></td>
-                <td><input id="id_password" type="password" name="password" /></td>
+                <td><input id="id_password" type="password" name="password" style="width: 90%"/></td>
             </tr>
             <tr>
                 <td colspan="2" valign="middle" align="center">
@@ -27,6 +27,6 @@
 </div>
 
 <script type="text/javascript">
-    create_dialog("login_dialog", 360, 250, "Войдите в систему", "", {});
+    create_dialog("login_dialog", 400, 270, "Войдите в систему", "", {});
     $("#menu_login_btn").click(login_dialog_init);
 </script>

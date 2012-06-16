@@ -3,7 +3,7 @@
 {% block content %}
     {% if profile %}
         Пользователь: <a href="{{ URL_PREFIX }}{{ profile.get_absolute_url }}" target="_blank">
-            {{ profile.full_name }} ({{ profile.username }})</a><br />
+            {{ profile }} ({{ profile.username }})</a><br />
         Еmail: {{ profile.user.email }}
     {% else %}
         Имя: {{ name }}<br />

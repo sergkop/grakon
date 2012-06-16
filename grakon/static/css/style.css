@@ -1,4 +1,4 @@
-input[type=text], input[type=password], textarea {border: 1px solid #eee;}
+input[type=text], input[type=password], textarea {border: 1px solid #eee; padding: 0.2em;}
 
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
@@ -7,8 +7,8 @@ input[type=text], input[type=password], textarea {border: 1px solid #eee;}
 	.gr-breadcrumbs li.on a {color: #fff;}
 
 /*Общие стили для постоянного использования*/
-.gr-fr {float: right;}
-.gr-fl {float: left;}
+.gr-fr {float: right !important;}
+.gr-fl {float: left !important;}
 .gr-dt {display: table;}
 .gr-mt0 {margin-top: 0 !important;}
 .gr-mt5 {margin-top: .5em !important;}
@@ -20,6 +20,7 @@ input[type=text], input[type=password], textarea {border: 1px solid #eee;}
 .gr-mb20 {margin-bottom: 2em !important;}
 .gr-mb30 {margin-bottom: 3em !important;}
 .gr-pt20 {padding-top: 2em !important;}
+.gr-pb20 {padding-bottom: 2em !important;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
 .gr-bb-grey-lt {border-bottom: 1px solid #eee;}
 .gr-noborder {border: none !important; box-shadow: none !important;}
@@ -41,9 +42,13 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 /*Sidebars*/
 .gr-side-item {position: relative;} 
 
-.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add.png) -3px -80px no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px;}
-	.gr-add-icon:hover {text-decoration: none; border-bottom: none !important;}	
-	.gr-ideas-item .gr-idea-selected span.gr-add-icon {background-position: -3px 0;}
+.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add-2.jpg) 0 0 no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px; cursor: pointer;}
+	.gr-ideas-item .gr-add span.gr-add-icon:hover {text-decoration: none; border-bottom: none !important; background-position: 0 -26px;}
+	.gr-ideas-item .gr-add span.gr-add-icon:active {background-position: 0 -52px;}
+
+.gr-side-list, .gr-side-list li {margin: 0; padding: 0; list-style-type: none;}	
+    .gr-side-list li {padding-bottom: .7em; margin-bottom: .7em; border-bottom: 1px dotted #eee;}
+    .gr-side-list li:last-child {border-bottom: none;}
 
 /*Кнопки соцсетей*/
 .gr-share-icons {float: right; margin: 10px 0;}
@@ -76,7 +81,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-info-bar .gr-active-link {font-weight: bold; color: #000;}
 .gr-ideas-list {}
 	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #eee; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
-		.gr-ideas-item-last {border: none; padding-top: 0;}
+	.gr-ideas-list .gr-ideas-item:last-child, .gr-ideas-list .gr-ideas-item-last {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
 		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 1em;}
@@ -85,15 +90,23 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em .4em .3em .7em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; cursor: pointer; line-height: 1.6em; position: relative;}
+	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default;}
 		.gr-resource-item-active {padding-right: .2em;} 
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
-		.gr-resource-item b {background:url(../images/icons/add.png) -3px -124px no-repeat; padding: 0 .3em; position: absolute; top: .2em; right: -.1em;}
+		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px; cursor: pointer;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
 	.gr-editing {background: url(../images/icons/add.png) 0 -206px no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
 		.gr-editing:hover {background-position: 0 -225px;}
+		h1 .gr-editing {margin-left: 0;} 
+        .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em; min-height: 1.6em;}
+        .gr-editor-btn {cursor: pointer; margin-right: 1em;  color: #009EC5;}
+
+        h1 .gr-editor-btn {cursor: pointer; font-weight: normal; margin-right: 1em; font-size: 0.6em;}
+
+        .bold {font-weight: bold;}
+		
 .gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;}	
 	.gr-close { float: right; width: 15px; height: 15px; background:url(../images/icons/add.png) -7px -104px no-repeat; cursor: pointer; z-index:1;}
 		.gr-close:hover {background-position: 0 -191px;}
@@ -103,6 +116,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   
 	.gr-source-list-slider {margin-top: 1em; font-size: .9em}        
 	.gr-source-list-slider li {margin: 0 0 1em;}
+        .gr-bb-grey-list li {border-bottom: 1px solid #eee; padding-bottom: 1em !important;}
+        .gr-bb-grey-list li:last-child {border-bottom: none;}
 	
 	.gr-ideas-resources .gr-source-list-slider {display: block; margin-top: 0;}
 	
@@ -159,10 +174,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 #main h2 {text-transform: uppercase; text-align: center; color: #029ec7; font-size: 1.5em;}	
 	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .7em}
 #main .gr-follow-button {width: 300px; margin: 1.5em 0 1em;}
-#main .markup {font-size: 1.3em;}
-	#main .markup a {text-decoration: underline;}
+#main .ym-col1 .markup {font-size: 1.3em;}
+	#main .ym-col1 .markup a {text-decoration: underline;}
 .gr-popular-list {background-color: #aad8dd; border-radius: .1em; width: 268px; line-height: 1.3em; text-align:left;}	
-	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px;}
+	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px; line-height: 1em;}
 		.gr-popular-list h3 i {position: absolute; top: 0; left: 0px; width: 80px; height: 80px; background:url(../images/icons/blank.jpg) 0 bottom no-repeat;}
 		.gr-icon-tasks h3 {padding-left: 65px;}
 		.gr-icon-tasks h3 i {background-position: 0  -200px; top: 5px; width: 65px;}
@@ -183,21 +198,27 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 #dsq-content .dsq-show-tools .dsq-post-tools  {height: 34px !important;}
 #dsq-content #dsq-messagesx-toolbar-icon {height: 22px !important; width: auto !important;}
 
+
+/*Static pages*/
+
+.gr-job-item {border-bottom: 1px dotted #eaeaea; padding: 25px 0 15px;}
+.gr-static {margin-bottom: 2em;}
+
 /* ----- Переиспользуемые элементы ----- */
 
 /* List of locations */
 .gr-locations-ul {
-	list-style-type: none; margin: 1em 0 0 0; padding: 0; font-size: 1.1em;
-}
+	list-style-type: none; margin: 1em 0 .5em -.5em; padding: .5em; font-size: 1.1em;}
 
-.gr-locations-ul li {list-style-type: none; margin: 0 0 1em; padding: 0;}
+.gr-locations-ul li {list-style-type: none; margin: 0; padding: 0;}
 
 .gr-next-arrow {background:url(../images/icons/add.png) -10px -32px no-repeat; display: inline-block; width: 8px; height: 15px; margin: 0 .3em;}
 .remove-li-btn {
     text-decoration: none;
     float: right;
-    margin-right: -16px;
-    opacity: 0.5;
+    margin-right: 0;
+    width: 15px;
+    height: 15px;
 }
 .remove-li-btn:hover {
     cursor: pointer;

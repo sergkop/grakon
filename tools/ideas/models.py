@@ -3,7 +3,6 @@ from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
 from tools.tasks.models import Task
-from users.models import Profile
 
 class IdeaManager(BaseEntityManager):
     def get_info(self, data, ids):
@@ -19,16 +18,6 @@ class IdeaManager(BaseEntityManager):
             data[id]['projects']['count'] = len(data[id]['projects']['ids'])
 
     def get_related_info(self, data, ids):
-        provider_ids = set(p_id for id in ids for p_id in data[id]['resources'])
-        if 'none' in provider_ids:
-            provider_ids.remove('none')
-
-        providers_info = Profile.objects.info_for(provider_ids, related=False)
-        for id in ids:
-            for p_id in data[id]['resources']:
-                if p_id != 'none':
-                    data[id]['resources'][p_id]['provider'] = providers_info[p_id]
-
         from tools.projects.models import Project
         proj_ids = [proj_id for id in ids for proj_id in data[id]['projects']['ids']]
         proj_info = Project.objects.info_for(proj_ids, related=False)

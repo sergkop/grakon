@@ -46,6 +46,7 @@
 	tt {
 		font-family: Tahoma, Geneva, sans-serif;
 		resize: none;
+        font-size: .9em;
 	}
 
 	/* (en) base layout gets standard font size 14px */
@@ -122,7 +123,8 @@
 		margin: 0 0 .5em;
 	}
 	
-		.gr-descr h5 {margin: 1em 0 .5em;}
+		.gr-descr h5 {margin: 2em 0 .5em;}
+		.gr-descr .gr-ideas-item h5 {margin: 1em 0 .5em;} 
 
 	h6 {
 		font-weight: bold;
@@ -423,12 +425,15 @@
 		border-collapse:collapse;
 		margin: 1.3571em 0 0 0;
 		color:#333;
-		border: 1px #f6f6f6 solid;
 	}
 	
 	table.markup {
         border: none;
     }
+	
+        table.markup td {
+            vertical-align: top;
+        }
 	
 	footer table {
         margin: 0;
@@ -457,16 +462,9 @@
 		font-variant:small-caps;
 	}
 
-	tr:nth-child(2n+1) td {
-		background-color: #f6f6f6;	
-	}
-	
-	footer tr:nth-child(2n+1) td, .markup tr:nth-child(2n+1) td {
-        background: none;  
-    }
 
 	th, td {
-		vertical-align: top;
+		/*vertical-align: top;*/
 		padding: 0.7143em 0.5em;
 	}
 	

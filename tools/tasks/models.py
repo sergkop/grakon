@@ -36,7 +36,7 @@ class TaskManager(BaseEntityManager):
 # TODO: introduce choices for types
 @entity_class(['locations', 'participants', 'posts'])
 class Task(BaseEntityModel):
-    title = models.CharField(u'Формулировка', max_length=250)
+    title = models.CharField(u'Формулировка', max_length=250, help_text=u'краткая формулировка гражданской задачи в виде вопроса. Лучше всего начать ее со слова "как", например: "как быстро и недорого обустроить свой двор?"')
     about = HTMLField(u'Описание', blank=True)
 
     objects = TaskManager()
@@ -50,6 +50,17 @@ class Task(BaseEntityModel):
     editable_fields = ['title', 'about']
 
     roles = ['admin', 'follower']
+
+    follow_button = {
+        'role': 'follower',
+        'cancel_msg': u'Вы хотите отписаться от новостей об этой задаче?',
+        'cancel_btn': u'Отписаться',
+        'cancel_btn_long': u'Отписаться',
+        'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
+        'confirm_btn': u'Следить',
+        'confirm_btn_long': u'Следить за задачей',
+        #'btn_class': 'bold',
+    }
 
     disqus_category = 'tasks'
 

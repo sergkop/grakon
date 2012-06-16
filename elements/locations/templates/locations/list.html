@@ -1,6 +1,6 @@
 <ul class="gr-locations-ul">
     {% for location_data in locations_data %}
-        <li loc_id="{{ location_data.location.id }}">
+        <li loc_id="{{ location_data.instance.id }}">
             {% with location=location_data.instance %}
                 {% include "locations/path.html" %}
             {% endwith %}

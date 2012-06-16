@@ -1,23 +1,10 @@
-<div class="gr-ideas-item">
+<div class="gr-ideas-item {% if forloop.last %} gr-ideas-item-last gr-mb30{% endif %}" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
     <div class="gr-ideas-content">
         <div class="gr-slider gr-slider-inactive">
             <div class="gr-close js-close-inactive">&nbsp;</div>
             <div class="gr-add gr-idea-selected">
-                <span href="" class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
+                <span class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
                 <span class="js-resources-list">{{ info.resources|length }}</span>
-            </div>
-
-            <div class="gr-small-popup gr-add-popup">
-                <div class="gr-close js-close">&nbsp;</div>
-                <div class="ym-clearfix">&nbsp;</div>
-                <select class="gr-mb10 gr-mt10" style="width:100%">
-                    <option>Выбрать ресурс</option>
-                </select>
-                <textarea style="width:100%">Описание (не более 140 символов)</textarea>
-                <div align="right" class="gr-mt5">
-                    <span class="highlighted">100</span>
-                    <span class="highlight">Сохранить</span>
-                </div>
             </div>
 
             <ul class="gr-source-list-slider js-resource-items">
@@ -25,19 +12,25 @@
                     <li>
                         <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
                         {% with resources=provider_resources.data %}
-                            {% include "resources/list.html" %}
+                            {% if provider_resources.provider.instance == request.profile %}
+                                {% with resource_editable="true" %}
+                                    {% include "resources/list.html" %}
+                                {% endwith %}
+                            {% else %}
+                                {% include "resources/list.html" %}
+                            {% endif %}
                         {% endwith %}
                     </li>
                 {% endfor %}
             </ul>
         </div>
 
-        <h3><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h3>
-        <p class="small">
+        <h3>{{ info.instance.title }}</h3>
+        <div class="gr-mb10">
             {% with person=info.participants.admin.entities.0.instance %}
                 {% include "participants/person.html" %}
             {% endwith %}
-        </p>
+        </div>
         <div>{{ info.instance.description|safe }}</div>
     </div>
 
@@ -50,9 +43,9 @@
         {% endif %}
 
         <span class="gr-bullet">&nbsp;</span>
-        <a href="" class="highlighted"><strong>Связать с проектом</strong></a>
+        <a class="bold js-link-to-project">Связать с проектом</a>
 
-        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.time|date:"j b Y H:i" }}</a></span>
+        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}" class="dimmed">{{ info.instance.time|date:"j b Y" }}</a></span>
     </div>
 
     <div class="gr-slider js-projects-content">

@@ -23,13 +23,24 @@
                 <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
 
                 <span class="gr-bullet">&nbsp;</span>
-                <a href="" class="highlighted"><strong>Следить за задачей</strong></a>
+
+                {% if request.user.is_authenticated %}
+                    {% if info.instance.id in request.profile_info.tasks.follower.ids %}
+                        {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
+                            {% include "participants/participate_button.html" %}
+                        {% endwith %}
+                    {% else %}
+                        {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
+                            {% include "participants/participate_button.html" %}
+                        {% endwith %}
+                    {% endif %}
+                {% endif %}
 
                 <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y" }}</span>
             </div>
             <div class="gr-slider js-follow-content">
                 <div class="gr-close js-slide-close">&nbsp;</div>
-                <div>
+                <div class="dimmed">
                     {% with person_entities=info.participants.follower.entities %}
                         {% include "participants/list.html" %}
                     {% endwith %}
@@ -39,10 +50,12 @@
     {% endfor %}
     </div>
 {% else %}
-    <div class="gr-blank">
-        <i class="gr-left-icon">&nbsp;</i>
-        <i class="gr-right-icon">&nbsp;</i>
-        <h2>Как благоустроить свой двор?</h2>
-        <p><a href="/create_task">На этот и много других вопросов Вы можете получить ответ, просто, задав его</a></p>
-    </div>
+    {% if is_location_page %}
+        <div class="gr-blank">
+            <i class="gr-left-icon">&nbsp;</i>
+            <i class="gr-right-icon">&nbsp;</i>
+            <h2>Как благоустроить свой двор?</h2>
+            <p><a href="/create_task">На этот и много других вопросов Вы можете получить ответ, просто, задав его</a></p>
+        </div>
+    {% endif %}
 {% endif %}

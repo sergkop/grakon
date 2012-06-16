@@ -1,16 +1,22 @@
-{% for entity in pagination_entities %}
-    <div>
-        {% with person=entity.instance %}
-            {% include "participants/person.html" %}
-        {% endwith %}
-        <div>
-            {% with resources=entity.resources.none.data %}
-                {% include "resources/list.html" %}
-            {% endwith %}
-        </div>
-    </div>
-{% endfor %}
+<div class="gr-descr">
+    <ul class="gr-source-list-slider js-resource-items-visible gr-bb-grey-list">
+        {% for entity in pagination_entities %}
+            <li class="gr-mb10">
+                <p>
+                    {% with person=entity.instance %}
+                        {% include "participants/person.html" %}
+                    {% endwith %}
+                </p>
 
-{% include "resources/description_popup.html" %}
+                {% with resources=entity.resources.none.data %}
+                    {% include "resources/list.html" %}
+                {% endwith %}
+            </li>
+        {% endfor %}
+        <!--li><a href="" class="ym-button">Еще 20</a></li-->
+    </ul>
 
-{% include "elements/paginator.html" %}
+    {% include "elements/paginator.html" %}
+
+    {% include "resources/description_popup.html" %}
+</div>

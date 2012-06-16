@@ -49,15 +49,6 @@ class BaseProfileView(object):
         ctx.update({
             'profile': self.entity,
             'is_admin': self.own_profile,
-            'follow_button': {
-                'cancel_msg': u'Вы хотите удалить этого пользователя из списка контактов?',
-                'cancel_btn': u'Удалить',
-                'cancel_btn_long': u'Удалить из контактов',
-                'confirm_msg': u'Вы хотите добавить этого пользователя в список контактов?',
-                'confirm_btn': u'Добавить',
-                'confirm_btn_long': u'Добавить в контакты',
-                'btn_class': 'ym-button gr-green-button gr-mb10',
-            },
             'location': location,
         })
         ctx.update(self.update_context())
@@ -86,9 +77,6 @@ class ProfileIdeasView(BaseProfileView, TemplateView):
     tab = 'ideas'
 
     def update_context(self):
-        from pprint import pprint
-        pprint(table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas')))
-        
         return table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas'))
 
 #class ProfileContactsView(BaseProfileView, TemplateView):

@@ -1,0 +1,33 @@
+{% if request.user.is_authenticated %}
+    <div id="link_to_project_dialog" class="hidden">
+        {% if request.profile_info.projects.admin.count > 0 %}
+            <p>Выберите один из ваших проектов для связи с выбранной задачей:</p>
+            <form id="link_to_project_form" method="post">
+                {% for info in request.profile_info.projects.admin.entities %}
+                    <input type="radio" name="project" value="{{ info.instance.id }}" /> {{ info.instance.title }}
+                {% endfor %}
+                <input class="hidden" name="idea" value="" />
+            </form>
+
+            <br/>
+            <p>Также вы можете <a href="{% url create_project %}">создать проект</a> на основе этой идее.</p>
+        {% else %}
+            <p>Вы можете <a href="{% url create_project %}">создать проект</a> на основе этой идее.</p>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        create_dialog("link_to_project_dialog", 400, 280, "Связать идею с проектом", "Отмена", {
+            "Связать": dialog_post_shortcut("{% url link_idea_to_project %}", {}, function(){}, true, "link_to_project_form")
+        });
+        $(".js-link-to-project").click(function(){
+            $("#link_to_project_dialog").dialog("open");
+            var idea_id = $(this).parent().parent().attr("instance_id");
+            $("#link_to_project_dialog [name='idea']").val(idea_id);
+        });
+    </script>
+{% else %}
+    <script type="text/javascript">
+        $(".js-link-to-project").click(login_dialog_init);
+    </script>
+{% endif %}

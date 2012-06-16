@@ -72,7 +72,7 @@
 	
 	nav {margin-bottom: .5em; padding-top: 2.5em}
 	
-	footer {height: 3em; position: relative; padding: .8em 0 1em; font-size: .9em;}
+	footer {height: 3.3em; position: relative; padding: .8em 0 1em; font-size: .9em; background-color: #f5f5f5; }
 		footer a {margin-right: 0.7em;}
 	
 	header {padding: 0.1em 0; position: fixed; width: 100%; z-index:1000;}
@@ -116,6 +116,7 @@
 	li {
 		margin-left:0.8em; /* LTR */
 	}
+        ul.gr-static li {margin-bottom: .7em;}
 
 	dd { margin:0 0 1em 0.8em; } /* LTR */
 
@@ -205,7 +206,7 @@
 	}
 	
 	.gr-wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -3em 0; padding: 0;  min-width: 950px;}
-	.gr-footer {height: 3.5em;}
+	.gr-footer {height: 3em;}
 }
 
 @media screen, projection {
@@ -223,7 +224,7 @@
 	.ym-column { display:table; width:100%;}
 
 	.ym-col1 { width: 70%; float:left; padding: 3em 2em 0 0;} /* center column */
-        #main .ym-col1   {width: auto; padding: 0; float: none;}
+        #main .ym-col1, .gr-wide .ym-col1  {width: auto; padding: 0; float: none;}
 	.ym-col2 { width: 30%; float:left;  margin-left: -100%; padding: 1em 1em 0 0;} /* left column */
 	.ym-col3 {  float:right; width: 30%; margin-left: -5px; margin-right: 0%; padding: 3em 0 0 2em;} /* right column */
 	
@@ -458,7 +459,7 @@
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
 	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -5px; padding-bottom: 3em;
-	box-shadow: 0 -10px 100px #e0e2e6}
+	box-shadow: 0 -20px 30px #f5f5f5}
 		#main .gr-content {box-shadow: none; border-top: none; background-color: #f0f9ff; padding: 1em 0}
 		#main .gr-content .ym-wrapper {background: url(../../images/bg-main-icons.jpg) 0 0;}
 	

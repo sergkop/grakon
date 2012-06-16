@@ -2,12 +2,14 @@ $(function(){
     //$("form.uniForm").uniform();
     //$(".gr-side-item h4 i, .gr-login-info a").tipsy({gravity: 'n', opacity: .8});
 
+    $("input[placeholder], textarea[placeholder]").placeholder();
+
     // Show/hide resources provided for idea
     $(".js-resources-list").click(function(){
         var slider = $(this).parent().parent();
         slider.toggleClass("gr-slider-inactive");
         slider.children(".gr-source-list-slider").slideToggle(100);
-    })
+    });
 
     // Show/hide popups with descriptions of idea resources
     $(".gr-resource-item-active")
@@ -33,7 +35,6 @@ $(function(){
         $(this).toggleClass("gr-active-link");
     });
 
-    // Close list of 
     $(".js-slide-close").click(function(){
         $(this).parent().hide();
         $(this).parent().parent().children(".gr-info-bar").children().removeClass("gr-active-link");
@@ -53,6 +54,83 @@ $(function(){
 
         // TODO: is it correct?
         $(".js-resource-items span").removeClass("gr-resource-item-active");
+    });
+
+    // Adding resources to idea
+    $(".js-add").click(function(){
+        if (USERNAME==""){
+            login_dialog_init();
+            return;
+        }
+
+        var button = $(this);
+        var idea = button.parent().parent().parent().parent();
+
+        var resource_popup = $("#add_resource_popup");
+
+        var select = resource_popup.children("select");
+        if (select.children("option").length == 0){
+            select.append($("<option/>").text("Выбрать ресурс").attr("value", ""));
+            _.each(RESOURCES, function(resource){
+                select.append($("<option/>").text(resource[1]).attr("value", resource[0]));
+            });
+        }
+
+        var dx = (button.offset().left+button.width()/2) - (resource_popup.width()/2);
+        var dy = button.offset().top + button.height() + 10;
+        resource_popup.css("top", dy).css("left", dx).show();
+
+        resource_popup.show();
+
+        //$(".gr-hover-popup").hide();
+        //$(".js-resource-items span").removeClass("gr-resource-item-active");
+
+        $("#add_idea_resource_btn").click(function(){
+            var resource = resource_popup.children("select").val();
+
+            if (resource == ""){
+                alert("Необходимо выбрать ресурс");
+                return;
+            }
+
+            // TODO: don't reload page
+            dialog_post_shortcut(ADD_RESOURCE_URL, {
+                "ct": idea.attr("ct"),
+                "id": idea.attr("instance_id"),
+                "provider": "true",
+                "resource": resource,
+                "description": resource_popup.children("textarea").val()
+            }, function(){
+                $("#add_resource_popup").hide();
+            }, true)();
+        });
+    });
+
+    // Closing popups
+    $(".js-close").click(function(){
+        $(this).parent().hide();
+        return false;
+    });
+
+    $(".js-open-add-resource-button").click(function(){
+        $("#add_project_resource_popup").show();
+    });
+
+    // Remove resource from idea
+    $(".js-remove-resource").click(function(){
+        var idea = $(this).parent().parent().parent().parent().parent().parent();
+        var label = $(this).parent();
+
+        dialog_post_shortcut(REMOVE_RESOURCE_URL, {
+            "ct": idea.attr("ct"),
+            "id": idea.attr("instance_id"),
+            "resource": label.attr("name"),
+            "provider": "true"
+        }, function(){
+            label.remove();
+            $(".gr-small-popup").hide();
+            alert("Ваш ресурс удален");
+        }, true)();
     });
 });
 
@@ -120,6 +198,13 @@ function dialog_post_shortcut(url, params, on_success, reload_page, form_id){
 function login_dialog_init(){
     $("#login_dialog").dialog("open");
     $('#login_form [name="csrfmiddlewaretoken"]').val(get_cookie("csrftoken"));
+}
+
+function select_resources(input){
+    input.attr("data-placeholder", "Выберите навыки и ресурсы");
+    if (!input.hasClass("chzn-done"))
+        input.chosen();
+    input.trigger("liszt:updated");
 }
 
 // Widget for choosing location path using several select elements
@@ -246,16 +331,16 @@ var LocationEditor = Backbone.View.extend({
         editor.$el.addClass("gr-editor");
 
         // Add cancel and save buttons
-        var cancel_btn = $("<span/>").text("Отмена")
-                .addClass("gr-editor-btn")
-                .click(function(){editor.recover();});
-        editor.$el.after(cancel_btn);
+        //var cancel_btn = $("<span/>").text("Отмена")
+        //        .addClass("gr-editor-btn")
+        //        .click(function(){editor.recover();});
+        //editor.$el.after(cancel_btn);
 
-        var add_location_btn = $("<span/>").text("Добавить территорию")
-                .addClass("gr-editor-btn")
-                .click(function(){
-                    // TODO: implement it
-                });
+        //var add_location_btn = $("<span/>").text("Добавить территорию")
+        //        .addClass("gr-editor-btn")
+        //        .click(function(){
+        //            // TODO: implement it
+        //        });
 
         var save_btn = $("<span/>").text("Сохранить")
                 .addClass("gr-editor-btn")
@@ -278,7 +363,7 @@ var LocationEditor = Backbone.View.extend({
 
             $("<span/>")
                     .attr("title", "Отказаться от участия")
-                    .addClass("remove-li-btn ui-icon ui-icon-close")
+                    .addClass("remove-li-btn gr-close")
                     .tipsy({gravity: 'n'})
                     .click(function(){
                         li.css("background-color", "#D9BDFF");
@@ -287,14 +372,12 @@ var LocationEditor = Backbone.View.extend({
                         li.css("background-color", "#FFFFFF");
 
                         // TODO: use model dialog here?
-                        if (confirmation){
-                            var params = {
+                        if (confirmation)
+                            dialog_post_shortcut(REMOVE_LOCATION_URL, {
                                 "loc_id": li.attr("loc_id"),
                                 "ct": editor.options.ct,
                                 "id": editor.options.entity_id
-                            }
-                            dialog_post_shortcut(REMOVE_LOCATION_URL, params, function(){li.remove();})();
-                        }
+                            }, function(){li.remove();})();
                     })
                     .prependTo(li);
         });
@@ -328,14 +411,29 @@ function prevent_enter_in_form(selector){
 // Widget for inline editing of text fields
 // Usage: new TextFieldEditor({el: $(div), edit_btn: $(edit_btn), add_btn: $(add_btn),
 //            ct: ct_id, entity_id: entity_id, field: field, type: "text" or "html"})
+// Also takes optional post_url and post_params parameters
 var TextFieldEditor = Backbone.View.extend({
     initialize: function(){
         this.edit_btn = this.options.edit_btn;
         this.add_btn = this.options.add_btn;
-        var editor = this;
 
-        editor.edit_btn.click(function(){editor.edit();});
-        editor.add_btn.click(function(){editor.edit();});
+        var editor = this;
+        this.edit_btn.click(function(){editor.edit();});
+        this.add_btn.click(function(){editor.edit();});
+
+        this.post_url = this.options.post_url || UPDATE_TEXT_FIELD_URL;
+    },
+
+    post_params: function(value){
+        if (this.options.post_params)
+            return this.options.post_params(this, value);
+
+        return {
+            ct: this.options.ct,
+            id: this.options.entity_id,
+            field: this.options.field,
+            value: value
+        };
     },
 
     edit: function(){
@@ -359,12 +457,7 @@ var TextFieldEditor = Backbone.View.extend({
                         // TODO: take related editor, not active
                         var value = tinyMCE.activeEditor.getContent();
 
-                    dialog_post_shortcut(UPDATE_TEXT_FIELD_URL, {
-                        ct: editor.options.ct,
-                        id: editor.options.entity_id,
-                        field: editor.options.field,
-                        value: value
-                    }, function(){
+                    dialog_post_shortcut(editor.post_url, editor.post_params(value), function(){
                         editor.old_value = value;
                         editor.recover();
                     })();
@@ -435,4 +528,26 @@ function show_comments(btn, id, url, category){
     btn.parent().after(disqus_div);
 
     load_disqus(id, url, category);
+}
+
+function add_project_resource(ct, instance_id){
+    dialog_post_shortcut(ADD_RESOURCE_URL, {
+        "ct": ct,
+        "id": instance_id,
+        "resource": $("#add_project_resource_popup input").val(),
+        "description": $("#add_project_resource_popup textarea").val()
+    }, function(){
+        $("#add_project_resource_popup").hide();
+    }, true)();
+}
+
+// TODO: popup with confirmation before deletion
+function remove_project_resource(ct, instance_id, resource){
+    dialog_post_shortcut(REMOVE_RESOURCE_URL, {
+        "ct": ct,
+        "id": instance_id,
+        "resource": resource
+    }, function(){
+        $("#add_project_resource_popup").hide();
+    }, true)();
 }

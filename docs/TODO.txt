@@ -1,29 +1,38 @@
-* rewrite disqus_page_params to take instance only
+* separation lines on idea page
+* project resources counter is -1 if no resources specified by admin
+* sort resources in project right panel by creation time
 
-* Разделить кнопки "Добавить задачу" и "Добавить проект". (разнести по вкладкам)
+* resources in adding idea popup + prohibit empty description
+
+* reimplement popup windows
+* popup before admin removes project resource
+
+* hide follow/unfollow button for admin
+
+
+* descriptions of html fields in forms are not shown (show inside field as grey text)
 
 * other option for resources
 * resources editing
-* participants tab on project (show resources)
 
-* adding ideas
-
-* list of participants on project tab
-* counter for people provided resources for project in info
-
-* project-ideas connection (editing ideas of the project)
+* idea title is not always a link (link was removed)
 
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
-
-* follow button in lists of projects and tasks
-
-* share buttons
-
-* idea title is not always a link
-* link to idea page with time - drop time, change color
+* deactivate disqus sso
+* rewrite disqus_page_params to take instance only
+* disqus id for entity should be obtained from entity model
 
 * resources editor on profile page (combine with editor in registration form)
+
+
+* count down counter under resource description
+
+* special location placeholder for empty tasks and projects lists should be moved to templates in locations
+
+* page title, image url and description should be specified as context variable
+* open share dialogs in popups (vk, fb, twitter)
+
 
 * use entity_base_view in location
 
@@ -39,43 +48,47 @@
 
 * new widget for location editor; add location in location list editor
 
+* editing resources for idea
+
 * fill in resource in registration when redirected from main page
 * add task and add project forms should open with initialized location
 
 Yulia:
-    * buttons for removing locations from a list
-    * location participants tab
-    * pointer cursor on resource labels
-    * format static pages (about, how to help, partners)
-    * login popup on the main page
-    * in text/html editing widget set background for buttons
-    * inline text editor is not displayed properly when start from empty string
-    * labels with text don't have arrows anymore
-    * dialog for adding ideas
-    * save and cancel buttons in title editing
+    * send message dialog
+    * feedback form formatting
+    * in chrome human icon above ideas on task page has blue top line
+    * top part of tabs is not clickable
+    * help text against location select in task create form is below widget
+    * idea page formatting, in particular - (пусто) when no resources are added
+    * popup for linking idea to project
+    * buttons in popups are not displayed in production
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
 * bug with disqus wall when some users log in
 
-* settings page
+* can admin unfollow an entity?
 
 * use tinymce parameters from settings.py in js
 * remove tinymce buttons opening popups
 * tinymce can be loaded twice due to inclusion in base.html
 * rewrite tinymce widget
--------------------------------------------------------------------------------
-* when mouse is over the date - show exact time in hover
-
-* can admin unfollow an entity?
-
-* Hide star near location form field where it is not required
-
-* do disqus counters for ideas work?
-
-* disqus id for entity should be obtained from entity model
+* getContent() should be taken for specific tinymce instances, not active
 
 * make ideas, tasks editable in lists
+
+* fill in create form fields with grey example values
+
+* settings page
+-------------------------------------------------------------------------------
+* project-ideas connection (editing ideas of the project)
+* linking idea to project on idea page
+
+* don't reload page after adding/removing resource to idea
+
+* when mouse is over the date - show exact time in hover
+
+* do disqus counters for ideas work?
 
 * display data for logged in user at main page (no redirect)
 
@@ -130,11 +143,7 @@ Performance:
 
 * Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
 
-* button for creating new entity on entities pages
-
 * ability to request entity deletion (like with profiles)
-
-* fill in create form fields with grey example values
 
 * Invite friends button under contacts in profile
 
@@ -161,8 +170,6 @@ Account activation:
     * what happens when account activation link expires? is it possible to register again?
 
 * README
-
-* show count of items in tables
 
 * adding urls about officials, events + universal entity feature for it
 
@@ -210,8 +217,6 @@ Social registration
 * order events according to the date (side list and table)
 
 * decorator to restrict permissions on access to edit/create views
-* process cases when edit tab is not shown but user tries to access it (e.g. other user's profile edit),
-  generalize tabs creation
 
 * make pages with lists of administered items and contacts; "показать все" links in side panels + header links
 
@@ -227,9 +232,6 @@ Social registration
 * entity model must contain info on how to display its instances in side panels and tables
 
 * Class to standartize forms features
-
-* start using tables in side panels everywhere
-* rename participants to profiles?
 
 * Introduce FINAL_URL_PREFIX and use
 
@@ -273,8 +275,6 @@ Disqus:
 
 Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
-    * when two buttons are close to each other (e.g. profile edit) - line appears between them
-    * unused skill icon in icons/badges.png
     * share and share_horizontal overlap a lot
 
 Misc:

@@ -1,3 +1,7 @@
-{% for person in person_entities %}
-    <a href="{{ person.instance.get_absolute_url }}">{{ person.instance }}</a>{% if not forloop.last %},{% endif %}
-{% endfor %}
+{% if person_entities %}
+    {% for person in person_entities %}
+        <a href="{{ person.instance.get_absolute_url }}">{{ person.instance }}</a>{% if not forloop.last %},{% endif %}
+    {% endfor %}
+{% else %}
+    (пусто)
+{% endif %}
