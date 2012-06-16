@@ -125,11 +125,8 @@ class Profile(BaseEntityModel):
     def get_absolute_url(self):
         return ('profile', [self.username])
 
-    def full_name(self):
-        return self.first_name + u' ' + self.last_name
-
     def __unicode__(self):
-        return self.full_name() if self.show_name else self.username
+        return self.first_name + u' ' + self.last_name
 
 def create_profile(sender, **kwargs):
     if kwargs.get('created', False):
