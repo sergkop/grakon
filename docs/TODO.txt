@@ -1,3 +1,5 @@
+* separation lines on idea page
+
 * resources in adding idea popup + prohibit empty description
 
 * reimplement popup windows
@@ -57,6 +59,7 @@ Yulia:
     * help text against location select in task create form is below widget
     * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
+    * buttons in popups are not displayed in production
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
