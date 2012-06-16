@@ -2,6 +2,8 @@
 * project resources counter is -1 if no resources specified by admin
 * sort resources in project right panel by creation time
 
+* sort lists on the main page
+
 * resources in adding idea popup + prohibit empty description
 
 * reimplement popup windows
@@ -9,6 +11,9 @@
 
 * hide follow/unfollow button for admin
 
+* analytics of registration form
+
+* in message letter duplicate a link to send message in text
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
 
