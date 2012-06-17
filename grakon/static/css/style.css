@@ -1,4 +1,6 @@
 input[type=text], input[type=password], textarea {border: 1px solid #eee; padding: 0.2em;}
+input {vertical-align: middle;}
+input[type=radio] {vertical-align: top;}
 
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
@@ -18,6 +20,7 @@ input[type=text], input[type=password], textarea {border: 1px solid #eee; paddin
 .gr-mb15 {margin-bottom: 1.5em !important;}
 .gr-mt20 {margin-top: 2em !important;}
 .gr-mb20 {margin-bottom: 2em !important;}
+.gr-mt30 {margin-top: 3em !important;}
 .gr-mb30 {margin-bottom: 3em !important;}
 .gr-pt20 {padding-top: 2em !important;}
 .gr-pb20 {padding-bottom: 2em !important;}
@@ -29,7 +32,7 @@ input[type=text], input[type=password], textarea {border: 1px solid #eee; paddin
 .gr-logo {margin-left: -45px;}
 	#main .gr-logo {margin-left: 0;} 
 .gr-login-info {float: right;}
-    .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.5em 1.4em 1.6em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
+    .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.6em 1.4em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
 		.gr-login-info a:hover, .gr-login-info div.gr-login-user:hover {text-decoration: none; background-color: rgba(255,255,255, 0.1);}
 		.gr-login-info div.gr-login-user{ position: relative; border: none; box-shadow: none; cursor: pointer; padding-bottom: 1em;}
 		.gr-job {float: left;}
@@ -64,8 +67,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 .gr-vk {margin: 0 auto 9px; height: 22px; overflow: hidden; width: 170px;}
 
 /*pagination*/
-.gr-pagination {clear: both; margin-top: 10px; text-align: center; font-size: .95em;}
-	.gr-pagination span {cursor: pointer; color: #a9c93e;}
+.gr-pagination {clear: both; margin-top: 2em; text-align: center;}
+	.gr-pagination span {cursor: pointer; color: #009EC5;}
 		.gr-pagination span.active {color: #000; font-weight: bold;}
 	.gr-pagination-arrow-previous, .gr-pagination-arrow-next {background: url(../images/icons/arrows-pagination.png) 0 1px no-repeat; cursor: pointer; padding: 3px 8px !important;}
 	.gr-pagination-arrow-previous {margin-right: 5px;}
@@ -90,7 +93,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default;}
+	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin-bottom: .3em}
 		.gr-resource-item-active {padding-right: .2em;} 
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
 		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px; cursor: pointer;}
@@ -175,6 +178,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .7em}
 #main .gr-follow-button {width: 300px; margin: 1.5em 0 1em;}
 #main .ym-col1 .markup {font-size: 1.3em;}
+    #main .ym-col1 .markup td {padding: 1em 0;}
 	#main .ym-col1 .markup a {text-decoration: underline;}
 .gr-popular-list {background-color: #aad8dd; border-radius: .1em; width: 268px; line-height: 1.3em; text-align:left;}	
 	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: 1em .5em .5em 75px; line-height: 1em;}

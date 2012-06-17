@@ -58,6 +58,7 @@
 	* Styling for: <form>, <fieldset>, <legend>, <label> and rows (class="ym-fbox-[xxx]")
 	*
 	*/
+    
 	.ym-form {
 		background:#f4f4f4;
 		border:2px #fff solid;
@@ -245,7 +246,8 @@
 	.ym-form button,
 	.ym-form input[type="button"],
 	.ym-form input[type="reset"],
-	.ym-form input[type="submit"]{
+	.ym-form input[type="submit"],
+    .ui-dialog .ui-dialog-buttonpane button {
 		display: inline-block;
 		white-space: nowrap;
 		border-radius: .4em;
@@ -260,11 +262,14 @@
 		box-shadow: inset 0 -1px 0 #0b6c9e;
 	}
 	
-	a.ym-button {
+	a.ym-button, .ui-dialog .ui-dialog-buttonpane button {
 		color: #fff;
-        font-size: 1em; 
         line-height: 1.4em;
 	}
+	
+    a.ym-button {
+        font-size: 1em; 
+    }
 	
 	.gr-side-item .ym-button
 	{

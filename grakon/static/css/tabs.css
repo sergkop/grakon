@@ -32,16 +32,21 @@
 
 	.jquery_tabs ul.tabs-list li a {
 		line-height: 1.5em;
-		padding: .5em 2em 1em;
+		padding: 1.2em 2em .8em;
 	}
 	
+	.jquery_tabs ul.tabs-list li.current a {
+        padding-bottom: 1em;        
+    }
+	
 	.jquery_tabs ul.tabs-list li.wall-tab a {
-        padding: .5em .3em 1em 2em;
+        padding-right: .3em;
     }
 	
 	.jquery_tabs ul.tabs-list li a.disqus-counter {
         line-height: 1.5em;
-        padding: .5em 2em 1em 0;
+        padding-left: 0;
+        padding-right: 2em;
     }
 
 	.jquery_tabs .tabhead {
@@ -69,12 +74,10 @@
 		display:inline;
 		float:left;
 		margin:0 .3em 0 0;
-		padding:.6em 0 0 0;
 	}
 	
 
 	.jquery_tabs ul.tabs-list li.current {
-		padding: .5em 0 0 0;
         background-color: #fff;
 	}
 
@@ -106,10 +109,6 @@
         background-color: #E0E2E6;
     }
     
-    .jquery_tabs ul.tabs-list li:hover a {
-     padding-bottom: .7em;  
-    }
-
 	.jquery_tabs ul.tabs-list li.current a,
 	.jquery_tabs ul.tabs-list li.current a:focus,
 	.jquery_tabs ul.tabs-list li.current a:hover,

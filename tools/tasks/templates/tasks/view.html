@@ -17,9 +17,10 @@
 
         <span class="gr-bullet">&nbsp;</span>
         <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
-        <span class="gr-bullet">&nbsp;</span>
+        
 
         {% with is_participant=is_follower button=task.follow_button btn_class="bold" %}
+            <span class="gr-bullet">&nbsp;</span>
             {% include "participants/participate_button.html" %}
         {% endwith %}
 

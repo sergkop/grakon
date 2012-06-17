@@ -4,7 +4,7 @@
             <p>Выберите один из ваших проектов для связи с выбранной задачей:</p>
             <form id="link_to_project_form" method="post">
                 {% for info in request.profile_info.projects.admin.entities %}
-                    <input type="radio" name="project" value="{{ info.instance.id }}" /> {{ info.instance.title }}
+                    <p><input type="radio" name="project" value="{{ info.instance.id }}" /> {{ info.instance.title }}</p>
                 {% endfor %}
                 <input class="hidden" name="idea" value="" />
             </form>

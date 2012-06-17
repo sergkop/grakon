@@ -9,7 +9,7 @@ from services.email import send_email
 class FeedbackForm(forms.Form):
     name = forms.CharField(label=u'Ваше имя')
     email = forms.EmailField(label=u'Электронная почта')
-    body = forms.CharField(label=u'Сообщение', widget=Textarea(attrs={'style': 'width:50%;'}))
+    body = forms.CharField(label=u'Сообщение', widget=Textarea())
 
     helper = form_helper('feedback', u'Отправить')
 
