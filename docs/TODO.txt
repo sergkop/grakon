@@ -9,6 +9,8 @@
 * reimplement popup windows
 * popup before admin removes project resource
 
+* add more content to init_database
+
 * hide follow/unfollow button for admin
 
 * analytics of registration form
@@ -67,6 +69,7 @@ Yulia:
     * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
     * buttons in popups are not displayed in production
+    * send message button in letter
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
