@@ -20,7 +20,7 @@
             <h5>Ресурсы:{% if is_admin %}<i id="resources_edit_btn" class="gr-editing">&nbsp;</i>{% endif %}</h5>
             <div id="resources_list">
                 {% for resource in info.resources.none.data %}
-                    <div class="gr-resource-item small">{{ resource.title }}</div>
+                    <div class="gr-resource-item">{{ resource.title }}</div>
                     <p>{{ resource.description }}</p>
                 {% endfor %}
             </div>

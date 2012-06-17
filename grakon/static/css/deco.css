@@ -70,7 +70,7 @@ header {
 	background: linear-gradient(top, #64c2f0, #48a7d5);
 }
 
-.ym-hlist ul li.on a, .ym-button {
+.ym-hlist ul li.on a, .ym-button, .ui-dialog .ui-dialog-buttonpane button {
 	background-color: #4aa9d7;	
 	background: -moz-linear-gradient(top, #66c3f0, #4aa9d7);
 	background: -ms-linear-gradient(top, #66c3f0, #4aa9d7);

@@ -2,13 +2,20 @@
 
 {% if request.user.is_authenticated %}
     <div id="send_message_dialog" class="hidden">
-        <p>Отправить сообщение пользователю <strong>{{ profile }}</strong>:</p>
-
-        <form id="send_message_form" method="post">
-            <p><label for="id_title">Тема:</label> <input type="text" maxlength="100" name="title" id="id_title"></p>
-            <div><label for="id_body">Сообщение:</label></div>
-            <p><textarea name="body" cols="40" rows="6" id="id_body"></textarea></p>
-            <p><label for="id_show_email">Показать email получателю:</label> <input type="checkbox" id="id_show_email" name="show_email" checked="checked"></p>
+          <form id="send_message_form" method="post">
+            <table class="markup" width="420">
+                <tr>
+                    <td width="20%"><label for="id_title">Тема:</label></td>
+                    <td><input type="text" maxlength="100" name="title" id="id_title" style="width: 100%" /></td>
+                </tr>
+                <tr>
+                    <td><label for="id_body">Сообщение:</label></td>
+                    <td><textarea name="body" cols="40" rows="9" id="id_body" style="width: 100%" ></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><label for="id_show_email">Показать email получателю:</label> <input type="checkbox" id="id_show_email" name="show_email" checked="checked"></td>
+                </tr>
+            </table>
         </form>
     </div>
 

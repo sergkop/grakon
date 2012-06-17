@@ -65,7 +65,7 @@ Yulia:
     * feedback form formatting
     * in chrome human icon above ideas on task page has blue top line
     * top part of tabs is not clickable
-    * help text against location select in task create form is below widget
+    * help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select" 
     * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
     * buttons in popups are not displayed in production

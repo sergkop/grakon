@@ -21,9 +21,10 @@
                     <span class="gr-bullet">&nbsp;</span>
                     <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
 
-                    <span class="gr-bullet">&nbsp;</span>
+                    
 
                     {% if request.user.is_authenticated %}
+                        <span class="gr-bullet">&nbsp;</span>
                         {% if info.instance.id in request.profile_info.projects.follower.ids %}
                             {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
                                 {% include "participants/participate_button.html" %}
