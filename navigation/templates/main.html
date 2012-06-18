@@ -90,10 +90,11 @@
                                 <li>
                                     <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
                                     <div class="gr-info-bar">
+                                        Ресурсы: {{ info.resources|length }}
+                                        <span class="gr-bullet">&nbsp;</span>
                                         Комментарии:
                                         <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
-                                        <span class="gr-bullet">&nbsp;</span>
-                                        Поддержали: {{ info.resources|length }}
+                                        
                                     </div>
                                 </li>
                             {% endfor %}
