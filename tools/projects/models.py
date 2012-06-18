@@ -43,6 +43,14 @@ class Project(BaseEntityModel):
     def disqus_url(self):
         return reverse('project_wall', args=[self.id])
 
+    def calc_rating(self):
+        # Number of people provided resources for project
+        providers = self.info()['resources'].keys()
+        if 'none' in providers:
+            return len(providers) - 1
+        else:
+            return len(providers)
+
     @models.permalink
     def get_absolute_url(self):
         return ('project', [self.id])

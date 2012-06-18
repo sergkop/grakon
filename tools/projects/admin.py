@@ -3,7 +3,7 @@ from django.contrib import admin
 from tools.projects.models import Project, ProjectIdeas
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title', 'rating')
     ordering = ('-time',)
 
 class ProjectIdeasAdmin(admin.ModelAdmin):

@@ -70,6 +70,12 @@ class Task(BaseEntityModel):
     def disqus_url(self):
         return reverse('task_wall', args=[self.id])
 
+    def calc_rating(self):
+        # Number of people provided resources for task ideas
+        info = self.info()
+        return len(set(provider_id for idea_info in info['ideas']['entities'] \
+                for provider_id in idea_info['resources']))
+
     @models.permalink
     def get_absolute_url(self):
         return ('task', [self.id])

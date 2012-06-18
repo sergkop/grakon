@@ -46,8 +46,8 @@ class EntityPostManager(BaseEntityPropertyManager, BaseEntityManager):
         self.create(content_type=ContentType.objects.get_for_model(type(entity)),
                 entity_id=entity.id, profile=profile, content=content, url=url, opinion=opinion)
 
-        for source in self.model.points_sources:
-            profile.update_source_points(source)
+        #for source in self.model.points_sources:
+        #    profile.update_source_points(source)
 
         entity.clear_cache()
         profile.clear_cache()

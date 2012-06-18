@@ -1,28 +1,23 @@
+* calculate ratings (similar to points - unify in one method?) - using info
+* sorting by ratings
+
 * separation lines on idea page
 * project resources counter is -1 if no resources specified by admin
 * sort resources in project right panel by creation time
+* edit own resources on idea page
 
 * sort lists on the main page
 
-* resources in adding idea popup + prohibit empty description
-
-* reimplement popup windows
 * popup before admin removes project resource
-
-* add more content to init_database
-
-* hide follow/unfollow button for admin
-
-* analytics of registration form
-
-* in message letter duplicate a link to send message in text
-
-* descriptions of html fields in forms are not shown (show inside field as grey text)
 
 * other option for resources
 * resources editing
+* resources editor on profile page (combine with editor in registration form)
 
-* idea title is not always a link (link was removed)
+* descriptions of html fields in forms are not shown (show inside field as grey text)
+
+* page title, image url and description should be specified as context variable
+* open share dialogs in popups (vk, fb, twitter)
 
 * comments don't work in lists of tasks, ideas, projects
 * disqus counter - not link
@@ -30,22 +25,28 @@
 * rewrite disqus_page_params to take instance only
 * disqus id for entity should be obtained from entity model
 
-* resources editor on profile page (combine with editor in registration form)
 
+
+
+* reimplement popup windows in project
+
+* add more content to init_database
+
+* hide follow/unfollow button for admin
+
+* analytics of registration form
+
+* resources in adding idea popup
+
+* idea title is not always a link (link was removed)
 
 * count down counter under resource description
 
 * special location placeholder for empty tasks and projects lists should be moved to templates in locations
 
-* page title, image url and description should be specified as context variable
-* open share dialogs in popups (vk, fb, twitter)
-
-
 * use entity_base_view in location
 
 * Убрать пустые параграфы из описания задачи/проекта. Мы можем как-то это контролировать?
-
-* пока нет in case when there is no contacts or participants
 
 * deactivate points system
 * depricate posts
@@ -57,14 +58,12 @@
 
 * editing resources for idea
 
-* fill in resource in registration when redirected from main page
 * add task and add project forms should open with initialized location
 
 Yulia:
     * send message dialog
     * feedback form formatting
     * in chrome human icon above ideas on task page has blue top line
-    * top part of tabs is not clickable
     * help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select" 
     * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
@@ -217,9 +216,6 @@ Social registration
     * file with all passwords, social applications (where to get them)
     * add Facebook App ID to disqus
 ---------------------------------------------------------------------------------
-* calculate ratings (similar to points - unify in one method?) - using info
-* sorting by ratings
-
 * after deleting official points are not updated
 
 * order events according to the date (side list and table)

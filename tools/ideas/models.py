@@ -49,6 +49,10 @@ class Idea(BaseEntityModel):
     def disqus_url(self):
         return self.get_absolute_url()
 
+    def calc_rating(self):
+        # Number of people provided resources for idea
+        return len(self.info()['resources'])
+
     @models.permalink
     def get_absolute_url(self):
         return ('idea', [self.id])

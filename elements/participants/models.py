@@ -89,12 +89,12 @@ class EntityParticipantManager(BaseEntityPropertyManager):
             getattr(entity, self.model.feature).filter(role=role, **{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
-        if self.model.points_sources:
-            from users.models import Profile
-            profiles = [x for x in [entity, instance] if type(x) is Profile]
-            for profile in profiles:
-                for source in self.model.points_sources:
-                    profile.update_source_points(source)
+        #if self.model.points_sources:
+        #    from users.models import Profile
+        #    profiles = [x for x in [entity, instance] if type(x) is Profile]
+        #    for profile in profiles:
+        #        for source in self.model.points_sources:
+        #            profile.update_source_points(source)
 
         entity.clear_cache()
         instance.clear_cache()

@@ -104,6 +104,10 @@ class EntityResourceManager(BaseEntityPropertyManager):
         if provider:
             provider.clear_cache()
 
+        entity.update_rating()
+        if entity.entity_name == 'ideas':
+            entity.task.update_rating()
+
     def add_or_update(self, entity, resource, description='', provider=None):
         self._add_remove(entity, resource, True, description, provider)
 
@@ -129,9 +133,9 @@ class EntityResourceManager(BaseEntityPropertyManager):
         # TODO: this can cause IntegrityError
         self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
 
-        from users.models import Profile
-        if type(entity) is Profile:
-            entity.update_source_points('resources')
+        #from users.models import Profile
+        #if type(entity) is Profile:
+        #    entity.update_source_points('resources')
 
         entity.clear_cache()
 

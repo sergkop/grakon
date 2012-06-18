@@ -101,25 +101,26 @@ class Profile(BaseEntityModel):
     }
 
     def calc_rating(self):
-        pass # TODO: implement it
+        info = self.info()
+        return info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + info['projects']['admin']['count']
 
     # TODO: make it admin interface command
-    def update_points(self):
-        # TODO: create celery task
-        Points.objects.recalculate(self)
+    #def update_points(self):
+    #    # TODO: create celery task
+    #    Points.objects.recalculate(self)
 
     # TODO: take bool parameter whether to run it in background
-    def update_source_points(self, source):
-        # TODO: create celery task
-        Points.objects.recalculate_source(self, source)
+    #def update_source_points(self, source):
+    #    # TODO: create celery task
+    #    Points.objects.recalculate_source(self, source)
 
     def has_contact(self, profile):
         return EntityParticipant.objects.is_participant(profile, self, 'follower')
 
-    def save(self):
-        super(Profile, self).save()
-        self.update_points()
-        self.clear_cache()
+    #def save(self):
+    #    super(Profile, self).save()
+    #    self.update_points()
+    #    self.clear_cache()
 
     @models.permalink
     def get_absolute_url(self):

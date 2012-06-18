@@ -52,12 +52,12 @@ class BaseEntityPropertyManager(models.Manager):
             getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
-        if self.model.points_sources:
-            from users.models import Profile
-            profiles = [x for x in [entity, instance] if type(x) is Profile]
-            for profile in profiles:
-                for source in self.model.points_sources:
-                    profile.update_source_points(source)
+        #if self.model.points_sources:
+        #    from users.models import Profile
+        #    profiles = [x for x in [entity, instance] if type(x) is Profile]
+        #    for profile in profiles:
+        #        for source in self.model.points_sources:
+        #            profile.update_source_points(source)
 
         entity.clear_cache()
         instance.clear_cache()
@@ -178,7 +178,7 @@ class BaseEntityManager(models.Manager):
 # TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
-    rating = models.IntegerField(default=0, editable=False) # used for sorting entities
+    rating = models.IntegerField(default=0) # used for sorting entities
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
     add_time = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
@@ -210,10 +210,14 @@ class BaseEntityModel(models.Model):
         # TODO: this code can fail
         return type(self).objects.info_for([self.id], related)[self.id]
 
-    # TODO: recalculate rating on save or in celery (?) and reset cache
     def calc_rating(self):
         """ Return rating using entity info """
         raise NotImplemented
+
+    # TODO: recalculate rating on save or in celery (?) and reset cache
+    def update_rating(self):
+        self.rating = self.calc_rating()
+        self.save()
 
     @reset_cache
     def save(self, *args, **kwargs):
