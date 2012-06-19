@@ -81,7 +81,7 @@ INSTALLED_APPS = (
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
-
+    'chart_tools',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

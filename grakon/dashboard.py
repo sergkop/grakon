@@ -116,7 +116,6 @@ class CustomAppIndexDashboard(AppIndexDashboard):
 '''
 
 class CustomIndexDashboard(Dashboard):
-
     def __init__(self, **kwargs):
         Dashboard.__init__(self, **kwargs)
         self.children.append(
@@ -145,8 +144,8 @@ class CustomIndexDashboard(Dashboard):
             display="tabs",
             children=[
                 AllRecentActions(
-                    title=_('Recent Actions'),
-                    limit=5
+                    title=_('Common stats'),
+                    limit=10
                 ),
             ]
         ))
