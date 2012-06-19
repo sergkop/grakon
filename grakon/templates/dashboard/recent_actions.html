@@ -16,7 +16,7 @@
     </div>    
 </form>
 </div>
-
+<!--
 <ul>
     {% spaceless %}
     {% for child in module.children %}
@@ -30,5 +30,109 @@
     </li>
     {% endfor %}
     {% endspaceless %}
-</ul>
+</ul>-->
+<div align="center" id="graphics" style="padding-top:10px;">
+{% load gr_chart_tags %}
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
+    {{ module.uuntil_now }}</br>
+    {{ module.uyear }}</br>
+    {{ module.umonth }}</br>
+    {{ module.uweek }}</br>
+    {{ module.utoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.uvalues module.ucaptions '580x150' 'Users' %}
+
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
+    {{ module.iuntil_now }}</br>
+    {{ module.iyear }}</br>
+    {{ module.imonth }}</br>
+    {{ module.iweek }}</br>
+    {{ module.itoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.idea_values module.idea_captions '580x150' 'Ideas' %}
+
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
+    {{ module.puntil_now }}</br>
+    {{ module.pyear }}</br>
+    {{ module.pmonth }}</br>
+    {{ module.pweek }}</br>
+    {{ module.ptoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.project_values module.project_captions '580x150' 'Projects' %}
+
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
+    {{ module.euntil_now }}</br>
+    {{ module.eyear }}</br>
+    {{ module.emonth }}</br>
+    {{ module.eweek }}</br>
+    {{ module.etoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.event_values module.event_captions '580x150' 'Events' %}
+
+</div>
+
+<script type="text/javascript">
+//If not jQuery - load it
+/*
+if (typeof jQuery === "undefined" || jQuery.fn.jquery !== '1.7.2') {
+        var script_tag = document.createElement('script');
+        script_tag.setAttribute("type","text/javascript");
+        script_tag.setAttribute("src","http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
+        script_tag.onload = jQuery_resize; // Run main() once jQuery has loaded
+        script_tag.onreadystatechange = function() { // Same thing but for IE
+            if (this.readyState == 'complete' || this.readyState == 'loaded') jQuery_resize();
+        }
+    document.getElementsByTagName("head")[0].appendChild(script_tag);
+} else {
+    jQuery_resize();
+}
+ */
+
+$(document).ready(function(){
+            resize();
+            jQuery_resize();
+        });
+
+function jQuery_resize(){
+           $(document).ready(function(){
+                resize();  
+            });
+
+           $(window).resize(function(){
+                resize();  
+            });
+}
+    
+function resize(){
+    var width = $("#graphics").width();
+    var windowWidth = $(window).width();
+    if (!width || width >= windowWidth/2)
+        width = Math.round((windowWidth-100)/2);
+    
+    $("#graphics img").each(function(i,el){
+            var imageSrc = $(el).attr("src");
+            imageSrc = imageSrc.replace(new RegExp("&chs=[0-9]+x[0-9]+&","g"),"&chs="+width+"x150&");  
+            $(el).attr("src",imageSrc);
+            $(el).attr("width",width);
+    });
+}
+
+</script>
+
 {% endblock %}

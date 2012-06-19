@@ -17,5 +17,9 @@ flup
 google-api-python-client
 sphinx
 django-admin-tools
+python-dateutil==1.5
+pytz
+django-qsstats-magic
+django-chart-tools
 #mysql-python
 #django-simple-captcha

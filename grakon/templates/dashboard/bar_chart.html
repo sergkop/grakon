@@ -1,0 +1,13 @@
+{% load chart_tags %}
+{% chart %}
+    cht=bvs
+    chco=4D89F9
+    chd=t:{{ values|join:"," }}
+    chs={{ size }}
+    chds=0,{{ max_value }}
+    chxr=1,0,{{ max_value }}
+    chbh=a
+    chxt=x,y
+    chxl=0:|{{ captions|join:"|" }}
+    chtt={{caption}}
+{% endchart %}
