@@ -33,7 +33,7 @@ class BaseProjectView(object):
         self.tabs = [
             ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
             ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
-            ('participants', u'Участники: %i' % (len(self.info['resources'])-1), reverse('project_participants', args=[id]), '', 'projects/participants.html'),
+            ('participants', u'Участники: %i' % self.info['instance'].rating, reverse('project_participants', args=[id]), '', 'projects/participants.html'),
         ]
 
         ctx.update(entity_tabs_view(self))

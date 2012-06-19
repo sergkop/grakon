@@ -36,9 +36,10 @@
         var USERNAME = "{{ request.user.username }}";
 
         VK.init({apiId: {{ VK_APP_ID }}, onlyWidgets: true});
-    </script>
 
-    {% include "disqus/config_js.html" %}
+        var disqus_shortname = "{{ DISQUS_SHORTNAME }}";
+        var disqus_developer = {{ DISQUS_DEVELOPER }};
+    </script>
 
     {% block head %}{% endblock %}
 

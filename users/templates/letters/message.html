@@ -8,7 +8,6 @@
             <td width="330">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <!--td width="58" valign="top"><img src="i/mail/avatar.jpg" /></td-->
                         <td valign="top" align="left">
                             <font size="3" face="Tahoma, Geneva, sans-serif"><strong>{{ title }}</strong></font></a>&nbsp;
                             <br />
@@ -17,11 +16,6 @@
                     </tr>
                 </table>
             </td>
-            <!--td>&nbsp;</td>
-            <td valign="top" align="left" width="105">
-                <img src="i/mail/icon-leader.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="85ac14">20</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong><br />
-                <img src="i/mail/icon-offline.png" align="absmiddle" />&nbsp; <strong><font size="3" face="Tahoma, Geneva, sans-serif" color="3290bf">15</font><font size="2" face="Tahoma, Geneva, sans-serif" color="cdd6db">/100</font></strong>
-            </td-->
         </tr>
     </table>
 
@@ -33,8 +27,15 @@
         <p><b>Не отвечайте на это письмо в вашем почтовом клиенте!</b></p>
         <p>Вы можете ответить на это сообщение на нашем сайте:</p>
     {% endif %}
-    <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" target="_blank">
-        <img src="{{ URL_PREFIX }}{{ STATIC_URL }}images/letters/btn-respond-to-message.png" border="0" />
+
+    <a href="{{ URL_PREFIX }}{{ sender.get_absolute_url }}" style="text-decoration: none;" target="_blank">
+        <table bgcolor="#4baad8" width="180">
+            <tr>
+                <td align="center">
+                    <font color="#FFFFFF" size="2" face="Tahoma, Geneva, sans-serif"><strong>&nbsp;Отправить сообщение&nbsp;</strong></font>
+                </td>
+            </tr>
+        </table>
     </a>
 
     <div style="border-bottom: 1px #a5a5a5 dotted">&nbsp;</div>

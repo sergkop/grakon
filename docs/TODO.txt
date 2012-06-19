@@ -1,12 +1,8 @@
-* calculate ratings (similar to points - unify in one method?) - using info
-* sorting by ratings
+* send button in message (remove &nbsp; ?)
 
-* separation lines on idea page
-* project resources counter is -1 if no resources specified by admin
 * sort resources in project right panel by creation time
 * edit own resources on idea page
-
-* sort lists on the main page
+* add resource button on idea page
 
 * popup before admin removes project resource
 
@@ -19,14 +15,16 @@
 * page title, image url and description should be specified as context variable
 * open share dialogs in popups (vk, fb, twitter)
 
-* comments don't work in lists of tasks, ideas, projects
-* disqus counter - not link
-* deactivate disqus sso
-* rewrite disqus_page_params to take instance only
-* disqus id for entity should be obtained from entity model
+* small html fixes of idea page with Yulia
 
 
+* don't load social networks scripts
 
+* links in breadcrumbs should depend on type of page currently displayed
+
+* drop idea names
+
+* ability to delete ideas, tasks (without reesources), projects
 
 * reimplement popup windows in project
 
@@ -69,6 +67,7 @@ Yulia:
     * popup for linking idea to project
     * buttons in popups are not displayed in production
     * send message button in letter
+    * remove underlining links in main menu
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
@@ -88,6 +87,9 @@ Yulia:
 
 * settings page
 -------------------------------------------------------------------------------
+* display data for logged in user at main page (no redirect) - data from followed entities
+* in users list show numbers of ideas, projects, tasks and resources provided
+
 * project-ideas connection (editing ideas of the project)
 * linking idea to project on idea page
 
@@ -96,8 +98,6 @@ Yulia:
 * when mouse is over the date - show exact time in hover
 
 * do disqus counters for ideas work?
-
-* display data for logged in user at main page (no redirect)
 
 * set of permissions (verified users)
 

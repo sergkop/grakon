@@ -4,7 +4,7 @@
             <div class="gr-ideas-item">
                 <div class="gr-ideas-content">
                     <div class="gr-add gr-idea-selected">
-                        <span>{{ info.resources|length|add:"-1" }}</span>
+                        <span>{{ info.instance.rating }}</span>
                     </div>
                     <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
                     <div class="gr-mb10">
@@ -20,8 +20,6 @@
 
                     <span class="gr-bullet">&nbsp;</span>
                     <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
-
-                    
 
                     {% if request.user.is_authenticated %}
                         <span class="gr-bullet">&nbsp;</span>

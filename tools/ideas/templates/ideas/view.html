@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="gr-descr" ct="{{ info.ct }}" instance_id="{{ idea.id }}">
+    <div class="gr-descr gr-ideas-list" ct="{{ info.ct }}" instance_id="{{ idea.id }}">
         <div class="gr-fl">
             {% with person=admin %}
                 {% include "participants/person.html" %}
@@ -28,7 +28,7 @@
         <div class="dimmed" align="right">{{ idea.time|date:"j b Y" }}</div>
         <div class="ym-clearfix">&nbsp;</div>
 
-        <div class="gr-mt10">
+        <div class="gr-ideas-item gr-pb20">
             {% with field="description" html=idea.description %}
                 {% include "elements/html_block.html" %}
                 {% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}
@@ -36,16 +36,18 @@
         </div>
 
         {% if projects %}
-            <h5>Связанные проекты:</h5>
-            <ul class="gr-links-list gr-mb20">
-                {% for project in projects %}
-                    <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
-                {% endfor %}
-            </ul>
+            <div class="gr-ideas-item">
+                <h5>Связанные проекты:</h5>
+                <ul class="gr-links-list gr-mb20">
+                    {% for project in projects %}
+                        <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
 
-        <h5>Ресурсы:</h5>
-        <div class="gr-ideas-item gr-ideas-resources gr-noborder">
+        <div class="gr-ideas-item gr-mb30">
+            <h5>Ресурсы:</h5>
             <div class="gr-ideas-content">
                 <div class="gr-add gr-idea-selected">
                     <span class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
