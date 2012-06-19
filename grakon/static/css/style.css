@@ -158,8 +158,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-blank .gr-left-icon-list {background-position: 0 -106px; height: 90px;} 
 	
 /* Главная страница */
-.gr-main-steps {background-color: #dbedcd; padding-top: 55px;}
-	.gr-main-steps h1 {font-size: 1.3em; color: #a5be85; text-align: center; margin-bottom: 1.53em; text-transform: uppercase;}
+.gr-main-steps {background-color: #dbedcd; padding-top: 62px;}
+	.gr-main-steps h1 {font-size: 1.5em; letter-spacing: .02em; color: #7fae51; text-align: center; margin-bottom: 1.53em; text-transform: uppercase;}
 .gr-step-bg {background: url(../images/bg-main-steps.png) 0 0 no-repeat; width: 1005px; height: 420px; position: relative; list-style-type: none; margin-left: 0;}
 #main .ym-wrapper {width: 1000px;}
 @media screen and (max-width:1024px) { 
@@ -174,14 +174,14 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 		.gr-step-bg li.gr-step-2 {width: 215px; top: 95px; left: 285px;}
 		.gr-step-bg li.gr-step-3 {width: 135px; top: 45px; left: 590px;}
 		.gr-step-bg li.gr-step-4 {width: 250px; top: 295px; left: 725px;}
-#main h2 {text-transform: uppercase; text-align: center; color: #029ec7; font-size: 1.5em;}	
-	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .7em}
-#main .gr-follow-button {width: 300px; margin: 1.5em 0 1em;}
-#main .ym-col1 .markup {font-size: 1.3em;}
+#main h2 {text-transform: uppercase; text-align: center; color: #029ec7; font-size: 1.9em; letter-spacing: .02em;}	
+	#main h2 select {width: 245px; text-transform: none; margin-left: 1em; font-size: .55em}
+#main .gr-follow-button {width: 300px; margin: 1.5em 0 .5em; font-size: 1.9em; letter-spacing: .02em;}
+#main .ym-col1 .markup {font-size: 1.3em; margin-top: 0;}
     #main .ym-col1 .markup td {padding: 1em 0;}
 	#main .ym-col1 .markup a {text-decoration: underline;}
-.gr-popular-list {background-color: #c3d8b3; border-radius: .2em; width: 268px; line-height: 1.3em; text-align:left;}	
-	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: .7em .5em .5em 75px; line-height: 1em;}
+.gr-popular-list {background-color: #c3d8b3; border-radius: .2em; width: 278px; line-height: 1.3em; text-align:left;}	
+	.gr-popular-list h3 {color: #fff; text-transform: uppercase; font-size: 1.5em; position: relative; height: 70px; padding: .7em .5em .5em 75px; line-height: 1em; letter-spacing: .02em;}
 		.gr-popular-list h3 i {position: absolute; top: 0; left: 0px; width: 65px; height: 65px; background:url(../images/icons/blank.jpg) 0 bottom no-repeat;}
 		.gr-icon-tasks h3 {padding-left: 70px;}
 		.gr-icon-tasks h3 i {background-position: -9px -202px; width: 65px;}
