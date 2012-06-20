@@ -6,13 +6,17 @@ from django.utils.translation import ugettext as _
 from django import forms
 from django.contrib.auth.models import User
 from services.models import Email
-from django.utils.timezone import utc
+from tools.ideas.models import Idea
+from tools.projects.models import Project
+from tools.tasks.models import Task
+from users.models import Message
 
+#Message
+from django.utils.timezone import utc
 import qsstats
 from qsstats import QuerySetStats
 
 from datetime import datetime,timedelta
-
 
 class PeriodForm(forms.Form):
     start = forms.DateTimeField()
@@ -100,7 +104,6 @@ class AllRecentActions(modules.RecentActions):
         else:
             mails = Email.objects.all()
         
-        
         qss = QuerySetStats(mails,"time")
         data = qss.time_series(startdate,enddate)
  
@@ -114,9 +117,9 @@ class AllRecentActions(modules.RecentActions):
         
         self.mail_values = [t[1] for t in data]
         self.mail_captions = [t[0].day for t in data]
-        self.mtoday = _("Today: ")+'<strong>%s/%s</strong>' % (qss.this_day(),qss_read.this_day()) + _(' sent/read.') 
+        self.mtoday = _("Today: ")+'<strong>%s/%s</strong>'%(qss.this_day(),qss_read.this_day()) + _(' sent/read.') 
         self.mweek =  _("This week: ")+'<strong>%s/%s</strong>' % (qss.this_week(),qss_read.this_week()) + _(' sent/read.')
-        self.mmonth =  _("This month: ")+ '<strong>%s/%s</strong>'% (qss.this_month(),qss_read.this_month()) + _(' sent/read.')
+        self.mmonth = _("This month: ")+ '<strong>%s/%s</strong>'% (qss.this_month(),qss_read.this_month()) + _(' sent/read.')
         #self.iyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new idea(s).')
         #self.iuntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new idea(s).')
 
@@ -131,12 +134,12 @@ class AllRecentActions(modules.RecentActions):
         self.umonth =  _("This month: ")+ '<strong>%s</strong>'% qss.this_month() + _(' new account(s).')
         #self.uyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new account(s).')
         #self.uuntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new account(s).')
-
+        
         #Ideas
-        ideasQs = LogEntry.objects.all()
-        ct = ContentType.objects.get(model='idea')
-        ideasQs = ideasQs.filter(get_qset([ct]))
-        qss = QuerySetStats(ideasQs,"action_time")
+        ideasQs = Idea.objects.all()
+        #ct = ContentType.objects.get(model='idea')
+        #ideasQs = ideasQs.filter(get_qset([ct]))
+        qss = QuerySetStats(ideasQs,"add_time")
         data = qss.time_series(startdate,enddate)
         self.idea_values = [t[1] for t in data]
         self.idea_captions = [t[0].day for t in data]
@@ -147,12 +150,12 @@ class AllRecentActions(modules.RecentActions):
         #self.iuntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new idea(s).')
 
         #Projects
-        projectQs = LogEntry.objects.all()
-        ct = ContentType.objects.get(model='project')
-        projectQs = projectQs.filter(get_qset([ct]))
+        projectQs = Project.objects.all()
+        #ct = ContentType.objects.get(model='project')
+        #projectQs = projectQs.filter(get_qset([ct]))
         #print "Count of projects:", projectQs.count()
 
-        qss = QuerySetStats(projectQs,"action_time")
+        qss = QuerySetStats(projectQs,"add_time")
         data = qss.time_series(startdate,enddate)
         self.project_values = [t[1] for t in data]
         self.project_captions = [t[0].day for t in data]
@@ -163,10 +166,10 @@ class AllRecentActions(modules.RecentActions):
         #self.puntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new project(s).')
 
         #Tasks
-        taskQs = LogEntry.objects.all()
-        ct = ContentType.objects.get(model='task')
-        taskQs = taskQs.filter(get_qset([ct]))
-        qss = QuerySetStats(taskQs,"action_time")
+        taskQs = Task.objects.all()
+        #ct = ContentType.objects.get(model='task')
+        #taskQs = taskQs.filter(get_qset([ct]))
+        qss = QuerySetStats(taskQs,"add_time")
         data = qss.time_series(startdate,enddate)
         self.task_values = [t[1] for t in data]
         self.task_captions = [t[0].day for t in data]
@@ -177,10 +180,10 @@ class AllRecentActions(modules.RecentActions):
         #self.euntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new task(s).')
 
         #Messages
-        messageQs = LogEntry.objects.all()
-        ct = ContentType.objects.get(model='message')
-        messageQs = messageQs.filter(get_qset([ct]))
-        qss = QuerySetStats(messageQs,"action_time")
+        messageQs = Message.objects.all()
+        #ct = ContentType.objects.get(model='message')
+        #messageQs = messageQs.filter(get_qset([ct]))
+        qss = QuerySetStats(messageQs,"time")
         data = qss.time_series(startdate,enddate)
         self.message_values = [t[1] for t in data]
         self.message_captions = [t[0].day for t in data]
