@@ -1,7 +1,6 @@
 * not all contacts are shown on profile page (check other lists as well)
 
 * write docs
-* eliminate code for events, officials and posts
 
 * send button in message (remove &nbsp; ?)
 

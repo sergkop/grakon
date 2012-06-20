@@ -42,7 +42,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.i18n',
-    
+
     'grakon.context_processors.media_files',
     'grakon.context_processors.page_url',
     'grakon.context_processors.proj_settings',
@@ -101,14 +101,11 @@ INSTALLED_APPS = (
     'elements.participants',
     'elements.locations',
     'elements.resources',
-    'posts',
     'users',
     'authentication',
     'grakon',
     'locations',
     'navigation',
-    'tools.officials',
-    'tools.events',
     'tools.tasks',
     'tools.ideas',
     'tools.projects',
