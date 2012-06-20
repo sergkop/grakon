@@ -6,7 +6,10 @@ from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HT
 
 class ProjectManager(BaseEntityManager):
     def get_info(self, data, ids):
-        pass
+        for id in ids:
+            data[id]['providers'] = len(data[id]['resources'])
+            if 'none' in data[id]['resources']:
+                data[id]['providers'] -= 1
 
 @entity_class(['locations', 'participants', 'resources'])
 class Project(BaseEntityModel):
