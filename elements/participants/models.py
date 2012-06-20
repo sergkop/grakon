@@ -89,15 +89,11 @@ class EntityParticipantManager(BaseEntityPropertyManager):
             getattr(entity, self.model.feature).filter(role=role, **{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
-        #if self.model.points_sources:
-        #    from users.models import Profile
-        #    profiles = [x for x in [entity, instance] if type(x) is Profile]
-        #    for profile in profiles:
-        #        for source in self.model.points_sources:
-        #            profile.update_source_points(source)
-
         entity.clear_cache()
+        entity.update_rating()
+
         instance.clear_cache()
+        instance.update_rating()
 
     def add(self, entity, instance, role, params={}):
         self._add_remove(entity, instance, True, role, params)
@@ -162,7 +158,6 @@ class EntityParticipant(BaseEntityProperty):
 
     feature = 'participants'
     fk_field = 'person'
-    points_sources = ['contacts', 'follows'] # TODO: fix it; make it function of entity model?
 
     @classmethod
     def entity_methods(cls, entity_model):

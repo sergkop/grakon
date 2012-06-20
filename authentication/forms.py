@@ -119,9 +119,6 @@ class RegistrationForm(BaseRegistrationForm):
 
         ActivationProfile.objects.init_activation(user)
 
-        #for source in ['registration', 'show_name', 'resources']:
-        #    profile.update_source_points(source)
-
         return profile
 
 # TODO: add next hidden field
@@ -193,9 +190,6 @@ class SocialRegistrationForm(BaseRegistrationForm):
             user.is_active = False
             user.save()
             ActivationProfile.objects.init_activation(user)
-
-        #for source in ['registration', 'show_name', 'resources']:
-        #    profile.update_source_points(source)
 
         return profile
 

@@ -1,13 +1,14 @@
-* notifications
-
 * write docs
 
-* links in breadcrumbs should depend on type of page
+* page title, image url and description should be specified as context variable
+* open share dialogs in popups (vk, fb, twitter)
+
+* notifications
+
+* links in breadcrumbs should depend on type of page or tab on location
 
 * update init_database
 * add more content to init_database
-
-* send button in message (remove &nbsp; ?)
 
 * sort resources in project right panel by creation time
 * edit own resources on idea page
@@ -21,9 +22,6 @@
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
 
-* page title, image url and description should be specified as context variable
-* open share dialogs in popups (vk, fb, twitter)
-
 * small html fixes of idea page with Yulia
 
 * system of comments
@@ -31,6 +29,8 @@
 * update ratings on any changes
 
 
+
+* drop yandex metrika?
 
 * move html blocks for entities items in special templates and add template path to entity models
 
@@ -63,10 +63,6 @@
 * use entity_base_view in location
 
 * Убрать пустые параграфы из описания задачи/проекта. Мы можем как-то это контролировать?
-
-* deactivate points system
-* depricate posts
-* block officials, events
 
 * on task list page get_related_info is called twice
 

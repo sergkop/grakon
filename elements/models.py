@@ -52,13 +52,6 @@ class BaseEntityPropertyManager(models.Manager):
             getattr(entity, self.model.feature).filter(**{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
-        #if self.model.points_sources:
-        #    from users.models import Profile
-        #    profiles = [x for x in [entity, instance] if type(x) is Profile]
-        #    for profile in profiles:
-        #        for source in self.model.points_sources:
-        #            profile.update_source_points(source)
-
         entity.clear_cache()
         instance.clear_cache()
 
@@ -79,7 +72,6 @@ class BaseEntityProperty(models.Model):
 
     feature = None # name of corresponding feature
     fk_field = None # specify if there is another foreign key field besides content_type
-    points_sources = []
 
     # Methods will be added to entity model {name: method}. It's either a dict or classmethod of entity_model
     entity_methods = {} 
@@ -88,26 +80,6 @@ class BaseEntityProperty(models.Model):
 
     class Meta:
         abstract = True
-
-    """
-    def save(self):
-        super(BaseEntityProperty, self).save()
-
-        if type(self).points_sources:
-            profiles = []
-
-            from users.models import Profile
-            if self.content_type.get_model() == Profile:
-                profiles.append(Profile(id))
-
-            if self.fk_field:
-                related_model = type(self)._meta.get_field(self.model.fk_field).rel.to
-
-            profiles = [x for x in instances if type(x) is Profile]
-            for profile in profiles:
-                for source in self.model.points_sources:
-                    profile.update_source_points(source)
-    """
 
 def feature_model(cls):
     FEATURES_MODELS[cls.feature] = cls
@@ -220,6 +192,7 @@ class BaseEntityModel(models.Model):
         if new_rating != self.rating:
             self.rating = new_rating
             self.save()
+            self.clear_cache()
 
     @reset_cache
     def save(self, *args, **kwargs):

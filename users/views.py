@@ -101,7 +101,6 @@ def profile(request):
     return redirect(request.profile.get_absolute_url())
 
 # TODO: limit the number of messages User can send daily (also depends on his points)
-# TODO: add points for sending message
 @authenticated_ajax_post
 def send_message(request):
     form = MessageForm(request.POST)

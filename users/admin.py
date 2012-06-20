@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import Message, Points, Profile
+from users.models import Message, Profile
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender', 'receiver', 'title', 'show_email', 'time')
@@ -14,11 +14,5 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = ('username', 'user__email', 'first_name', 'last_name')
     raw_id_fields = ('user',)
 
-class PointsAdmin(admin.ModelAdmin):
-    list_display = ('profile', 'source', 'points', 'type')
-    ordering = ('profile__username',)
-    search_fields = ('profile__username', 'source')
-
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Points, PointsAdmin)
