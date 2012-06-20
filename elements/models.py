@@ -216,8 +216,10 @@ class BaseEntityModel(models.Model):
 
     # TODO: recalculate rating on save or in celery (?) and reset cache
     def update_rating(self):
-        self.rating = self.calc_rating()
-        self.save()
+        new_rating = self.calc_rating()
+        if new_rating != self.rating:
+            self.rating = new_rating
+            self.save()
 
     @reset_cache
     def save(self, *args, **kwargs):

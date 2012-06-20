@@ -45,11 +45,12 @@ class Project(BaseEntityModel):
 
     def calc_rating(self):
         # Number of people provided resources for project
-        providers = self.info()['resources'].keys()
+        info = self.info()
+        providers = info['resources'].keys()
         if 'none' in providers:
-            return len(providers) - 1
+            return len(providers) - 1 + info['participants']['follower']['count']
         else:
-            return len(providers)
+            return len(providers) + info['participants']['follower']['count']
 
     @models.permalink
     def get_absolute_url(self):

@@ -75,7 +75,8 @@ class Profile(BaseEntityModel):
     show_name = models.BooleanField(u'Показывать настоящее имя', default=True,
             help_text=u'Снимите эту галку, чтобы скрыть свое имя от других пользователей')
 
-    intro = models.CharField(u'Кратко о себе', max_length=100, blank=True, help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
+    intro = models.CharField(u'Кратко о себе', max_length=100, blank=True,
+            help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
     about = HTMLField(u'О себе', default='', blank=True)
 
     objects = ProfileManager()
@@ -102,7 +103,7 @@ class Profile(BaseEntityModel):
 
     def calc_rating(self):
         info = self.info()
-        return info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + info['projects']['admin']['count']
+        return info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + 3*info['projects']['admin']['count']
 
     # TODO: make it admin interface command
     #def update_points(self):

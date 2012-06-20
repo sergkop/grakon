@@ -10,7 +10,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'first_name', 'last_name', 'intro', 'about', 'rating')
-    ordering = ('username',)
+    ordering = ('-add_time',)
     search_fields = ('username', 'user__email', 'first_name', 'last_name')
     raw_id_fields = ('user',)
 

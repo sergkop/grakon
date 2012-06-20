@@ -47,7 +47,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
                 data[id]['participants'][role]['entities'] = [
                         r_info[r_id] for r_id in data[id]['participants'][role]['ids'] if r_id in r_info]
 
-    # TODO: ability to get results for a list of entity types
+    # TODO: ability to get results for a list of entity types (?)
     def participant_in(self, role, ids, entity_model):
         """ Return entities in which users participate {id: {'count': count, 'ids': [top_entities_ids]}} """
         assert 'participants' in entity_model.features

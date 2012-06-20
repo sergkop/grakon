@@ -1,3 +1,8 @@
+* not all contacts are shown on profile page (check other lists as well)
+
+* write docs
+* eliminate code for events, officials and posts
+
 * send button in message (remove &nbsp; ?)
 
 * sort resources in project right panel by creation time
@@ -17,6 +22,13 @@
 
 * small html fixes of idea page with Yulia
 
+* system of comments
+
+
+* unsubscribe from letters
+* notifications system
+
+* remove table_header and other features
 
 * don't load social networks scripts
 

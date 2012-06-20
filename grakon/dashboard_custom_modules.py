@@ -23,7 +23,7 @@ class AllRecentActions(modules.RecentActions):
     limit = 10
     include_list = None
     exclude_list = None
-    
+
     filter_title = _("Select period for report")
     start_title = _("Start")
     end_title= _("End")
@@ -78,7 +78,7 @@ class AllRecentActions(modules.RecentActions):
 
         if not len(self.children):
             self.pre_content = _('No recent actions.')
- 
+
         #Users
         grqs = User.objects.filter(is_active=True)
         qss = QuerySetStats(grqs, 'date_joined')
@@ -109,7 +109,7 @@ class AllRecentActions(modules.RecentActions):
         projectQs = LogEntry.objects.all()
         ct = ContentType.objects.get(model='project')
         projectQs = projectQs.filter(get_qset([ct]))
-        print "Count of projects:", projectQs.count()
+        #print "Count of projects:", projectQs.count()
 
         qss = QuerySetStats(projectQs,"action_time")
         data = qss.time_series(startdate,enddate)
