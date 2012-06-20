@@ -1,0 +1,29 @@
+<p>
+    {% with person=info.instance %}
+        {% include "participants/person.html" %}
+    {% endwith %}
+</p>
+
+{% with resources=info.resources.none.data %}
+    {% include "resources/list.html" %}
+{% endwith %}
+
+<div class="gr-info-bar">
+    {% if info.ideas.admin.count %}
+        <a href="{% url profile_ideas info.instance.username %}" class="dimmed">Идеи: {{ info.ideas.admin.count }}</a>
+        {% if info.tasks.admin.count or info.projects.admin.count %}
+            <span class="gr-bullet">&nbsp;</span>
+        {% endif %}
+    {% endif %}
+
+    {% if info.tasks.admin.count %}
+        <a href="{% url profile_tasks info.instance.username %}" class="dimmed">Задачи: {{ info.tasks.admin.count }}</a>
+        {% if info.projects.admin.count %}
+            <span class="gr-bullet">&nbsp;</span>
+        {% endif %}
+    {% endif %}
+
+    {% if info.projects.admin.count %}
+        <a href="{% url profile_projects info.instance.username %}" class="dimmed">Проекты: {{ info.projects.admin.count }}</a>
+    {% endif %}
+</div>

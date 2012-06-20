@@ -30,7 +30,7 @@
 	/* (en) Correction:margin/padding reset caused too small select boxes. */
 	/* (de) Korrektur:Das Zurücksetzen der Abstände verursacht zu kleine Selectboxen. */
 	option { padding-left:0.4em; } /* LTR */
-	select { padding:1px; border: 1px solid #d4d0c8;}
+	select { padding:1px; border: 1px solid #d4d0c8; vertical-align: middle;}
 
 	/**
 	* (en) Global fix of the Italics bugs in IE 5.x and IE 6

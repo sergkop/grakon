@@ -54,7 +54,7 @@
 
     <div align="center">
         <a id="register_btn" href="{% url register %}" class="gr-follow-button">Поехали!</a>
-        <table width="500" class="markup gr-mb30">
+        <table width="500" class="markup gr-mb20">
             <tr>
                 <td width="50%" align="center"><a href="{{ country_url }}">Посмотреть площадку</a></td>
                 <td align="center"><a href="{% url about %}">Подробнее о проекте</a></td>
@@ -108,7 +108,7 @@
                                 <li>
                                     <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
                                     <div class="gr-info-bar">
-                                        Участники: {{ info.instance.rating }}
+                                        Участники: {{ info.providers }}
                                         <span class="gr-bullet">&nbsp;</span>
                                         Следят: {{ info.participants.follower.count }}
                                     </div>

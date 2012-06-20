@@ -91,14 +91,12 @@
 /* ----------------------------------------------------------------------------- */
 
   /* Error message at the top of the form */
-  .uniForm #errorMsg{ background: #ffdfdf; border: 1px solid #f3afb5; margin: 0 0 1.5em 0;}
     .uniForm #errorMsg h3{} /* Feel free to use a heading level suitable to your page structure */
-    .uniForm #errorMsg ol{ margin: 0; padding: 0; list-style-type: none; }
-      .uniForm #errorMsg ol li{ margin: 0 0 3px 1.5em; padding: 7px; position: relative; font-size: .85em;}
-      .uniForm #errorMsg ol li i {poasition: absolute; top: 0; left: 0; width: 12px; height: 12px;  background: url(../../images/icons.png) 0 0 no-repeat;}
+    .uniForm #errorMsg ol{ margin: -1em 0 0; padding: 0; list-style-type: none; }
+      .uniForm #errorMsg ol li{ margin: 1em 0 0;}
   
   .uniForm .ctrlHolder.error,
-  .uniForm .ctrlHolder.focused.error{ background: #ffdfdf; border: 1px solid #f3afb5; padding: 1em; margin-bottom: 1em;
+  .uniForm .ctrlHolder.focused.error, .uniForm #errorMsg{ background: #ffdfdf; border: 1px solid #f3afb5; padding: 1em; margin: 0 0 1em -1em;
                                       /* CSS3 */
                                       border-radius:         4px;
                                       -webkit-border-radius: 4px;

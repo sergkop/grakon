@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 
 from elements.locations.utils import subregion_list
 from elements.models import ENTITIES_MODELS
-from elements.participants.models import EntityParticipant, participant_in
+from elements.participants.models import EntityParticipant
 from elements.utils import table_data
 from elements.views import entity_tabs_view
 from locations.models import Location

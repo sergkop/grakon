@@ -1,16 +1,8 @@
 <div class="gr-descr">
     <ul class="gr-source-list-slider js-resource-items-visible gr-bb-grey-list">
-        {% for entity in pagination_entities %}
+        {% for info in pagination_entities %}
             <li class="gr-mb10">
-                <p>
-                    {% with person=entity.instance %}
-                        {% include "participants/person.html" %}
-                    {% endwith %}
-                </p>
-
-                {% with resources=entity.resources.none.data %}
-                    {% include "resources/list.html" %}
-                {% endwith %}
+                {% include "profiles/item.html" %}
             </li>
         {% endfor %}
         <!--li><a href="" class="ym-button">Еще 20</a></li-->

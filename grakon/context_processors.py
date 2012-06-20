@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 from django.forms.widgets import Media
 
 from grakon.utils import project_settings
-from posts.models import OPINION_CHOICES
 
 # TODO: add IE-specific styles here
 # TODO: take extra media files from request - ability to add them per-view (variable in class-based views?)
@@ -55,11 +54,7 @@ def media_files(request):
     return {'media_files': media}
 
 def proj_settings(request):
-    ctx = project_settings()
-    ctx.update({
-        'OPINION_CHOICES': OPINION_CHOICES,
-    })
-    return ctx
+    return project_settings()
 
 def page_url(request):
     return {'full_page_url': quote(settings.URL_PREFIX+request.get_full_path())}

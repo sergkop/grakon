@@ -21,10 +21,7 @@ DISQUS_SHORTNAME = 'grakon2'
 DISQUS_CATEGORIES = {
     'general': 1444561,
     'locations': 1444565,
-    'officials': 1444566,
-    'events': 1456479,
     'tasks': 1470945,
-    'posts': 1471343,
     'ideas': 1482947,
     'projects': 1490095,
 }

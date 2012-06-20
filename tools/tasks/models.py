@@ -34,7 +34,7 @@ class TaskManager(BaseEntityManager):
             }
 
 # TODO: introduce choices for types
-@entity_class(['locations', 'participants', 'posts'])
+@entity_class(['locations', 'participants'])
 class Task(BaseEntityModel):
     title = models.CharField(u'Формулировка', max_length=250, help_text=u'краткая формулировка гражданской задачи в виде вопроса. Лучше всего начать ее со слова "как", например: "как быстро и недорого обустроить свой двор?"')
     about = HTMLField(u'Описание', blank=True)
@@ -59,7 +59,6 @@ class Task(BaseEntityModel):
         'confirm_msg': u'Вы хотите следить за новыми идеями для этой задачи?',
         'confirm_btn': u'Следить',
         'confirm_btn_long': u'Следить за задачей',
-        #'btn_class': 'bold',
     }
 
     disqus_category = 'tasks'
@@ -73,8 +72,11 @@ class Task(BaseEntityModel):
     def calc_rating(self):
         # Number of people provided resources for task ideas
         info = self.info()
-        return len(set(provider_id for idea_info in info['ideas']['entities'] \
+        providers = len(set(provider_id for idea_info in info['ideas']['entities'] \
                 for provider_id in idea_info['resources']))
+        ideas = info['ideas']['count']
+        followers = info['participants']['follower']['count']
+        return 25*providers + 5*ideas + followers
 
     @models.permalink
     def get_absolute_url(self):

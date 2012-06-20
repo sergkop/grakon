@@ -25,7 +25,7 @@ class AllRecentActions(modules.RecentActions):
     limit = 10
     include_list = None
     exclude_list = None
-    
+
     filter_title = _("Select period for report")
     start_title = _("Start")
     end_title= _("End")
@@ -94,6 +94,7 @@ class AllRecentActions(modules.RecentActions):
 
         if not len(self.children):
             self.pre_content = _('No recent actions.')
+<<<<<<< HEAD
         
         #E-mails
         if (mailtype):
@@ -121,6 +122,8 @@ class AllRecentActions(modules.RecentActions):
         #self.iyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new idea(s).')
         #self.iuntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new idea(s).')
 
+=======
+>>>>>>> 8bce83f8045b9a16a7a2bbadf4ab297684e3a90b
 
         #Users
         grqs = User.objects.filter(is_active=True)
@@ -152,6 +155,10 @@ class AllRecentActions(modules.RecentActions):
         projectQs = LogEntry.objects.all()
         ct = ContentType.objects.get(model='project')
         projectQs = projectQs.filter(get_qset([ct]))
+<<<<<<< HEAD
+=======
+        #print "Count of projects:", projectQs.count()
+>>>>>>> 8bce83f8045b9a16a7a2bbadf4ab297684e3a90b
 
         qss = QuerySetStats(projectQs,"action_time")
         data = qss.time_series(startdate,enddate)
@@ -160,6 +167,7 @@ class AllRecentActions(modules.RecentActions):
         self.ptoday = _("Today: ")+'<strong>%s</strong>' % qss.this_day() + _(' new project(s).') 
         self.pweek =  _("This week: ")+'<strong>%s</strong>' % qss.this_week() + _(' new project(s).')
         self.pmonth =  _("This month: ")+ '<strong>%s</strong>'% qss.this_month() + _(' new project(s).')
+<<<<<<< HEAD
         #self.pyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new project(s).')
         #self.puntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new project(s).')
 
@@ -188,7 +196,9 @@ class AllRecentActions(modules.RecentActions):
         self.mstoday = _("Today: ")+'<strong>%s</strong>' % qss.this_day() + _(' new message(s).') 
         self.msweek =  _("This week: ")+'<strong>%s</strong>' % qss.this_week() + _(' new message(s).')
         self.msmonth =  _("This month: ")+ '<strong>%s</strong>'% qss.this_month() + _(' new message(s).')
+=======
+        self.pyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new project(s).')
+        self.puntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new project(s).')
+>>>>>>> 8bce83f8045b9a16a7a2bbadf4ab297684e3a90b
 
         self._initialized = True
-
-

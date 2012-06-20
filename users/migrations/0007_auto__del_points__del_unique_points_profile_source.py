@@ -8,21 +8,28 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'EntityPost.url'
-        db.delete_column('posts_entitypost', 'url')
+        # Removing unique constraint on 'Points', fields ['profile', 'source']
+        db.delete_unique('users_points', ['profile_id', 'source'])
+
+        # Deleting model 'Points'
+        db.delete_table('users_points')
 
 
-        # Changing field 'EntityPost.content'
-        db.alter_column('posts_entitypost', 'content', self.gf('elements.models.HTMLField')())
     def backwards(self, orm):
-        # Adding field 'EntityPost.url'
-        db.add_column('posts_entitypost', 'url',
-                      self.gf('django.db.models.fields.URLField')(default='', max_length=200),
-                      keep_default=False)
+        # Adding model 'Points'
+        db.create_table('users_points', (
+            ('profile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.Profile'])),
+            ('source', self.gf('django.db.models.fields.CharField')(max_length=15, db_index=True)),
+            ('type', self.gf('django.db.models.fields.CharField')(max_length=7)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('points', self.gf('django.db.models.fields.IntegerField')(default=0)),
+        ))
+        db.send_create_signal('users', ['Points'])
+
+        # Adding unique constraint on 'Points', fields ['profile', 'source']
+        db.create_unique('users_points', ['profile_id', 'source'])
 
 
-        # Changing field 'EntityPost.content'
-        db.alter_column('posts_entitypost', 'content', self.gf('django.db.models.fields.TextField')())
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -87,25 +94,25 @@ class Migration(SchemaMigration):
             'role': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'db_index': 'True', 'blank': 'True'})
         },
-        'posts.entitypost': {
-            'Meta': {'object_name': 'EntityPost'},
-            'add_time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
-            'content': ('elements.models.HTMLField', [], {}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'entity_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'opinion': ('django.db.models.fields.CharField', [], {'max_length': '8'}),
-            'profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'post_entities'", 'to': "orm['users.Profile']"}),
-            'rating': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'})
-        },
         'resources.entityresource': {
-            'Meta': {'unique_together': "(('content_type', 'entity_id', 'resource'),)", 'object_name': 'EntityResource'},
+            'Meta': {'unique_together': "(('content_type', 'entity_id', 'resource', 'provider'),)", 'object_name': 'EntityResource'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '140', 'blank': 'True'}),
             'entity_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'resource': ('django.db.models.fields.CharField', [], {'max_length': '20', 'db_index': 'True'}),
+            'provider': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'provided_resources'", 'null': 'True', 'to': "orm['users.Profile']"}),
+            'resource': ('django.db.models.fields.CharField', [], {'max_length': '100', 'db_index': 'True'}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'db_index': 'True', 'blank': 'True'})
+        },
+        'users.message': {
+            'Meta': {'object_name': 'Message'},
+            'body': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'receiver': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'received_messages'", 'to': "orm['users.Profile']"}),
+            'sender': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sent_messages'", 'to': "orm['users.Profile']"}),
+            'show_email': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'users.profile': {
             'Meta': {'object_name': 'Profile'},
@@ -113,6 +120,7 @@ class Migration(SchemaMigration):
             'add_time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'intro': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'rating': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'show_name': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
@@ -122,4 +130,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['posts']
+    complete_apps = ['users']

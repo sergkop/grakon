@@ -47,7 +47,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
                 data[id]['participants'][role]['entities'] = [
                         r_info[r_id] for r_id in data[id]['participants'][role]['ids'] if r_id in r_info]
 
-    # TODO: ability to get results for a list of entity types
+    # TODO: ability to get results for a list of entity types (?)
     def participant_in(self, role, ids, entity_model):
         """ Return entities in which users participate {id: {'count': count, 'ids': [top_entities_ids]}} """
         assert 'participants' in entity_model.features
@@ -62,7 +62,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
         for id in ids:
             entity_ids = map(lambda pd: pd[0], filter(lambda p: p[1]==id, participants_data))
             top_entity_ratings = sorted(filter(lambda er: er[0] in entity_ids, entity_ratings),
-                    key=lambda er: -er[1])[:settings.LIST_COUNT['followed']]
+                    key=lambda er: -er[1])#[:settings.LIST_COUNT['followed']]
             res[id] = {
                 'count': len(entity_ids),
                 'ids': map(lambda f: f[0], top_entity_ratings),
@@ -89,15 +89,11 @@ class EntityParticipantManager(BaseEntityPropertyManager):
             getattr(entity, self.model.feature).filter(role=role, **{self.model.fk_field: instance}) \
                     .filter(**params).delete()
 
-        #if self.model.points_sources:
-        #    from users.models import Profile
-        #    profiles = [x for x in [entity, instance] if type(x) is Profile]
-        #    for profile in profiles:
-        #        for source in self.model.points_sources:
-        #            profile.update_source_points(source)
-
         entity.clear_cache()
+        entity.update_rating()
+
         instance.clear_cache()
+        instance.update_rating()
 
     def add(self, entity, instance, role, params={}):
         self._add_remove(entity, instance, True, role, params)
@@ -162,7 +158,6 @@ class EntityParticipant(BaseEntityProperty):
 
     feature = 'participants'
     fk_field = 'person'
-    points_sources = ['contacts', 'follows'] # TODO: fix it; make it function of entity model?
 
     @classmethod
     def entity_methods(cls, entity_model):

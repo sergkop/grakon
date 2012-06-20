@@ -93,13 +93,6 @@ class EntityResourceManager(BaseEntityPropertyManager):
             # Use generic relation to filter related feature instances
             getattr(entity, self.model.feature).filter(resource=resource, provider=provider).delete()
 
-        #if self.model.points_sources:
-        #    from users.models import Profile
-        #    profiles = [x for x in [entity, provider] if type(x) is Profile]
-        #    for profile in profiles:
-        #        for source in self.model.points_sources:
-        #            profile.update_source_points(source)
-
         entity.clear_cache()
         if provider:
             provider.clear_cache()
@@ -133,10 +126,6 @@ class EntityResourceManager(BaseEntityPropertyManager):
         # TODO: this can cause IntegrityError
         self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
 
-        #from users.models import Profile
-        #if type(entity) is Profile:
-        #    entity.update_source_points('resources')
-
         entity.clear_cache()
 
 @reset_cache
@@ -153,7 +142,6 @@ class EntityResource(BaseEntityProperty):
     objects = EntityResourceManager()
 
     feature = 'resources'
-    points_sources = ['resources']
     entity_methods = {'update_resources': update_resources}
 
     class Meta:
