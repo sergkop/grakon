@@ -12,32 +12,39 @@
         </br>
         {{ module.periodForm.start.errors }}
         {{ module.periodForm.end.errors }}
+
+        <label for="mailtype">{{ module.mailtype_title }}: </label>
+        <select name="mailtype">
+            <option value="all"> {{ module.all_title }} </option>
+            {% if module.mailtypes %}
+                {% for instance in module.mailtypes %}
+                <option {% if instance == module.mailtype %}selected{% endif %} value="{{instance}}"> {{ module.mailtype }} </option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        </br> 
         <input type="submit" value = "{{ module.submit_title }}"/>
     </div>    
+
 </form>
 </div>
-<!--
-<ul>
-    {% spaceless %}
-    {% for child in module.children %}
-    <li class="{% cycle 'odd' 'even' %}">
-        <span class="float-right">{{ child.action_time|date }}</span>
-        {% if child.is_deletion %}
-        <span class="deletelink">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</span>
-        {% else %}
-        <a href="{{ admin_url }}{{ child.get_admin_url }}" class="{% if child.is_addition %} addlink{% endif %}{% if child.is_change %} changelink{% endif %}">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</a>
-        {% endif %}
-    </li>
-    {% endfor %}
-    {% endspaceless %}
-</ul>-->
+
 <div align="center" id="graphics" style="padding-top:10px;">
 {% load gr_chart_tags %}
 <div align = "left">
 {% autoescape off %}
 <p style="font-size:0.9em;">
-    {{ module.uuntil_now }}</br>
-    {{ module.uyear }}</br>
+    {{ module.mmonth }}</br>
+    {{ module.mweek }}</br>
+    {{ module.mtoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.mail_values module.mail_captions '580x150' 'E-mails' %}
+
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
     {{ module.umonth }}</br>
     {{ module.uweek }}</br>
     {{ module.utoday }}</br>
@@ -49,8 +56,6 @@
 <div align = "left">
 {% autoescape off %}
 <p style="font-size:0.9em;">
-    {{ module.iuntil_now }}</br>
-    {{ module.iyear }}</br>
     {{ module.imonth }}</br>
     {{ module.iweek }}</br>
     {{ module.itoday }}</br>
@@ -62,8 +67,6 @@
 <div align = "left">
 {% autoescape off %}
 <p style="font-size:0.9em;">
-    {{ module.puntil_now }}</br>
-    {{ module.pyear }}</br>
     {{ module.pmonth }}</br>
     {{ module.pweek }}</br>
     {{ module.ptoday }}</br>
@@ -75,15 +78,25 @@
 <div align = "left">
 {% autoescape off %}
 <p style="font-size:0.9em;">
-    {{ module.euntil_now }}</br>
-    {{ module.eyear }}</br>
-    {{ module.emonth }}</br>
-    {{ module.eweek }}</br>
-    {{ module.etoday }}</br>
+    {{ module.tmonth }}</br>
+    {{ module.tweek }}</br>
+    {{ module.ttoday }}</br>
 </p>
 {% endautoescape %}
 </div>
-{% gr_bar_chart module.event_values module.event_captions '580x150' 'Events' %}
+{% gr_bar_chart module.task_values module.task_captions '580x150' 'Tasks' %}
+
+<div align = "left">
+{% autoescape off %}
+<p style="font-size:0.9em;">
+    {{ module.msmonth }}</br>
+    {{ module.msweek }}</br>
+    {{ module.mstoday }}</br>
+</p>
+{% endautoescape %}
+</div>
+{% gr_bar_chart module.message_values module.message_captions '580x150' 'Messages' %}
+
 
 </div>
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 20:02+0400\n"
+"POT-Creation-Date: 2012-06-20 15:38+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,22 +25,23 @@ msgstr "Приложения"
 msgid "Administration"
 msgstr "Админ. панель"
 
+#: dashboard.py:147 dashboard_custom_modules.py:22
 msgid "Common stats"
 msgstr "Общая статистика"
 
-#: dashboard_custom_modules.py:27
+#: dashboard_custom_modules.py:28
 msgid "Select period for report"
 msgstr "Выберите период для отчета"
 
-#: dashboard_custom_modules.py:28
+#: dashboard_custom_modules.py:29
 msgid "Start"
 msgstr "Начало"
 
-#: dashboard_custom_modules.py:29
+#: dashboard_custom_modules.py:30
 msgid "End"
 msgstr "Конец"
 
-#: dashboard_custom_modules.py:30
+#: dashboard_custom_modules.py:31
 msgid "Apply"
 msgstr "Применить"
 
@@ -48,37 +49,41 @@ msgstr "Применить"
 msgid "No recent actions."
 msgstr "Нет действий за этот период"
 
-#: dashboard_custom_modules.py:89 dashboard_custom_modules.py:106
+msgid "All"
+msgstr "Вся"
+
 msgid "Today: "
 msgstr "За сегодня: "
 
-#: dashboard_custom_modules.py:89 dashboard_custom_modules.py:90
-#: dashboard_custom_modules.py:91 dashboard_custom_modules.py:92
-#: dashboard_custom_modules.py:93
-msgid " new account(s)."
-msgstr " новых аккаунт(ов)."
+msgid " sent/read."
+msgstr " отослано/прочитано."
 
-#: dashboard_custom_modules.py:90 dashboard_custom_modules.py:107
 msgid "This week: "
 msgstr "За неделю: "
 
-#: dashboard_custom_modules.py:91 dashboard_custom_modules.py:108
 msgid "This month: "
 msgstr "За месяц: "
 
-#: dashboard_custom_modules.py:92 dashboard_custom_modules.py:109
-msgid "This year: "
-msgstr "За год: "
-
-#: dashboard_custom_modules.py:93 dashboard_custom_modules.py:110
-msgid "Until now: "
-msgstr "Всего: "
+msgid " new account(s)."
+msgstr " новых аккаунт(ов)."
 
 msgid " new idea(s)."
 msgstr " новых идей(и)."
 
 msgid " new project(s)."
 msgstr " новых проекта(ов)."
+
+msgid " new task(s)."
+msgstr " новых идей(и)."
+
+msgid " new message(s)."
+msgstr " новых сообщения(ий)."
+
+msgid "This year: "
+msgstr "За год: "
+
+msgid "Until now: "
+msgstr "Всего: "
 
 msgid " new event(s)."
 msgstr " новых события(ий)."
@@ -92,9 +97,16 @@ msgstr "Идеи"
 msgid "Projects"
 msgstr "Проекты"
 
-msgid "Events"
-msgstr "События"
+msgid "Tasks"
+msgstr "Задачи"
 
+msgid "Messages"
+msgstr "Сообщения"
 
+msgid "E-mails"
+msgstr "Электронная почта"
+
+msgid "e-mail type"
+msgstr "Тип почты"
 
 
