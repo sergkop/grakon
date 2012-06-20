@@ -121,20 +121,4 @@ class AllRecentActions(modules.RecentActions):
         self.pyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new project(s).')
         self.puntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new project(s).')
 
-        #Events
-        eventQs = LogEntry.objects.all()
-        ct = ContentType.objects.get(model='event')
-        eventQs = eventQs.filter(get_qset([ct]))
-        qss = QuerySetStats(eventQs,"action_time")
-        data = qss.time_series(startdate,enddate)
-        self.event_values = [t[1] for t in data]
-        self.event_captions = [t[0].day for t in data]
-        self.etoday = _("Today: ")+'<strong>%s</strong>' % qss.this_day() + _(' new event(s).') 
-        self.eweek =  _("This week: ")+'<strong>%s</strong>' % qss.this_week() + _(' new event(s).')
-        self.emonth =  _("This month: ")+ '<strong>%s</strong>'% qss.this_month() + _(' new event(s).')
-        self.eyear =  _("This year: ")+ '<strong>%s</strong>'% qss.this_year() + _(' new event(s).')
-        self.euntil_now =  _("Until now: ")+ '<strong>%s</strong>'% qss.until_now() + _(' new event(s).')
-
         self._initialized = True
-
-

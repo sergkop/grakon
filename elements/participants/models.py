@@ -62,7 +62,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
         for id in ids:
             entity_ids = map(lambda pd: pd[0], filter(lambda p: p[1]==id, participants_data))
             top_entity_ratings = sorted(filter(lambda er: er[0] in entity_ids, entity_ratings),
-                    key=lambda er: -er[1])[:settings.LIST_COUNT['followed']]
+                    key=lambda er: -er[1])#[:settings.LIST_COUNT['followed']]
             res[id] = {
                 'count': len(entity_ids),
                 'ids': map(lambda f: f[0], top_entity_ratings),

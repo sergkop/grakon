@@ -1,6 +1,11 @@
-* not all contacts are shown on profile page (check other lists as well)
+* notifications
 
 * write docs
+
+* links in breadcrumbs should depend on type of page
+
+* update init_database
+* add more content to init_database
 
 * send button in message (remove &nbsp; ?)
 
@@ -23,9 +28,13 @@
 
 * system of comments
 
+* update ratings on any changes
+
+
+
+* move html blocks for entities items in special templates and add template path to entity models
 
 * unsubscribe from letters
-* notifications system
 
 * remove table_header and other features
 
@@ -38,8 +47,6 @@
 * ability to delete ideas, tasks (without reesources), projects
 
 * reimplement popup windows in project
-
-* add more content to init_database
 
 * hide follow/unfollow button for admin
 

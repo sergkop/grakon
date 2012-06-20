@@ -206,6 +206,4 @@ LIST_COUNT = {
     'admin': 5,
     'administered': 5,
     'tools': 5,
-    'posts': 5,
-    'events': 5,
 }
