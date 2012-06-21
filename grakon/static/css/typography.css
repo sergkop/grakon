@@ -339,7 +339,7 @@
 	}
 	
 	.dimmed {
-		color:#888;
+		color:#888 !important;
 	}
 
 	.box {
