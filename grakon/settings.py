@@ -24,7 +24,6 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.CustomIndexDashboard'
-#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'grakon.dashboard.CustomAppIndexDashboard'
 
 # Additional locations of static files
 STATICFILES_DIRS = ()
@@ -41,7 +40,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
 
     'grakon.context_processors.media_files',
     'grakon.context_processors.page_url',
@@ -82,6 +80,7 @@ INSTALLED_APPS = (
     'admin_tools.menu',
     'admin_tools.dashboard',
     'chart_tools',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

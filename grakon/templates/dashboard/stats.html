@@ -1,0 +1,121 @@
+{% extends "admin_tools/dashboard/module.html" %}
+
+{% load gr_chart_tags %}
+
+{% block module_content %}
+    <div style="padding:20px 0px 20px 0px;">
+        Выберите период для отчета:
+        <form action="" method="get">
+            {{ module.period_form.non_field_errors }}
+            <div style="padding-top:5px;">
+                <label for="id_start">Начало: </label>
+                {{ module.period_form.start }}&nbsp;
+                <label for="id_end">Конец: </label>
+                {{ module.period_form.end }}
+                </br>
+                {{ module.period_form.start.errors }}
+                {{ module.period_form.end.errors }}
+
+                <label for="mailtype">Тип письма: </label>
+                <select name="mailtype">
+                    <option value="all">Все</option>
+                    {% for mailtype in module.mailtypes %}
+                        <option {% if mailtype == module.mailtype %}selected{% endif %} value="{{ mailtype }}">{{ mailtype }}</option>
+                    {% endfor %}
+                </select>
+                </br>
+                <input type="submit" value="Показать"/>
+            </div>
+
+        </form>
+    </div>
+
+    <div align="center" id="graphics" style="padding-top:10px;">
+        {% gr_bar_chart module.mail_values module.day_captions '580x150' 'E-mails' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.mails_read_qss.this_day }}/{{ module.mails_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.mails_read_qss.this_week }}/{{ module.mails_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.mails_read_qss.this_month }}/{{ module.mails_qss.this_month }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                (прочитано/отправлено)
+            </p>
+        </div>
+
+        {% gr_bar_chart module.users_values module.day_captions '580x150' 'Users' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.users_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.users_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.users_qss.this_month }}</strong>
+            </p>
+        </div>
+
+        {% gr_bar_chart module.ideas_values module.day_captions '580x150' 'Ideas' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.ideas_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.ideas_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.ideas_qss.this_month }}</strong>
+            </p>
+        </div>
+
+        {% gr_bar_chart module.projects_values module.day_captions '580x150' 'Projects' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.projects_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.projects_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.projects_qss.this_month }}</strong>
+            </p>
+        </div>
+
+        {% gr_bar_chart module.tasks_values module.day_captions '580x150' 'Tasks' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.tasks_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.tasks_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.tasks_qss.this_month }}</strong>
+            </p>
+        </div>
+
+        {% gr_bar_chart module.messages_values module.day_captions '580x150' 'Messages' %}
+
+        <div align = "left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.messages_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.messages_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.messages_qss.this_month }}</strong>
+            </p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            resize();
+            jQuery_resize();
+        });
+
+        function jQuery_resize(){
+           $(document).ready(function(){resize();});
+           $(window).resize(function(){resize();});
+        }
+
+        function resize(){
+            var width = $("#graphics").width();
+            var windowWidth = $(window).width();
+            if (!width || width >= windowWidth/2)
+                width = Math.round((windowWidth-100)/2);
+
+            $("#graphics img").each(function(i, el){
+                var imageSrc = $(el).attr("src");
+                imageSrc = imageSrc.replace(new RegExp("&chs=[0-9]+x[0-9]+&","g"),"&chs="+width+"x150&");
+                $(el).attr("src", imageSrc);
+                $(el).attr("width", width);
+            });
+        }
+    </script>
+{% endblock %}
