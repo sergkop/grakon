@@ -1,7 +1,7 @@
 {% if pagination_entities %}
     <div class="gr-ideas-list">
     {% for info in pagination_entities %}
-        <div class="gr-ideas-item"> 
+        <div class="gr-ideas-item">
             <div class="gr-ideas-content">
                 <div class="gr-add gr-idea-selected"><span>{{ info.resources.count }}</span></div>
                 <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>

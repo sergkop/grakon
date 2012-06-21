@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
@@ -5,8 +6,30 @@ from elements.models import BaseEntityProperty, BaseEntityPropertyManager, featu
 class EntityCommentManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         res = {}
+
+        comments = self.filter(content_type=ContentType.objects.get_for_model(model), entity_id__in=ids)
+
+        from users.models import Profile
+        profiles = Profile.objects.info_for(set(c.person_id for c in comments), related=False)
+
         for id in ids:
-            res[id] = {}
+            comments_by_parent = {}
+            for comment in filter(lambda c: c.entity_id==id, comments):
+                comments_by_parent.setdefault(comment.parent_id, []).append(comment)
+
+            # Sort comments by time
+            for parent_id in comments_by_parent:
+                comments_by_parent[parent_id] = sorted(comments_by_parent[parent_id],
+                        key=lambda c: c.time, reverse=True)
+
+            def get_comment_data(comment):
+                return {
+                    'comment': comment,
+                    'author': profiles[comment.person_id],
+                    'children': [get_comment_data(child) for child in comments_by_parent.get(comment.id, [])],
+                }
+
+            res[id] = [get_comment_data(comment) for comment in comments_by_parent.get(None, [])]
         return res
 
     def add(self, entity, profile, comment, parent_id=None):
@@ -17,10 +40,17 @@ class EntityCommentManager(BaseEntityPropertyManager):
         self.create(content_type=ContentType.objects.get_for_model(type(entity)),
                 entity_id=entity.id, person=profile, comment=comment)
 
-        # TODO: reset caches
+        entity.clear_cache()
+        profile.clear_cache()
 
     def remove(self, entity, profile, comment_id):
-        pass
+        if self.model.feature not in type(entity).features:
+            return
+
+        getattr(entity, self.model.feature).filter(person=profile, id=comment_id).delete()
+
+        entity.clear_cache()
+        profile.clear_cache()
 
 @feature_model
 class EntityComment(BaseEntityProperty):

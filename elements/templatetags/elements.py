@@ -29,3 +29,7 @@ class TabsNode(template.Node):
             'active': active
         })
         return render_to_string('elements/tabs.html', context)
+
+@register.simple_tag
+def show_comment(data):
+    return render_to_string('comments/item.html', {'data': data})

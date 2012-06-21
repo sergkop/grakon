@@ -3,10 +3,11 @@
 {% load gr_chart_tags %}
 
 {% block module_content %}
+    {{ module.period_form.media }}
+
     <div style="padding:20px 0px 20px 0px;">
         Выберите период для отчета:
         <form action="" method="get">
-            {{ module.period_form.non_field_errors }}
             <div style="padding-top:5px;">
                 <label for="id_start">Начало: </label>
                 {{ module.period_form.start }}&nbsp;
@@ -23,7 +24,7 @@
                         <option {% if mailtype == module.mailtype %}selected{% endif %} value="{{ mailtype }}">{{ mailtype }}</option>
                     {% endfor %}
                 </select>
-                </br>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Показать"/>
             </div>
 

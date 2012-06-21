@@ -1,3 +1,8 @@
+* statistics for last day, week, month in dashboard is wrong
+* stats for read/unread emails
+
+* in clean_html shorten allowed tags list further and drop style attribute
+
 * write docs
 
 * page title, image url and description should be specified as context variable
@@ -35,8 +40,6 @@
 * move html blocks for entities items in special templates and add template path to entity models
 
 * unsubscribe from letters
-
-* remove table_header and other features
 
 * don't load social networks scripts
 

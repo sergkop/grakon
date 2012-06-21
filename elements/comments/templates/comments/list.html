@@ -1,0 +1,9 @@
+{% load elements %}
+
+{% if request.user.is_authenticated %}
+    <textarea style="width:100%;"></textarea>
+{% endif %}
+
+{% for data in info.comments %}
+    {% show_comment data %}
+{% endfor %}

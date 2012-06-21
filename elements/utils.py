@@ -65,8 +65,6 @@ def table_data(request, entity_type, selector, limit=20):
     num_pages = int(ceil(entities_data['count']/float(per_page)))
 
     # TODO: what if count==0?
-    # TODO: show count somewhere
-    # TODO: generate table header (include sorting links and highlighting arrows)
     return {
         'pagination_entities': entities,
         'paginator': {
@@ -78,8 +76,6 @@ def table_data(request, entity_type, selector, limit=20):
             'pages': range(1, num_pages+1),
             'url_prefix': url_prefix,
         },
-        'header_template': entity_model.table_header,
-        'line_template': entity_model.table_line,
     }
 
 def get_entity(post_data):

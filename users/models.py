@@ -77,9 +77,6 @@ class Profile(BaseEntityModel):
     cache_prefix = 'user_info/'
     editable_fields = ['first_name', 'last_name', 'intro', 'about']
 
-    table_header = 'profiles/table_header.html'
-    table_line = 'profiles/table_line.html'
-
     roles = ['follower']
 
     follow_button = {

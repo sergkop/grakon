@@ -9,15 +9,18 @@ from django.utils.timezone import utc
 from admin_tools.dashboard import modules, Dashboard
 from qsstats import QuerySetStats
 
+from elements.widgets import DateTimeWidget
 from services.models import Email
 from tools.ideas.models import Idea
 from tools.projects.models import Project
 from tools.tasks.models import Task
 from users.models import Message
 
+dt_format = '%d/%m/%Y %H:%M'
+
 class PeriodForm(forms.Form):
-    start = forms.DateTimeField()
-    end = forms.DateTimeField()
+    start = forms.DateTimeField(input_formats=[dt_format], widget=DateTimeWidget(format=dt_format))
+    end = forms.DateTimeField(input_formats=[dt_format], widget=DateTimeWidget(format=dt_format))
     mailtypes = forms.Select()
 
 class SiteStats(modules.DashboardModule):
@@ -32,15 +35,15 @@ class SiteStats(modules.DashboardModule):
 
         # Date range
         if 'start' in request.GET and 'end' in request.GET:
-            enddate = datetime.strptime(request.GET['end'], '%d.%m.%Y %X').replace(tzinfo=utc)
-            startdate = datetime.strptime(request.GET['start'], '%d.%m.%Y %X').replace(tzinfo=utc)
+            enddate = datetime.strptime(request.GET['end'], dt_format).replace(tzinfo=utc)
+            startdate = datetime.strptime(request.GET['start'], dt_format).replace(tzinfo=utc)
         else:
             enddate = datetime.today().replace(tzinfo=utc)
             startdate = enddate - timedelta(days=30)
 
         # TODO: remove it
-        qs = LogEntry.objects.filter(action_time__lte=enddate, action_time__gte=startdate)
-        self.children = qs.select_related('content_type', 'user')[:10]
+        self.children = LogEntry.objects.filter(action_time__lte=enddate, action_time__gte=startdate) \
+                .select_related('content_type', 'user')[:10]
 
         self.mailtypes = Email.objects.distinct().values_list('type', flat=True)
 
@@ -78,14 +81,11 @@ class SiteStats(modules.DashboardModule):
 
         self._initialized = True
 
-class CustomIndexDashboard(Dashboard):
+class StatsDashboard(Dashboard):
     def __init__(self, **kwargs):
         Dashboard.__init__(self, **kwargs)
-        self.children.append(modules.ModelList(title = u'Пользователи', models=('django.contrib.auth.*',)))
 
-        self.children.append(modules.AppList(title=u'Приложения', exclude=('django.contrib.*',)))
+        self.children.append(modules.AppList(title=u'Приложения', exclude=('django.contrib.sites.*', 'django.contrib.auth.models.Group')))
 
-        self.children.append(modules.AppList(title=u'Администрирование', models=('django.contrib.*',)))
-
-        self.children.append(modules.Group(title=u"Статистика", display="tabs",
-                children=[SiteStats(title=u'Общая статистика', limit=10)]))
+        self.children.append(modules.Group(title=u'Статистика', display='tabs',
+                children=[SiteStats(title=u'Общая статистика')]))

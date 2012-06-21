@@ -21,9 +21,9 @@ MEDIA_ROOT = ''
 MEDIA_URL = ''
 
 STATIC_URL = '/static/'
-ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.StatsDashboard'
 
 # Additional locations of static files
 STATICFILES_DIRS = ()
@@ -97,6 +97,7 @@ INSTALLED_APPS = (
 
     # Applications
     'elements',
+    'elements.comments',
     'elements.participants',
     'elements.locations',
     'elements.resources',

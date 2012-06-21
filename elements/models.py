@@ -164,11 +164,6 @@ class BaseEntityModel(models.Model):
 
     editable_fields = [] # Names of model text fields, which can be updated by ajax requests
 
-    # Paths to templates constructing tables
-    table_header = ''
-    table_line = ''
-    table_cap = '' # Used on locations pages
-
     class Meta:
         abstract = True
 

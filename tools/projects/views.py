@@ -32,7 +32,7 @@ class BaseProjectView(object):
 
         self.tabs = [
             ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
-            ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
+            ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'projects/wall.html'),
             ('participants', u'Участники: %i' % self.info['providers'], reverse('project_participants', args=[id]), '', 'projects/participants.html'),
         ]
 
