@@ -8,7 +8,7 @@
     {% include "resources/list.html" %}
 {% endwith %}
 
-<div class="gr-info-bar">
+<div class="gr-info-bar gr-mt10">
     {% if info.ideas.admin.count %}
         <a href="{% url profile_ideas info.instance.username %}" class="dimmed">Идеи: {{ info.ideas.admin.count }}</a>
         {% if info.tasks.admin.count or info.projects.admin.count %}
