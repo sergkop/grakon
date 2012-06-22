@@ -14,7 +14,7 @@
 
 {% block right_column %}
     <div align="center" class="gr-mb30">
-        <a id="add_idea_btn" class="gr-follow-button" href="{{ info.instance.get_absolute_url }}#add_idea">Добавить идею</a>
+        <a id="add_idea_btn" class="gr-follow-button" href="{{ info.instance.url }}#add_idea">Добавить идею</a>
 
         <script type="text/javascript">
             {% if not request.user.is_authenticated %}

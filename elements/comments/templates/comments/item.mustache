@@ -1,0 +1,17 @@
+<div class="gr-comment" comment_id="{{comment.id}}" ct="{{comment.content_type_id}}" entity_id="{{comment.entity_id}}">
+    <div><a href="{{author.instance.get_absolute_url}}">{{author.instance.__unicode__}}</a></div>
+
+    <p>{{comment.comment}}</p>
+
+    <div>
+        <span class="dimmed">{{comment.time}}</span>
+
+        <span class="gr-fr js-comment-response">Ответить</span>
+    </div>
+
+    <div class="gr-child-comments" style="margin-left:2em;">
+        {{#children}}
+            {{>comment_item}}
+        {{/children}}
+    </div>
+</div>

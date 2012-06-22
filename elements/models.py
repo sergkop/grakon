@@ -3,12 +3,13 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.db import models
+from django.utils import dateformat
 
 from tinymce.models import HTMLField as TinyMCEHTMLField
 
 from elements.utils import reset_cache
 
-# TODO: rename for Feature?
+# TODO: rename to Feature?
 class BaseEntityPropertyManager(models.Manager):
     def get_for(self, model, ids):
         """
@@ -74,7 +75,7 @@ class BaseEntityProperty(models.Model):
     fk_field = None # specify if there is another foreign key field besides content_type
 
     # Methods will be added to entity model {name: method}. It's either a dict or classmethod of entity_model
-    entity_methods = {} 
+    entity_methods = {}
 
     objects = BaseEntityPropertyManager()
 
@@ -115,7 +116,7 @@ class BaseEntityManager(models.Manager):
             for id in other_ids:
                 other_res[id] = {
                     'ct': content_type_id,
-                    'instance': entities_by_id[id],
+                    'instance': entities_by_id[id].info_data(),
                 }
 
             for feature in features:
@@ -160,12 +161,20 @@ class BaseEntityModel(models.Model):
     entity_name = ''
     entity_title = ''
     cache_prefix = ''
-    features = [] # 'resources', 'followers', 'locations', 'complaints', 'admins'
+    features = [] # 'resources', 'participants', 'locations', 'comments'
 
     editable_fields = [] # Names of model text fields, which can be updated by ajax requests
 
+    disqus_category = ''
+
     class Meta:
         abstract = True
+
+    def disqus_id(self):
+        return ''
+
+    def disqus_url(self):
+        return ''
 
     def cache_key(self):
         return self.cache_prefix + str(self.id)
@@ -176,6 +185,29 @@ class BaseEntityModel(models.Model):
     def info(self, related=True):
         # TODO: this code can fail
         return type(self).objects.info_for([self.id], related)[self.id]
+
+    def info_data(self):
+        """ Returns dict-like structure with db instance data """
+        res = {}
+        for field in type(self)._meta.local_fields:
+            if field.name == 'rating':
+                continue
+
+            field_name = field.name+'_id' if field.rel else field.name
+            if field_name in ('time', 'add_time'):
+                # Transform time fields to strings generated using Django
+                res[field_name] = dateformat.format(getattr(self, field_name), 'j b Y')
+            else:
+                res[field_name] = getattr(self, field_name)
+
+        res.update({
+            'url': self.get_absolute_url(),
+            'disqus_category': self.disqus_category,
+            'disqus_id': self.disqus_id(),
+            'disqus_url': self.disqus_url(),
+            'follow_button': getattr(self, 'follow_button', None), # TODO: exclude it from here
+        })
+        return res
 
     def calc_rating(self):
         """ Return rating using entity info """
@@ -230,7 +262,7 @@ class HTMLField(TinyMCEHTMLField):
         return super(HTMLField, self).formfield(**kwargs)
 
     def south_field_triple(self):
-        """ Hack to deal with south migrations """
+        """ A hack to deal with south migrations """
         field_class = self.__class__.__module__ + '.' + self.__class__.__name__
         from south.modelsinspector import introspector
         args, kwargs = introspector(self)

@@ -1,3 +1,5 @@
+{% load elements %}
+
 {% include "disqus/comments.html" %}
 
-{% include "comments/list.html" %}
+{% show_comments "comments/list.mustache" info.comments %}

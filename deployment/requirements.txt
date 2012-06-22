@@ -1,25 +1,44 @@
 django>=1.4
-django-tinymce
 south>=0.7.3
+
+# Front-end
+django-tinymce
 django-crispy-forms
+pystache
+
+# HTML
 bleach
-django-debug-toolbar
-pylibmc
 beautifulsoup
-scrapy
+
+# Social
 django-social-auth
+google-api-python-client
+
+# Drivers
 psycopg2
-ipython
+pylibmc
+
+# Sending emails
 dnspython
 -e git+https://github.com/ghewgill/pydkim.git#egg=pydkim
 boto
+
+# Misc
+django-debug-toolbar
+ipython
+scrapy
+
+# Deployment
 flup
-google-api-python-client
+
+# Documentation
 sphinx
+
+# Dashboard
 django-admin-tools
 python-dateutil==1.5
 pytz
 django-qsstats-magic
 django-chart-tools
-#mysql-python
+
 #django-simple-captcha

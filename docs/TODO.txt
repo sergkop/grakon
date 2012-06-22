@@ -1,14 +1,44 @@
-* statistics for last day, week, month in dashboard is wrong
-* stats for read/unread emails
-
-* in clean_html shorten allowed tags list further and drop style attribute
-
 * write docs
+* conventions file for front-end developer (docs about tabs and buttons, page layout)
+
+* include mustache templates in code_data.js (fix \n issues?)
+* use one renderer with a complete list of partials (also in code_data.js)
+
+* system of comments
+
+* in 'about' fields add target="_blank" to all external links (in HTMLField)
 
 * page title, image url and description should be specified as context variable
 * open share dialogs in popups (vk, fb, twitter)
 
 * notifications
+
+* send emails about считайте сами
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* reinstall pydkim on server
+* redirect url to track pressing on external links in emails
+* extract emails from undelivered letters and don't use them anymore
+* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+
+
+
+* include other factors in users sorting (number of contacts, etc.)
+
+* move html blocks for entities items in special templates and add template path to entity models
+
+* when mouse is over the date - show exact time in hover
+
+* make ideas, tasks editable in lists
+
+* use tinymce parameters from settings.py in js
+* remove tinymce buttons opening popups
+* tinymce can be loaded twice due to inclusion in base.html
+* rewrite tinymce widget
+* getContent() should be taken for specific tinymce instances, not active
+
+
+* statistics for last day, week, month in dashboard is wrong
+* stats for read/unread emails
 
 * links in breadcrumbs should depend on type of page or tab on location
 
@@ -16,7 +46,7 @@
 * add more content to init_database
 
 * sort resources in project right panel by creation time
-* edit own resources on idea page
+* edit own resources on idea page and in lists
 * add resource button on idea page
 
 * popup before admin removes project resource
@@ -29,25 +59,20 @@
 
 * small html fixes of idea page with Yulia
 
-* system of comments
+* update ratings on any changes (adding, deleting, following, etc)
+* override save() method of EntityProperty models to reset cache
 
-* update ratings on any changes
-
-
+* sorting lists by popularity, date (choose sorting type)
 
 * drop yandex metrika?
-
-* move html blocks for entities items in special templates and add template path to entity models
 
 * unsubscribe from letters
 
 * don't load social networks scripts
 
-* links in breadcrumbs should depend on type of page currently displayed
-
 * drop idea names
 
-* ability to delete ideas, tasks (without reesources), projects
+* ability to delete ideas, tasks (without resources), projects
 
 * reimplement popup windows in project
 
@@ -71,8 +96,6 @@
 
 * new widget for location editor; add location in location list editor
 
-* editing resources for idea
-
 * add task and add project forms should open with initialized location
 
 Yulia:
@@ -82,39 +105,32 @@ Yulia:
     * help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select" 
     * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
-    * buttons in popups are not displayed in production
-    * send message button in letter
     * remove underlining links in main menu
+    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
 
 * consider all the cases for showing lists under task/idea (press one button first, then another)
 
-* bug with disqus wall when some users log in
-
 * can admin unfollow an entity?
-
-* use tinymce parameters from settings.py in js
-* remove tinymce buttons opening popups
-* tinymce can be loaded twice due to inclusion in base.html
-* rewrite tinymce widget
-* getContent() should be taken for specific tinymce instances, not active
-
-* make ideas, tasks editable in lists
 
 * fill in create form fields with grey example values
 
+* typography http://jevix.ru/
+
 * settings page
+
+* use jinja instead of django templates (?) Check rendering time
+
+* no breadcrumbs on create form pages
+* in registration form check that russian letters are used in first and last name
 -------------------------------------------------------------------------------
+* use spaceless built-in template tag?
+
 * display data for logged in user at main page (no redirect) - data from followed entities
-* in users list show numbers of ideas, projects, tasks and resources provided
 
 * project-ideas connection (editing ideas of the project)
 * linking idea to project on idea page
 
 * don't reload page after adding/removing resource to idea
-
-* when mouse is over the date - show exact time in hover
-
-* do disqus counters for ideas work?
 
 * set of permissions (verified users)
 
@@ -126,7 +142,7 @@ Yulia:
 
 * when text field text is longer than 140 - text is cut
 
-* user's avatar, use it in disqus, emails
+* user's avatar, use it in comments, emails
 
 * in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
 
@@ -157,15 +173,9 @@ Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
     * activate compression for tinymce
 
-* in 'about' fields add target="_blank" to all external links (in HTMLField)
-
 * check admin rights in elements.views.check_permissions (check that it works)
 
-* override save() method of EntityProperty models to reset cache
-
 * ability to edit html in message (special filtering of html for emails)
-
-* Отправить сообщение -> Ответить - нарисовать кнопку (Оксана)
 
 * ability to request entity deletion (like with profiles)
 
@@ -186,23 +196,16 @@ Performance:
 
 * Activating compessing in tinymce breaks popups (on development server only)
 
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
-* reinstall pydkim on server
-
 Account activation:
     * fix sending profile activation email via admin
     * what happens when account activation link expires? is it possible to register again?
 
 * README
 
-* adding urls about officials, events + universal entity feature for it
-
 Emails:
     * subscription configuration
     * page with form for writing messages (put link on it in emails)
-    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
     * send email notifying that user has been added to contacts (+ ability to unsubscribe)
-    * redirect url to track pressing on external links in emails
 
 Analytics:
     * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
@@ -233,24 +236,11 @@ Social registration
     * file with all passwords, social applications (where to get them)
     * add Facebook App ID to disqus
 ---------------------------------------------------------------------------------
-* after deleting official points are not updated
-
-* order events according to the date (side list and table)
-
 * decorator to restrict permissions on access to edit/create views
-
-* make pages with lists of administered items and contacts; "показать все" links in side panels + header links
-
-* make resources in registration not mandatory (?)
 
 * denormalization of counters
 
 * ability to specify yandex money account when asking for money
-
-* show posts on the left panel (link to anchor on a page with post)
-* return entities of posts, not model instances
-
-* entity model must contain info on how to display its instances in side panels and tables
 
 * Class to standartize forms features
 
@@ -262,37 +252,22 @@ SEO:
     * Webmaster Tools, https://www.google.com/webmasters/
     * set proper page titles
     * ability to set individual titles for tabs of static pages
+    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
+    * how to deal with large sitemaps?
 
-* invitations to events
-
-* change the looks of title of officials page - apply styles to 'Чиновники'
-
-* sorting official by last_name
-
-* for anonym users logo in the hat must contain the text 'гражданский контроль...'
+* invitations to projects?
 
 * Ability to sign up for higher levels
 
 * popups with user's info and points in right panel
 
-* show sender's points in message email
-
 * form fields are not highlighted anymore (with uniform script)
 
-* Give points for disqus activity, negative for complaints
-
-SEO:
-    * Disallow paths in robots.txt (see django-social-auth example) - generate it and put in static on deployment
+* Give rating for comments, negative for complaints
 
 * pages for tools and users (with search) + bring them back in main menu
 
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
-
-Disqus:
-    * неправильный заголовок на вкладке логина через гракон
-    * special login url, which closes window
-
-* Use aggregates for counting points
 
 Front-end:
     * show g+ and vk buttons in dev mode; add these buttons to pages
@@ -301,11 +276,9 @@ Front-end:
 Misc:
     * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
         move logo url to settings
-    * reset cache on changes
     * add tips to buttons and ? signs to get help on features of the system
     * in forms limit lengths of strings that go into model's CharField
 
-* Graphs with statistics (in dashboard first); stats about users, emails, activities, etc.
 * http://analytics.blogspot.co.uk/2012/05/new-google-analytics-easy-dashboard.html
 
 * Check that urls are specified properly in templates (look for "/ and http://grakon.org
@@ -315,59 +288,40 @@ Misc:
 * add per_page selector in paginator
 
 * ability to choose timezone/determine it from location
-
-* button creating event/official from location page should automatically fill in location in the form
-  (get params in url)
 --------------------------------------
-* calendar page with events
+* calendar page with projects
 
 * add wikipedia links to locations, info about population, map boundaries
 
-* show events on map and allow to specify exact location on the map
+* show projects on map and allow to specify exact location on the map
 
 * can we speed up get_for by not taking all entities, just those within requested limit?
 
 * separate analytics of elections site
 * exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
 
-* use jinja instead of django templates (?) Check rendering time
-
 * Registration form should take get parameters
 * Fill in registration form with location or login
+* Don't ask password in registration until email is confirmed (like in gravatar.com)
 
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
 
-* Left column of profile - administration, participation, представитель организации, etc.
-
-* Types of officials (депутаты, судьи, адвокаты)
-* Pages for places
-
 * combine create pages with search pages
 
-* display entities assigned to higher levels of hierarchy on lower levels
+* display entities assigned to higher levels of hierarchy on lower levels?
 
 * use gravatar
 
-* in registration don't take password at first (like in gravatar.com)?
-
-* choosing main location
-
 * Show list my locations in top panel (if there are more than 1)
-
-* generate links in breadcrumbs in such a way that an opened tab doesn't change at navigation
 
 * move password change views to users (from auth)
 * reasons to register on registration page (merge with landing page)
 
 * use celery to send emails (method for delayed sending of email)
 
-* show post messages
-
 * allow user to start working without confirmation of his email, but limit his functionality (?)
 
 * captchas
-
-* dashboard with statistics (emails, users activities, traffic, etc.)
 
 * display html fields in admin listings nicely (extract text only)
 --------------------------------------
@@ -376,14 +330,12 @@ Misc:
 * give superuser the rights of all admins (?)
 
 Emails:
-    * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
     * list-unsubscribe header
     * messages, subscription @grakon.org (send messages of different types from different emails)
     * analyze email postfixes, detect sending problems, configure properly
     * suggest users to add our emails to contacts lists
 
 Front-end
-    * conventions file for front-end developer (docs about tabs and buttons, page layout)
     * take only necessary parts of jquery-ui, compress
     * use sprites to extract images from one file (especially icons) (https://github.com/jorgebastida/glue)
 
@@ -402,9 +354,6 @@ Analytics:
     * use page visits analytics to determine optimal caching times
     * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
     * get statistics on db usage
-
-SEO:
-    * how to deal with large sitemaps?
 
 Testing:
     * perform code testing after commit (github hooks)
@@ -437,8 +386,6 @@ Celery:
 
 * update select widget in breadcrumbs with chosen (?)
 
-* stackoverflow-like ordering of news
-
 * search + autocompletion
 
 Deployment:
@@ -450,8 +397,6 @@ Deployment:
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 
-* start writing documentation
-
 * project news page - store in db, rss + ability to post to social networks automatically
 
 * don't use cache for anonymous users on the dev server (for convinience)
@@ -462,8 +407,6 @@ Deployment:
 
 * написать текст на страницах 404 и 500
 
-* highlight buttons in the menu
-
 * put all our media (video, presentations, logos, infographics, etc.) online in social networks
 
 * use pylint, pyflakes for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
@@ -471,5 +414,3 @@ Deployment:
 * use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python
 
 * move reformal options to settings
-
-* Automatically find valuable mentions of officials in news, e.g. lenta.ru and post them as a link

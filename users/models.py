@@ -91,7 +91,20 @@ class Profile(BaseEntityModel):
 
     def calc_rating(self):
         info = self.info()
-        return info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + 3*info['projects']['admin']['count']
+        rating = info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + \
+                3*info['projects']['admin']['count']
+
+        if self.intro:
+            rating += 0.1
+
+        if self.about:
+            rating += 0.1
+
+        rating += 0.05 * len(info['resources'].get('none', {}).get('data', []))
+
+        # TODO: take into account provided resources, comments and contacts
+
+        return rating
 
     def has_contact(self, profile):
         return EntityParticipant.objects.is_participant(profile, self, 'follower')

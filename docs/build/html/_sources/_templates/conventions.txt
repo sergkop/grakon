@@ -10,6 +10,30 @@ Code styling
 ------------
     * Use 4 space indentation, no tabulations
     * Line length **can exceed** 80 symbols if it makes sence
+    * Remove trailing spaces
+    * One empty line at the end of file
+    * Ordering of imports is the following (all sorted by alphabet):
+      1) native python packages; 2) django packages; 3) external libraries; 4) grakon applications.
+      Blocks should be separated by one line, e.g.
+
+      .. code-block:: python
+
+          import os.path
+
+          from django import forms
+          from django.template import RequestContext
+
+          from elements.utils import reset_cache
+
+    * If code contains some bugs, issues or needs extra work, leave comments with TODO tag:
+
+      .. code-block:: python
+
+          # TODO: consider other cases for values of name
+          if name == 'all':
+              return 1
+
+    * Remove **print** statements from code performed by web server
 
 Database migration
 ------------------
@@ -45,7 +69,6 @@ Django template system documentation
 
 Templates
 ---------
-    
 * use {{ ADMIN_EMAIL }} instead of admin@grakon.org as our contact email
 * use {{ URL_PREFIX }} instead of http://grakon.org
 * {{ SLOGAN }} - "Гражданский контроль за работой властей"

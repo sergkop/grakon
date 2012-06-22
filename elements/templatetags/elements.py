@@ -1,9 +1,12 @@
 from django import template
 from django.template.loader import render_to_string
+from django.utils._os import safe_join
+
+from pystache import Renderer
 
 register = template.Library()
 
-@register.tag(name="tabs")
+@register.tag(name='tabs')
 def tabs_tag(parser, token):
     args = token.split_contents()
     if len(args) != 3:
@@ -30,6 +33,40 @@ class TabsNode(template.Node):
         })
         return render_to_string('elements/tabs.html', context)
 
-@register.simple_tag
-def show_comment(data):
-    return render_to_string('comments/item.html', {'data': data})
+def get_mustache_template(path):
+    # This code is partially copied from django.template.loaders.app_directories
+    from django.template.loaders.app_directories import app_template_dirs
+    for template_dir in app_template_dirs:
+        try:
+            full_path = safe_join(template_dir, path)
+        except ValueError:
+            pass
+        else:
+            try:
+                file = open(full_path)
+                try:
+                    return file.read().decode('utf8')
+                finally:
+                    file.close()
+            except IOError:
+                pass
+
+def mustache_renderer(partials_paths):
+    """ partials_paths = {name: path} """
+    partials = {}
+    for name, path in partials_paths.iteritems():
+        partials[name] = get_mustache_template(path)
+    return Renderer(partials=partials)
+
+@register.simple_tag(takes_context=True)
+def show_comments(context, template_path, data):
+    template = get_mustache_template(template_path)
+
+    # TODO: move getting renderer out of here
+    comments_renderer = mustache_renderer({'comment_item': 'comments/item.mustache'})
+
+    ctx = {
+        'comments': data,
+        'is_authenticated': context['request'].user.is_authenticated(),
+    }
+    return comments_renderer.render(template, ctx)

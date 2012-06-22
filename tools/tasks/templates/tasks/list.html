@@ -4,7 +4,7 @@
         <div class="gr-ideas-item">
             <div class="gr-ideas-content">
                 <div class="gr-add gr-idea-selected"><span>{{ info.resources.count }}</span></div>
-                <h4><a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a></h4>
+                <h4><a href="{{ info.instance.url }}">{{ info.instance.title }}</a></h4>
                 <div class="gr-mb10">
                     {% with person=info.participants.admin.entities.0.instance %}
                         {% include "participants/person.html" %}
@@ -17,7 +17,7 @@
                 {% include "elements/comments.html" %}
 
                 <span class="gr-bullet">&nbsp;</span>
-                <a href="{{ info.instance.get_absolute_url }}#ideas" class="dimmed">Идеи: {{ info.ideas.count }}</a>
+                <a href="{{ info.instance.url }}#ideas" class="dimmed">Идеи: {{ info.ideas.count }}</a>
 
                 <span class="gr-bullet">&nbsp;</span>
                 <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
@@ -35,7 +35,7 @@
                     {% endif %}
                 {% endif %}
 
-                <span class="gr-fr dimmed">{{ info.instance.time|date:"j b Y" }}</span>
+                <span class="gr-fr dimmed">{{ info.instance.add_time }}</span>
             </div>
             <div class="gr-slider js-follow-content">
                 <div class="gr-close js-slide-close">&nbsp;</div>

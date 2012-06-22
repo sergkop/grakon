@@ -31,13 +31,11 @@ def reset_cache(func):
 # TODO: add target="_blank" to all external links
 def clean_html(html):
     """ Clean html fields edited by tinymce """
-    tags = ['a', 'b', 'big', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'li', 
-                'ol', 'p', 's', 'span', 'strike', 'strong', 'u', 'ul']
+    tags = ['a', 'b', 'br', 'em', 'i', 'li', 'ol', 'p', 'span', 'strong', 'u', 'ul']
 
-    attributes = ['align', 'alt', 'border', 'class', 'dir', 'data', 'height', 'href', 'id', 'lang', 'longdesc', 'media', 'multiple',
-                'nowrap', 'rel', 'rev', 'span', 'src', 'style', 'target', 'title', 'type', 'valign', 'vspace', 'width']
+    attributes = ['align', 'href', 'style']
 
-    styles = ['text-decoration', 'font-size', 'font-family', 'text-align', 'padding-left', 'color', 'background-color', ]
+    styles = ['text-decoration']
     return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
 
 # TODO: use anchors to show table on navigation to another page

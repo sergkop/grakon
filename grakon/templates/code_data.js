@@ -47,3 +47,5 @@ function tinymce_editor(textarea_id){
     } else
         create_tinymce_widget(textarea_id);
 }
+
+PARTIALS = {{ mustache_partials|safe }};

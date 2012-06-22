@@ -16,7 +16,7 @@
                     {% for provider_resources in info.resources.values %}
                         {% if provider_resources.provider %}
                             <li>
-                                <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                                <a href="{{ provider_resources.provider.instance.url }}">{{ provider_resources.provider.instance.first_name }} {{ provider_resources.provider.instance.last_name }}</a>
                                 {% with resources=provider_resources.data %}
                                     {% include "resources/list.html" %}
                                 {% endwith %}
