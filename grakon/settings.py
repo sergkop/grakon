@@ -1,5 +1,8 @@
 # Django settings for grakon project.
 
+from grakon.public_site_settings import *
+from grakon.site_settings import *
+
 TIME_ZONE = 'Europe/Moscow'
 
 LANGUAGE_CODE = 'ru-RU'
@@ -42,8 +45,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'grakon.context_processors.media_files',
-    'grakon.context_processors.page_url',
-    'grakon.context_processors.proj_settings',
+    'grakon.context_processors.code_data',
 )
 
 TEMPLATE_LOADERS = (
@@ -61,6 +63,9 @@ MIDDLEWARE_CLASSES = (
     'users.middleware.ProfileMiddleware',
     'services.middleware.FromEmailMiddleware',
 )
+
+if not DEBUG:
+    MIDDLEWARE_CLASSES += ('grakon.middleware.MinifyHTMLMiddleware',)
 
 ROOT_URLCONF = 'grakon.urls'
 
@@ -167,9 +172,6 @@ AUTHENTICATION_BACKENDS = (
     'authentication.backend.EmailAuthenticationBackend',
 )
 
-from grakon.public_site_settings import *
-from grakon.site_settings import *
-
 # TODO: remove unlink button?
 TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'libs', 'tiny_mce')
@@ -183,7 +185,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons3': "",
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
-    'extended_valid_elements': "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],",
 }
 TINYMCE_COMPRESSOR = True
 

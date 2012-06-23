@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
-from elements.locations.utils import subregion_list
+from elements.locations.utils import breadcrumbs_context, subregion_list
 from elements.models import ENTITIES_MODELS
 from elements.participants.models import EntityParticipant
 from elements.utils import table_data
@@ -49,11 +49,11 @@ class BaseLocationView(object):
         ]
 
         ctx.update(entity_tabs_view(self))
+        ctx.update(breadcrumbs_context(location))
 
         ctx.update({
+            'title': location.name,
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
-            'location': location,
-            'subregions': subregion_list(location),
             'info': self.info,
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],

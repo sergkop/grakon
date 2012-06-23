@@ -89,6 +89,11 @@ class Profile(BaseEntityModel):
         'confirm_btn_long': u'Добавить в контакты',
     }
 
+    def info_data(self):
+        data = super(Profile, self).info_data()
+        data['full_name'] = unicode(self)
+        return data
+
     def calc_rating(self):
         info = self.info()
         rating = info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + \

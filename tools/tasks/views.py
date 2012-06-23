@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.locations.utils import subregion_list
+from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.resources.models import RESOURCE_CHOICES
 from elements.views import entity_base_view, entity_tabs_view
@@ -30,26 +30,19 @@ class BaseTaskView(object):
 
         ctx.update(entity_base_view(self, Task, {'id': id}))
 
-        #self.tabs = [
-        #    ('view', u'Идеи', reverse('task', args=[id]), '', 'tasks/view.html'),
-        #    ('wall', u'Обсуждение', reverse('task_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
-        #]
-
-        #ctx.update(entity_tabs_view(self))
-
-        # TODO: select_related it needed
-        location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
-
         supporters_ids = set(provider_id for idea_info in self.info['ideas']['entities'] for provider_id in idea_info['resources'])
         supporters_info = Profile.objects.info_for(supporters_ids, related=False)
 
         idea_admins_ids = set([idea_admin_id for idea_info in self.info['ideas']['entities'] for idea_admin_id in idea_info['participants']['admin']['ids']])
         idea_admins_info = Profile.objects.info_for(idea_admins_ids, related=False)
 
+        # TODO: select_related it needed
+        location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
+        ctx.update(breadcrumbs_context(location))
+
         ctx.update({
+            'title': u'Задача: '+self.entity.title,
             'task': self.entity,
-            'location': location,
-            'subregions': subregion_list(location),
 
             # TODO: fix it
             'admin': ctx['info']['participants']['admin']['entities'][0]['instance'],
@@ -77,12 +70,6 @@ class TaskWallView(BaseTaskView, TemplateView):
 
     def update_context(self):
         return {'template_path': 'disqus/comments.html'}
-
-#class TaskParticipantsView(BaseTaskView, TemplateView):
-#    tab = 'participants'
-
-#    def update_context(self):
-#        return participants_view(self)
 
 class CreateTaskView(CreateView):
     template_name = 'tasks/create.html'

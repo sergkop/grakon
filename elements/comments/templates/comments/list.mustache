@@ -1,7 +1,9 @@
-{{#is_authenticated}}
-    <textarea style="width:100%;"></textarea>
-{{/is_authenticated}}
+<div class="js-comments" ct="{{ct}}" e_id="{{e_id}}">
+    {{#PROFILE.username}}
+        {{>comment_field}}
+    {{/PROFILE.username}}
 
-{{#comments}}
-    {{>comment_item}}
-{{/comments}}
+    {{#comments}}
+        {{>comment_item}}
+    {{/comments}}
+</div>

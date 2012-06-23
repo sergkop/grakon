@@ -58,7 +58,7 @@ $(function(){
 
     // Adding resources to idea
     $(".js-add").click(function(){
-        if (USERNAME==""){
+        if (!PROFILE.username){
             login_dialog_init();
             return;
         }

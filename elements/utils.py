@@ -27,16 +27,16 @@ def reset_cache(func):
     return new_func
 
 # TODO: sync it with tinymce and test
-# TODO: remove all <p></p>. Replace them with
-# TODO: add target="_blank" to all external links
+# TODO: remove all <p></p>. Replace them with <br/> (?)
 def clean_html(html):
     """ Clean html fields edited by tinymce """
     tags = ['a', 'b', 'br', 'em', 'i', 'li', 'ol', 'p', 'span', 'strong', 'u', 'ul']
 
-    attributes = ['align', 'href', 'style']
+    attributes = ['align', 'href', 'style', 'target', 'rel']
 
     styles = ['text-decoration']
-    return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
+    html = bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
+    return bleach.linkify(html, nofollow=True, target='_blank')
 
 # TODO: use anchors to show table on navigation to another page
 def table_data(request, entity_type, selector, limit=20):

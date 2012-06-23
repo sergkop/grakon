@@ -47,6 +47,7 @@ class BaseProfileView(object):
             location = None
 
         ctx.update({
+            'title': unicode(self.entity),
             'profile': self.entity,
             'is_admin': self.own_profile,
             'location': location,

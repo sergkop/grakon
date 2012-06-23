@@ -58,15 +58,25 @@ def mustache_renderer(partials_paths):
         partials[name] = get_mustache_template(path)
     return Renderer(partials=partials)
 
+comments_templates = {
+    'comment_item': 'comments/item.mustache',
+    'comments_list': 'comments/list.mustache',
+    'comment_field': 'comments/field.mustache',
+}
+
 @register.simple_tag(takes_context=True)
-def show_comments(context, template_path, data):
+def show_comments(context, template_path, info):
     template = get_mustache_template(template_path)
 
+    # TODO: check that corresponding entity model has comments feature
+
     # TODO: move getting renderer out of here
-    comments_renderer = mustache_renderer({'comment_item': 'comments/item.mustache'})
+    comments_renderer = mustache_renderer(comments_templates)
 
     ctx = {
-        'comments': data,
-        'is_authenticated': context['request'].user.is_authenticated(),
+        'ct': info['ct'],
+        'e_id': info['instance']['id'],
+        'comments': info['comments'],
+        'PROFILE': context['request'].PROFILE,
     }
     return comments_renderer.render(template, ctx)

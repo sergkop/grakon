@@ -1,7 +1,9 @@
+# -*- coding:utf-8 -*-
+from django.conf import settings
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 
-from elements.locations.utils import subregion_list
+from elements.locations.utils import breadcrumbs_context
 from elements.models import ENTITIES_MODELS
 from elements.resources.models import RESOURCE_DICT
 from locations.models import Location
@@ -20,6 +22,8 @@ def main(request):
         data[entity_type] = [entities_info[id] for id in ids]
 
     ctx = {
+        'title': u'Соцсеть гражданских активистов',
+        'description': settings.SLOGAN,
         'is_main': True,
         'country_url': country.get_absolute_url(),
         'lists_data': data,
@@ -34,11 +38,7 @@ def static_page(request, **kwargs):
     kwargs must contain the following keys: 'tab', 'template', 'tabs'.
     kwargs['tabs']=[(name, url, template, css_class), ...]
     """
-    location = Location.objects.country()
-    ctx = {
-        'location': location,
-        'subregions': subregion_list(location),
-    }
+    ctx = breadcrumbs_context(Location.objects.country())
     ctx.update(kwargs)
     return render_to_response(kwargs['template'], context_instance=RequestContext(request, ctx))
 

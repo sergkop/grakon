@@ -1,5 +1,5 @@
-<div class="gr-comment" comment_id="{{comment.id}}" ct="{{comment.content_type_id}}" entity_id="{{comment.entity_id}}">
-    <div><a href="{{author.instance.get_absolute_url}}">{{author.instance.__unicode__}}</a></div>
+<div class="gr-comment" comment_id="{{comment.id}}" ct="{{comment.ct_id}}" e_id="{{comment.entity_id}}">
+    <div><a href="{{{author.url}}}">{{author.full_name}}</a></div>
 
     <p>{{comment.comment}}</p>
 

@@ -1,33 +1,13 @@
-* write docs
-* conventions file for front-end developer (docs about tabs and buttons, page layout)
-
-* include mustache templates in code_data.js (fix \n issues?)
-* use one renderer with a complete list of partials (also in code_data.js)
-
-* system of comments
-
-* in 'about' fields add target="_blank" to all external links (in HTMLField)
-
-* page title, image url and description should be specified as context variable
-* open share dialogs in popups (vk, fb, twitter)
-
-* notifications
-
+* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+* extract emails from undelivered letters and don't use them anymore
 * send emails about считайте сами
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 * reinstall pydkim on server
 * redirect url to track pressing on external links in emails
-* extract emails from undelivered letters and don't use them anymore
-* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
 
-
-
-* include other factors in users sorting (number of contacts, etc.)
+* write docs (entities, features, info, ajax ports)
 
 * move html blocks for entities items in special templates and add template path to entity models
-
-* when mouse is over the date - show exact time in hover
-
 * make ideas, tasks editable in lists
 
 * use tinymce parameters from settings.py in js
@@ -36,11 +16,22 @@
 * rewrite tinymce widget
 * getContent() should be taken for specific tinymce instances, not active
 
+* don't load social networks scripts (include loading scripts in elements/share.html)
+
+* links in breadcrumbs should depend on type of page or tab on location
+
+* system of comments
+
+* notifications
+
+* add tabs names to title for entities, image url and description should be specified as context variable
+
+
+
+* include other factors in users sorting (number of contacts, etc.)
 
 * statistics for last day, week, month in dashboard is wrong
 * stats for read/unread emails
-
-* links in breadcrumbs should depend on type of page or tab on location
 
 * update init_database
 * add more content to init_database
@@ -67,8 +58,6 @@
 * drop yandex metrika?
 
 * unsubscribe from letters
-
-* don't load social networks scripts
 
 * drop idea names
 
@@ -116,14 +105,20 @@ Yulia:
 
 * typography http://jevix.ru/
 
-* settings page
+* settings page (change password, request account deletion)
 
 * use jinja instead of django templates (?) Check rendering time
 
 * no breadcrumbs on create form pages
 * in registration form check that russian letters are used in first and last name
+
+* open share dialogs in popups (vk, fb, twitter)
 -------------------------------------------------------------------------------
-* use spaceless built-in template tag?
+* when mouse is over the date - show exact time in hover
+
+* split requirements to deploy and develop, use inclusion
+
+* conventions file for front-end developer (docs about tabs and buttons, page layout)
 
 * display data for logged in user at main page (no redirect) - data from followed entities
 

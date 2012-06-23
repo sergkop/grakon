@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
 from elements.resources.models import RESOURCE_CHOICES
-from elements.templatetags.elements import get_mustache_template
+from elements.templatetags.elements import comments_templates, get_mustache_template
 from grakon.utils import project_settings
 from services.cache import cache_view
 
@@ -17,16 +17,11 @@ def code_data(request):
     ctx.update(project_settings())
 
     # Include mustache templates
-    mustache_templates = {
-        'comment_item': 'comments/item.mustache',
-        'comments_list': 'comments/list.mustache',
-    }
-
     partials = {}
-    for name, path in mustache_templates.iteritems():
+    for name, path in comments_templates.iteritems():
         partials[name] = get_mustache_template(path)
 
-    ctx['mustache_partials'] = json.dumps(partials, ensure_ascii=False)
+    ctx['mustache_partials'] = json.dumps(partials, ensure_ascii=False).replace('\\n', ' ')
 
     return render_to_response('code_data.js', ctx, mimetype='application/javascript')
 

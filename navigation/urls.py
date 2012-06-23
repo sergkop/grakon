@@ -5,7 +5,7 @@ urlpatterns = patterns('navigation.views',
     url(r'^$', 'main', name='main'),
     url(r'^feedback$', 'feedback', name='feedback'),
     url('^feedback_thanks$', 'static_page', kwargs={'template': 'feedback/thanks.html'}, name='feedback_thanks'),
-    url('^partners$', 'static_page', kwargs={'template': 'static_pages/partners.html'}, name='partners'),
+    url('^partners$', 'static_page', kwargs={'template': 'static_pages/partners.html', 'title': u'Партнеры'}, name='partners'),
 )
 
 def static_tabs_urls(base_template, tabs_short):
@@ -23,6 +23,7 @@ def static_tabs_urls(base_template, tabs_short):
             'template': base_template,
             'tabs': tabs,
             'template_path': template,
+            'title': title,
         }
         urls.append(url(r'^'+name+'$', view or 'navigation.views.static_page',
                 kwargs, name=name))
