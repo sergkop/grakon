@@ -10,9 +10,9 @@
             <ul class="gr-source-list-slider js-resource-items">
                 {% for provider_resources in info.resources.values %}
                     <li>
-                        <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                        <a href="{{ provider_resources.provider.instance.url }}">{{ provider_resources.provider.instance.first_name }} {{ provider_resources.provider.instance.last_name }}</a>
                         {% with resources=provider_resources.data %}
-                            {% if provider_resources.provider.instance == request.profile %}
+                            {% if provider_resources.provider.instance.id == request.profile.id %}
                                 {% with resource_editable="true" %}
                                     {% include "resources/list.html" %}
                                 {% endwith %}
@@ -45,14 +45,14 @@
         <span class="gr-bullet">&nbsp;</span>
         <a class="bold js-link-to-project">Связать с проектом</a>
 
-        <span class="gr-fr dimmed"><a href="{{ info.instance.get_absolute_url }}" class="dimmed">{{ info.instance.time|date:"j b Y" }}</a></span>
+        <span class="gr-fr dimmed"><a href="{{ info.instance.url }}" class="dimmed">{{ info.instance.add_time }}</a></span>
     </div>
 
     <div class="gr-slider js-projects-content">
         <div class="gr-close js-slide-close">&nbsp;</div>
         <ul class="gr-links-list">
             {% for project in info.projects.entities %}
-                <li><a href="{{ project.instance.get_absolute_url }}">{{ project.instance.title }}</a></li>
+                <li><a href="{{ project.instance.url }}">{{ project.instance.title }}</a></li>
             {% endfor %}
         </ul>
     </div>

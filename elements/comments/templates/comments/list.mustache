@@ -1,0 +1,9 @@
+<div class="js-comments" ct="{{ct}}" e_id="{{e_id}}">
+    {{#PROFILE.username}}
+        {{>comment_field}}
+    {{/PROFILE.username}}
+
+    {{#comments}}
+        {{>comment_item}}
+    {{/comments}}
+</div>

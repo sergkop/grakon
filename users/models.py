@@ -77,9 +77,6 @@ class Profile(BaseEntityModel):
     cache_prefix = 'user_info/'
     editable_fields = ['first_name', 'last_name', 'intro', 'about']
 
-    table_header = 'profiles/table_header.html'
-    table_line = 'profiles/table_line.html'
-
     roles = ['follower']
 
     follow_button = {
@@ -92,9 +89,27 @@ class Profile(BaseEntityModel):
         'confirm_btn_long': u'Добавить в контакты',
     }
 
+    def info_data(self):
+        data = super(Profile, self).info_data()
+        data['full_name'] = unicode(self)
+        return data
+
     def calc_rating(self):
         info = self.info()
-        return info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + 3*info['projects']['admin']['count']
+        rating = info['tasks']['admin']['count'] + info['ideas']['admin']['count'] + \
+                3*info['projects']['admin']['count']
+
+        if self.intro:
+            rating += 0.1
+
+        if self.about:
+            rating += 0.1
+
+        rating += 0.05 * len(info['resources'].get('none', {}).get('data', []))
+
+        # TODO: take into account provided resources, comments and contacts
+
+        return rating
 
     def has_contact(self, profile):
         return EntityParticipant.objects.is_participant(profile, self, 'follower')

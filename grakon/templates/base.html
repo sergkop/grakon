@@ -6,20 +6,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--meta name="title" content="{{ title }}" />
-    <meta name="description" content="{{ description }}" /-->
+    <meta name="title" content="{{ title }} - Гракон" />
+    <meta name="description" content="{{ description }}" />
     <link rel="image_src" href="{{ URL_PREFIX }}{{ STATIC_URL }}images/logos/share.jpg" />
 
-    <!--meta itemprop="name" content="{{ title }}"/>
-    <meta itemprop="description" content="{{ description }}"/-->
+    <meta itemprop="name" content="{{ title }} - Гракон"/>
+    <meta itemprop="description" content="{{ description }}"/>
 
-    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <title>{% block title %}{{ title }} - Гракон{% endblock %}</title>
 
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon">
 
     <meta property="fb:admins" content="1844239989" />
     <meta property="og:image" content="{{ URL_PREFIX }}{{ STATIC_URL }}images/logos/share.jpg" />
-    <meta property="og:description" content="Гракон - {{ SLOGAN }}" />
+    <meta property="og:description" content="{{ description }}" />
 
     {{ media_files }}
 
@@ -33,7 +33,7 @@
     <![endif]-->
 
     <script type="text/javascript">
-        var USERNAME = "{{ request.user.username }}";
+        var PROFILE = {{ PROFILE|safe }};
 
         VK.init({apiId: {{ VK_APP_ID }}, onlyWidgets: true});
 
@@ -96,9 +96,11 @@
                             {% tabs tabs tab %}
                         {% endif %}
 
-                        <div class="gr-share-icons">
-                            {% include "elements/share_buttons.html" %}
-                        </div>
+                        {% if title %}
+                            <div class="gr-share-icons">
+                                {% include "elements/share_buttons.html" %}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="ym-clearfix">&nbsp;</div>
                 </div>
@@ -111,7 +113,6 @@
                 <div class="ym-col2">{% block left_column %}{% endblock %}</div>
                 <div class="ym-col3">
                     {% block right_column %}{% endblock %}
-                    <!--{% include "elements/share.html" %}-->
                 </div>
             </div>
         </div>

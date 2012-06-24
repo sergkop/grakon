@@ -1,5 +1,8 @@
 # Django settings for grakon project.
 
+from grakon.public_site_settings import *
+from grakon.site_settings import *
+
 TIME_ZONE = 'Europe/Moscow'
 
 LANGUAGE_CODE = 'ru-RU'
@@ -21,16 +24,15 @@ MEDIA_ROOT = ''
 MEDIA_URL = ''
 
 STATIC_URL = '/static/'
-ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.CustomIndexDashboard'
-#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'grakon.dashboard.CustomAppIndexDashboard'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.StatsDashboard'
 
 # Additional locations of static files
 STATICFILES_DIRS = ()
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
+    #'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
@@ -41,11 +43,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
 
     'grakon.context_processors.media_files',
-    'grakon.context_processors.page_url',
-    'grakon.context_processors.proj_settings',
+    'grakon.context_processors.code_data',
 )
 
 TEMPLATE_LOADERS = (
@@ -64,15 +64,14 @@ MIDDLEWARE_CLASSES = (
     'services.middleware.FromEmailMiddleware',
 )
 
+if not DEBUG:
+    MIDDLEWARE_CLASSES += ('grakon.middleware.MinifyHTMLMiddleware',)
+
 ROOT_URLCONF = 'grakon.urls'
 
 WSGI_APPLICATION = 'grakon.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+TEMPLATE_DIRS = ()
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
@@ -82,6 +81,7 @@ INSTALLED_APPS = (
     'admin_tools.menu',
     'admin_tools.dashboard',
     'chart_tools',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -98,6 +98,7 @@ INSTALLED_APPS = (
 
     # Applications
     'elements',
+    'elements.comments',
     'elements.participants',
     'elements.locations',
     'elements.resources',
@@ -172,9 +173,6 @@ AUTHENTICATION_BACKENDS = (
     'authentication.backend.EmailAuthenticationBackend',
 )
 
-from grakon.public_site_settings import *
-from grakon.site_settings import *
-
 # TODO: remove unlink button?
 TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'libs', 'tiny_mce')
@@ -188,7 +186,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons3': "",
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
-    'extended_valid_elements': "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],",
 }
 TINYMCE_COMPRESSOR = True
 

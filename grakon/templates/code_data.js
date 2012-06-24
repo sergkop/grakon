@@ -1,15 +1,15 @@
-RESOURCES = {{ resources|safe }};
+var RESOURCES = {{ resources|safe }};
 
-RESOURCES_DICT = {};
+var RESOURCES_DICT = {};
 _.each(RESOURCES, function(resource){
     RESOURCES_DICT[resource[0]] = resource[1];
 });
 
-GET_SUBREGIONS_URL = "{% url get_subregions %}";
-REMOVE_LOCATION_URL = "{% url remove_location %}";
-UPDATE_TEXT_FIELD_URL = "{% url update_text_field %}";
-ADD_RESOURCE_URL = "{% url add_resource %}";
-REMOVE_RESOURCE_URL = "{% url remove_resource %}";
+var GET_SUBREGIONS_URL = "{% url get_subregions %}";
+var REMOVE_LOCATION_URL = "{% url remove_location %}";
+var UPDATE_TEXT_FIELD_URL = "{% url update_text_field %}";
+var ADD_RESOURCE_URL = "{% url add_resource %}";
+var REMOVE_RESOURCE_URL = "{% url remove_resource %}";
 
 // TODO: use values from settings.py
 // TODO: hide textarea while widget is loading
@@ -30,7 +30,6 @@ function create_tinymce_widget(textarea_id){
         "strict_loading_mode": 1,
         "directionality": "ltr",
         "mode": "exact",
-        "extended_valid_elements": "script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],"
     });
 }
 
@@ -47,3 +46,5 @@ function tinymce_editor(textarea_id){
     } else
         create_tinymce_widget(textarea_id);
 }
+
+var PARTIALS = {{ mustache_partials|safe }};

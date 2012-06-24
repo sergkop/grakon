@@ -140,8 +140,9 @@ you might need to commit (not push) your changes first (as described above).:</p
 <p>(don&#8217;t forget &#8216;source ../env/bin/activate&#8217;!).</p>
 <p>TODO: creating branches</p>
 </div>
-<div class="section" id="common-errors">
-<h2>Common errors<a class="headerlink" href="#common-errors" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
 <ul>
 <li><p class="first">If you are seeing an error:</p>
 <div class="highlight-python"><pre>ValueError: Unable to configure filter 'require_debug_false': Cannot resolve 'django.utils.log.RequireDebugFalse':
@@ -151,12 +152,22 @@ No module named RequireDebugFalse</pre>
 <div class="highlight-python"><pre>source ../env/bin/activate</pre>
 </div>
 </li>
-<li><p class="first">TODO: db not migrated</p>
+<li><p class="first">If you see ImportError, new libraries might be added in recent commits. In that case you need
+to run</p>
+<blockquote>
+<div><p>pip install -r deployment/requirements.txt</p>
+</div></blockquote>
+</li>
+<li><p class="first">If you see some database errors, try running</p>
+<blockquote>
+<div><p>python manage.py migrate</p>
+</div></blockquote>
+<p>In case it doesn&#8217;t help, init_database.sqlite can be copied to database.sqlite to provide
+a ready to use database with some test content.</p>
 </li>
 <li><p class="first">TODO: git errors</p>
 </li>
 </ul>
-</div>
 </div>
 
 
@@ -175,9 +186,9 @@ No module named RequireDebugFalse</pre>
 <li><a class="reference internal" href="#development-process">Development process</a><ul>
 <li><a class="reference internal" href="#commiting-code-to-repository">Commiting code to repository</a></li>
 <li><a class="reference internal" href="#getting-new-code-from-repository">Getting new code from repository</a></li>
-<li><a class="reference internal" href="#common-errors">Common errors</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 </ul>
 
   <h4>Previous topic</h4>

@@ -69,7 +69,7 @@
                         <ul>
                             {% for info in lists_data.tasks %}
                                 <li>
-                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <a href="{{ info.instance.url }}">{{ info.instance.title }}</a>
                                     <div class="gr-info-bar">
                                         Идеи: {{ info.ideas.count }}
                                         <span class="gr-bullet">&nbsp;</span>
@@ -87,7 +87,7 @@
                         <ul>
                             {% for info in lists_data.ideas %}
                                 <li>
-                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <a href="{{ info.instance.url }}">{{ info.instance.title }}</a>
                                     <div class="gr-info-bar">
                                         Поддержали: {{ info.resources|length }}
                                         <span class="gr-bullet">&nbsp;</span>
@@ -106,7 +106,7 @@
                         <ul>
                             {% for info in lists_data.projects %}
                                 <li>
-                                    <a href="{{ info.instance.get_absolute_url }}">{{ info.instance.title }}</a>
+                                    <a href="{{ info.instance.url }}">{{ info.instance.title }}</a>
                                     <div class="gr-info-bar">
                                         Участники: {{ info.providers }}
                                         <span class="gr-bullet">&nbsp;</span>

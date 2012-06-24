@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic.base import TemplateView
 
-from elements.locations.utils import subregion_list
+from elements.locations.utils import breadcrumbs_context, subregion_list
 from elements.models import ENTITIES_MODELS
 from elements.participants.models import EntityParticipant
 from elements.utils import table_data
@@ -49,11 +49,11 @@ class BaseLocationView(object):
         ]
 
         ctx.update(entity_tabs_view(self))
+        ctx.update(breadcrumbs_context(location))
 
         ctx.update({
+            'title': location.name,
             'loc_id': kwargs['loc_id'], # TODO: what is it for?
-            'location': location,
-            'subregions': subregion_list(location),
             'info': self.info,
             'is_participant': self.request.user.is_authenticated() and \
                     location.id in self.request.profile_info['locations']['ids'],
@@ -81,25 +81,6 @@ class LocationWallView(BaseLocationView, TemplateView):
 
 #class MapLocationView(BaseLocationView, TemplateView):
 #    tab = 'map'
-
-#class ToolsLocationView(BaseLocationView, TemplateView):
-#    tab = 'tools'
-#
-#    def update_context(self):
-#        entity_types = sorted(set(ENTITIES_MODELS.keys()) - set(['participants', 'posts']),
-#                key=lambda em: ENTITIES_MODELS[em].entity_title)
-#
-#        entity_type = self.request.GET.get('type', '')
-#        if entity_type not in entity_types:
-#            entity_type = 'officials'
-#
-#        ctx = table_data(self.request, entity_type, self.location.get_entities(entity_type))
-#        ctx.update({
-#            'table_cap_choices': map(lambda em: (self.tools_url+'?type='+em, ENTITIES_MODELS[em].entity_title), entity_types),
-#            'table_cap_title': ENTITIES_MODELS[entity_type].entity_title,
-#            'table_cap_template': ENTITIES_MODELS[entity_type].table_cap,
-#        })
-#        return ctx
 
 class ParticipantsLocationView(BaseLocationView, TemplateView):
     tab = 'participants'

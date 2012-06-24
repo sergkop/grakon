@@ -1,0 +1,17 @@
+<div class="gr-comment" comment_id="{{comment.id}}" ct="{{comment.ct_id}}" e_id="{{comment.entity_id}}">
+    <div><a href="{{{author.url}}}">{{author.full_name}}</a></div>
+
+    <p>{{comment.comment}}</p>
+
+    <div>
+        <span class="dimmed">{{comment.time}}</span>
+
+        <span class="gr-fr js-comment-response">Ответить</span>
+    </div>
+
+    <div class="gr-child-comments" style="margin-left:2em;">
+        {{#children}}
+            {{>comment_item}}
+        {{/children}}
+    </div>
+</div>

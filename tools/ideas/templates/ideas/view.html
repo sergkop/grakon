@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block title %}Идея - Гракон{% endblock %}
-
 {% block breadcrumbs %}
     {% include "locations/breadcrumbs.html" %}
 {% endblock %}
@@ -25,7 +23,7 @@
                 {% include "participants/person.html" %}
             {% endwith %}
         </div>
-        <div class="dimmed" align="right">{{ idea.time|date:"j b Y" }}</div>
+        <div class="dimmed" align="right">{{ info.instance.add_time }}</div>
         <div class="ym-clearfix">&nbsp;</div>
 
         <div class="gr-ideas-item gr-pb20">
@@ -48,25 +46,27 @@
 
         <div class="gr-ideas-item gr-mb30">
             <h5>Ресурсы:</h5>
-            <div class="gr-ideas-content">
+            <div class="gr-ideas-content    ">
                 <div class="gr-add gr-idea-selected">
                     <span class="gr-add-icon js-add" title="Добавить ресурсы">&nbsp;</span>
                 </div>
-
+                
+                <ul class="gr-source-list-slider gr-mt0">
                 {% if info.resources.values %}
-                    <ul class="gr-source-list-slider">
+                    
                         {% for provider_resources in info.resources.values %}
                             <li>
-                                <a href="{{ provider_resources.provider.instance.get_absolute_url }}">{{ provider_resources.provider.instance }}</a>
+                                <a href="{{ provider_resources.provider.instance.url }}">{{ provider_resources.provider.instance.first_name }} {{ provider_resources.provider.instance.last_name }}</a>
                                 {% with resources=provider_resources.data %}
                                     {% include "resources/list.html" %}
                                 {% endwith %}
                             </li>
                         {% endfor %}
-                    </ul>
+                    
                 {% else %}
-                    <div class="dimmed">(пусто)</div>
+                    <li class="dimmed gr-mt3">(пусто)</li>
                 {% endif %}
+                </ul>
             </div>
         </div>
 

@@ -13,6 +13,7 @@ input[type=radio] {vertical-align: top;}
 .gr-fl {float: left !important;}
 .gr-dt {display: table;}
 .gr-mt0 {margin-top: 0 !important;}
+.gr-mt3 {margin-top: .3em !important;}
 .gr-mt5 {margin-top: .5em !important;}
 .gr-mt10 {margin-top: 1em !important;}
 .gr-mb3 {margin-bottom: .3em !important;}
@@ -105,7 +106,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 		.gr-editing:hover {background-position: 0 -225px;}
 		h1 .gr-editing {margin-left: 0;} 
         .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em; min-height: 1.6em;}
-        .gr-editor-btn {cursor: pointer; margin-right: 1em;  color: #009EC5;}
+        .gr-editor-btn {cursor: pointer; margin-right: 1.5em; line-height: 2.5em; color: #009EC5;}
 
         h1 .gr-editor-btn {cursor: pointer; font-weight: normal; margin-right: 1em; font-size: 0.6em;}
 

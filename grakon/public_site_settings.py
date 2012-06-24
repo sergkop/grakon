@@ -17,6 +17,8 @@ EMAILS = {
     'noreply': (u'Гракон', 'noreply@grakon.org'),
 }
 
+SLOGAN = u'Cоцсеть активистов, где виртуальные лайки становятся реальными ресурсами'
+
 DISQUS_SHORTNAME = 'grakon2'
 DISQUS_CATEGORIES = {
     'general': 1444561,

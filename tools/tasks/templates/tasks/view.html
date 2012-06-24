@@ -6,7 +6,7 @@
     </div>
 
     <div class="gr-mb10">
-        {% with field="about" html=task.about %}
+        {% with field="about" html=info.instance.about %}
             {% include "elements/html_block.html" %}
             {% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}
         {% endwith %}
@@ -17,14 +17,13 @@
 
         <span class="gr-bullet">&nbsp;</span>
         <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
-        
 
         {% with is_participant=is_follower button=task.follow_button btn_class="bold" %}
             <span class="gr-bullet">&nbsp;</span>
             {% include "participants/participate_button.html" %}
         {% endwith %}
 
-        <span class="gr-fr dimmed">{{ task.time|date:"j b Y" }}</span>
+        <span class="gr-fr dimmed">{{ info.instance.add_time }}</span>
     </div>
 
     <div class="gr-slider js-follow-content">

@@ -27,18 +27,16 @@ def reset_cache(func):
     return new_func
 
 # TODO: sync it with tinymce and test
-# TODO: remove all <p></p>. Replace them with
-# TODO: add target="_blank" to all external links
+# TODO: remove all <p></p>. Replace them with <br/> (?)
 def clean_html(html):
     """ Clean html fields edited by tinymce """
-    tags = ['a', 'b', 'big', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'li', 
-                'ol', 'p', 's', 'span', 'strike', 'strong', 'u', 'ul']
+    tags = ['a', 'b', 'br', 'em', 'i', 'li', 'ol', 'p', 'span', 'strong', 'u', 'ul']
 
-    attributes = ['align', 'alt', 'border', 'class', 'dir', 'data', 'height', 'href', 'id', 'lang', 'longdesc', 'media', 'multiple',
-                'nowrap', 'rel', 'rev', 'span', 'src', 'style', 'target', 'title', 'type', 'valign', 'vspace', 'width']
+    attributes = ['align', 'href', 'style', 'target', 'rel']
 
-    styles = ['text-decoration', 'font-size', 'font-family', 'text-align', 'padding-left', 'color', 'background-color', ]
-    return bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
+    styles = ['text-decoration']
+    html = bleach.clean(html, tags=tags, attributes=attributes, styles=styles, strip=True)
+    return bleach.linkify(html, nofollow=True, target='_blank')
 
 # TODO: use anchors to show table on navigation to another page
 def table_data(request, entity_type, selector, limit=20):
@@ -65,8 +63,6 @@ def table_data(request, entity_type, selector, limit=20):
     num_pages = int(ceil(entities_data['count']/float(per_page)))
 
     # TODO: what if count==0?
-    # TODO: show count somewhere
-    # TODO: generate table header (include sorting links and highlighting arrows)
     return {
         'pagination_entities': entities,
         'paginator': {
@@ -78,8 +74,6 @@ def table_data(request, entity_type, selector, limit=20):
             'pages': range(1, num_pages+1),
             'url_prefix': url_prefix,
         },
-        'header_template': entity_model.table_header,
-        'line_template': entity_model.table_line,
     }
 
 def get_entity(post_data):

@@ -44,9 +44,6 @@ class Task(BaseEntityModel):
     entity_name = 'tasks'
     entity_title = u'Задачи'
     cache_prefix = 'tasks/'
-    table_header = 'tasks/table_header.html'
-    table_line = 'tasks/table_line.html'
-    table_cap = 'tasks/table_cap.html'
     editable_fields = ['title', 'about']
 
     roles = ['admin', 'follower']

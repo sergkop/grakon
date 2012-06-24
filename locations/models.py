@@ -36,12 +36,11 @@ class LocationManager(models.Manager):
             ct_id = ContentType.objects.get_for_model(self.model).id
             locations = self.filter(id__in=other_ids).select_related()
             for loc in locations:
+                # TODO: instance is a dict in all entities
                 other_res[loc.id] = {'instance': loc, 'ct': ct_id}
 
-                # TODO: separate participants and tools
+                # TODO: separate participants and tools (depricate)
                 for name, model in ENTITIES_MODELS.iteritems():
-                    if name == 'posts': # TODO: hack
-                        continue
                     count_name = 'participants' if name=='participants' else 'tools'
                     other_res[loc.id][name] = loc.get_entities(name)(
                             limit=settings.LIST_COUNT[count_name])

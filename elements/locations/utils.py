@@ -31,3 +31,9 @@ def subregion_list(location=None):
         return res
     else:
         return []
+
+def breadcrumbs_context(location):
+    return {
+        'location': location,
+        'subregions': subregion_list(location),
+    }

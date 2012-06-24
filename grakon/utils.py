@@ -51,10 +51,10 @@ def authenticated_ajax_post(func):
     return new_func
 
 def project_settings():
-    res = {'SLOGAN': u'Гражданский контроль за работой властей'}
+    res = {}
     for setting in ('VK_APP_ID', 'GOOGLE_ANALYTICS_ID', 'YA_METRIKA_ID', 'YANDEX_MAPS_KEY',
             'URL_PREFIX', 'STATIC_URL', 'ADMIN_EMAIL', 'ADMIN_PREFIX', 'DEBUG',
             'DISQUS_SHORTNAME', 'DISQUS_PUBLIC_KEY', 'DISQUS_DEVELOPER', 'LIST_COUNT',
-            'TINYMCE_COMPRESSOR', 'TINYMCE_JS_URL'):
+            'TINYMCE_COMPRESSOR', 'TINYMCE_JS_URL', 'SLOGAN'):
         res[setting] = getattr(settings, setting)
     return res

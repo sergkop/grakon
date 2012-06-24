@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import json
 from urllib import quote
 
 from django.conf import settings
@@ -47,14 +48,18 @@ def media_files(request):
         'libs/chosen/chosen.jquery.min.js',
         'libs/tipsy/jquery.tipsy.js',
         'libs/jquery.placeholder.min.js',
+        'libs/mustache.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
         'js/main.js',
     )
     media.add_js(js)
     return {'media_files': media}
 
-def proj_settings(request):
-    return project_settings()
+def code_data(request):
+    ctx = project_settings()
 
-def page_url(request):
-    return {'full_page_url': quote(settings.URL_PREFIX+request.get_full_path())}
+    ctx.update({
+        'full_page_url': quote(settings.URL_PREFIX+request.get_full_path()),
+        'PROFILE': json.dumps(request.PROFILE, ensure_ascii=False),
+    })
+    return ctx

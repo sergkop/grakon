@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from elements.locations.utils import subregion_list
+from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.utils import authenticated_ajax_post
 from elements.views import entity_base_view, entity_tabs_view
@@ -32,7 +32,7 @@ class BaseProjectView(object):
 
         self.tabs = [
             ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
-            ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'disqus/comments.html'),
+            ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'projects/wall.html'),
             ('participants', u'Участники: %i' % self.info['providers'], reverse('project_participants', args=[id]), '', 'projects/participants.html'),
         ]
 
@@ -40,14 +40,12 @@ class BaseProjectView(object):
 
         # TODO: select_related it needed (?)
         location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
+        ctx.update(breadcrumbs_context(location))
 
         ctx.update({
+            'title': u'Проект: '+self.entity.title,
             'project': self.entity,
-            'location': location,
-            'subregions': subregion_list(location),
-
-            # TODO: fix it
-            'admin': ctx['info']['participants']['admin']['entities'][0]['instance'],
+            'admin': ctx['info']['participants']['admin']['entities'][0]['instance'], # TODO: fix it
         })
         ctx.update(disqus_page_params('project/'+str(id), reverse('project_wall', args=[id]), 'projects'))
         return ctx
@@ -62,6 +60,11 @@ class ProjectView(BaseProjectView, TemplateView):
 
 class ProjectWallView(BaseProjectView, TemplateView):
     tab = 'wall'
+
+    def update_context(self):
+        # TODO: remove it
+        import json
+        return {'comments_data': json.dumps(self.info['comments'], ensure_ascii=False)}
 
 class ProjectParticipantsView(BaseProjectView, TemplateView):
     tab = 'participants'

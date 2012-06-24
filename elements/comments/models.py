@@ -1,12 +1,49 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.utils import dateformat
 
 from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
 
 class EntityCommentManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
         res = {}
+
+        comments = self.filter(content_type=ContentType.objects.get_for_model(model), entity_id__in=ids)
+
+        from users.models import Profile
+        profiles = Profile.objects.only('id', 'username', 'first_name', 'last_name') \
+                .in_bulk(set(c.person_id for c in comments))
+
         for id in ids:
-            res[id] = {}
+            comments_by_parent = {}
+            for comment in filter(lambda c: c.entity_id==id, comments):
+                comments_by_parent.setdefault(comment.parent_id, []).append(comment)
+
+            # Sort comments by time
+            for parent_id in comments_by_parent:
+                comments_by_parent[parent_id] = sorted(comments_by_parent[parent_id],
+                        key=lambda c: c.time, reverse=True)
+
+            def get_comment_data(comment):
+                profile = profiles[comment.person_id]
+                return {
+                    'comment': {
+                        'id': comment.id,
+                        'ct_id': comment.content_type_id,
+                        'entity_id': comment.entity_id,
+                        'comment': comment.comment,
+                        'time': dateformat.format(comment.time, 'j b Y'),
+                    },
+                    'author': {
+                        'id': profile.id,
+                        'username': profile.username,
+                        'full_name': unicode(profile),
+                        'url': profile.get_absolute_url(),
+                    },
+                    'children': [get_comment_data(child) for child in comments_by_parent.get(comment.id, [])],
+                }
+
+            res[id] = [get_comment_data(comment) for comment in comments_by_parent.get(None, [])]
         return res
 
     def add(self, entity, profile, comment, parent_id=None):
@@ -17,10 +54,17 @@ class EntityCommentManager(BaseEntityPropertyManager):
         self.create(content_type=ContentType.objects.get_for_model(type(entity)),
                 entity_id=entity.id, person=profile, comment=comment)
 
-        # TODO: reset caches
+        entity.clear_cache()
+        profile.clear_cache()
 
     def remove(self, entity, profile, comment_id):
-        pass
+        if self.model.feature not in type(entity).features:
+            return
+
+        getattr(entity, self.model.feature).filter(person=profile, id=comment_id).delete()
+
+        entity.clear_cache()
+        profile.clear_cache()
 
 @feature_model
 class EntityComment(BaseEntityProperty):

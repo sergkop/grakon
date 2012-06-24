@@ -89,8 +89,8 @@ If you see some import errors (libraries missing), run::
 
 TODO: creating branches
 
-Common errors
-~~~~~~~~~~~~~
+Troubleshooting
+===============
 
 * If you are seeing an error::
 
@@ -101,7 +101,18 @@ Common errors
 
     source ../env/bin/activate
 
-* TODO: db not migrated
+* If you see ImportError, new libraries might be added in recent commits. In that case you need
+  to run
+
+    pip install -r deployment/requirements.txt
+
+* If you see some database errors, try running
+
+    python manage.py migrate
+
+  In case it doesn't help, init_database.sqlite can be copied to database.sqlite to provide
+  a ready to use database with some test content.
+
 * TODO: git errors
 
 .. _github docs: http://help.github.com/linux-set-up-git/

@@ -2,40 +2,42 @@
     This template uses the following variables: info, is_participant, btn_class and button (dict with button data)
 {% endcomment %}
 
-{% if is_participant %}
-    <a id="cancel_{{ button.role }}_btn_{{ info.ct }}_{{ info.instance.id }}" class="{{ btn_class }}"><span>{{ button.cancel_btn_long }}</span></a>
-{% else %}
-    <a id="confirm_{{ button.role }}_btn_{{ info.ct }}_{{ info.instance.id }}" class="{{ btn_class }}"><span>{{ button.confirm_btn_long }}</span></a>
-{% endif %}
-
-{% if request.user.is_authenticated %}
+{% with role=button.role id=info.instance.id ct=info.ct %}
     {% if is_participant %}
-        <div id="cancel_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}" class="hidden">
-            <p>{{ button.cancel_msg }}</p>
-        </div>
-
-        <script type="text/javascript">
-            create_dialog("cancel_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}", 320, 200, "{{ button.cancel_btn_long }}", "Отмена", {
-                "{{ button.cancel_btn }}": dialog_post_shortcut("{% url remove_participant %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }}, "role": "{{ button.role }}"},
-                        function(){$("#cancel_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}").dialog("close");}, true)
-            });
-            $("#cancel_{{ button.role }}_btn_{{ info.ct }}_{{ info.instance.id }}").click(function(){$("#cancel_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}").dialog("open");});
-        </script>
+        <a id="cancel_{{ role }}_btn_{{ ct }}_{{ id }}" class="{{ btn_class }}"><span>{{ button.cancel_btn_long }}</span></a>
     {% else %}
-        <div id="confirm_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}" class="hidden">
-            <p>{{ button.confirm_msg }}</p>
-        </div>
+        <a id="confirm_{{ role }}_btn_{{ ct }}_{{ id }}" class="{{ btn_class }}"><span>{{ button.confirm_btn_long }}</span></a>
+    {% endif %}
 
+    {% if request.user.is_authenticated %}
+        {% if is_participant %}
+            <div id="cancel_{{ role }}_dialog_{{ ct }}_{{ id }}" class="hidden">
+                <p>{{ button.cancel_msg }}</p>
+            </div>
+
+            <script type="text/javascript">
+                create_dialog("cancel_{{ role }}_dialog_{{ ct }}_{{ id }}", 320, 200, "{{ button.cancel_btn_long }}", "Отмена", {
+                    "{{ button.cancel_btn }}": dialog_post_shortcut("{% url remove_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
+                            function(){$("#cancel_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("close");}, true)
+                });
+                $("#cancel_{{ role }}_btn_{{ ct }}_{{ id }}").click(function(){$("#cancel_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("open");});
+            </script>
+        {% else %}
+            <div id="confirm_{{ role }}_dialog_{{ ct }}_{{ id }}" class="hidden">
+                <p>{{ button.confirm_msg }}</p>
+            </div>
+
+            <script type="text/javascript">
+                create_dialog("confirm_{{ role }}_dialog_{{ ct }}_{{ id }}", 320, 200, "{{ button.confirm_btn_long }}", "Отмена", {
+                    "{{ button.confirm_btn }}": dialog_post_shortcut("{% url add_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
+                            function(){$("#confirm_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("close");}, true)
+                });
+                $("#confirm_{{ role }}_btn_{{ ct }}_{{ id }}").click(function(){$("#confirm_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("open");});
+            </script>
+        {% endif %}
+    {% else %}
         <script type="text/javascript">
-            create_dialog("confirm_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}", 320, 200, "{{ button.confirm_btn_long }}", "Отмена", {
-                "{{ button.confirm_btn }}": dialog_post_shortcut("{% url add_participant %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }}, "role": "{{ button.role }}"},
-                        function(){$("#confirm_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}").dialog("close");}, true)
-            });
-            $("#confirm_{{ button.role }}_btn_{{ info.ct }}_{{ info.instance.id }}").click(function(){$("#confirm_{{ button.role }}_dialog_{{ info.ct }}_{{ info.instance.id }}").dialog("open");});
+            $("#confirm_{{ role }}_btn_{{ ct }}_{{ id }}").click(login_dialog_init);
         </script>
     {% endif %}
-{% else %}
-    <script type="text/javascript">
-        $("#confirm_{{ button.role }}_btn_{{ info.ct }}_{{ info.instance.id }}").click(login_dialog_init);
-    </script>
-{% endif %}
+{% endwith %}

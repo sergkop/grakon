@@ -54,9 +54,36 @@
 <div class="section" id="code-styling">
 <h3>Code styling<a class="headerlink" href="#code-styling" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><ul class="simple">
-<li>Use 4 space indentation, no tabulations</li>
-<li>Line length <strong>can exceed</strong> 80 symbols if it makes sence</li>
+<div><ul>
+<li><p class="first">Use 4 space indentation, no tabulations</p>
+</li>
+<li><p class="first">Line length <strong>can exceed</strong> 80 symbols if it makes sence</p>
+</li>
+<li><p class="first">Remove trailing spaces</p>
+</li>
+<li><p class="first">One empty line at the end of file</p>
+</li>
+<li><p class="first">Ordering of imports is the following (all sorted by alphabet):
+1) native python packages; 2) django packages; 3) external libraries; 4) grakon applications.
+Blocks should be separated by one line, e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">RequestContext</span>
+
+<span class="kn">from</span> <span class="nn">elements.utils</span> <span class="kn">import</span> <span class="n">reset_cache</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If code contains some bugs, issues or needs extra work, leave comments with TODO tag:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># TODO: consider other cases for values of name</span>
+<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remove <strong>print</strong> statements from code performed by web server</p>
+</li>
 </ul>
 </div></blockquote>
 </div>

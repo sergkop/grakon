@@ -1,9 +1,12 @@
 from django import template
 from django.template.loader import render_to_string
+from django.utils._os import safe_join
+
+from pystache import Renderer
 
 register = template.Library()
 
-@register.tag(name="tabs")
+@register.tag(name='tabs')
 def tabs_tag(parser, token):
     args = token.split_contents()
     if len(args) != 3:
@@ -29,3 +32,51 @@ class TabsNode(template.Node):
             'active': active
         })
         return render_to_string('elements/tabs.html', context)
+
+def get_mustache_template(path):
+    # This code is partially copied from django.template.loaders.app_directories
+    from django.template.loaders.app_directories import app_template_dirs
+    for template_dir in app_template_dirs:
+        try:
+            full_path = safe_join(template_dir, path)
+        except ValueError:
+            pass
+        else:
+            try:
+                file = open(full_path)
+                try:
+                    return file.read().decode('utf8')
+                finally:
+                    file.close()
+            except IOError:
+                pass
+
+def mustache_renderer(partials_paths):
+    """ partials_paths = {name: path} """
+    partials = {}
+    for name, path in partials_paths.iteritems():
+        partials[name] = get_mustache_template(path)
+    return Renderer(partials=partials)
+
+comments_templates = {
+    'comment_item': 'comments/item.mustache',
+    'comments_list': 'comments/list.mustache',
+    'comment_field': 'comments/field.mustache',
+}
+
+@register.simple_tag(takes_context=True)
+def show_comments(context, template_path, info):
+    template = get_mustache_template(template_path)
+
+    # TODO: check that corresponding entity model has comments feature
+
+    # TODO: move getting renderer out of here
+    comments_renderer = mustache_renderer(comments_templates)
+
+    ctx = {
+        'ct': info['ct'],
+        'e_id': info['instance']['id'],
+        'comments': info['comments'],
+        'PROFILE': context['request'].PROFILE,
+    }
+    return comments_renderer.render(template, ctx)
