@@ -11,9 +11,7 @@ from grakon.utils import project_settings
 from services.cache import cache_view
 
 def code_data(request):
-    ctx = {
-        'resources': json.dumps(RESOURCE_CHOICES, ensure_ascii=False),
-    }
+    ctx = {'resources': json.dumps(RESOURCE_CHOICES, ensure_ascii=False)}
     ctx.update(project_settings())
 
     # Include mustache templates

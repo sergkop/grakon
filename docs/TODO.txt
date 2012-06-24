@@ -1,11 +1,15 @@
+* fix showing list of contacts on profile page and participants in right panel of location
+
+* in production version resource labels have no margin
+
 * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
-* extract emails from undelivered letters and don't use them anymore
+* model with emails which should be blacklisted
 * send emails about считайте сами
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 * reinstall pydkim on server
 * redirect url to track pressing on external links in emails
 
-* write docs (entities, features, info, ajax ports)
+* write docs (entities, features, info, ajax ports, code_data)
 
 * move html blocks for entities items in special templates and add template path to entity models
 * make ideas, tasks editable in lists

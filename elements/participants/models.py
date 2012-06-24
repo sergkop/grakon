@@ -9,43 +9,40 @@ from elements.models import BaseEntityProperty, BaseEntityPropertyManager, ENTIT
 # TODO: user should not follow himself
 class EntityParticipantManager(BaseEntityPropertyManager):
     def get_for(self, model, ids):
-        """ Return participants data {id: {role: {'count': count, 'ids': [top_participants_ids]}}} """
+        """ {role: {'count': count, 'entities': [{'id': id, 'url': url, 'full_name': full_name, 'intro': intro}]}} """
         assert 'participants' in model.features
 
-        participants_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
+        # Get roles and participants for given entities
+        roles_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids, role__in=model.roles).values_list('entity_id', 'person', 'role'))
 
+        participants = {} # {entity_id: {role: [profile_ids]}}
+        for entity_id, profile_id, role in roles_data:
+            participants.setdefault(entity_id, {}).setdefault(role, []).append(profile_id)
+
+        # Get all related profiles
         from users.models import Profile
-        participant_ratings = Profile.objects.filter(id__in=map(lambda p: p[1], participants_data)) \
-                .values_list('id', 'rating')
+        profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+                .in_bulk(set([r[1] for r in roles_data]))
 
         res = {}
         for id in ids:
             res[id] = {}
-            entity_data = map(lambda p: (p[1], p[2]), filter(lambda p: p[0]==id, participants_data))
-
             for role in model.roles:
-                profile_ids = map(lambda p: p[0], filter(lambda p: p[1]==role, entity_data))
+                profiles = [profiles_by_id[p_id] for p_id in participants.get(id, {}).get(role, [])]
 
-                top_participants_rating = sorted(filter(lambda p: p[0] in profile_ids, participant_ratings),
-                        key=lambda p: p[1], reverse=True)[:settings.LIST_COUNT[role]]
-                res[id][role] = {
-                    'count': len(profile_ids),
-                    'ids': map(lambda p: p[0], top_participants_rating),
-                }
+                res[id][role] = {'count': len(profiles), 'entities': []}
+
+                # TODO: don't pass
+                for profile in sorted(profiles, key=lambda p: -p.rating):
+                    profile_data = {'id': profile.id, 'url': profile.get_absolute_url(),
+                        'full_name': unicode(profile)}
+
+                    if role == 'admin':
+                        profile_data['intro'] = profile.intro
+
+                    res[id][role]['entities'].append(profile_data)
         return res
-
-    def get_related_info(self, data, ids):
-        profile_ids = set(r_id for id in ids for role in data[id]['participants']
-                for r_id in data[id]['participants'][role]['ids'])
-
-        from users.models import Profile
-        r_info = Profile.objects.info_for(profile_ids, related=False)
-
-        for id in ids:
-            for role in data[id]['participants']:
-                data[id]['participants'][role]['entities'] = [
-                        r_info[r_id] for r_id in data[id]['participants'][role]['ids'] if r_id in r_info]
 
     # TODO: ability to get results for a list of entity types (?)
     def participant_in(self, role, ids, entity_model):
@@ -62,12 +59,15 @@ class EntityParticipantManager(BaseEntityPropertyManager):
         for id in ids:
             entity_ids = map(lambda pd: pd[0], filter(lambda p: p[1]==id, participants_data))
             top_entity_ratings = sorted(filter(lambda er: er[0] in entity_ids, entity_ratings),
-                    key=lambda er: -er[1])#[:settings.LIST_COUNT['followed']]
+                    key=lambda er: -er[1])
             res[id] = {
                 'count': len(entity_ids),
                 'ids': map(lambda f: f[0], top_entity_ratings),
             }
         return res
+
+    def get_related_info(self, data, ids):
+        pass
 
     def is_participant(self, entity, profile, role):
         assert 'participants' in type(entity).features and role in type(entity).roles
@@ -125,25 +125,9 @@ def participant_in(profile, role, entity_type):
 
     return func
 
-"""
-entities_data = list(profile.participates_in.filter(role=role).values_list('content_type', 'entity_id'))
-
-entities_by_ct = {}
-for ct_id, e_id in entities_data:
-    entities_by_ct.setdefault(ct_id, []).append(e_id)
-
-entities = []
-for ct_id in entities_by_ct:
-    model = ContentType.objects.get_for_id(ct_id).model_class()
-    entities += model.objects.info_for(entities_by_ct[ct_id], related=False).values()
-
-count = len(entities_data)
-"""
-
 ROLE_TYPES = (
     ('admin', u'Админ', u'Админы'),
     ('follower', u'Следит', u'Следят'),
-    ('participant', u'Идет', u'Идут'),
 )
 ROLE_CHOICES = map(lambda r: (r[0], r[1]), ROLE_TYPES)
 

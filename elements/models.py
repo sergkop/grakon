@@ -29,6 +29,7 @@ class BaseEntityPropertyManager(models.Manager):
             return
 
         feature = self.model.feature
+
         related_ids = set(r_id for id in ids for r_id in data[id][feature]['ids'])
         related_model = self.model._meta.get_field(self.model.fk_field).rel.to
         r_info = related_model.objects.info_for(related_ids, related=False)

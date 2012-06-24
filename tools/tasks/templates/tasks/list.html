@@ -6,7 +6,7 @@
                 <div class="gr-add gr-idea-selected"><span>{{ info.resources.count }}</span></div>
                 <h4><a href="{{ info.instance.url }}">{{ info.instance.title }}</a></h4>
                 <div class="gr-mb10">
-                    {% with person=info.participants.admin.entities.0.instance %}
+                    {% with person=info.participants.admin.entities.0 %}
                         {% include "participants/person.html" %}
                     {% endwith %}
                 </div>

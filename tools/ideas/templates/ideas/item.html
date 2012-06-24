@@ -10,9 +10,9 @@
             <ul class="gr-source-list-slider js-resource-items">
                 {% for provider_resources in info.resources.values %}
                     <li>
-                        <a href="{{ provider_resources.provider.instance.url }}">{{ provider_resources.provider.instance.first_name }} {{ provider_resources.provider.instance.last_name }}</a>
+                        <a href="{{ provider_resources.provider.url }}">{{ provider_resources.provider.full_name }}</a>
                         {% with resources=provider_resources.data %}
-                            {% if provider_resources.provider.instance.id == request.profile.id %}
+                            {% if provider_resources.provider.id == request.profile.id %}
                                 {% with resource_editable="true" %}
                                     {% include "resources/list.html" %}
                                 {% endwith %}
@@ -27,7 +27,7 @@
 
         <h3>{{ info.instance.title }}</h3>
         <div class="gr-mb10">
-            {% with person=info.participants.admin.entities.0.instance %}
+            {% with person=info.participants.admin.entities.0 %}
                 {% include "participants/person.html" %}
             {% endwith %}
         </div>

@@ -194,6 +194,7 @@ CRISPY_TEMPLATE_PACK = 'uni_form'
 # http://docs.djangoproject.com/en/dev/howto/deployment/fastcgi/#forcing-the-url-prefix-to-a-particular-value
 FORCE_SCRIPT_NAME = ''
 
+# TODO: some values are not used anymore
 # Numbers of entries shown in the side blocks for tools and participants
 LIST_COUNT = {
     'follower': 5,

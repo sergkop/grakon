@@ -1,6 +1,6 @@
 {% if person_entities %}
     {% for person in person_entities %}
-        <a href="{{ person.instance.url }}">{{ person.instance.first_name }} {{ person.instance.last_name }}</a>{% if not forloop.last %},{% endif %}
+        <a href="{{ person.url }}">{{ person.full_name }}</a>{% if not forloop.last %},{% endif %}
     {% endfor %}
 {% else %}
     (пусто)

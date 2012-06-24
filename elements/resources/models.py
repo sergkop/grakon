@@ -51,6 +51,11 @@ class EntityResourceManager(BaseEntityPropertyManager):
         resources_data = list(self.filter(content_type=ContentType.objects.get_for_model(model),
                 entity_id__in=ids).values_list('entity_id', 'resource', 'description', 'provider'))
 
+        # Get all related profiles
+        from users.models import Profile
+        profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+                .in_bulk(set(r[3] for r in resources_data))
+
         # TODO: sort by provider and by resource
         for id, resource, descr, provider_id in resources_data:
             resource_data = {'name': resource, 'description': descr}
@@ -61,19 +66,20 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
             res[id].setdefault(provider_id if provider_id else 'none', {'data': []})['data'].append(resource_data)
 
+        for id in ids:
+            for p_id in res[id]:
+                if p_id != 'none':
+                    profile = profiles_by_id[p_id]
+                    res[id][p_id]['provider'] = {
+                        'id': profile.id,
+                        'url': profile.get_absolute_url(),
+                        'full_name': unicode(profile),
+                    }
+
         return res
 
     def get_related_info(self, data, ids):
-        provider_ids = set(p_id for id in ids for p_id in data[id]['resources'])
-        if 'none' in provider_ids:
-            provider_ids.remove('none')
-
-        from users.models import Profile
-        providers_info = Profile.objects.info_for(provider_ids, related=False)
-        for id in ids:
-            for p_id in data[id]['resources']:
-                if p_id != 'none':
-                    data[id]['resources'][p_id]['provider'] = providers_info[p_id]
+        pass
 
     def _add_remove(self, entity, resource, add, description='', provider=None):
         if self.model.feature not in type(entity).features:

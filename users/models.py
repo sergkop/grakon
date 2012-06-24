@@ -56,6 +56,7 @@ class ProfileManager(BaseEntityManager):
                     data[id][entity_name][role]['entities'] = [entities_info[e_id] \
                             for e_id in data[id][entity_name][role]['ids']]
 
+# TODO: depricate show_name
 @entity_class(['resources', 'locations', 'participants'])
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)

@@ -29,7 +29,7 @@ class IdeaView(TemplateView):
         ctx.update({
             'title': u'Идея: '+self.entity.title,
             'idea': self.entity,
-            'admin': self.info['participants']['admin']['entities'][0]['instance'],
+            'admin': self.info['participants']['admin']['entities'][0],
             'projects': projects,
         })
         ctx.update(disqus_page_params('idea/'+str(id), self.entity.get_absolute_url(), 'ideas'))

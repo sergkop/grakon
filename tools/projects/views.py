@@ -45,7 +45,7 @@ class BaseProjectView(object):
         ctx.update({
             'title': u'Проект: '+self.entity.title,
             'project': self.entity,
-            'admin': ctx['info']['participants']['admin']['entities'][0]['instance'], # TODO: fix it
+            'admin': ctx['info']['participants']['admin']['entities'], # TODO: fix it
         })
         ctx.update(disqus_page_params('project/'+str(id), reverse('project_wall', args=[id]), 'projects'))
         return ctx

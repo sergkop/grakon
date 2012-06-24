@@ -30,11 +30,12 @@ class BaseTaskView(object):
 
         ctx.update(entity_base_view(self, Task, {'id': id}))
 
-        supporters_ids = set(provider_id for idea_info in self.info['ideas']['entities'] for provider_id in idea_info['resources'])
-        supporters_info = Profile.objects.info_for(supporters_ids, related=False)
+        supporters = [idea_info['resources'][provider_id]['provider'] for idea_info in self.info['ideas']['entities']
+                for provider_id in idea_info['resources']]
 
-        idea_admins_ids = set([idea_admin_id for idea_info in self.info['ideas']['entities'] for idea_admin_id in idea_info['participants']['admin']['ids']])
-        idea_admins_info = Profile.objects.info_for(idea_admins_ids, related=False)
+        idea_admins = [idea_admin for idea_info in self.info['ideas']['entities']
+                for idea_admin in idea_info['participants']['admin']['entities']]
+        # TODO: exclude repeating admins and supporters
 
         # TODO: select_related it needed
         location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
@@ -45,10 +46,10 @@ class BaseTaskView(object):
             'task': self.entity,
 
             # TODO: fix it
-            'admin': ctx['info']['participants']['admin']['entities'][0]['instance'],
+            'admin': ctx['info']['participants']['admin']['entities'][0],
 
-            'supporters': [supporters_info[supporter_ids] for supporter_ids in supporters_ids],
-            'idea_admins': [idea_admins_info[idea_admin_ids] for idea_admin_ids in idea_admins_ids],
+            'supporters': supporters,
+            'idea_admins': idea_admins,
 
             'RESOURCE_CHOICES': RESOURCE_CHOICES, # TODO: use idea form instead
         })
