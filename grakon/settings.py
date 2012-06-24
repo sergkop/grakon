@@ -106,6 +106,7 @@ INSTALLED_APPS = (
     'authentication',
     'grakon',
     'locations',
+    'search',
     'navigation',
     'tools.tasks',
     'tools.ideas',
