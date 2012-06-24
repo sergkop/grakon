@@ -224,6 +224,7 @@
 
 	.ym-col1 { width: 70%; float:left; padding: 3em 2em 0 0;} /* center column */
         #main .ym-col1, .gr-wide .ym-col1  {width: auto; padding: 0; float: none;}
+        #search .ym-col1, .gr-wide .ym-col1  {width: auto; padding: 0; float: none;}
 	.ym-col2 { width: 30%; float:left;  margin-left: -100%; padding: 1em 1em 0 0;} /* left column */
 	.ym-col3 {  float:right; width: 30%; margin-left: -5px; margin-right: 0%; padding: 3em 0 0 2em;} /* right column */
 	
@@ -460,6 +461,7 @@
 	.gr-content { background-color: #fff; border-top: 2px solid #e0e2e6; border-top: 2px solid #e0e2e6; font-size: .9em; margin-top: -3px; padding-bottom: 3em;
 	box-shadow: 0 -20px 30px #f5f5f5}
 		#main .gr-content {box-shadow: none; border-top: none; background: #f0f9ff url(../../images/bg-main-icons.jpg) 0; padding: 1em 0}
+		#search .gr-content {box-shadow: none; border-top: none; padding: 1em 0}
 	
 }
 
