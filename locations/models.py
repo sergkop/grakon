@@ -140,7 +140,7 @@ class Location(models.Model):
     # TODO: cache count separately?
     # TODO: take is_main into account
     # TODO: cache it (at least for data for side panels) - in Location
-    def get_entities(self, entity_type):
+    def get_entities(self, entity_type,qfilter=None):
         """ Return {'ids': sorted_entities_ids, 'count': total_count} """
         from elements.locations.models import EntityLocation
         model = ENTITIES_MODELS[entity_type]
@@ -166,6 +166,9 @@ class Location(models.Model):
 
                 # TODO: what happens when the list of ids is too long (for the next query)? - use subqueries
                 entity_query &= Q(id__in=entity_ids)
+            
+            if (qfilter):
+                entity_query &= qfilter
 
             ids = model.objects.filter(entity_query).order_by(*sort_by).values_list('id', flat=True)
             return {

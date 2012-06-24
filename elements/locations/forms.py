@@ -13,7 +13,7 @@ class LocationSelectField(forms.CharField):
 # TODO: write one method taking a list of features (take params from models) + classes with methods and data
 # TODO: rename it
 # TODO: if required is False provide help_text saying that nothing chosen means Russia
-def location_init(required, label):
+def location_init(required, label,help_text = ""):
     """ If required then the lowest possible level must be chosen """
     attrs = {
         'location_select': LocationSelectField(label=label, required=required, initial=[],
@@ -22,48 +22,58 @@ def location_init(required, label):
         'district': forms.CharField(required=False),
         'location': forms.CharField(required=False),
     }
-    if not required:
+    if not required and help_text=="":
         attrs['location_select'].help_text = u'если не выбрать место, то задача добавится на страницу России'
+    elif not required and help_text!="":
+        attrs['location_select'].help_text = help_text 
 
     def decorator(cls):
         new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
+        print new_cls.__name__,(cls,),attrs
         new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
-
+        print "Decorator here"
         old_init = new_cls.__init__
         def new_init(form, *args, **kwargs):
             old_init(form, *args, **kwargs)
-            if form.instance.id: # if this is editing form
-                location_info = EntityLocation.objects.get_for(type(form.instance), [form.instance.id])[form.instance.id]
-                loc_id = location_info['ids'][0] # TODO: which location to choose?
-                form.fields['location_select'].initial = Location.objects.get(id=loc_id).path()
+            if (hasattr(form,"instance")):
+                if form.instance.id: # if this is editing form
+                    location_info = EntityLocation.objects.get_for(type(form.instance), [form.instance.id])[form.instance.id]
+                    print type(form.instance)
+                    loc_id = location_info['ids'][0] # TODO: which location to choose?
+                    form.fields['location_select'].initial = Location.objects.get(id=loc_id).path()
+            else:
+                form.fields['location_select'].initial = Location.objects.all()[:1].get().path()
         new_cls.__init__ = new_init
 
-        clean = new_cls.clean
-        def new_clean(form):
-            form.cleaned_data = location_clean(form)
-            return clean(form)
-        new_cls.clean = new_clean
+        if (hasattr(new_cls,"clean")):
+            clean = new_cls.clean
+            def new_clean(form):
+                form.cleaned_data = location_clean(form)
+                return clean(form)
+            new_cls.clean = new_clean
 
+        print "Decorator near clean"
         # TODO: location_init should take parameter, which controls whether location is added or updated
-        save = new_cls.save
-        def new_save(form):
-            is_create_form = form.instance.id is None
+        if (hasattr(new_cls,"save")):
+            save = new_cls.save
+            def new_save(form):
+                is_create_form = form.instance.id is None
 
-            entity = save(form)
+                entity = save(form)
 
-            # TODO: what about is_main (take decorator params to control it)
-            if is_create_form:
-                EntityLocation.objects.add(entity, form.location, params={'is_main': True})
-            else:
-                EntityLocation.objects.update_location(entity, form.location)
+                # TODO: what about is_main (take decorator params to control it)
+                if is_create_form:
+                    EntityLocation.objects.add(entity, form.location, params={'is_main': True})
+                else:
+                    EntityLocation.objects.update_location(entity, form.location)
 
-            return entity
-        new_cls.save = new_save
+                return entity
+            new_cls.save = new_save
 
         new_cls.required = required
 
         return new_cls
-
+        
     return decorator
 
 def form_location_path(form):

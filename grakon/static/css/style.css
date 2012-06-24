@@ -31,6 +31,7 @@ input[type=radio] {vertical-align: top;}
 /*Элементы header*/
 .gr-logo {margin-left: -45px;}
 	#main .gr-logo {margin-left: 0;} 
+	#search .gr-logo {margin-left: 0;} 
 .gr-login-info {float: right;}
     .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.6em 1.4em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
 		.gr-login-info a:hover, .gr-login-info div.gr-login-user:hover {text-decoration: none; background-color: rgba(255,255,255, 0.1);}
@@ -162,11 +163,14 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-main-steps h1 {font-size: 1.5em; letter-spacing: .02em; color: #7fae51; text-align: center; margin-bottom: 1.53em; text-transform: uppercase;}
 .gr-step-bg {background: url(../images/bg-main-steps.png) 0 0 no-repeat; width: 1005px; height: 420px; position: relative; list-style-type: none; margin-left: 0;}
 #main .ym-wrapper {width: 1000px;}
+#search .ym-wrapper {width: 1000px;}
 @media screen and (max-width:1024px) { 
 	.gr-step-bg {overflow: hidden; margin-left: -30px; width: 995px;} 
 	#main .gr-main-steps .ym-wrapper {width: 945px;}
+	#search .gr-main-steps .ym-wrapper {width: 945px;}
 	.gr-wrapper {overflow: hidden;}
 	#main .ym-wrapper {width: 900px;}
+	#search .ym-wrapper {width: 900px;}
 }
 	.gr-step-bg li {position: absolute; list-style-type: none; top: 0; left: 0;}
 		.gr-step-bg li h3 {text-transform: uppercase; font-size: 1.2em}
