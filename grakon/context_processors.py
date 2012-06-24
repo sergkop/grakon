@@ -21,6 +21,7 @@ def media_files(request):
             'libs/crispy-forms/default.uni-form.css',
             'libs/chosen/chosen.css',
             'libs/tipsy/tipsy.css',
+            'libs/jTour/jtour_assets/jquery-jtour-2.0.2.css',
 
             'css/hlist.css',
             'css/tabs.css',

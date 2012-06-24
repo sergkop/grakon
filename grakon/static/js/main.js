@@ -132,6 +132,7 @@ $(function(){
             alert("Ваш ресурс удален");
         }, true)();
     });
+        
 });
 
 // Default tipsy settings

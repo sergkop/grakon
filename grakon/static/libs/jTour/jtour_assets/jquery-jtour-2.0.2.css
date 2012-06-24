@@ -1,0 +1,211 @@
+
+
+/*
+
+Only edit below this line if you know what you're doing :)
+
+*/
+
+html, body {
+	position: relative;
+	min-height: 100%;
+}
+
+.jtour.overlay {
+	opacity: 0.5;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+	background: #222;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+    z-index:1;
+}
+
+.jtour.holder {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.jtour-btn {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	background: #fff;
+	font-size: 1em;
+	text-align: center;
+	line-height: 24px;
+	cursor: pointer;
+	color: #222;
+	border-radius: 12px;
+	box-shadow: 0px 0px 4px 0px rgba(68, 68, 68, 0.7); 
+}
+
+.jtour.box {
+	width: 350px;
+	position: absolute;
+	z-index: 9000;
+	top: 0;
+	left: 0;
+	border-radius: 6px;
+	border: 1px solid #777;
+	background: #f6f6f6; /* Old browsers */
+	background: -moz-linear-gradient(top, #f6f6f6 0%, #ebebeb 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f6f6), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #f6f6f6 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #f6f6f6 0%,#ebebeb 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #f6f6f6 0%,#ebebeb 100%); /* IE10+ */
+	background: linear-gradient(top, #f6f6f6 0%,#ebebeb 100%); /* W3C */
+	
+	overflow: hidden;
+
+	color: #111;
+	font-size: 1.1em; 
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.7);
+	-moz-box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.7);
+	box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.7); 
+}
+
+.jtour.timer {
+	height: 1px;
+	background: #777;
+	margin-bottom: 8px;
+}
+
+.jtour.heading {
+	padding: 0;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: normal;
+	color: #222;
+	width: 100%;
+	border-bottom:
+	padding-bottom: 6px;
+	margin-bottom: 8px;
+}
+
+.jtour.main {
+	margin: 12px;
+}
+
+/* Spotlight Feature Theming */
+
+.jt-spotlit {
+	position: relative !important;
+	z-index: 8000 !important;
+	-webkit-box-shadow: 0 0 12px 0  #ccc;
+	-moz-box-shadow: 0 0 12px 0  #ccc;
+	box-shadow: 0 0 12px 0 #ccc;
+	background-color: #eaeaea;
+    border-radius: .3em;
+}
+    .ym-column.jt-spotlit{
+        padding-top: 1em;
+    }
+    
+    .jt-spotlit .jquery_tabs ul.tabs-list li.current a {background: #eaeaea !important;}
+    .jt-spotlit.gr-ideas-list, .jt-spotlit.gr-descr, .jt-spotlit.gr-side-item {padding: 2% 2% 1%; margin: -2% -2% 1%; width: 104%;}
+    .jt-spotlit.gr-ideas-list .gr-slider {background-color: #eaeaea !important; border-color: #eaeaea !important;}
+
+.jt-spotlit.super {
+	z-index: 10000 !important;
+}
+
+/* ----------- */
+
+.jtour.controls {
+	position: relative;
+	text-align: right;
+}
+
+.jtour.controls a {
+	width: 28px;
+	height: 28px;
+	margin-left: 6px;
+	display: inline-block;
+	background: url(jt-img/ctrls.png) no-repeat;
+}
+
+.jtour.controls a.play-pause.paused {background-position: -64px -1px;}
+.jtour.controls a.play-pause {		background-position: -32px -1px;}
+.jtour.controls a.previous {			background-position: -96px -1px;}
+.jtour.controls a.next {				background-position: -128px -1px;}
+.jtour.controls a.stop {				background-position: -160px -1px;}
+/*
+.jtour.controls a.play-pause.paused:hover {	background-position: -64px -28px;}
+.jtour.controls a.play-pause:hover {			background-position: -32px -28px;}
+.jtour.controls a.previous:hover {			background-position: -96px -28px;}
+.jtour.controls a.next:hover {				background-position: -128px -28px;}
+.jtour.controls a.stop:hover {				background-position: -160px -28px;}
+*/
+
+
+/* BLACK STYLE */
+
+.jtour-black .jtour.box {
+	color: #f0f0f0;
+	background: #7d7e7d; /* Old browsers */
+	background: -moz-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d7e7d), color-stop(100%,#0e0e0e)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* IE10+ */
+	background: linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* W3C */
+	border: 1px solid #bbb;
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.9);
+	-moz-box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.9);
+	box-shadow: 0px 0px 4px 0px rgba(204, 204, 204, 0.9);
+}
+.jtour-black .jtour.heading {
+	color: #f0f0f0;
+}
+
+
+/* BLUE STYLE */
+
+.jtour-blue .jtour.box {
+	color: #001115;
+	background: #4096ee; /* Old browsers */
+	background: -moz-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7abcff), color-stop(44%,#60abf8), color-stop(100%,#4096ee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* IE10+ */
+	background: linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* W3C */
+}
+.jtour-blue .jtour.heading {
+	color: #001115;
+	background: none;
+	border-bottom: 1px #005775 solid;
+}
+
+.jtour-blue .jtour.timer {
+	background: #005775;
+}
+
+
+/* YELLOW STYLE */
+
+.jtour-yellow .jtour.box {
+	color: #000;
+	background: #efe5a0; /* Old browsers */
+	background: -moz-linear-gradient(top, #fefcea 0%, #efe5a0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#efe5a0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fefcea 0%,#efe5a0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fefcea 0%,#efe5a0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #fefcea 0%,#efe5a0 100%); /* IE10+ */
+	background: linear-gradient(top, #fefcea 0%,#efe5a0 100%); /* W3C */
+}
+.jtour-yellow .jtour.heading {
+	color: #000;
+	background: none;
+	border-bottom: 1px #000 solid;
+}
+
+.jtour-yellow .jtour.timer {
+	background: #000;
+}
