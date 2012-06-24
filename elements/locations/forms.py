@@ -29,16 +29,13 @@ def location_init(required, label,help_text = ""):
 
     def decorator(cls):
         new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
-        print new_cls.__name__,(cls,),attrs
         new_cls.Meta.exclude = getattr(new_cls.Meta, 'exclude', ()) + ('region', 'district', 'location')
-        print "Decorator here"
         old_init = new_cls.__init__
         def new_init(form, *args, **kwargs):
             old_init(form, *args, **kwargs)
             if (hasattr(form,"instance")):
                 if form.instance.id: # if this is editing form
                     location_info = EntityLocation.objects.get_for(type(form.instance), [form.instance.id])[form.instance.id]
-                    print type(form.instance)
                     loc_id = location_info['ids'][0] # TODO: which location to choose?
                     form.fields['location_select'].initial = Location.objects.get(id=loc_id).path()
             else:
@@ -52,7 +49,6 @@ def location_init(required, label,help_text = ""):
                 return clean(form)
             new_cls.clean = new_clean
 
-        print "Decorator near clean"
         # TODO: location_init should take parameter, which controls whether location is added or updated
         if (hasattr(new_cls,"save")):
             save = new_cls.save
