@@ -124,7 +124,7 @@ $(function(){
                                     element: $('.gr-ideas-item:first .gr-slider:first')
                             });
                             this.pause();
-                            jQuery('#add_resource_popup').hide();
+                            jQuery('.gr-add-popup').hide();
                             jQuery('.gr-ideas-item:first .gr-slider:first').show().removeClass('gr-slider-inactive');
                             jQuery('.gr-ideas-item:first .gr-source-list-slider').show();
                     }
