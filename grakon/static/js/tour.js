@@ -2,7 +2,7 @@ $(function(){
     $.jTour({
         tourId:             'intro',
         onTourClose: function(){
-                        window.document.location.href='/register';
+                        window.document.location.href='/register?utm_campaign=tour&utm_medium=link&utm_source=main_page';
         },
         pages:              [
             {url: '/', items: [
@@ -11,7 +11,7 @@ $(function(){
                     msg:        '<p align="center">Наша цель &mdash; помочь активным гражданам собрать ресурсы и&nbsp;идеи для&nbsp;решения общественных задач.</p>',
                     elemPos:    'cc',
                     boxPos:     'cc',
-                    scrollTop:  -220,
+                    offsetTop:  -220,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.pause();
@@ -22,16 +22,13 @@ $(function(){
                 {
                     sel:        '.gr-wrapper',
                     msg:        '<p>Основная структурная единица проекта&nbsp;&mdash; регион.</p><p>На&nbsp;его странице выводится вся существующая статистика: количество задач, проектов и&nbsp;участников.</p><p>Регион по&nbsp;умолчанию&nbsp;&mdash; Россия.</p>',
-                    elemPos:    'cr',
-                    boxPos:     'cr',
-                    offsetLeft: -160,
+                    elemPos:    'tc',
+                    boxPos:     'tc',
+                    offsetTop:  200,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight({
-                                    element: $('.ym-column')
-                            });
-                            this.spotlight({
-                                    element: $('.gr-content')
+                                    element: $('.ym-column .ym-wrapper:first')
                             });
                             this.pause();
                     }
@@ -51,12 +48,12 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-wrapper',
+                    sel:        '.gr-ideas-list',
                     msg:        '<p>Цитируя классиков: &laquo;Правильно поставленная задача &mdash; половина ее решения&raquo;.</p><p>Поэтому полезные дела на Граконе начинаются с постановки задач.</p>',
-                    elemPos:    'cc',
-                    boxPos:     'cc',
-                    offsetTop:  -60,
-                    offsetLeft: 320,
+                    elemPos:    'tr',
+                    boxPos:     'tr',
+                    offsetTop:  -35,
+                    offsetLeft: 330,
                     delay:      3000,
                     onStart:    function(e, b){
                              this.spotlight({
@@ -68,31 +65,33 @@ $(function(){
             ]}, 
             {url: '/task/1', items: [
                 {
-                    sel:        '.gr-wrapper',
+                    sel:        '.gr-descr',
                     msg:        '<p>Задачей может быть любая проблема или инициатива, относящаяся к жизни граждан.</p>',
-                    elemPos:    'cс',
-                    boxPos:     'cс',
-                    offsetTop:  -60,
-                    offsetLeft: 320,
+                    elemPos:    'bс',
+                    boxPos:     'bс',
+                    offsetTop:  120,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
-                                    element: $('.gr-wrapper')
+                                    element: $('.gr-descr')
                             });
                             this.pause();
                     }
                 },
                 {
-                    sel:        '.gr-follow-button',
+                    sel:        '.gr-ideas-list',
                     msg:        '<p>Для решения задач пользователи предлагают идеи.</p>',
-                    elemPos:    'br',
-                    boxPos:     'tr',
-                    offsetTop:  10,
+                    elemPos:    'tc',
+                    boxPos:     'tc',
+                    offsetTop:  -190,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight();
                             this.spotlight({
-                                    element: $('.gr-ideas-list')
+                                    element: $('.gr-follow-button')
+                            });
+                            this.spotlight({
+                                    element: $('.gr-add-icon')
                             });
                             this.pause();
                     }
@@ -109,16 +108,16 @@ $(function(){
                             this.spotlight({
                                     element: $('.gr-add-icon:first')
                             });
-                            jQuery('.gr-ideas-item:first').append('<div id="add_resource_popup" class="gr-small-popup gr-add-popup" style="display: block; top: 30px"><div class="gr-close js-close">&nbsp;</div><div class="ym-clearfix">&nbsp;</div><select class="gr-mb10 gr-mt10" style="width:100%"><option>Волонтер/Время</option></select><textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"></textarea><div align="right" class="gr-mt5"><!--span class="highlighted">100</span--><span id="add_idea_resource_btn" class="highlight">Добавить</span></div></div>');
+                           jQuery('.gr-ideas-item:first').append('<div id="add_resource_popup" class="gr-small-popup gr-add-popup" style="display: block; top: 30px"><div class="gr-close js-close">&nbsp;</div><div class="ym-clearfix">&nbsp;</div><select class="gr-mb10 gr-mt10" style="width:100%"><option>Волонтер/Время</option></select><textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"></textarea><div align="right" class="gr-mt5"><!--span class="highlighted">100</span--><span id="add_idea_resource_btn" class="highlight">Добавить</span></div></div>');
                             this.pause();
                     }
                 },
                 {
-                    sel:        '.gr-ideas-list',
+                    sel:        '.gr-ideas-item:first h3',
                     msg:        '<p>По клику на счетчик ресурсов открывается более подробная информация о пользователях, поддержавших идею.</p>',
-                    elemPos:    'tc',
-                    boxPos:     'tc',
-                    offsetTop:  70,
+                    elemPos:    'bc',
+                    boxPos:     'bc',
+                    offsetTop:  150,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -133,11 +132,10 @@ $(function(){
                 {
                     sel:        '.js-link-to-project:first',
                     msg:        '<p>Чтобы собрать полный &laquo;комплект&raquo; ресурсов и&nbsp;скоординировать реализацию идеи, создается проект.</p>',
-                    elemPos:    'tr',
+                    elemPos:    'tl',
                     boxPos:     'tl',
-                    offsetTop:  -20,
-                    offsetLeft: 30,
                     delay:      1000,
+                    offsetLeft:  -30,
                     onStart:    function(e, b){
                             this.spotlight();
                             this.pause();
@@ -152,7 +150,7 @@ $(function(){
                     elemPos:    'tr',
                     boxPos:     'tl',
                     offsetTop:  -33,
-                    offsetLeft: 30,
+                    offsetLeft: 20,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight();
@@ -173,11 +171,10 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-wrapper',
+                    sel:        '.gr-descr',
                     msg:        '<p align="center"><big>Когда все ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
-                    elemPos:    'cc',
-                    boxPos:     'cc',
-                    offsetTop:  100,
+                    elemPos:    'tc',
+                    boxPos:     'tc',
                     delay:      3000
                 }
             ]}

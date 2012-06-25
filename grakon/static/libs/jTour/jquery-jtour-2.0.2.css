@@ -97,9 +97,7 @@ html, body {
 .jt-spotlit {
 	position: relative !important;
 	z-index: 8000 !important;
-	-webkit-box-shadow: 0 0 12px 0  #ccc;
-	-moz-box-shadow: 0 0 12px 0  #ccc;
-	box-shadow: 0 0 12px 0 #ccc;
+	
 	background-color: #eaeaea;
     border-radius: .3em;
 }
@@ -110,6 +108,10 @@ html, body {
     .jt-spotlit .jquery_tabs ul.tabs-list li.current a {background: #eaeaea !important;}
     .jt-spotlit.gr-ideas-list, .jt-spotlit.gr-descr, .jt-spotlit.gr-side-item {padding: 2% 2% 1%; margin: -2% -2% 1%; width: 104%;}
     .jt-spotlit.gr-ideas-list .gr-slider {background-color: #eaeaea !important; border-color: #eaeaea !important;}
+    .ym-column .jt-spotlit.ym-wrapper {padding: 10px;}
+    .jt-spotlit.gr-add-icon {box-shadow: none; position: absolute !important;}
+    .jt-spotlit.js-link-to-project {padding: 1% 2% 1%; margin: -1% -2% 1%; width: 104%;}
+    
 
 .jt-spotlit.super {
 	z-index: 10000 !important;

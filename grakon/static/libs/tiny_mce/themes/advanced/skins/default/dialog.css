@@ -15,7 +15,7 @@ margin:8px 8px 0 8px;
 }
 
 html {background:#F0F0EE;}
-td {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px;}
+td {font-family:Verdana, Arial, Helvetica, sans-serif;}
 textarea {resize:none;outline:none;}
 a:link, a:visited {color:black;}
 a:hover {color:#2B6FB6;}
@@ -28,8 +28,8 @@ label.msg {display:none;}
 label.invalid {color:#EE0000; display:inline;}
 input.invalid {border:1px solid #EE0000;}
 input {background:#FFF; border:1px solid #CCC;}
-input, select, textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px;}
-input, select, textarea {border:1px solid #808080;}
+input, select, textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em;}
+input, select, textarea {border:1px solid #808080; width: 100%;}
 input.radio {border:1px none #000000; background:transparent; vertical-align:middle;}
 input.checkbox {border:1px none #000000; background:transparent; vertical-align:middle;}
 .input_noborder {border:0;}
@@ -78,8 +78,8 @@ td.charmap, #charmap a {width:18px; height:18px; color:#000; border:1px solid #A
 .tabs li {float:left; background:url(img/tabs.gif) no-repeat 0 0; margin:0 2px 0 0; padding:0 0 0 10px; line-height:17px; height:18px; display:block;}
 .tabs li.current {background:url(img/tabs.gif) no-repeat 0 -18px; margin-right:2px;}
 .tabs span {float:left; display:block; background:url(img/tabs.gif) no-repeat right -36px; padding:0px 10px 0 0;}
-.tabs .current span {background:url(img/tabs.gif) no-repeat right -54px;}
-.tabs a {text-decoration:none; font-family:Verdana, Arial; font-size:10px;}
+.tabs .current span {background:url(img/tabs.gif) no-repeat right -54px; line-height: 2em;}
+.tabs a {text-decoration:none; font-family:Verdana, Arial;}
 .tabs a:link, .tabs a:visited, .tabs a:hover {color:black;}
 
 /* Panels */

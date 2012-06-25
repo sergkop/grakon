@@ -36,7 +36,7 @@ input[type=radio] {vertical-align: top;}
 .gr-login-info {float: right;}
     .gr-login-info a, .gr-login-info div.gr-login-user {border-right: 1px solid #242424; padding: 1.6em 1.4em; box-shadow: inset -1px 0 0 #3e3d3d; display: block; float: left; line-height: 0; color: #fff;}
 		.gr-login-info a:hover, .gr-login-info div.gr-login-user:hover {text-decoration: none; background-color: rgba(255,255,255, 0.1);}
-		.gr-login-info div.gr-login-user{ position: relative; border: none; box-shadow: none; cursor: pointer; padding-bottom: 1em;}
+		.gr-login-info div.gr-login-user{ position: relative; border: none; box-shadow: none; cursor: pointer;}
 		.gr-job {float: left;}
 			.gr-job a {background:url(../images/icons/search.png) 5px 7px no-repeat; padding-left: 35px}
 		.gr-login-user span {background:url(../images/icons/add.png) -17px -178px no-repeat; padding: 0 .3em; line-height: .5em;} 	
@@ -95,7 +95,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin-bottom: .3em}
+	.gr-resource-item {padding: .2em 1em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 0 .3em .3em}
 		.gr-resource-item-active {padding-right: .2em;} 
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; padding: 0 .4em; margin: 0 .3em}
 		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat; padding: 0 .4em; position: absolute; top: .2em; right: -.1em; height: 10px; cursor: pointer;}
@@ -120,7 +120,6 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	
 	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   
 	.gr-source-list-slider {margin-top: 1em; font-size: .9em}        
-	.gr-source-list-slider li {margin: 0 0 1em;}
         .gr-bb-grey-list li {border-bottom: 1px solid #eee; padding-bottom: 1em !important;}
         .gr-bb-grey-list li:last-child {border-bottom: none;}
 	
