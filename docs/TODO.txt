@@ -1,4 +1,6 @@
 * show participants on location page
+* project admin on project page is not shown
+* in logged out state follow buttons in lists of tasks are not shown
 
 * sending letter during registration doesn't work
 
