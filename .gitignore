@@ -8,3 +8,4 @@
 grakon/site_settings.py
 database.sqlite
 Makefile
+*.directory

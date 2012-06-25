@@ -33,7 +33,6 @@ class BaseProfileView(object):
             ('tasks', u'Задачи: %i' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[username]), '', 'tasks/list.html'),
             ('projects', u'Проекты: %i' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[username]), '', 'projects/list.html'),
             ('ideas', u'Идеи: %i' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[username]), '', 'ideas/list.html'),
-            #('contacts', u'В контактах у', reverse('profile_contacts', args=[username]), '', 'elements/table.html'),
         ]
 
         ctx.update(entity_tabs_view(self))

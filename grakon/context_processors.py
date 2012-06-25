@@ -21,7 +21,7 @@ def media_files(request):
             'libs/crispy-forms/default.uni-form.css',
             'libs/chosen/chosen.css',
             'libs/tipsy/tipsy.css',
-            'libs/jTour/jtour_assets/jquery-jtour-2.0.2.css',
+            'libs/jTour/jquery-jtour-2.0.2.css',
 
             'css/hlist.css',
             'css/tabs.css',
@@ -50,8 +50,10 @@ def media_files(request):
         'libs/tipsy/jquery.tipsy.js',
         'libs/jquery.placeholder.min.js',
         'libs/mustache.js',
+        'libs/jTour/jquery-jtour-2.0.2.min.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
         'js/main.js',
+        'js/tour.js',
     )
     media.add_js(js)
     return {'media_files': media}
