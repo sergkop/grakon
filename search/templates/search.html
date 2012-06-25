@@ -1,36 +1,39 @@
 {% extends "base.html" %}
+
 {% block title %}Поиск участников - Гракон{% endblock %}
 
 {% block body %}<body id="search">{% endblock %}
+
 {% block top %}
     <h1>Поиск активистов</h1>
 {% endblock %}
+
 {% block content %}
-    
     <div class="ym-grid">
         <div class="ym-gl ym-g25" style="padding-right: 20px;">
             <form action="">
-            <label for="id_surname">Фамилия:</label></br>
-            <input id="id_surname" name="surname" type="text" {% if surname %}value="{{surname}}"{% endif %} />
-            </br>
-            </br>
-                {{locationWidget}}
-            </br>
-            <label for="id_resource" >Ресурс:</label></br>
-            <select id="id_resource" name="resource" style="width:200px;">
-                <option value="all">Все</option>
-                {% for res in resources %}
-                <option {% if resource and res.title == resource %}selected{% endif %} value="{{res.title}}">{{res.value}}</option>
-                {% endfor %}
-            </select>
-            </br>
-            </br>
-            <input type="submit" value="Поиск" style="width:100px;height:20px;"/>
+                <label for="id_surname">Фамилия:</label></br>
+                <input id="id_surname" name="last_name" type="text" {% if last_name %}value="{{ last_name }}"{% endif %} />
+                <br/>
+                <br/>
+                {{ locationWidget }}
+                <br/>
+                <label for="id_resource" >Ресурс:</label>
+                <br/>
+                <select id="id_resource" name="resource" style="width:200px;">
+                    <option value="all">Все</option>
+                    {% for res in resources %}
+                        <option {% if resource and res.title == resource %}selected{% endif %} value="{{ res.title }}">{{ res.value }}</option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <br/>
+                <input type="submit" value="Поиск" style="width:100px;height:20px;"/>
             </form>
         </div>
+
         <div>
             {% include "locations/participants.html" %}
         </div>
     </div>
 {% endblock %}
-

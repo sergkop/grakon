@@ -16,10 +16,19 @@ class ProfileManager(BaseEntityManager):
 
         # Get contacts
         contacts = EntityParticipant.objects.participant_in('follower', ids, Profile)
-        for id in ids:
-            data[id]['contacts'] = contacts[id]
+        contacts_ids = set(c_id for id in ids for c_id in contacts[id]['ids'])
+        contacts_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+                .in_bulk(contacts_ids)
 
-        participants_data = list(EntityParticipant.objects.filter(person__in=ids).values_list('content_type', 'entity_id', 'role', 'person'))
+        for id in ids:
+            data[id]['contacts'] = {
+                'count': contacts[id]['count'],
+                'entities': [contacts_by_id[c_id].display_info() for c_id in contacts[id]['ids']],
+            }
+
+        # Get data for related entities
+        participants_data = list(EntityParticipant.objects.filter(person__in=ids) \
+                .values_list('content_type', 'entity_id', 'role', 'person'))
 
         # TODO: use ratings to sort entities
 
@@ -38,12 +47,6 @@ class ProfileManager(BaseEntityManager):
                     data[id][entity_name][role]['count'] = len(data[id][entity_name][role]['ids'])
 
     def get_related_info(self, data, ids):
-        contacts_ids = set(c_id for id in ids for c_id in data[id]['contacts']['ids'])
-        contacts_info = Profile.objects.info_for(contacts_ids, related=False)
-        for id in ids:
-            data[id]['contacts']['entities'] = [contacts_info[c_id] for c_id in data[id]['contacts']['ids']
-                            if c_id in contacts_info]
-
         for entity_name in ('ideas', 'tasks', 'projects'):
             model = ENTITIES_MODELS[entity_name]
 
@@ -94,6 +97,16 @@ class Profile(BaseEntityModel):
         data = super(Profile, self).info_data()
         data['full_name'] = unicode(self)
         return data
+
+    def display_info(self, intro=False):
+        res = {
+            'id': self.id,
+            'url': self.get_absolute_url(),
+            'full_name': unicode(self),
+        }
+        if intro:
+            res['intro'] = self.intro
+        return res
 
     def calc_rating(self):
         info = self.info()

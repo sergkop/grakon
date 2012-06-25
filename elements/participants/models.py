@@ -33,15 +33,8 @@ class EntityParticipantManager(BaseEntityPropertyManager):
 
                 res[id][role] = {'count': len(profiles), 'entities': []}
 
-                # TODO: don't pass
                 for profile in sorted(profiles, key=lambda p: -p.rating):
-                    profile_data = {'id': profile.id, 'url': profile.get_absolute_url(),
-                        'full_name': unicode(profile)}
-
-                    if role == 'admin':
-                        profile_data['intro'] = profile.intro
-
-                    res[id][role]['entities'].append(profile_data)
+                    res[id][role]['entities'].append(profile.display_info(role=='admin'))
         return res
 
     # TODO: ability to get results for a list of entity types (?)

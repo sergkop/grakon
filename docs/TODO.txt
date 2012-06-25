@@ -1,3 +1,14 @@
+* show participants on location page
+
+* sending letter during registration doesn't work
+
+Search
+    * min-width in locations/select.html
+    * #search in styles and body, {% block body %}
+    * qfilter in Location.get_entities
+    * reimplement SearchForm and view
+
+* 
 * fix showing list of contacts on profile page and participants in right panel of location
 
 * in production version resource labels have no margin

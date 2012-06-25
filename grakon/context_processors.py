@@ -59,7 +59,7 @@ def code_data(request):
     ctx = project_settings()
 
     ctx.update({
-        'full_page_url': quote(settings.URL_PREFIX+request.get_full_path()),
+        'full_page_url': quote((settings.URL_PREFIX+request.get_full_path()).encode('utf8')),
         'PROFILE': json.dumps(request.PROFILE, ensure_ascii=False),
     })
     return ctx

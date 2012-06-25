@@ -2,7 +2,7 @@
 from django import forms
 
 class SearchForm(forms.Form):
-    surname = forms.CharField(required=False)
+    last_name = forms.CharField(required=False)
     country = forms.IntegerField(required=False)
     region = forms.IntegerField(required=False)
     district = forms.IntegerField(required=False)
