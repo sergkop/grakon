@@ -47,7 +47,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 /*Sidebars*/
 .gr-side-item {position: relative;} 
 
-.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add-2.jpg) 0 0 no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px; cursor: pointer;}
+.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add-2.png) 0 0 no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px; cursor: pointer;}
 	.gr-ideas-item .gr-add span.gr-add-icon:hover {text-decoration: none; border-bottom: none !important; background-position: 0 -26px;}
 	.gr-ideas-item .gr-add span.gr-add-icon:active {background-position: 0 -52px;}
 
