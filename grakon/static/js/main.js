@@ -314,16 +314,6 @@ var SelectLocation = Backbone.View.extend({
     }
 });
 
-var ResourcesEditor = Backbone.View.extend({
-    initialize: function(){
-        this.$el;
-    },
-
-    add_item: function(resource, descr){
-        
-    }
-});
-
 // TODO: add "add location" button and save
 // Widget for inline editing of the list of locations
 // Usage: new LocationEditor({el: $(div), edit_btn: $(edit_btn), ct: ct_id, entity_id: entity_id})

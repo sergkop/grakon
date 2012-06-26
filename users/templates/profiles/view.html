@@ -2,7 +2,12 @@
     <div class="gr-ideas-list">
         {% if profile.intro or is_admin %}
             <div class="gr-ideas-item">
-                <h5 class="gr-mt0">Кто я такой:{% with field="intro" text=profile.intro %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
+                <h5 class="gr-mt0">Кто я такой:
+                    {% with field="intro" text=profile.intro %}
+                        {% if is_admin %}
+                            {% include "elements/edit_button.html" %}
+                        {% endif %}
+                </h5>
                     {% include "elements/text_block.html" %}
                 {% endwith %}
             </div>
@@ -17,13 +22,28 @@
         {% endif %}
 
         <div class="gr-ideas-item">     
-            <h5>Ресурсы:{% if is_admin %}<i id="resources_edit_btn" class="gr-editing">&nbsp;</i>{% endif %}</h5>
-            <div id="resources_list">
+            <h5>Ресурсы:
+                {% if is_admin %}
+                    <i id="resources_edit_btn" class="gr-editing edit-resource-list">&nbsp;</i>
+                {% endif %}
+            </h5>
+            <div id="resources_list" class="resources-list">
                 {% for resource in info.resources.none.data %}
-                    <div class="gr-resource-item">{{ resource.title }}</div>
-                    <p>{{ resource.description }}</p>
+                    <div class="resource-list-item">
+                        <div class="gr-resource-item">{{ resource.title }}</div>
+                        {% if is_admin %}
+                            <i class="gr-editing edit-resource-item" style="display: none;">&nbsp;</i>
+                        {% endif %}
+                        <p class="gr-resource-item-desc">{{ resource.description }}</p>
+                    </div>
                 {% endfor %}
             </div>
+            {% if is_admin %}
+                <div class="action-btns" style="display: none;">
+                    <span class="gr-editor-btn add-resource-btn highlight">Добавить</span>
+                    <span class="gr-editor-btn cancel-res-editing-btn highlight">Отменить</span>
+                </div>
+            {% endif %}
         </div>
 
        <div class="gr-ideas-item">     
@@ -41,3 +61,10 @@
         </div>
     </div>
 </div>
+
+{# Попап окно с формой добавления ресурса #}
+{% if is_admin %}
+    {% with ct=info.ct entity_id=info.instance.id %}
+        {% include "resources/add.html" %}
+    {% endwith %}
+{% endif %}
