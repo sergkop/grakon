@@ -91,7 +91,7 @@ def send_email_task(email):
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
 
     try:
-        response = conn.send_raw_email(raw_message=email.raw_msg,
+        response = conn.send_raw_email(raw_message=email.raw_msg.decode('utf8'),
                 destinations=email.to_email,
                 source=settings.EMAILS[email.from_email][1])
     except SESConnection.ResponseError, err:
