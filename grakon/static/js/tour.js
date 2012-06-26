@@ -108,7 +108,7 @@ $(function(){
                             this.spotlight({
                                     element: $('.gr-add-icon:first')
                             });
-                           jQuery('.gr-ideas-item:first').append('<div id="add_resource_popup" class="gr-small-popup gr-add-popup" style="display: block; top: 30px"><div class="gr-close js-close">&nbsp;</div><div class="ym-clearfix">&nbsp;</div><select class="gr-mb10 gr-mt10" style="width:100%"><option>Волонтер/Время</option></select><textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"></textarea><div align="right" class="gr-mt5"><!--span class="highlighted">100</span--><span id="add_idea_resource_btn" class="highlight">Добавить</span></div></div>');
+                           $('.gr-ideas-item:first').append('<div id="add_resource_popup" class="gr-small-popup gr-add-popup" style="display: block; top: 30px"><div class="gr-close js-close">&nbsp;</div><div class="ym-clearfix">&nbsp;</div><select class="gr-mb10 gr-mt10" style="width:100%"><option>Волонтер/Время</option></select><textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"></textarea><div align="right" class="gr-mt5"><!--span class="highlighted">100</span--><span id="add_idea_resource_btn" class="highlight">Добавить</span></div></div>');
                             this.pause();
                     }
                 },
@@ -124,9 +124,9 @@ $(function(){
                                     element: $('.gr-ideas-item:first .gr-slider:first')
                             });
                             this.pause();
-                            jQuery('.gr-add-popup').hide();
-                            jQuery('.gr-ideas-item:first .gr-slider:first').show().removeClass('gr-slider-inactive');
-                            jQuery('.gr-ideas-item:first .gr-source-list-slider').show();
+                            $('.gr-add-popup').hide();
+                            $('.gr-ideas-item:first .gr-slider:first').show().removeClass('gr-slider-inactive');
+                            $('.gr-ideas-item:first .gr-source-list-slider').show();
                     }
                 },
                 {

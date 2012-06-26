@@ -33,7 +33,11 @@ def media_files(request):
     })
 
     if settings.DEBUG:
-        js = ('libs/jquery.js', 'libs/jquery-ui/jquery-ui.js', 'libs/openapi.js')
+        js = (
+            'libs/jquery.js',
+            'libs/jquery-ui/jquery-ui.js',
+            'libs/openapi.js',
+        )
     else:
         js = (
             'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
@@ -45,17 +49,23 @@ def media_files(request):
         'libs/underscore.js',
         'libs/json2.js',
         'libs/backbone.js',
-        'libs/crispy-forms/uni-form.jquery.js',
         'libs/chosen/chosen.jquery.min.js',
-        'libs/tipsy/jquery.tipsy.js',
         'libs/jquery.placeholder.min.js',
-        'libs/mustache.js',
-        reverse('code_data') if settings.DEBUG else 'js/code_data.js', # TODO: needs to be generated
+        reverse('code_data') if settings.DEBUG else 'js/code_data.js',
         'js/main.js',
-        'js/tour.js',
     )
     media.add_js(js)
-    return {'media_files': media}
+
+    bottom_media = Media()
+    bottom_media.add_js((
+        'libs/tipsy/jquery.tipsy.js',
+        'libs/mustache.js',
+        'libs/crispy-forms/uni-form.jquery.js', # TODO: currently doesn't work
+        'libs/jTour/jquery-jtour-2.0.2.min.js',
+        'js/tour.js',
+    ))
+
+    return {'media_files': media, 'bottom_media_files': bottom_media}
 
 def code_data(request):
     ctx = project_settings()

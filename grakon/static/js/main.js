@@ -132,14 +132,13 @@ $(function(){
             alert("Ваш ресурс удален");
         }, true)();
     });
-        
-});
 
-// Default tipsy settings
-$.fn.tipsy.defaults.delayIn = 150;
-$.fn.tipsy.defaults.delayOut = 200;
-$.fn.tipsy.defaults.fade = true;
-$.fn.tipsy.defaults.opacity = 0.6;
+    // Default tipsy settings
+    $.fn.tipsy.defaults.delayIn = 150;
+    $.fn.tipsy.defaults.delayOut = 200;
+    $.fn.tipsy.defaults.fade = true;
+    $.fn.tipsy.defaults.opacity = 0.6;
+});
 
 function get_cookie(name){
     var cookie_value = null;
