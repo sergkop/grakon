@@ -106,11 +106,12 @@ html, body {
     }
     
     .jt-spotlit .jquery_tabs ul.tabs-list li.current a {background: #eaeaea !important;}
-    .jt-spotlit.gr-ideas-list, .jt-spotlit.gr-descr, .jt-spotlit.gr-side-item {padding: 2% 2% 1%; margin: -2% -2% 1%; width: 104%;}
+    .jt-spotlit.gr-ideas-list, .jt-spotlit.gr-descr, .jt-spotlit.gr-side-item, .jt-spotlit.gr-ideas-item {padding: 2% 2% 1%; margin: -2% -2% 1%; width: 104%;}
     .jt-spotlit.gr-ideas-list .gr-slider {background-color: #eaeaea !important; border-color: #eaeaea !important;}
     .ym-column .jt-spotlit.ym-wrapper {padding: 10px;}
     .jt-spotlit.gr-add-icon {box-shadow: none; position: absolute !important;}
-    .jt-spotlit.js-link-to-project {padding: 1% 2% 1%; margin: -1% -2% 1%; width: 104%;}
+    .jt-spotlit.js-link-to-project, h1.jt-spotlit {padding: 1% 2% 1%; margin: -1% -2% 1%; width: 104%;}
+    .jt-spotlit.gr-slider .gr-add-icon {background-image:url(../../images/icons/add-2-jtour.png) !important; cursor: default !important;}
     
 
 .jt-spotlit.super {

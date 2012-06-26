@@ -1,8 +1,14 @@
 $(function(){
-    $.jTour({
+    
+    var tourArr = {
         tourId:             'intro',
         onTourClose: function(){
-                        window.document.location.href='/register?utm_campaign=tour&utm_medium=link&utm_source=main_page';
+                if(!PROFILE.username) {
+                       window.document.location.href='/register?utm_campaign=tour&utm_medium=link&utm_source=main_page';  
+                }
+                else{
+                         window.document.location.href='/location/1/tasks';  
+                }
         },
         pages:              [
             {url: '/', items: [
@@ -61,7 +67,22 @@ $(function(){
                             });
                             this.pause();
                     }
-                }
+                },
+                {
+                        sel:        '.gr-ideas-list',
+                        msg:        '<p>Рассмотрим пример задачи.</p>',
+                        elemPos:    'tr',
+                        boxPos:     'tr',
+                        offsetTop:  -35,
+                        offsetLeft: 330,
+                        delay:      3000,
+                        onStart:    function(e, b){
+                                this.spotlight({
+                                        element: $('.gr-ideas-item:first')
+                                });
+                                this.pause();
+                        }
+                    }
             ]}, 
             {url: '/task/1', items: [
                 {
@@ -74,6 +95,9 @@ $(function(){
                     onStart:    function(e, b){
                             this.spotlight({
                                     element: $('.gr-descr')
+                            });
+                            this.spotlight({
+                                    element: $('h1')
                             });
                             this.pause();
                     }
@@ -179,5 +203,12 @@ $(function(){
                 }
             ]}
         ]
-    });
+    }
+    
+    /*if(PROFILE.username)
+    {
+        delete tourArr['pages']['items'][0];    
+    }*/
+     $.jTour(tourArr);
+
 });
