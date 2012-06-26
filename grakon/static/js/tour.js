@@ -118,6 +118,9 @@ $(function(){
                                     element: $('.gr-add-icon')
                             });
                             this.pause();
+                            $('.gr-add-popup').hide();
+                            $('.gr-ideas-item:first .gr-slider:first').show().removeClass('gr-slider-inactive');
+                            $('.gr-ideas-item:first .gr-source-list-slider').show();
                     }
                 },
                 {
