@@ -1,21 +1,14 @@
-* show participants on location page
-* project admin on project page is not shown
-* in logged out state follow buttons in lists of tasks are not shown
-
 * 2 accounts didn't receive email verification letter
 
-Search
-    * min-width in locations/select.html
-    * #search in styles and body, {% block body %}
-    * qfilter in Location.get_entities
-    * reimplement SearchForm and view
-
 * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+* use Amazon SNS to receive bounce and complaints notifications
 * model with emails which should be blacklisted
 * send emails about считайте сами
 * Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
 * reinstall pydkim on server
 * redirect url to track pressing on external links in emails
+
+* bug with providing resources to project (error on backend)
 
 * write docs (entities, features, info, ajax ports, code_data)
 
@@ -37,6 +30,13 @@ Search
 * notifications
 
 * add tabs names to title for entities, image url and description should be specified as context variable
+
+Search
+    * min-width in locations/select.html
+    * #search in styles and body, {% block body %}
+    * qfilter in Location.get_entities
+    * reimplement SearchForm and view
+
 
 
 

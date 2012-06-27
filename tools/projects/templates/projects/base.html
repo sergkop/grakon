@@ -32,7 +32,7 @@
                         <div class="ym-clearfix">&nbsp;</div>
 
                         <h3 class="highlight">{{ resource.name }}</h3>
-                        <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)"></textarea> 
+                        <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)" maxlength="140"></textarea>
                         <div align="right" class="gr-mt5">
                             <!--span class="highlighted gr-fl">100</span-->
                             <span class="highlight fr js-provide-resource-btn">Предоставить</span>
@@ -95,7 +95,7 @@
                 <div class="gr-close js-close">&nbsp;</div>
                 <div class="ym-clearfix">&nbsp;</div>
                 <input type="text" placeholder="Название ресурса" style="width:100%" class="gr-mb10 gr-mt10"/>
-                <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)"></textarea>
+                <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)" maxlength="140"></textarea>
                 <div align="right" class="gr-mt5">
                     <span id="add_project_resource_btn" class="highlight" onclick="add_project_resource({{ info.ct }}, {{ info.instance.id }})">Добавить</span>
                 </div>

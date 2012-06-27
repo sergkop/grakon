@@ -1,5 +1,4 @@
 $(function(){
-    
     var tourArr = {
         tourId:             'intro',
         onTourClose: function(){
@@ -207,11 +206,10 @@ $(function(){
             ]}
         ]
     }
-    
-    /*if(PROFILE.username)
-    {
-        delete tourArr['pages']['items'][0];    
-    }*/
+
+    if (PROFILE.username)
+        tourArr['pages'].splice(0, 1);
+
      $.jTour(tourArr);
 
 });

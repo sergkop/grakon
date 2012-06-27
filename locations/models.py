@@ -35,15 +35,34 @@ class LocationManager(models.Manager):
 
             ct_id = ContentType.objects.get_for_model(self.model).id
             locations = self.filter(id__in=other_ids).select_related()
+            participants_ids = []
             for loc in locations:
                 # TODO: instance is a dict in all entities
                 other_res[loc.id] = {'instance': loc, 'ct': ct_id}
 
-                # TODO: separate participants and tools (depricate)
+                # TODO: do we need tools data here?
                 for name, model in ENTITIES_MODELS.iteritems():
-                    count_name = 'participants' if name=='participants' else 'tools'
+                    if name == 'participants':
+                        continue
+
                     other_res[loc.id][name] = loc.get_entities(name)(
-                            limit=settings.LIST_COUNT[count_name])
+                            limit=settings.LIST_COUNT['tools'])
+
+                # Get participants
+                participants_data = loc.get_entities('participants')(limit=settings.LIST_COUNT['participants'])
+                participants_ids += participants_data['ids']
+                other_res[loc.id]['participants'] = {
+                    'count': participants_data['count'],
+                    'entities': [{'id': id} for id in participants_data['ids']],
+                }
+
+            from users.models import Profile
+            profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+                    .in_bulk(set(participants_ids))
+
+            for loc in locations:
+                for entity in other_res[loc.id]['participants']['entities']:
+                    entity.update(profiles_by_id[entity['id']].display_info())
 
             res.update(other_res)
 
@@ -52,8 +71,9 @@ class LocationManager(models.Manager):
 
         if related:
             for name, model in ENTITIES_MODELS.iteritems():
-                if name == 'posts':
-                    continue
+                if name == 'participants':
+                        continue
+
                 e_ids = set(e_id for id in ids for e_id in res[id][name]['ids'])
                 e_info = model.objects.info_for(e_ids, related=False)
 

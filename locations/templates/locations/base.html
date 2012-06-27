@@ -32,7 +32,7 @@
         </div>
     {% endif %}
 
-    <!--div class="gr-side-item gr-light-back">
+    <div class="gr-side-item gr-light-back">
         <div class="gr-side-item">
             <h4>Участники:</h4>
             <p class="dimmed">
@@ -44,7 +44,7 @@
                 <a href="{% url location_participants location.id %}">Показать всех...</a>
             {% endif %}
         </div>
-    </div-->
+    </div>
 
     {% include "disqus/counter.html" %}
 {% endblock %}
