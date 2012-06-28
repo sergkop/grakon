@@ -2,6 +2,11 @@
 
 {% load elements %}
 
+{% block head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/resources.js"></script>
+{% endblock %}
+
+
 {% block top %}
     <h1>{{ profile }}</h1>
 {% endblock %}
