@@ -23,6 +23,9 @@ dnspython
 -e git+https://github.com/ghewgill/pydkim.git#egg=pydkim
 boto
 
+# Background tasks
+django-celery<2.6
+
 # Misc
 django-debug-toolbar
 ipython

@@ -1,0 +1,5 @@
+К задаче <a href="{{ URL_PREFIX }}{{ task.get_absolute_url }}">{{ task.title }}</a> была добавлена новая идея.
+<br/>
+<b><a href="{{ URL_PREFIX }}{{ idea.get_absolute_url }}">{{ idea.title }}</a></b>
+<br/>
+{{ idea.description|safe }}

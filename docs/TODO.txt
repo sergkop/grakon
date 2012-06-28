@@ -1,3 +1,9 @@
+* notifications
+
+
+* automatically add target="_blank" to links in emails
+* template filter to produce html code for emails
+
 * 2 accounts didn't receive email verification letter
 
 * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
@@ -27,8 +33,6 @@
 
 * system of comments
 
-* notifications
-
 * add tabs names to title for entities, image url and description should be specified as context variable
 
 Search
@@ -38,7 +42,7 @@ Search
     * reimplement SearchForm and view
 
 
-
+* on deleting entities profile rating is not updated
 
 * include other factors in users sorting (number of contacts, etc.)
 

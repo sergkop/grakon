@@ -62,7 +62,7 @@ def file_from_template(template_path, dest_path, data):
 # TODO: configure db backups
 # Use 'sudo su postgres', 'dropdb %s' and 'dropuser %s' to clean db; 'deluser --remove-home' to remove linux user
 def init_data_server():
-    ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached']
+    ubuntu_packages = ['postgresql', 'postgresql-client', 'memcached', 'rabbitmq-server']
 
     sudo('aptitude -y install %s' % ' '.join(ubuntu_packages))
 
@@ -204,7 +204,8 @@ def developer_init():
     code_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     env_path = os.path.abspath(os.path.join(code_path, '..', 'env'))
 
-    local('sudo aptitude -y install %s' % ' '.join(UBUNTU_PACKAGES))
+    packages = UBUNTU_PACKAGES + ['rabbitmq-server']
+    local('sudo aptitude -y install %s' % ' '.join(packages))
 
     # Copy settings file
     local('cp %s %s' % (os.path.join(code_path, 'grakon', 'site_settings.py.example'),

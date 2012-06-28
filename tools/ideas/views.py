@@ -8,7 +8,7 @@ from elements.utils import clean_html, entity_post_method
 from elements.views import entity_base_view
 from services.disqus import disqus_page_params
 from tools.ideas.forms import IdeaForm
-from tools.ideas.models import Idea
+from tools.ideas.models import Idea, NewIdeaNotification
 
 class IdeaView(TemplateView):
     template_name = 'ideas/view.html'
@@ -47,6 +47,8 @@ def add_idea(request, entity):
     EntityParticipant.objects.add(idea, request.profile, 'admin')
 
     # TODO: add resources
+
+    NewIdeaNotification.send(idea.id)
 
     entity.clear_cache()
 

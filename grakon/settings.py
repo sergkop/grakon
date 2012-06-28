@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'social_auth',
     'south',
     'tinymce',
+    'djcelery',
 
     # Applications
     'elements',
@@ -112,6 +113,7 @@ INSTALLED_APPS = (
     'tools.ideas',
     'tools.projects',
     'services',
+    'notifications',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -206,3 +208,8 @@ LIST_COUNT = {
     'administered': 5,
     'tools': 5,
 }
+
+#CELERYD_FORCE_EXECV = True
+
+import djcelery
+djcelery.setup_loader()

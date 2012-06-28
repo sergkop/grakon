@@ -18,14 +18,12 @@ from services.models import Email
 # TODO: ability to attach files
 # TODO: check user's subscription settings? (some emails should be sent anyway)
 # TODO: not all tags are allowed in emails (e.g. avoid <p/>) - check and warn
-def send_email(recipient, subject, template, ctx, type, from_email, reply_to=None, to_email=None):
+def send_email(recipient, subject, template, ctx, type, from_email='noreply', reply_to=None, to_email=None):
     """ To send emails to admin account set recipient=None """
     # TODO: generate unsubscribe link with hash (page with confirmation); default place for it in base template
     context = project_settings()
     context.update(ctx)
-    context.update({
-        'recipient': recipient,
-    })
+    context['recipient'] = recipient
     html = render_to_string(template, context)
 
     # TODO: convert html to text

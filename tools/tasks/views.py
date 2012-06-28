@@ -30,12 +30,17 @@ class BaseTaskView(object):
 
         ctx.update(entity_base_view(self, Task, {'id': id}))
 
-        supporters = [idea_info['resources'][provider_id]['provider'] for idea_info in self.info['ideas']['entities']
-                for provider_id in idea_info['resources']]
+        # Get (unique) supporters
+        supporters_by_id = {}
+        for idea_info in self.info['ideas']['entities']:
+            for provider_id in idea_info['resources']:
+                supporters_by_id[provider_id] = idea_info['resources'][provider_id]['provider']
 
-        idea_admins = [idea_admin for idea_info in self.info['ideas']['entities']
-                for idea_admin in idea_info['participants']['admin']['entities']]
-        # TODO: exclude repeating admins and supporters
+        # Get (unique) idea admins
+        idea_admins_by_id = {}
+        for idea_info in self.info['ideas']['entities']:
+            for idea_admin in idea_info['participants']['admin']['entities']:
+                idea_admins_by_id[idea_admin['id']] = idea_admin
 
         # TODO: select_related it needed
         location = ctx['info']['locations']['entities'][0]['instance'] # TODO: looks hacky
@@ -48,8 +53,8 @@ class BaseTaskView(object):
             # TODO: fix it
             'admin': ctx['info']['participants']['admin']['entities'][0],
 
-            'supporters': supporters,
-            'idea_admins': idea_admins,
+            'supporters': supporters_by_id.values(),
+            'idea_admins': idea_admins_by_id.values(),
 
             'RESOURCE_CHOICES': RESOURCE_CHOICES, # TODO: use idea form instead
         })
