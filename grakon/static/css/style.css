@@ -96,13 +96,13 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
 	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 0 .3em .3em}
-		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; width: 7px; margin: 0 0 0 .7em; display: inline-block}
-		.gr-resource-item b {background:url(../images/icons/add.png) 0 -206px no-repeat;  width: 16px; height: 16px; cursor: pointer;  margin: 2px 0 0 .7em; display: inline-block;}
+		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; width: 7px; margin: 0 0 0 .5em; display: inline-block}
+		.gr-resource-item b {background:url(../images/icons/add.png) 0 -206px no-repeat;  width: 13px; height: 16px; cursor: pointer;  margin: 2px 0 0 .5em; display: inline-block;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
 	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
 	.gr-editing {background: url(../images/icons/add.png) 0 -206px no-repeat; cursor: pointer; width: 16px; height: 16px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
-		.gr-editing:hover, .gr-resource-item-active:hover b {background-position: 0 -225px;}
+		.gr-editing:hover, .gr-resource-item-active:hover b {background-position: 0 -262px;}
 		h1 .gr-editing {margin-left: 0;} 
         .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em; min-height: 1.6em;}
         .gr-editor-btn {cursor: pointer; margin-right: 1.5em; line-height: 2.5em; color: #009EC5;}

@@ -53,12 +53,12 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-ideas-list',
+                    sel:        '.gr-follow-button',
                     msg:        '<p>Цитируя классиков: &laquo;Правильно поставленная задача &mdash; половина ее решения&raquo;.</p><p>Поэтому полезные дела на Граконе начинаются с постановки задач.</p>',
-                    elemPos:    'tr',
-                    boxPos:     'tr',
-                    offsetTop:  -35,
-                    offsetLeft: 330,
+                    elemPos:    'tl',
+                    boxPos:     'tl',
+                    offsetTop:  0,
+                    offsetLeft: -30,
                     delay:      3000,
                     onStart:    function(e, b){
                              this.spotlight({
@@ -68,12 +68,12 @@ $(function(){
                     }
                 },
                 {
-                        sel:        '.gr-ideas-list',
+                        sel:        '.gr-follow-button',
                         msg:        '<p>Рассмотрим пример задачи.</p>',
-                        elemPos:    'tr',
-                        boxPos:     'tr',
-                        offsetTop:  -35,
-                        offsetLeft: 330,
+                        elemPos:    'tl',
+                        boxPos:     'tl',
+                        offsetTop:  0,
+                        offsetLeft: -30,
                         delay:      3000,
                         onStart:    function(e, b){
                                 this.spotlight({
@@ -118,8 +118,7 @@ $(function(){
                             });
                             this.pause();
                             $('.gr-add-popup').hide();
-                            $('.gr-ideas-item:first .gr-slider:first').show().removeClass('gr-slider-inactive');
-                            $('.gr-ideas-item:first .gr-source-list-slider').show();
+                            
                     }
                 },
                 {
@@ -136,6 +135,8 @@ $(function(){
                             });
                            $('.gr-ideas-item:first').append('<div id="add_resource_popup" class="gr-small-popup gr-add-popup" style="display: block; top: 30px"><div class="gr-close js-close">&nbsp;</div><div class="ym-clearfix">&nbsp;</div><select class="gr-mb10 gr-mt10" style="width:100%"><option>Волонтер/Время</option></select><textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"></textarea><div align="right" class="gr-mt5"><!--span class="highlighted">100</span--><span id="add_idea_resource_btn" class="highlight">Добавить</span></div></div>');
                             this.pause();
+                            $('.gr-ideas-item:first .gr-slider:first').show().addClass('gr-slider-inactive');
+                            $('.gr-ideas-item:first .gr-source-list-slider').hide();
                     }
                 },
                 {
@@ -156,14 +157,33 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.js-link-to-project:first',
-                    msg:        '<p>Чтобы собрать полный &laquo;комплект&raquo; ресурсов и&nbsp;скоординировать реализацию идеи, создается проект.</p>',
+                    sel:        '.gr-descr',
+                    msg:        '<p>Вернемся на страницу региона</p>',
+                    elemPos:    'tc',
+                    boxPos:     'tc',
+                    delay:      3000
+                }
+                
+            ]},
+            {url: '/location/1/projects', items: [
+                {
+                    sel:        '.gr-follow-button',
+                    msg:        '<p>Когда приходит время претворять идеи в жизнь, создается проект.</p>',
                     elemPos:    'tl',
                     boxPos:     'tl',
-                    delay:      1000,
-                    offsetLeft:  -30,
+                    offsetTop:  70,
+                    offsetLeft: -30,
+                    delay:      3000,
                     onStart:    function(e, b){
-                            this.spotlight();
+                            this.spotlight({
+                                    element: $('.gr-ideas-list')
+                            });
+                            this.spotlight({
+                                    element: $('.ym-column:first .ym-wrapper')
+                            });
+                            this.spotlight({
+                                    element: $('.gr-follow-button')
+                            });
                             this.pause();
                     }
                 }
@@ -175,11 +195,13 @@ $(function(){
                     msg:        '<p>Здесь автор описывает суть и&nbsp;план реализации проекта, определяет дедлайн,</p>',
                     elemPos:    'tr',
                     boxPos:     'tl',
-                    offsetTop:  -33,
                     offsetLeft: 20,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight();
+                            this.spotlight({
+                                    element: $('.ym-column:first .ym-wrapper')
+                            });
                             this.pause();
                     }
                 },
