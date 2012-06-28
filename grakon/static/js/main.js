@@ -201,7 +201,7 @@ function login_dialog_init(){
 }
 
 function select_resources(input){
-    input.attr("data-placeholder", "Выберите навыки и ресурсы");
+    input.attr("data-placeholder", " "); //Выбрать навыки и ресурсы
     if (!input.hasClass("chzn-done"))
         input.chosen();
     input.trigger("liszt:updated");
