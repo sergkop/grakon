@@ -22,26 +22,15 @@
         {% endif %}
 
         <div class="gr-ideas-item">     
-            <h5>Ресурсы:
-                {% if is_admin %}
-                    <i id="resources_edit_btn" class="gr-editing edit-resource-list">&nbsp;</i>
-                {% endif %}
-            </h5>
+            <h5>Ресурсы:</h5>
             <div id="resources_list" class="resources-list">
-                {% for resource in info.resources.none.data %}
-                    <div class="resource-list-item">
-                        <div class="gr-resource-item">{{ resource.title }}</div>
-                        {% if is_admin %}
-                            <i class="gr-editing edit-resource-item" style="display: none;">&nbsp;</i>
-                        {% endif %}
-                        <p class="gr-resource-item-desc">{{ resource.description }}</p>
-                    </div>
-                {% endfor %}
+                {% with resource_editable=is_admin resources=info.resources.none.data vertical="true" %}
+                    {% include "resources/list.html" %}
+                {% endwith %}
             </div>
             {% if is_admin %}
-                <div class="action-btns" style="display: none;">
-                    <span class="gr-editor-btn add-resource-btn highlight">Добавить</span>
-                    <span class="gr-editor-btn cancel-res-editing-btn highlight">Отменить</span>
+                <div class="gr-add gr-idea-selected" style="margin: 0.5em 0 2em 0;">
+                    <span class="gr-add-icon js-add" title="Добавить ресурсы" style="left: 0;">&nbsp;</span>
                 </div>
             {% endif %}
         </div>
@@ -68,3 +57,7 @@
         {% include "resources/add.html" %}
     {% endwith %}
 {% endif %}
+
+{# Попап описания ресурса #}
+{% include "resources/description_popup.html" %}
+

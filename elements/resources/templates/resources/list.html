@@ -1,6 +1,12 @@
+{# шаблон списка ресурсов. При передаче "resource_editable" ресурсы становятся редактируемыми #}
 {% for resource in resources %}
+    {#  описание из аттрибута descr показывается в попапе при наведении  #}
     <span class="gr-resource-item {% if resource.description %}gr-resource-item-active{% endif %}" name="{{ resource.name }}" descr="{{ resource.description }}">
         {{ resource.title }}<i>&nbsp;</i>
         {% if resource_editable %}<b class="js-remove-resource">&nbsp;</b>{% endif %}
     </span>
+    {# если надо сделать список ресурсов вертикальным #}
+    {% if vertical %}
+        <br/>
+    {% endif %}
 {% endfor %}
