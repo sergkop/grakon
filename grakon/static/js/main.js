@@ -11,18 +11,6 @@ $(function(){
         slider.children(".gr-source-list-slider").slideToggle(100);
     });
 
-    // Show/hide popups with descriptions of idea resources
-    $(".gr-resource-item-active")
-            .hover(function(){
-                var label = $(this);
-                var resource_popup = $(".gr-hover-popup");
-                resource_popup.children("div").text(label.attr("descr"));
-                var dx = (label.offset().left+label.width()/2) - (resource_popup.width()/2);
-                var dy = label.offset().top + label.height() + 10;
-                resource_popup.css("top", dy).css("left", dx).show();
-            })
-            .mouseleave(function(){$(".gr-hover-popup").hide();});
-
     // Show/hide projects related to idea
     $(".js-projects").click(function(){
         $(this).parent().parent().children(".js-projects-content").toggle();
@@ -56,56 +44,6 @@ $(function(){
         $(".js-resource-items span").removeClass("gr-resource-item-active");
     });
 
-    // Adding resources to idea
-    $(".js-add").click(function(){
-        if (!PROFILE.username){
-            login_dialog_init();
-            return;
-        }
-
-        var button = $(this);
-        var idea = button.parent().parent().parent().parent();
-
-        var resource_popup = $("#add_resource_popup");
-
-        var select = resource_popup.children("select");
-        if (select.children("option").length == 0){
-            select.append($("<option/>").text("Выбрать ресурс").attr("value", ""));
-            _.each(RESOURCES, function(resource){
-                select.append($("<option/>").text(resource[1]).attr("value", resource[0]));
-            });
-        }
-
-        var dx = (button.offset().left+button.width()/2) - (resource_popup.width()/2);
-        var dy = button.offset().top + button.height() + 10;
-        resource_popup.css("top", dy).css("left", dx).show();
-
-        resource_popup.show();
-
-        //$(".gr-hover-popup").hide();
-        //$(".js-resource-items span").removeClass("gr-resource-item-active");
-
-        $("#add_idea_resource_btn").click(function(){
-            var resource = resource_popup.children("select").val();
-
-            if (resource == ""){
-                alert("Необходимо выбрать ресурс");
-                return;
-            }
-
-            // TODO: don't reload page
-            dialog_post_shortcut(ADD_RESOURCE_URL, {
-                "ct": idea.attr("ct"),
-                "id": idea.attr("instance_id"),
-                "provider": "true",
-                "resource": resource,
-                "description": resource_popup.children("textarea").val()
-            }, function(){
-                $("#add_resource_popup").hide();
-            }, true)();
-        });
-    });
-
     // Closing popups
     $(".js-close").click(function(){
         $(this).parent().hide();
@@ -114,23 +52,6 @@ $(function(){
 
     $(".js-open-add-resource-button").click(function(){
         $("#add_project_resource_popup").show();
-    });
-
-    // Remove resource from idea
-    $(".js-remove-resource").click(function(){
-        var idea = $(this).parent().parent().parent().parent().parent().parent();
-        var label = $(this).parent();
-
-        dialog_post_shortcut(REMOVE_RESOURCE_URL, {
-            "ct": idea.attr("ct"),
-            "id": idea.attr("instance_id"),
-            "resource": label.attr("name"),
-            "provider": "true"
-        }, function(){
-            label.remove();
-            $(".gr-small-popup").hide();
-            alert("Ваш ресурс удален");
-        }, true)();
     });
 
     // Default tipsy settings

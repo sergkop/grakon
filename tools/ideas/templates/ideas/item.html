@@ -22,6 +22,18 @@
                         {% endwith %}
                     </li>
                 {% endfor %}
+                <script>
+                    $(function() {
+                        $(".js-resource-items li").each(function() {
+                            new Resource.ListView({
+                                template: $("#resource-template").html(),
+                                el: $(this),
+                                addBtn: $(".add-resource-btn"),
+                                provider: "true"
+                            });
+                        })
+                    })
+                </script>
             </ul>
         </div>
 

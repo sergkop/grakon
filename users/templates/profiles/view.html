@@ -29,6 +29,16 @@
                 {% endwith %}
             </div>
             {% if is_admin %}
+                <script>
+                    $(function() {
+                        new Resource.ListView({
+                            template: $("#resource-template").html(),
+                            el: $(".resources-list"),
+                            addBtn: $(".add-resource-btn")
+                        });
+                    })
+                </script>
+
                 <div class="gr-add gr-idea-selected" style="margin: 0.5em 0 2em 0;">
                     <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы" style="left: 0;">&nbsp;</span>
                 </div>
