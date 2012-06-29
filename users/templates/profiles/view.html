@@ -23,14 +23,14 @@
 
         <div class="gr-ideas-item">     
             <h5>Ресурсы:</h5>
-            <div id="resources_list" class="resources-list">
+            <div id="resources_list" class="resources-list" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
                 {% with resource_editable=is_admin resources=info.resources.none.data vertical="true" %}
                     {% include "resources/list.html" %}
                 {% endwith %}
             </div>
             {% if is_admin %}
                 <div class="gr-add gr-idea-selected" style="margin: 0.5em 0 2em 0;">
-                    <span class="gr-add-icon js-add" title="Добавить ресурсы" style="left: 0;">&nbsp;</span>
+                    <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы" style="left: 0;">&nbsp;</span>
                 </div>
             {% endif %}
         </div>
@@ -53,9 +53,14 @@
 
 {# Попап окно с формой добавления ресурса #}
 {% if is_admin %}
-    {% with ct=info.ct entity_id=info.instance.id %}
-        {% include "resources/add.html" %}
-    {% endwith %}
+    {% include "resources/add.html" %}
+    {#  шаблон для динамического создания новых ресурсов на странице  #}
+    <div id="resource-template" style="display: none;">
+        {% with resource_editable=is_admin %}
+            {% include "resources/item.html" %}
+        {% endwith %}
+        <br/>
+    </div>
 {% endif %}
 
 {# Попап описания ресурса #}

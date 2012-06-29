@@ -115,6 +115,26 @@ def is_entity_admin(entity, profile):
     else:
         return False
 
+
+def provided_entity_method(func):
+    """
+    Декоратор для entity_post_method view. Пытается достать провайдера и проверить из запроса.
+    Посылает провайдер 3м аргументов в декорированный метод
+    """
+    def wrapper(request, entity):
+
+        if request.POST.get('provider')=='true':
+            provider = request.profile
+        else:
+            if not is_entity_admin(entity, request.profile):
+                return HttpResponse(u'У вас нет прав на выполнение этой операции')
+            provider = None
+
+        return func(request, entity, provider)
+    return wrapper
+
+
+
 def check_permissions(func):
     """ Check if user has permissions to modify entity """
     def new_func(request, entity):
