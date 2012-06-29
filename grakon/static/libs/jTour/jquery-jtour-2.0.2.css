@@ -112,6 +112,10 @@ html, body {
     .jt-spotlit.gr-add-icon {box-shadow: none; position: absolute !important;}
     .jt-spotlit.js-link-to-project, h1.jt-spotlit {padding: 1% 2% 1%; margin: -1% -2% 1%; width: 104%;}
     .jt-spotlit.gr-slider .gr-add-icon {background-image:url(../../images/icons/add-2-jtour.png) !important; cursor: default !important;}
+    #tour-content h2 {padding: .5em;}
+    .jt-spotlit .gr-slider, .jt-spotlit .gr-bb-grey-lt, .jt-spotlit .gr-ideas-item {width: 580px;}
+    .jt-spotlit .gr-resource-needs {width: 230px !important;}
+    
     
 
 .jt-spotlit.super {

@@ -384,8 +384,8 @@
 			var tB = $('<div class="jtour box"/>'),
 				main = $('<div class="jtour main"/>'),
 				cntrls = $('<div class="jtour controls"/>');
-				cntrls_ar = ['previous', 'play-pause', 'stop', 'next'];
-				cntrls_ke = ['Previous Item: Up/Left Arrow', 'Play/Pause: Spacebar', 'Stop: Esc', 'Next Item: Right/Down Arrow'];
+				cntrls_ar = ['Назад', 'Начать/Пауза', 'Выйти', 'Вперед'];
+				cntrls_ke = ['Назад', 'Начать/Пауза: Spacebar', 'Выйти: Esc', 'Вперед'];
 			main.append('<h1 class="jtour heading">jTour Demo</h1>')
 				.append('<div class="message"><p>Lorem ipsum.</p></div>')
 				.append('<div class="jtour timer"/>');

@@ -38,17 +38,19 @@
     <div class="gr-mt10 gr-bb-grey-lt">&nbsp;</div>
 </div>
 
-<a name="ideas"></a>
-<h2>Идеи</h2>
+<div id="tour-content">
+    <a name="ideas"></a>
+    <h2>Идеи</h2>
 
-<div class="gr-ideas-list">
-    {% for info in ideas %}
-        {% include "ideas/item.html" %}
-    {% endfor %}
+    <div class="gr-ideas-list">
+        {% for info in ideas %}
+            {% include "ideas/item.html" %}
+        {% endfor %}
 
-    {% include "resources/description_popup.html" %}
+        {% include "resources/description_popup.html" %}
 
-    {% include "ideas/link_to_project.html" %}
+        {% include "ideas/link_to_project.html" %}
+    </div>
 </div>
 
 {% if request.user.is_authenticated %}

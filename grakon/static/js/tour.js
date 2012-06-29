@@ -25,11 +25,11 @@ $(function(){
             ]}, 
             {url: '/location/1/tasks', items: [
                 {
-                    sel:        '.gr-wrapper',
+                    sel:        '.ym-column .ym-wrapper:first',
                     msg:        '<p>Основная структурная единица проекта&nbsp;&mdash; регион.</p><p>На&nbsp;его странице выводится вся существующая статистика: количество задач, проектов и&nbsp;участников.</p><p>Регион по&nbsp;умолчанию&nbsp;&mdash; Россия.</p>',
-                    elemPos:    'tc',
+                    elemPos:    'bc',
                     boxPos:     'tc',
-                    offsetTop:  200,
+                    offsetTop:  30,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -39,11 +39,11 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-wrapper',
+                    sel:        '.gr-breadcrumbs',
                     msg:        '<p>Вы можете уточнить регион с&nbsp;помощью этого меню.</p>',
-                    elemPos:    'tc',
+                    elemPos:    'bc',
                     boxPos:     'tc',
-                    offsetTop:  80,
+                    offsetTop:  10,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -69,7 +69,7 @@ $(function(){
                 },
                 {
                         sel:        '.gr-follow-button',
-                        msg:        '<p>Рассмотрим пример задачи.</p>',
+                        msg:        '<p>Рассмотрим пример задачи.</p><p>Перейти на нее можно, нажав на название.</p>',
                         elemPos:    'tl',
                         boxPos:     'tl',
                         offsetTop:  0,
@@ -85,11 +85,10 @@ $(function(){
             ]}, 
             {url: '/task/1', items: [
                 {
-                    sel:        '.gr-descr',
-                    msg:        '<p>Задачей может быть любая проблема или инициатива, относящаяся к жизни граждан.</p>',
-                    elemPos:    'bс',
-                    boxPos:     'bс',
-                    offsetTop:  120,
+                    sel:        '.gr-ideas-list',
+                    msg:        '<p>Задачей может быть любая общественная проблема или инициатива.</p>',
+                    elemPos:    'tс',
+                    boxPos:     'tc',
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -106,12 +105,12 @@ $(function(){
                     msg:        '<p>Для решения задач пользователи предлагают идеи.</p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
-                    offsetTop:  -190,
+                    offsetTop:  -157,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight();
                             this.spotlight({
-                                    element: $('.gr-follow-button')
+                                    element: $('#tour-content')
                             });
                             this.spotlight({
                                     element: $('.gr-add-icon')
@@ -123,7 +122,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-ideas-list',
-                    msg:        '<p>Популярность идеи оценивается по&nbsp;количеству предложенных пользователями ресурсов.</p><p>Любой пользователь может поддержать существующую идею ресурсом, заполнив форму слева.</p>',
+                    msg:        '<p>Популярность идеи оценивается по&nbsp;количеству ресурсов, предложенных пользователями для ее реализации.</p><p>Любой участник может поддержать добавленную идею ресурсом, нажав на плюс напротив идеи и заполнив простую форму слева.</p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
                     offsetTop:  10,
@@ -168,7 +167,7 @@ $(function(){
             {url: '/location/1/projects', items: [
                 {
                     sel:        '.gr-follow-button',
-                    msg:        '<p>Когда приходит время претворять идеи в жизнь, создается проект.</p>',
+                    msg:        '<p>Когда приходит время претворять идеи в&nbsp;жизнь, создается проект.</p><p>Список всех проектов региона можно посмотреть на соответствующей вкладке.</p><p>Рассмотрим подробнее страницу проекта.</p>',
                     elemPos:    'tl',
                     boxPos:     'tl',
                     offsetTop:  70,
@@ -192,7 +191,7 @@ $(function(){
             {url: '/project/1', items: [
                 {
                     sel:        '.gr-descr',
-                    msg:        '<p>Здесь автор описывает суть и&nbsp;план реализации проекта, определяет дедлайн,</p>',
+                    msg:        '<p>Здесь автор описывает суть и&nbsp;план реализации проекта, определяет дедлайн...</p>',
                     elemPos:    'tr',
                     boxPos:     'tl',
                     offsetLeft: 20,
@@ -207,7 +206,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-side-item',
-                    msg:        '<p>перечисляет необходимые ресурсы.</p><p>Пользователи могут присоединиться к&nbsp;проекту, предложив какой-либо ресурс.</p>',
+                    msg:        '<p>перечисляет необходимые ресурсы.</p><p>Пользователи могут присоединиться к&nbsp;проекту, предложив один из них.</p><p>Для этого достаточно нажать на прямоугольник ресурса и добавить краткое пояснение.</p>',
                     elemPos:    'tr',
                     boxPos:     'tr',
                     offsetTop:  -25,
@@ -220,7 +219,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-descr',
-                    msg:        '<p align="center"><big>Когда все ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
+                    msg:        '<p align="center"><big>Когда вся команда собрана и ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
                     delay:      3000

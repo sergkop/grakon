@@ -354,8 +354,8 @@
 		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2) inset;
 		color: #444;
 		color: rgba(0,0,0,.8);
-		padding: 1.4286em;
-		margin: 1.5em 0 0 0;
+		padding: 1.4em;
+		margin: 0;
 	}
 
 	.box > *:first-child {
