@@ -86,9 +86,10 @@ $(function(){
             {url: '/task/1', items: [
                 {
                     sel:        '.gr-ideas-list',
-                    msg:        '<p>Задачей может быть любая общественная проблема или инициатива.</p>',
+                    msg:        '<p>Задачей может быть любая общественная проблема или&nbsp;инициатива.</p>',
                     elemPos:    'tс',
                     boxPos:     'tc',
+                    offsetTop:  -15,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -101,16 +102,16 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-ideas-list',
+                    sel:        '#tour-content',
                     msg:        '<p>Для решения задач пользователи предлагают идеи.</p>',
-                    elemPos:    'tc',
-                    boxPos:     'tc',
-                    offsetTop:  -157,
+                    elemPos:    'tr',
+                    boxPos:     'tl',
+                    offsetLeft: 10,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight();
                             this.spotlight({
-                                    element: $('#tour-content')
+                                    element: $('.gr-ideas-list')
                             });
                             this.spotlight({
                                     element: $('.gr-add-icon')
@@ -122,7 +123,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-ideas-list',
-                    msg:        '<p>Популярность идеи оценивается по&nbsp;количеству ресурсов, предложенных пользователями для ее реализации.</p><p>Любой участник может поддержать добавленную идею ресурсом, нажав на плюс напротив идеи и заполнив простую форму слева.</p>',
+                    msg:        '<p>Популярность идеи оценивается по&nbsp;количеству ресурсов, предложенных пользователями для ее реализации.</p><p>Любой участник может поддержать добавленную идею ресурсом, нажав на&nbsp;плюс напротив идеи и заполнив простую форму слева.</p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
                     offsetTop:  10,
@@ -142,8 +143,8 @@ $(function(){
                     sel:        '.gr-ideas-item:first h3',
                     msg:        '<p>По клику на счетчик ресурсов открывается более подробная информация о пользователях, поддержавших идею.</p>',
                     elemPos:    'bc',
-                    boxPos:     'bc',
-                    offsetTop:  150,
+                    boxPos:     'tc',
+                    offsetTop:  20,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -156,9 +157,9 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-descr',
+                    sel:        '.gr-ideas-item:first h3',
                     msg:        '<p>Вернемся на страницу региона</p>',
-                    elemPos:    'tc',
+                    elemPos:    'bc',
                     boxPos:     'tc',
                     delay:      3000
                 }
@@ -170,7 +171,7 @@ $(function(){
                     msg:        '<p>Когда приходит время претворять идеи в&nbsp;жизнь, создается проект.</p><p>Список всех проектов региона можно посмотреть на соответствующей вкладке.</p><p>Рассмотрим подробнее страницу проекта.</p>',
                     elemPos:    'tl',
                     boxPos:     'tl',
-                    offsetTop:  70,
+                    offsetTop:  75,
                     offsetLeft: -30,
                     delay:      3000,
                     onStart:    function(e, b){
@@ -194,7 +195,8 @@ $(function(){
                     msg:        '<p>Здесь автор описывает суть и&nbsp;план реализации проекта, определяет дедлайн...</p>',
                     elemPos:    'tr',
                     boxPos:     'tl',
-                    offsetLeft: 20,
+                    offsetTop:  20,
+                    offsetLeft: 10,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight();
@@ -206,11 +208,10 @@ $(function(){
                 },
                 {
                     sel:        '.gr-side-item',
-                    msg:        '<p>перечисляет необходимые ресурсы.</p><p>Пользователи могут присоединиться к&nbsp;проекту, предложив один из них.</p><p>Для этого достаточно нажать на прямоугольник ресурса и добавить краткое пояснение.</p>',
-                    elemPos:    'tr',
+                    msg:        '<p>перечисляет необходимые ресурсы.</p><p>Пользователи могут присоединиться к&nbsp;проекту, предложив один из них.</p><p>Для этого достаточно нажать на прямоугольник ресурса и&nbsp;добавить краткое пояснение.</p>',
+                    elemPos:    'tl',
                     boxPos:     'tr',
-                    offsetTop:  -25,
-                    offsetLeft: -300,
+                    offsetLeft: -50,
                     delay:      3000,
                     onStart:    function(e, b){
                             this.spotlight();
@@ -219,7 +220,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-descr',
-                    msg:        '<p align="center"><big>Когда вся команда собрана и ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
+                    msg:        '<p align="center"><big>Когда вся команда собрана и&nbsp;ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
                     delay:      3000
