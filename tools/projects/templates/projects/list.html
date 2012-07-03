@@ -16,25 +16,28 @@
                 </div>
 
                 <div class="gr-info-bar">
-                    {% include "elements/comments.html" %}
+                    <div class="gr-fl">     
+                        {% include "elements/comments.html" %}
 
-                    <span class="gr-bullet">&nbsp;</span>
-                    <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
-
-                    {% if request.user.is_authenticated %}
                         <span class="gr-bullet">&nbsp;</span>
-                        {% if info.instance.id in request.profile_info.projects.follower.ids %}
-                            {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
-                                {% include "participants/participate_button.html" %}
-                            {% endwith %}
-                        {% else %}
-                            {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
-                                {% include "participants/participate_button.html" %}
-                            {% endwith %}
-                        {% endif %}
-                    {% endif %}
+                        <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
 
-                    <span class="gr-fr dimmed">{{ info.instance.add_time }}</span>
+                        {% if request.user.is_authenticated %}
+                            <span class="gr-bullet">&nbsp;</span>
+                            {% if info.instance.id in request.profile_info.projects.follower.ids %}
+                                {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
+                                    {% include "participants/participate_button.html" %}
+                                {% endwith %}
+                            {% else %}
+                                {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
+                                    {% include "participants/participate_button.html" %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <div class="gr-fr dimmed">{{ info.instance.add_time }}</div>
+                    <div class="ym-clearfix">&nbsp;</div>
                 </div>
                 <div class="gr-slider js-follow-content">
                     <div class="gr-close js-slide-close">&nbsp;</div>

@@ -32,7 +32,7 @@
 
 	.jquery_tabs ul.tabs-list li a {
 		line-height: 1.5em;
-		padding: 1.2em 2em .8em;
+		padding: 1.2em 2em 1em;
 	}
 	
 	.jquery_tabs ul.tabs-list li.current a {
@@ -79,6 +79,8 @@
 
 	.jquery_tabs ul.tabs-list li.current {
         background-color: #fff;
+        border: 2px solid #e7e7e7;
+        border-width: 2px 2px 0;
 	}
 
 	.jquery_tabs ul.tabs-list li.current:hover {

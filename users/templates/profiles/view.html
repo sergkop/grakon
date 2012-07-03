@@ -23,11 +23,6 @@
 
         <div class="gr-ideas-item">     
             <h5>Ресурсы:</h5>
-            <div id="resources_list" class="resources-list" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
-                {% with resource_editable=is_admin resources=info.resources.none.data vertical="true" %}
-                    {% include "resources/list.html" %}
-                {% endwith %}
-            </div>
             {% if is_admin %}
                 <script>
                     $(function() {
@@ -39,10 +34,15 @@
                     })
                 </script>
 
-                <div class="gr-add gr-idea-selected" style="margin: 0.5em 0 2em 0;">
-                    <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы" style="left: 0;">&nbsp;</span>
+                <div class="gr-add gr-idea-selected">
+                    <span class="gr-add-icon add-resource-btn gr-add-profile" title="Добавить ресурсы">&nbsp;</span>
                 </div>
             {% endif %}
+            <div id="resources_list" class="resources-list gr-mb10" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
+                {% with resource_editable=is_admin resources=info.resources.none.data vertical="true" %}
+                    {% include "resources/list.html" %}
+                {% endwith %}
+            </div>
         </div>
 
        <div class="gr-ideas-item">     
