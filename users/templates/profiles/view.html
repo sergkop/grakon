@@ -2,12 +2,7 @@
     <div class="gr-ideas-list">
         {% if profile.intro or is_admin %}
             <div class="gr-ideas-item">
-                <h5 class="gr-mt0">Кто я такой:
-                    {% with field="intro" text=profile.intro %}
-                        {% if is_admin %}
-                            {% include "elements/edit_button.html" %}
-                        {% endif %}
-                </h5>
+                <h5 class="gr-mt0">Кто я такой:{% with field="intro" text=profile.intro %}{% if is_admin %}{% include "elements/edit_button.html" %}{% endif %}</h5>
                     {% include "elements/text_block.html" %}
                 {% endwith %}
             </div>

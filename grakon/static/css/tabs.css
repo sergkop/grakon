@@ -16,8 +16,9 @@
 
 @media screen, projection {
 
+
 	.jquery_tabs {
-		margin:0 0 1em;
+		margin:2em 0 1em;
 	}
 
 	.jquery_tabs ul.tabs-list {
@@ -25,19 +26,15 @@
 		font-size:.9em;
 		line-height:1.5em;
 		list-style-type:none;
-		margin: 2em 0 0 0;
+		margin: 0;
 		position:relative;
 		z-index:1;
 	}
 
 	.jquery_tabs ul.tabs-list li a {
 		line-height: 1.5em;
-		padding: 1.2em 2em 1em;
+		padding: .8em 1.5em .6em;
 	}
-	
-	.jquery_tabs ul.tabs-list li.current a {
-        padding-bottom: 1em;        
-    }
 	
 	.jquery_tabs ul.tabs-list li.wall-tab a {
         padding-right: .3em;
@@ -74,23 +71,13 @@
 		display:inline;
 		float:left;
 		margin:0 .3em 0 0;
+        padding: 2px 2px 0;
 	}
 	
 
 	.jquery_tabs ul.tabs-list li.current {
-        background-color: #fff;
-        border: 2px solid #e7e7e7;
-        border-width: 2px 2px 0;
+        background-color: #e7e7e7;
 	}
-
-	.jquery_tabs ul.tabs-list li.current:hover {
-        background-color: #fff;
-    }
-	
-	 .jquery_tabs ul.tabs-list li.current:hover a {
-     padding-bottom: 1em;  
-    }
-	
 	
 	.jquery_tabs ul.tabs-list li a {
 		display:block;
@@ -111,10 +98,7 @@
         background-color: #E0E2E6;
     }
     
-	.jquery_tabs ul.tabs-list li.current a,
-	.jquery_tabs ul.tabs-list li.current a:focus,
-	.jquery_tabs ul.tabs-list li.current a:hover,
-	.jquery_tabs ul.tabs-list li.current a:active {
+	.jquery_tabs ul.tabs-list li.current a{
 		background-color: #fff;
 		font-weight: bold;
 		border-bottom:0 none;
