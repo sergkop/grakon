@@ -238,3 +238,19 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 /* JS стили */
 
 .js-follow-content, .js-projects-content, .js-resource-items, .gr-small-popup {display: none;}
+
+
+
+/* Комментарии */
+
+.gr-add-comment {margin-bottom: .7em}
+.gr-add-comment td {padding: 0;}
+.gr-add-comment td .ym-button {margin: 0 0 0 1em;}
+.gr-add-comment textarea {font-size: 1.2em; width: 100%}
+.gr-comment {padding: 10px 0; font-size: 1.2em;}
+.gr-child-comments .gr-comment {font-size: 1em;} 
+.gr-comment .gr-info-bar {padding: 0 0 1em; font-size: .85em; border-bottom: 1px solid #eee;}   
+    .gr-comment .gr-info-bar .highlight {cursor: pointer;}
+    .gr-comment .gr-info-bar .gr-add-comment {margin-bottom: 0;}    
+.gr-child-comments {margin-left: 44px;}
+input:focus, textarea:focus {border-color: rgba(82, 168, 236, 0.8); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);}

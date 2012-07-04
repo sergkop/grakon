@@ -4,9 +4,6 @@ from notifications.models import NotificationRecipient, notify_user
 
 @task
 def send_notifications():
-    logger = send_notifications.get_logger()
-    logger.info("sending")
-
     recipient_ids = NotificationRecipient.objects.filter(is_read=False, email_sent=False) \
             .distinct().values_list('recipient', flat=True)
 

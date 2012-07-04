@@ -50,9 +50,15 @@ class EntityCommentManager(BaseEntityPropertyManager):
         if self.model.feature not in type(entity).features:
             return
 
-        # TODO: add parent if provided
+        parent = None
+        if parent_id:
+            try:
+                parent = self.get(id=parent_id)
+            except self.model.DoesNotExist:
+                pass
+
         self.create(content_type=ContentType.objects.get_for_model(type(entity)),
-                entity_id=entity.id, person=profile, comment=comment)
+                entity_id=entity.id, person=profile, comment=comment, parent=parent)
 
         entity.clear_cache()
         profile.clear_cache()

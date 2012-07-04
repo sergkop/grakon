@@ -115,7 +115,6 @@ def is_entity_admin(entity, profile):
     else:
         return False
 
-
 def provided_entity_method(func):
     """
     Декоратор для entity_post_method view. Пытается достать провайдера и проверить из запроса.
@@ -132,8 +131,6 @@ def provided_entity_method(func):
 
         return func(request, entity, provider)
     return wrapper
-
-
 
 def check_permissions(func):
     """ Check if user has permissions to modify entity """

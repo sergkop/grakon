@@ -1,5 +1,12 @@
-* notifications
+Notifications
+    * notifications about adding resources
+    * configure celery to perform tasks periodically
+    * run celery as a daemon
 
+* unsubscribe from letters + settings
+
+
+* in ajax ports make sure that entity content type has allowed value
 
 * automatically add target="_blank" to links in emails
 * template filter to produce html code for emails
@@ -48,6 +55,7 @@ Search
 
 * statistics for last day, week, month in dashboard is wrong
 * stats for read/unread emails
+* some messages are not sent
 
 * update init_database
 * add more content to init_database
@@ -72,8 +80,6 @@ Search
 * sorting lists by popularity, date (choose sorting type)
 
 * drop yandex metrika?
-
-* unsubscribe from letters
 
 * drop idea names
 

@@ -8,8 +8,11 @@ _.each(RESOURCES, function(resource){
 var GET_SUBREGIONS_URL = "{% url get_subregions %}";
 var REMOVE_LOCATION_URL = "{% url remove_location %}";
 var UPDATE_TEXT_FIELD_URL = "{% url update_text_field %}";
+
 var ADD_RESOURCE_URL = "{% url add_resource %}";
 var REMOVE_RESOURCE_URL = "{% url remove_resource %}";
+
+var ADD_COMMENT_URL = "{% url add_comment %}";
 
 // TODO: use values from settings.py
 // TODO: hide textarea while widget is loading

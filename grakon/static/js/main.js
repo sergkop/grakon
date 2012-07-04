@@ -59,6 +59,54 @@ $(function(){
     $.fn.tipsy.defaults.delayOut = 200;
     $.fn.tipsy.defaults.fade = true;
     $.fn.tipsy.defaults.opacity = 0.6;
+
+    // Comments
+    // TODO: add send event to the top textarea
+    $(".js-comment-response").click(function(){
+        var btn = $(this);
+        // TODO: only show for logged in users
+        if (btn.siblings("table").length==0){
+            // Generate html
+            var field_html = Mustache.render("{{>comment_field}}", {}, PARTIALS);
+            var field = $(field_html);
+            btn.parent().append(field);
+
+            // Bind click event for send button
+            $(".ym-button", field).click(function(){
+                var comment_div = btn.parent().parent(),
+                    entity_id = comment_div.attr("e_id"),
+                    ct_id = comment_div.attr("ct"),
+                    comment = $("textarea", field).val();
+
+                // TODO: get id of new comment
+                // TODO: comment field should be non-empty
+                dialog_post_shortcut(ADD_COMMENT_URL, {
+                    id: entity_id,
+                    ct: ct_id,
+                    parent: comment_div.attr("comment_id"),
+                    comment: comment
+                },
+                function(){
+                    var comment_html = Mustache.render("{{>comment_item}}", {
+                        comment: {
+                            entity_id: entity_id,
+                            ct_id: ct_id,
+                            time: "", // TODO: get it
+                            id: "",
+                            comment: comment
+                        }
+                    }, PARTIALS);
+
+                    // TODO: add click event for respond button
+                    btn.parent().next().prepend(comment_html);
+
+                    $("textarea", field).val("");
+                    btn.siblings("table").hide();
+                })();
+            });
+        } else
+            btn.siblings("table").toggle();
+    });
 });
 
 function get_cookie(name){

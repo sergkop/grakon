@@ -15,6 +15,7 @@ def add_comment(request, entity):
         except ValueError, EntityComment.DoesNotExist:
             return HttpResponse(u'Родительский комментарий указан неверно')
 
+        # TODO: also check content type
         if parent_comment.entity_id != entity.id:
             return HttpResponse(u'На этот комментарий ответить нельзя')
     else:

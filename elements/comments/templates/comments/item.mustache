@@ -1,15 +1,15 @@
 <div class="gr-comment" comment_id="{{comment.id}}" ct="{{comment.ct_id}}" e_id="{{comment.entity_id}}">
-    <div><a href="{{{author.url}}}">{{author.full_name}}</a></div>
+    <div class="gr-mb3"><a href="{{{author.url}}}">{{author.full_name}}</a></div>
 
     <p>{{comment.comment}}</p>
 
-    <div>
-        <span class="dimmed">{{comment.time}}</span>
+    <div class="gr-info-bar">
+        <span class="js-comment-response gr-pseudolink">Ответить</span>
 
-        <span class="gr-fr js-comment-response">Ответить</span>
+        <span class="gr-fr dimmed">{{comment.time}}</span>
     </div>
 
-    <div class="gr-child-comments" style="margin-left:2em;">
+    <div class="gr-child-comments">
         {{#children}}
             {{>comment_item}}
         {{/children}}
