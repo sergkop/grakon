@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^remove_participant$', 'elements.participants.views.remove_participant', name='remove_participant'),
 
     url(r'^add_resource$', 'elements.resources.views.add_resource', name='add_resource'),
+    url(r'^update_resource$', 'elements.resources.views.update_resource', name='update_resource'),
     url(r'^remove_resource$', 'elements.resources.views.remove_resource', name='remove_resource'),
 
     url(r'^update_text_field$', 'elements.views.update_text_field', name='update_text_field'),

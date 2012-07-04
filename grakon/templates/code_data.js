@@ -10,6 +10,7 @@ var REMOVE_LOCATION_URL = "{% url remove_location %}";
 var UPDATE_TEXT_FIELD_URL = "{% url update_text_field %}";
 
 var ADD_RESOURCE_URL = "{% url add_resource %}";
+var UPDATE_RESOURCE_URL = "{% url update_resource %}";
 var REMOVE_RESOURCE_URL = "{% url remove_resource %}";
 
 var ADD_COMMENT_URL = "{% url add_comment %}";

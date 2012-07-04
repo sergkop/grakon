@@ -1,40 +1,9 @@
 var Resource = {
-    // Модель ресурса
-    Model: Backbone.Model.extend({
-        defaults: {
-            value: "",
-            title: "",
-            desc:  ""
-        },
 
-        initialize: function() {
-            // ошибки валидации пока валим в консоль
-            this.bind("error", function(model, error) {
-                console.log( "Error: " + error )
-            })
-        },
-
-        // на клиенте валидируются длина описания и наличие id ресурса
-        validate: function(attributes) {
-            if ( attributes.desc && attributes.desc.length > 140 ) {
-                return "Описание ресурса должно быть короче 140 символов"
-            }
-
-            // если id = 0, или не число
-            if (+( attributes.value )){
-                return "Не верный id ресурса"
-            }
-        }
-    }),
-
-    /*
-     * View, отрисовывающий плашку ресурса
-     */
+    /* View, отрисовывающий плашку ресурса */
     ItemView: Backbone.View.extend({
         initialize: function(){
-            this.model = this.options.model;
-            this.parent = this.options.parent;
-
+            _.extend(this, _.pick(this.options, 'parent', 'provider'))
         },
 
         events: {
@@ -42,9 +11,8 @@ var Resource = {
         },
 
         renderEditWindow: function() {
-            var
-                popup = $("#add_resource_popup"),
-                position;
+            // перед показом окна -- обновляем список уже назначенных ресурсов
+            this.existingResources = this.parent.existingResources;
 
             //  отбивка для не аутентифицированных
             if (!PROFILE.username){
@@ -52,300 +20,284 @@ var Resource = {
                 return;
             }
 
-            position = {
+            // координаты для попапа
+            var position = {
                 top: this.$el.offset().top,
                 left: (this.$el.offset().left+this.$el.width()*1.5)
             };
 
             var popupView = new Resource.PopupView({
-                el: popup,
                 ct: this.parent.ct,
                 entity_id: this.parent.entity_id,
                 mode: "edit",
-                provider: this.options.provider,
+                provider: this.provider,
+                position: position,
                 callback: this.updateLayout,
                 removeCallback: this.remove,
                 caller: this
             });
 
-            popupView.configure(this.model, position);
             popupView.show();
         },
 
 
         fetchFromHTML: function() {
-            this.model.set({
+            this.obj = {
                 title:  $.trim(this.$el.text()),
                 value: this.$el.attr("name"),
-                desc:  this.$el.attr("descr")
-            })
+                descr:  this.$el.attr("descr")
+            };
+
+            this.parent.existingResources.push(this.$el.attr("name"));
         },
 
         updateLayout: function(obj) {
 
-            this.model.set({
+            this.obj = {
                 value: obj.resource,
                 title: obj.title,
-                desc:  obj.description
-            });
+                descr: obj.description
+            };
+
+            this.parent.existingResources.push(this.obj.value);
 
             this.render()
         },
 
         render: function() {
-            this.$el.prepend(this.model.get("title"));
-            this.$el.attr("name", this.model.get("value"));
+            $(".gr-resource-title", this.$el).text(this.obj.title);
+            this.$el.attr("name", this.obj.value);
 
-            if (this.model.get("desc")) {
+            if (this.obj.descr) {
                 this.$el.addClass("gr-resource-item-active");
-                this.$el.attr("descr", this.model.get("desc"));
+                this.$el.attr("descr", this.obj.descr);
             }
         },
 
         remove: function() {
-            this.$el.remove();
-            $("br + br", this.parent.$el).remove()
+            this.parent.existingResources = _.without(this.parent.existingResources, this.obj.value);
+            this.$el.remove()
         }
     }),
 
-
-    /*
-     *View, отвечающий за список ресурсов
+    /** View, отвечающий за список ресурсов
+     * Параметры:
+     * @param el        Элемент списка на странице
+     * @param addBtn    Элемент списка на странице
+     * @param popupTpl  Строка-шаблон попап-окна
+     * @param itemTpl   Строка-шаблон для создания новых элементов
+     * @param [provider="true"] Необязательный флаг провайдера
      */
     ListView: Backbone.View.extend({
         initialize: function(){
             var view = this;
 
-            this.template = this.options.template;
-            this.getEntityParams();
+            _.extend(this, _.pick(this.options, 'provider', 'addBtn', 'itemTpl'));
 
-            this.options.addBtn.click(function(){
-                view.renderAddWindow();
-            });
+            this.existingResources = [];
+            this.getEntityParams(this.$el);
 
+            // показ попапа для добавления ресурса
+            this.addBtn.click( $.proxy( this.renderAddWindow, this ) );
+
+
+            // для всех существующих ресурсов создаются вьюшки
             $(".gr-resource-item", this.$el).each(function() {
-
                 new Resource.ItemView({
                     el: $(this),
-                    model: new Resource.Model(),
                     parent: view,
-                    provider: view.options.provider
+                    provider: view.provider
                 }).fetchFromHTML();
             })
-
         },
 
+        /* находим content_type и entity_instance_id либо в аттрибутах списка,
+         * либо в атрибутах контейнера списка */
+        getEntityParams: function(elem) {
+            var ct = elem.attr("ct"),
+                entity_id = elem.attr("instance_id");
 
-        events: {
-        //    "click .add-resource-btn": "renderAddWindow"
-        },
-
-        /*
-         * находим content_type и entity_instance_id либо в аттрибутах списка, либо в атрибутах
-         * контейнера списка
-         */
-        getEntityParams: function() {
-            this.ct = this.$el.attr("ct");
-            this.entity_id = this.$el.attr("instance_id");
-
-            if (!this.ct || !this.entity_id) {
-                var cont = this.$el.closest("[ct][instance_id]");
-                this.ct = cont.attr("ct");
-                this.entity_id = cont.attr("instance_id");
+            if (ct && entity_id) {
+                this.ct = ct;
+                this.entity_id = entity_id
+            } else {
+                var cont = this.$el.closest("[ct][instance_id]"); // ближайший контейнер с обоими аттрибутами
+                if (cont) {
+                    this.getEntityParams(cont)
+                } else {
+                    console.log('ct & instance_id not found')
+                }
             }
-
         },
 
         updateLayout: function(obj) {
-
-            $(".gr-resource-item", this.$el).last().parent().append(this.template);
+            $(".gr-resource-item", this.$el).last().parent().append(this.itemTpl);
 
             var newItem = $(".gr-resource-item", this.$el).last();
 
             new Resource.ItemView({
                 el: newItem,
-                model: new Resource.Model(),
                 parent: this
             }).updateLayout(obj)
         },
 
         renderAddWindow: function(){
-            var elem = this.options.addBtn,
-                newItem = new Resource.Model(),
-                popup = $("#add_resource_popup"),
-                position, ct, entity_id;
-
             //  отбивка для не аутентифицированных
             if (!PROFILE.username){
                 login_dialog_init();
                 return;
             }
 
-            position = {
-                top: elem.offset().top,
-                left: (elem.offset().left+elem.width()/2) - (popup.width()/2)
+            // координаты попапа
+            var position = {
+                top: this.addBtn.offset().top,
+                left: (this.addBtn.offset().left+this.addBtn.width() + 22)
             };
 
 
-
             var popupView = new Resource.PopupView({
-                el: popup,
                 ct: this.ct,
                 entity_id: this.entity_id,
-                provider: this.options.provider,
+                provider: this.provider,
                 mode: "new",
+                position: position,
                 callback: this.updateLayout,
                 caller: this
             });
 
-            popupView.configure(newItem, position);
             popupView.show();
         }
     }),
 
 
-    /*
-     *View, окна добавления / редактирования ресурса
-     */
+    /* View, окна добавления / редактирования ресурса */
     PopupView: Backbone.View.extend({
 
+        template:   '<div id="{{popup_id}}" class="gr-small-popup gr-add-popup">' +
+                        '<span class="popup-action-label">{{actionLabel}}</span>' +
+                        '<div class="gr-close">&nbsp;</div>' +
+                        '<select class="gr-mb10 gr-mt10" style="width:100%">' +
+                            '{{#options}}' +
+                                '<option value="{{value}}" {{selected}}>{{title}}</option>' +
+                            '{{/options}}' +
+                        '</select>' +
+                        '<textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)">' +
+                            '{{descr}}' +
+                        '</textarea>' +
+                        '<div align="right" class="gr-mt5">' +
+                            '{{#buttons}}' +
+                                '&nbsp;<span class="{{class}} highlight">{{text}}</span>' +
+                            '{{/buttons}}' +
+                        '</div>' +
+                    '</div>',
+
         initialize: function() {
+            this.el = "add_resource_popup";
 
-            this.params = {
-                "ct": this.options.ct,
-                "id": this.options.entity_id
-            };
+            $("#" + this.el).remove();
 
-            if (this.options.provider) {
-                this.params.provider = this.options.provider
-            }
+            this.params = {};
+            // параметры для отправки на сервер
+            _.extend(this.params, _.pick(this.options, 'ct', 'entity_id', 'provider'));
+            // параметры окна
+            _.extend(this, _.pick(this.options, 'mode', 'position', 'callback', 'removeCallback', 'caller'))
 
-            this.mode  = (this.options.mode === "edit") ? "edit" : "new"
-            this.callback = this.options.callback;
-            this.caller   = this.options.caller;
-            this.clearPopupWindow();
+            this.createNew();
+            this.setListeners();
+        },
 
-            $(".add_resource_btn", this.$el).on("click", $.proxy(this.savePopupData, this));
-            //$(".edit_resource_btn", this.$el).on("click", $.proxy(this.savePopupData, this));
+        setListeners: function() {
+            $(".gr-close", this.$el).on("click", $.proxy(this.remove, this)); // закрыть окно
+
+            // общение с сервером
+            $(".add_resource_btn", this.$el).on("click", $.proxy(this.addResource, this));
+            $(".edit_resource_btn", this.$el).on("click", $.proxy(this.updateResource, this));
             $(".remove_resource_btn", this.$el).on("click", $.proxy(this.removeResource, this));
-
         },
 
-        events: {
-        },
+        createNew: function() {
+            var context = {popup_id: this.el},
+                options = this.fetchAllowedResources();
 
-        configure: function(resource, position) {
+            if (this.mode === 'new') {
+                options.unshift({title:"Выбрать ресурс", selected: "selected", value: ""});
 
-
-            this.configureForm(resource);
-
-            this.configureLabels();
-
-            this.condifgurePosition(position);
-        },
-
-
-        /*
-         * заполняем селектор
-         */
-        configureForm: function(resource) {
-            var view = this,
-                select = this.$el.children("select");
-
-
-
-            // добавляем ресурсы в селектор
-            if (select.children("option").length == 0){
-                // если создаем ресурс, добавляем начальную строчку "Выбрать ресурс" в селектор
-                if (this.mode === "new") {
-                    select.append($("<option/>").text("Выбрать ресурс").attr("value", ""))
-                } else {
-                    // при редактировании забиваем описание, если есть
-                    $("textarea", this.$el).val(resource.get("desc"));
-                }
-
-                _.each(RESOURCES, function(resource_item){
-                    var selectItem = $("<option/>").text(resource_item[1]).attr("value", resource_item[0]);
-                    select.append(selectItem);
-
-                    // если есть редактируем ресурс, находим сразу выставляем его выбранным
-                    if (view.mode === "edit" && resource.get("title").length > 0 && resource_item[1] === resource.get("title")) {
-                        selectItem.attr("selected", "selected")
-                    }
-                });
-            }
-        },
-
-        /*
-         * оформление окна
-         */
-        configureLabels: function() {
-            if (this.mode === "edit") {
-                // поправляем надписи в попапе в соответвствие с режимом
-                $(".popup-action-label", this.$el).text("Изменить ресурс");
-
-                // оставляем видимыми лишь нужные кнопки
-                $(".add_resource_btn", this.$el).hide();
-      //          $(".edit_resource_btn", this.$el).show();
-                $(".remove_resource_btn", this.$el).show()
+                _.extend(context, {
+                    actionLabel: "Новый ресурс",
+                    buttons: [{ text: "Добавить", class: "add_resource_btn" }]
+                })
             } else {
+                // считаем что здесь режим редактирования и вызывала окно вьюшка отдельного ресурса
+                options.unshift({title:this.caller.obj.title, selected: "selected", value: this.caller.obj.value});
 
-                $(".popup-action-label", this.$el).text("Новый ресурс");
-
-                // оставляем видимыми лишь нужные кнопки
-                $(".add_resource_btn", this.$el).show();
-                $(".edit_resource_btn", this.$el).hide();
-                $(".remove_resource_btn", this.$el).hide()
+                _.extend(context, {
+                    actionLabel: "Изменить ресурс",
+                    buttons: [
+                        { text: "Изменить", class: "edit_resource_btn" },
+                        { text: "Удалить", class: "remove_resource_btn" }
+                    ],
+                    descr: this.caller.obj.descr
+                })
             }
 
+            context.options = options;
+            // создаем попап по шаблону
+            $("body").append(Mustache.render(this.template, context));
+            // ссылка для view
+            this.$el = $("#" + this.el);
+            this.condifgurePosition();
         },
 
+        fetchAllowedResources: function() {
+            var popup = this,
+                data  = [];
 
-        /*
-         * выставляем позицию попапа
-         */
-        condifgurePosition: function(position) {
-            this.$el.css("top", position.top)
-                        .css("left", position.left);
+            _.each(RESOURCES, function(item) {
+                if (!_.include(popup.caller.existingResources, item[0])) {
+                    data.push({title:item[1], value: item[0]})
+                }
+            });
+
+            return data
         },
 
-
-        /*
-         * очистка окна-попапа
-         */
-        clearPopupWindow: function() {
-            $("select", this.$el).html("");
-            $("textarea", this.$el).val("");
-            // FIXME: надо просто пересоздавать попап каждый раз с шаблона
-            $(".add_resource_btn", this.$el).off("click");
-            $(".edit_resource_btn", this.$el).off("click");
-            $(".remove_resource_btn", this.$el).off("click");
+        /* Выставляем позицию попапа */
+        condifgurePosition: function() {
+            this.$el.css("top", this.position.top)
+                        .css("left", this.position.left);
         },
 
-
-        /*
-         * сохранение данных из окна-попапа
-         */
-        savePopupData: function(){
+        /* Сохранение ресурса с данными из окна-попапа */
+        addResource: function(){
             this.sendResourceActionRequest(ADD_RESOURCE_URL, this.callback);
         },
 
-        /*
-         * удаление данных из окна-попапа
-         */
-        removeResource: function() {
-            this.sendResourceActionRequest(REMOVE_RESOURCE_URL, this.options.removeCallback);
+        /* Обновление ресурса на выбранный из окна-попапа */
+        updateResource: function(){
+            var popup = this;
+
+            this.params.old_resource = this.caller.obj.value;
+            this.sendResourceActionRequest(UPDATE_RESOURCE_URL, this.callback);
         },
 
+        /* Удаление ресурса */
+        removeResource: function() {
+            this.sendResourceActionRequest(REMOVE_RESOURCE_URL, this.removeCallback);
+        },
 
         sendResourceActionRequest: function(url, callback) {
-            var view = this;
+            var view = this,
+                data = {
+                    title: $("select option:selected", this.$el).text(),
+                    resource: $("select", this.$el).val(),
+                    description: $("textarea", this.$el).val()
+                };
 
-            this.params.title       = $("select option:selected", this.$el).text();
-            this.params.resource    = $("select", this.$el).val();
-            this.params.description = $("textarea", this.$el).val();
+            _.extend(this.params, data);
 
-            this.$el.hide();
+            // api сервера требует id
+            this.params.id = this.params.entity_id;
+            delete this.params.entity_id;
 
             dialog_post_shortcut(
                     url,
@@ -357,6 +309,12 @@ var Resource = {
                     },
                     false
             )();
+
+            this.remove()
+        },
+
+        remove: function() {
+            this.$el.remove();
         },
 
         show: function() {

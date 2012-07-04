@@ -1,10 +1,5 @@
-{# шаблон списка ресурсов. При передаче "resource_editable" ресурсы становятся редактируемыми #}
+{# шаблон списка ресурсов. #}
+{#  При передаче  resource_editable=true, ресурсы становятся редактируемыми #}
 {% for resource in resources %}
-    {% with resource=resource %}
-        {% include "resources/item.html" %}
-    {% endwith %}
-    {# если надо сделать список ресурсов вертикальным; - не надо #}
-    {% if vertical %}
-        <!--<br/> -->
-    {% endif %}
+    {% include "resources/item.html" %}
 {% endfor %}

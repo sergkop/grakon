@@ -47,9 +47,9 @@ class EntityResourceManager(BaseEntityPropertyManager):
     def get_related_info(self, data, ids):
         pass
 
-
     @entity_object_action
-    def _add_resource(self, entity, resource, description='', provider=None):
+    def add(self, entity, resource, provider=None, description=''):
+        """ Создает или обновляет ресурс, привязанный к сущности """
         entity_resource, created = self.get_or_create(content_type=ContentType.objects.get_for_model(type(entity)),
             entity_id=entity.id, resource=resource, provider=provider, defaults={'description': description})
 
@@ -57,47 +57,17 @@ class EntityResourceManager(BaseEntityPropertyManager):
             entity_resource.description = description
             entity_resource.save()
 
-
     @entity_object_action
-    def _remove_resource(self, entity, resource, provider=None):
-        # Use generic relation to filter related feature instances
+    def remove(self, entity, resource, provider=None):
+        """ Удаляет ресурс, привязанный к сущности """
         getattr(entity, self.model.feature).filter(resource=resource, provider=provider).delete()
 
 
-    def add_or_update(self, entity, resource, description='', provider=None):
-        """
-        Создает или обновляет ресурс, привязанный к сущности
-        """
-        self._add_resource(entity, resource, description=description, provider=provider)
+    def edit(self, entity, old_resource, new_resource, provider=None, description=''):
+        """ Удаляет, потом создает ресурс, привязанный к сущности """
+        self.remove(entity, old_resource, provider=provider)
+        self.add(entity, new_resource, provider=provider, description=description)
 
-
-    def remove(self, entity, resource, provider=None):
-        """
-        Удаляет ресурс, привязанный к сущности
-        """
-        self._remove_resource(entity, resource, provider=provider)
-
-
-    # TODO: update resources with descriptions
-    def update(self, entity, resources):
-        if self.model.feature not in type(entity).features:
-            return
-
-        # Filter out resources not from the list
-        if type(entity).entity_name != 'projects':
-            resources = set(RESOURCE_DICT.keys()) & set(resources)
-
-        entity_resources = list(getattr(entity, self.model.feature).all())
-        new_resources = resources - set(er.resource for er in entity_resources)
-
-        for er in entity_resources:
-            if er.resource not in resources:
-                er.delete()
-
-        # TODO: this can cause IntegrityError
-        self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
-
-        entity.clear_cache()
 
 
 @reset_cache

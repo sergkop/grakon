@@ -7,22 +7,30 @@ from elements.utils import is_entity_admin, entity_post_method, provided_entity_
 @entity_post_method
 @provided_entity_method
 def add_resource(request, entity, provider):
-    """
-    Добавляет/редактирует существующий ресурс
-    """
+    """ Добавляет ресурс """
 
-    EntityResource.objects.add_or_update(entity, request.POST.get('resource', ''),
-            request.POST.get('description', ''), provider)
+    EntityResource.objects.add(entity, request.POST.get('resource', ''),
+        description=request.POST.get('description', ''), provider=provider)
 
     #EntityResource.objects.update(entity, request.POST.getlist('value[]', None))
     return HttpResponse('ok')
 
+
+@entity_post_method
+@provided_entity_method
+def update_resource(request, entity, provider):
+    """ Редактирует существующий ресурс """
+
+    EntityResource.objects.edit(entity, request.POST.get('old_resource', ''), request.POST.get('resource', ''),
+        description=request.POST.get('description', ''), provider=provider)
+
+    return HttpResponse('ok')
+
+
 @entity_post_method
 @provided_entity_method
 def remove_resource(request, entity, provider):
-    """
-    Удаляет ресурс
-    """
+    """ Удаляет ресурс """
 
-    EntityResource.objects.remove(entity, request.POST.get('resource', ''), provider)
+    EntityResource.objects.remove(entity, request.POST.get('resource', ''), provider=provider)
     return HttpResponse('ok')
