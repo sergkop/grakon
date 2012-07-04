@@ -26,8 +26,8 @@
                     $(function() {
                         $(".js-resource-items li").each(function() {
                             new Resource.ListView({
-                                template: $("#resource-template").html(),
                                 el: $(this),
+                                itemTpl: $("#resource-template").html(),
                                 addBtn: $(".add-resource-btn"),
                                 provider: "true"
                             });

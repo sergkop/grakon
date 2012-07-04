@@ -22,9 +22,9 @@
                 <script>
                     $(function() {
                         new Resource.ListView({
-                            template: $("#resource-template").html(),
                             el: $(".resources-list"),
-                            addBtn: $(".add-resource-btn")
+                            addBtn: $(".add-resource-btn"),
+                            itemTpl: $("#resource-template").html()
                         });
                     })
                 </script>
@@ -34,7 +34,7 @@
                 </div>
             {% endif %}
             <div id="resources_list" class="resources-list gr-mb10" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
-                {% with resource_editable=is_admin resources=info.resources.none.data vertical="true" %}
+                {% with resource_editable=is_admin resources=info.resources.none.data %}
                     {% include "resources/list.html" %}
                 {% endwith %}
             </div>
@@ -58,13 +58,11 @@
 
 {# Попап окно с формой добавления ресурса #}
 {% if is_admin %}
-    {% include "resources/add.html" %}
     {#  шаблон для динамического создания новых ресурсов на странице  #}
     <div id="resource-template" style="display: none;">
         {% with resource_editable=is_admin %}
             {% include "resources/item.html" %}
         {% endwith %}
-        <br/>
     </div>
 {% endif %}
 

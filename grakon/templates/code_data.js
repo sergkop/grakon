@@ -9,6 +9,7 @@ var GET_SUBREGIONS_URL = "{% url get_subregions %}";
 var REMOVE_LOCATION_URL = "{% url remove_location %}";
 var UPDATE_TEXT_FIELD_URL = "{% url update_text_field %}";
 var ADD_RESOURCE_URL = "{% url add_resource %}";
+var UPDATE_RESOURCE_URL = "{% url update_resource %}";
 var REMOVE_RESOURCE_URL = "{% url remove_resource %}";
 
 // TODO: use values from settings.py

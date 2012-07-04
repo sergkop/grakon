@@ -10,7 +10,6 @@
 
 {# Попап окно с формой добавления ресурса #}
 {% if request.user.is_authenticated %}
-    {% include "resources/add.html" %}
     {#  шаблон для динамического создания новых ресурсов на странице  #}
     <div id="resource-template" style="display: none;">
         {% with resource_editable=request.user.is_authenticated %}
