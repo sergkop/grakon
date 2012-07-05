@@ -137,7 +137,8 @@ var Resource = {
 
             new Resource.ItemView({
                 el: newItem,
-                parent: this
+                parent: this,
+                provider: this.provider
             }).updateLayout(obj)
         },
 

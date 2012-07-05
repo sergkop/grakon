@@ -74,4 +74,11 @@
     </script>
 
     {% include "dialogs/add_idea.html" %}
+
+    {#  шаблон для динамического создания новых ресурсов на странице  #}
+    <div id="resource-template" style="display: none;">
+        {% with resource_editable=request.user.is_authenticated %}
+            {% include "resources/item.html" %}
+        {% endwith %}
+    </div>
 {% endif %}
