@@ -1,0 +1,17 @@
+<div id="{{popup_id}}" class="gr-small-popup gr-add-popup"> 
+    <span class="popup-action-label">{{actionLabel}}</span> 
+    <div class="gr-close">&nbsp;</div> 
+    <select class="gr-mb10 gr-mt10" style="width:100%"> 
+        {{#options}} 
+            <option value="{{value}}" {{selected}}>{{title}}</option> 
+        {{/options}} 
+    </select> 
+    <textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)"> 
+        {{descr}} 
+    </textarea> 
+    <div align="right" class="gr-mt5"> 
+        {{#buttons}} 
+            &nbsp;<span class="{{class}} highlight">{{text}}</span> 
+        {{/buttons}} 
+    </div> 
+</div>

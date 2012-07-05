@@ -1,0 +1,5 @@
+{{!  описание из аттрибута descr показывается в попапе при наведении  }}
+<span class="gr-resource-item {{#resource.description}}gr-resource-item-active{{/resource.description}}" name="{{resource.name}}" descr="{{resource.description}}">
+    <span class="gr-resource-title">{{resource.title}}</span><i>&nbsp;</i>
+    {{#resource_editable}}<b class="js-edit-resource">&nbsp;</b>{{/resource_editable}}
+</span>

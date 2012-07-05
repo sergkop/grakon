@@ -82,10 +82,10 @@ var Resource = {
 
     /** View, отвечающий за список ресурсов
      * Параметры:
-     * @param el        Элемент списка на странице
-     * @param addBtn    Элемент списка на странице
+     * @param el        Элемент списка ресурсов на странице
+     * @param addBtn    Элемент кнопки добавления ресурса
      * @param popupTpl  Строка-шаблон попап-окна
-     * @param itemTpl   Строка-шаблон для создания новых элементов
+     * @param itemTpl   Строка-шаблон нового элемента
      * @param [provider="true"] Необязательный флаг провайдера
      */
     ListView: Backbone.View.extend({
@@ -173,23 +173,9 @@ var Resource = {
     /* View, окна добавления / редактирования ресурса */
     PopupView: Backbone.View.extend({
 
-        template:   '<div id="{{popup_id}}" class="gr-small-popup gr-add-popup">' +
-                        '<span class="popup-action-label">{{actionLabel}}</span>' +
-                        '<div class="gr-close">&nbsp;</div>' +
-                        '<select class="gr-mb10 gr-mt10" style="width:100%">' +
-                            '{{#options}}' +
-                                '<option value="{{value}}" {{selected}}>{{title}}</option>' +
-                            '{{/options}}' +
-                        '</select>' +
-                        '<textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)">' +
-                            '{{descr}}' +
-                        '</textarea>' +
-                        '<div align="right" class="gr-mt5">' +
-                            '{{#buttons}}' +
-                                '&nbsp;<span class="{{class}} highlight">{{text}}</span>' +
-                            '{{/buttons}}' +
-                        '</div>' +
-                    '</div>',
+        getTemplate:  function(context) {
+            $( Mustache.render("{{>popup}}", context, PARTIALS) )
+        },
 
         initialize: function() {
             this.el = "add_resource_popup";
@@ -242,7 +228,7 @@ var Resource = {
 
             context.options = options;
             // создаем попап по шаблону
-            $("body").append(Mustache.render(this.template, context));
+            $("body").append(this.getTemplate( context ));
             // ссылка для view
             this.$el = $("#" + this.el);
             this.condifgurePosition();

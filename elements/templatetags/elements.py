@@ -80,3 +80,18 @@ def show_comments(context, template_path, info):
         'PROFILE': context['request'].PROFILE,
     }
     return comments_renderer.render(template, ctx)
+
+
+resources_templates = {
+    'resources_item': 'resources/item.mustache',
+    'resources_list': 'resources/list.mustache',
+    'resources_edit_popup': 'resources/edit_popup.mustache',
+}
+
+@register.simple_tag(takes_context=True)
+def show_resources(context, template_path, resources):
+    template = get_mustache_template(template_path)
+
+    comments_renderer = mustache_renderer(resources_templates)
+    ctx = {'resources': resources}
+    return comments_renderer.render(template, ctx)
