@@ -1,4 +1,4 @@
-  input[type=text], input[type=password], textarea {border: 1px solid #eee; padding: 0.2em;}
+  input[type=text], input[type=password], textarea {border: 1px solid #ddd; padding: 0.2em;}
 input {vertical-align: middle;}
 input[type=radio] {vertical-align: top;}
 
@@ -26,7 +26,7 @@ input[type=radio] {vertical-align: top;}
 .gr-pt20 {padding-top: 2em !important;}
 .gr-pb20 {padding-bottom: 2em !important;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
-.gr-bb-grey-lt {border-bottom: 1px solid #eee;}
+.gr-bb-grey-lt {border-bottom: 1px solid #ddd;}
 .gr-noborder {border: none !important; box-shadow: none !important;}
 
 /*Элементы header*/
@@ -53,7 +53,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-item .gr-add span.gr-add-icon:active {background-position: 0 -52px;}
 
 .gr-side-list, .gr-side-list li {margin: 0; padding: 0; list-style-type: none;}	
-    .gr-side-list li {padding-bottom: .7em; margin-bottom: .7em; border-bottom: 1px dotted #eee;}
+    .gr-side-list li {padding-bottom: .7em; margin-bottom: .7em; border-bottom: 1px solid #ddd;}
     .gr-side-list li:last-child {border-bottom: none;}
 
 /*Кнопки соцсетей*/
@@ -78,6 +78,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
 	.gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}
 	.gr-pagination-arrow-next:hover {background-position: 0 -59px;}
+.gr-grey-button {font-weight: normal; color: #000;}
 
 
 /* Страница задачи */
@@ -86,7 +87,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-info-bar .ym-button {margin-top: -.7em;}
 	.gr-info-bar .gr-active-link {font-weight: bold; color: #000;}
 .gr-ideas-list {}
-	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #eee; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
+	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #ddd; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
 	.gr-ideas-list .gr-ideas-item:last-child, .gr-ideas-list .gr-ideas-item-last {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
@@ -121,7 +122,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	
 	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   
 	.gr-source-list-slider {margin-top: 1em; font-size: .9em}        
-        .gr-bb-grey-list li {border-bottom: 1px solid #eee; padding-bottom: 1em !important;}
+        .gr-bb-grey-list li {border-bottom: 1px solid #ddd; padding-bottom: 1em !important;}
         .gr-bb-grey-list li:last-child {border-bottom: none;}
 	
 	.gr-ideas-resources .gr-source-list-slider {display: block; margin-top: 0;}
@@ -210,7 +211,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Static pages*/
 
-.gr-job-item {border-bottom: 1px dotted #eaeaea; padding: 25px 0 15px;}
+.gr-job-item {border-bottom: 1px solid #ddd; padding: 25px 0 15px;}
 .gr-static {margin-bottom: 2em;}
 
 /* ----- Переиспользуемые элементы ----- */
@@ -236,9 +237,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 
 /* JS стили */
-
 .js-follow-content, .js-projects-content, .js-resource-items, .gr-small-popup {display: none;}
-
 
 
 /* Комментарии */
@@ -249,7 +248,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 .gr-add-comment textarea {font-size: 1.2em; width: 100%}
 .gr-comment {padding: 10px 0; font-size: 1.2em;}
 .gr-child-comments .gr-comment {font-size: 1em;} 
-.gr-comment .gr-info-bar {padding: 0 0 1em; font-size: .85em; border-bottom: 1px solid #eee;}   
+.gr-comment .gr-info-bar {padding: 0 0 1em; font-size: .85em; border-bottom: 1px solid #ddd;}   
     .gr-comment .gr-info-bar .highlight {cursor: pointer;}
     .gr-comment .gr-info-bar .gr-add-comment {margin-bottom: 0;}    
 .gr-child-comments {margin-left: 44px;}
