@@ -70,8 +70,11 @@ var Resource = {
 
             if (this.obj.descr) {
                 this.$el.addClass("gr-resource-item-active");
-                this.$el.attr("descr", this.obj.descr);
+            } else {
+                this.$el.removeClass("gr-resource-item-active");
             }
+
+            this.$el.attr("descr", this.obj.descr)
         },
 
         remove: function() {

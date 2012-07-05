@@ -5,7 +5,24 @@
 </p>
 
 {% with resources=info.resources.none.data %}
-    {% include "resources/list.html" %}
+    {% if info.instance.id == request.profile.id %}
+        <script>
+            $(function() {
+                new Resource.ListView({
+                    el: $(".resources-list"),
+                    addBtn: $(".add-resource-btn"),
+                    itemTpl: $("#resource-template").html()
+                });
+            })
+        </script>
+        {% with resource_editable="true" %}
+            <div id="resources_list" class="resources-list gr-mb10" ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
+                {% include "resources/list.html" %}
+            </div>
+        {% endwith %}
+    {% else %}
+        {% include "resources/list.html" %}
+    {% endif %}
 {% endwith %}
 
 <div class="gr-info-bar gr-mt10">
