@@ -7,7 +7,7 @@ var Resource = {
         },
 
         events: {
-            "click .js-remove-resource": "renderEditWindow"
+            "click .js-edit-resource": "renderEditWindow"
         },
 
         renderEditWindow: function() {
@@ -299,7 +299,7 @@ var Resource = {
             this.params.id = this.params.entity_id;
             delete this.params.entity_id;
 
-            dialog_post_shortcut(
+            post_shortcut(
                     url,
                     this.params,
                     function() {

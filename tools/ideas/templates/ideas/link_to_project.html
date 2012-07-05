@@ -18,7 +18,7 @@
 
     <script type="text/javascript">
         create_dialog("link_to_project_dialog", 400, 280, "Связать идею с проектом", "Отмена", {
-            "Связать": dialog_post_shortcut("{% url link_idea_to_project %}", {}, function(){}, true, "link_to_project_form")
+            "Связать": post_shortcut("{% url link_idea_to_project %}", {}, function(){}, true, "link_to_project_form")
         });
         $(".js-link-to-project").click(function(){
             $("#link_to_project_dialog").dialog("open");

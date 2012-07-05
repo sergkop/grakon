@@ -17,7 +17,7 @@
 
             <script type="text/javascript">
                 create_dialog("cancel_{{ role }}_dialog_{{ ct }}_{{ id }}", 320, 200, "{{ button.cancel_btn_long }}", "Отмена", {
-                    "{{ button.cancel_btn }}": dialog_post_shortcut("{% url remove_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
+                    "{{ button.cancel_btn }}": post_shortcut("{% url remove_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
                             function(){$("#cancel_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("close");}, true)
                 });
                 $("#cancel_{{ role }}_btn_{{ ct }}_{{ id }}").click(function(){$("#cancel_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("open");});
@@ -29,7 +29,7 @@
 
             <script type="text/javascript">
                 create_dialog("confirm_{{ role }}_dialog_{{ ct }}_{{ id }}", 320, 200, "{{ button.confirm_btn_long }}", "Отмена", {
-                    "{{ button.confirm_btn }}": dialog_post_shortcut("{% url add_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
+                    "{{ button.confirm_btn }}": post_shortcut("{% url add_participant %}", {"ct": {{ ct }}, "id": {{ id }}, "role": "{{ role }}"},
                             function(){$("#confirm_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("close");}, true)
                 });
                 $("#confirm_{{ role }}_btn_{{ ct }}_{{ id }}").click(function(){$("#confirm_{{ role }}_dialog_{{ ct }}_{{ id }}").dialog("open");});

@@ -7,7 +7,7 @@
 <script type="text/javascript">
     {% if request.user.is_authenticated %}
         create_dialog("become_participant_dialog", 300, 200, "Стать участником", "Отмена", {
-            "Участвовать": dialog_post_shortcut("{% if is_participant %}{% url remove_location %}{% else %}{% url add_location %}{% endif %}",
+            "Участвовать": post_shortcut("{% if is_participant %}{% url remove_location %}{% else %}{% url add_location %}{% endif %}",
                 {"ct": {{ request.profile_info.ct }}, "id": {{ request.profile.id }}, "loc_id": {{ location.id }} },
                 function(){
                     $("#become_participant_dialog").dialog("close");

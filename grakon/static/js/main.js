@@ -59,55 +59,91 @@ $(function(){
     $.fn.tipsy.defaults.delayOut = 200;
     $.fn.tipsy.defaults.fade = true;
     $.fn.tipsy.defaults.opacity = 0.6;
+});
 
-    // Comments
-    // TODO: add send event to the top textarea
-    $(".js-comment-response").click(function(){
-        var btn = $(this);
-        // TODO: only show for logged in users
-        if (btn.siblings("table").length==0){
-            // Generate html
-            var field_html = Mustache.render("{{>comment_field}}", {}, PARTIALS);
-            var field = $(field_html);
-            btn.parent().append(field);
+var Comment = {
+    generateCommentItem: function(data){
+        return $( Mustache.render("{{>comment_item}}", data, PARTIALS) );
+    },
 
-            // Bind click event for send button
-            $(".ym-button", field).click(function(){
-                var comment_div = btn.parent().parent(),
-                    entity_id = comment_div.attr("e_id"),
-                    ct_id = comment_div.attr("ct"),
-                    comment = $("textarea", field).val();
+    ItemView: Backbone.View.extend({
+        events: {"click .gr-info-bar .js-comment-response": "respondToComment"},
 
-                // TODO: get id of new comment
-                // TODO: comment field should be non-empty
-                dialog_post_shortcut(ADD_COMMENT_URL, {
-                    id: entity_id,
-                    ct: ct_id,
-                    parent: comment_div.attr("comment_id"),
+        respondToComment: function(){
+            this.field = this.$el.children(".js-comments").children("table");
+
+            if (!PROFILE.username){
+                login_dialog_init();
+                return;
+            }
+
+            if (this.field.length==0){
+                var field = Comment.generateAddCommentField();
+                this.$el.children(".js-comments").prepend(field);
+
+                new Comment.AddCommentFieldView({el: field});
+            } else
+                this.field.toggle();
+        }
+    }),
+
+    generateAddCommentField: function(){
+        return $( Mustache.render("{{>comment_field}}", {}, PARTIALS) );
+    },
+
+    // This view should not be shown to unauthenticated users
+    AddCommentFieldView: Backbone.View.extend({
+        events: {"click .ym-button": "addComment"},
+
+        initialize: function(){
+            this.textarea = $("textarea", this.$el);
+
+            this.entity_id = this.$el.parent().parent().attr("e_id");
+            this.ct_id = this.$el.parent().parent().attr("ct");
+        },
+
+        addComment: function(){
+            var comment = $.trim( this.textarea.val() );
+
+            if (comment===""){
+                alert("Пожалуйста введите комментарий");
+                return;
+            }
+
+            // TODO: get id of new comment
+            post_shortcut(ADD_COMMENT_URL, {
+                    id: this.entity_id,
+                    ct: this.ct_id,
+                    parent: this.$el.parent().parent().attr("comment_id"),
                     comment: comment
                 },
-                function(){
-                    var comment_html = Mustache.render("{{>comment_item}}", {
-                        comment: {
-                            entity_id: entity_id,
-                            ct_id: ct_id,
-                            time: "", // TODO: get it
-                            id: "",
-                            comment: comment
-                        }
-                    }, PARTIALS);
+                $.proxy(this.showAddedComment, this)
+            )();
+        },
 
-                    // TODO: add click event for respond button
-                    btn.parent().next().prepend(comment_html);
-
-                    $("textarea", field).val("");
-                    btn.siblings("table").hide();
-                })();
+        showAddedComment: function(){
+            var comment_item = Comment.generateCommentItem({
+                comment: {
+                    entity_id: this.entity_id,
+                    ct_id: this.ct_id,
+                    comment_id: "", // TODO: get it
+                    comment: this.textarea.val(),
+                    time: "" // TODO: get it
+                },
+                author: PROFILE
             });
-        } else
-            btn.siblings("table").toggle();
-    });
-});
+
+            this.$el.after(comment_item);
+
+            new Comment.ItemView({el: comment_item});
+
+            //this.textarea.val("");
+            //btn.siblings("table").hide();
+
+            this.$el.remove();
+        }
+    })
+};
 
 function get_cookie(name){
     var cookie_value = null;
@@ -144,7 +180,7 @@ function create_dialog(id, width, height, title, cancel_btn_title, buttons){
 // If post response is "ok", provided function is performed and dialog is closed.
 // Otherwise alert with error message appears.
 // If form_id is specified, params is updated with form data.
-function dialog_post_shortcut(url, params, on_success, reload_page, form_id){
+function post_shortcut(url, params, on_success, reload_page, form_id){
     return function(){
         params["csrfmiddlewaretoken"] = get_cookie("csrftoken");
         if (form_id){
@@ -315,7 +351,7 @@ var LocationEditor = Backbone.View.extend({
                 .addClass("gr-editor-btn")
                 .click(function(){
                     editor.recover();
-                    /*dialog_post_shortcut(UPDATE_TEXT_FIELD_URL, {
+                    /*post_shortcut(UPDATE_TEXT_FIELD_URL, {
                         ct: editor.options.ct,
                         id: editor.options.entity_id,
                         field: editor.options.field,
@@ -342,7 +378,7 @@ var LocationEditor = Backbone.View.extend({
 
                         // TODO: use model dialog here?
                         if (confirmation)
-                            dialog_post_shortcut(REMOVE_LOCATION_URL, {
+                            post_shortcut(REMOVE_LOCATION_URL, {
                                 "loc_id": li.attr("loc_id"),
                                 "ct": editor.options.ct,
                                 "id": editor.options.entity_id
@@ -426,7 +462,7 @@ var TextFieldEditor = Backbone.View.extend({
                         // TODO: take related editor, not active
                         var value = tinyMCE.activeEditor.getContent();
 
-                    dialog_post_shortcut(editor.post_url, editor.post_params(value), function(){
+                    post_shortcut(editor.post_url, editor.post_params(value), function(){
                         editor.old_value = value;
                         editor.recover();
                     })();
@@ -500,7 +536,7 @@ function show_comments(btn, id, url, category){
 }
 
 function add_project_resource(ct, instance_id){
-    dialog_post_shortcut(ADD_RESOURCE_URL, {
+    post_shortcut(ADD_RESOURCE_URL, {
         "ct": ct,
         "id": instance_id,
         "resource": $("#add_project_resource_popup input").val(),
@@ -512,7 +548,7 @@ function add_project_resource(ct, instance_id){
 
 // TODO: popup with confirmation before deletion
 function remove_project_resource(ct, instance_id, resource){
-    dialog_post_shortcut(REMOVE_RESOURCE_URL, {
+    post_shortcut(REMOVE_RESOURCE_URL, {
         "ct": ct,
         "id": instance_id,
         "resource": resource

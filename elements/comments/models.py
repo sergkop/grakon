@@ -28,7 +28,7 @@ class EntityCommentManager(BaseEntityPropertyManager):
                 profile = profiles[comment.person_id]
                 return {
                     'comment': {
-                        'id': comment.id,
+                        'comment_id': comment.id,
                         'ct_id': comment.content_type_id,
                         'entity_id': comment.entity_id,
                         'comment': comment.comment,

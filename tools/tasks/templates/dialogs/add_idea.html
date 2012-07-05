@@ -21,7 +21,7 @@
 
 <script type="text/javascript">
     create_dialog("add_idea_dialog", 400, 310, "Добавить идею", "Отмена", {
-        "Добавить": dialog_post_shortcut("{% url add_idea %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
+        "Добавить": post_shortcut("{% url add_idea %}", {"ct": {{ info.ct }}, "id": {{ info.instance.id }} },
                 function(){}, true, "add_idea_form")
     });
     $("#add_idea_btn").click(function(){

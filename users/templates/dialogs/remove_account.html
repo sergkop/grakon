@@ -8,7 +8,7 @@
     }
 
     create_dialog("remove_account_dialog", 625, 400, "Удаление аккаунта", "Отмена", {
-        "Удалить": dialog_post_shortcut("{% url remove_account %}", {}, function(){
+        "Удалить": post_shortcut("{% url remove_account %}", {}, function(){
             $("#remove_account_dialog").dialog("close");
             alert("Ваш аккаунт будет удален в ближайшее время. Мы вышлем уведомление на ваш email.");
         })

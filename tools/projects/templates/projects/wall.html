@@ -1,13 +1,19 @@
 {% load elements %}
 
-{% include "disqus/comments.html" %}
-
 {% show_comments "comments/list.mustache" info %}
 
 <!--div id="comments"></div-->
 
 <script type="text/javascript">
+    $(".gr-comment").each(function(){
+        new Comment.ItemView({el: $(this)});
+    });
+
+    new Comment.AddCommentFieldView({el: $(".gr-bb-grey-lt .gr-add-comment")});
+    // TODO: don't hide that field even after submission
+
     $(function(){
+        // TODO: move this code out of here
         var comments_data = {{ comments_data|safe }};
         var template = "{% templatetag openvariable %}>comments_list{% templatetag closevariable %}";
         var res = Mustache.render(template, {

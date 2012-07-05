@@ -7,6 +7,7 @@ class ProfileMiddleware(object):
                 'id': request.profile.id,
                 'username': request.profile.username,
                 'full_name': unicode(request.profile),
+                'url': request.profile.get_absolute_url(),
             }
         else:
             request.profile = None
