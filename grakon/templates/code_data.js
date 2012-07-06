@@ -35,9 +35,9 @@ function create_tinymce_widget(textarea_id){
         "directionality": "ltr",
         "mode": "exact",
 
-        //"plugins": "autoresize",
-        //"autoresize_min_height": 300,
-        //"autoresize_max_height": 500
+        "plugins": "autoresize",
+        "autoresize_min_height": 300,
+        "autoresize_max_height": 500
     });
 }
 
