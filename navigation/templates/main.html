@@ -94,8 +94,7 @@
                                     <div class="gr-info-bar">
                                         Поддержали: {{ info.resources|length }}
                                         <span class="gr-bullet">&nbsp;</span>
-                                        Комментарии:
-                                        <a style="color:#FFFFFF;" data-disqus-identifier="{{ info.instance.disqus_id }}" href="{{ URL_PREFIX }}{{ info.instance.disqus_url }}#disqus_thread"></a>
+                                        Комментарии: {{ info.comments.count }}
                                     </div>
                                 </li>
                             {% endfor %}
@@ -123,7 +122,4 @@
             </tr>
         </table>
     </div>
-
-{% include "disqus/counter.html" %}
-
 {% endblock %}

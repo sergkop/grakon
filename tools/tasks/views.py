@@ -10,7 +10,6 @@ from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.resources.models import RESOURCE_CHOICES
 from elements.views import entity_base_view, entity_tabs_view
-from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
 from tools.tasks.forms import TaskForm
 from tools.tasks.models import Task
@@ -58,7 +57,6 @@ class BaseTaskView(object):
 
             'RESOURCE_CHOICES': RESOURCE_CHOICES, # TODO: use idea form instead
         })
-        ctx.update(disqus_page_params('task/'+str(id), reverse('task_wall', args=[id]), 'tasks'))
         return ctx
 
 class TaskView(BaseTaskView, TemplateView):
@@ -70,12 +68,6 @@ class TaskView(BaseTaskView, TemplateView):
             'ideas': sorted(ideas, key=lambda info: -len(info['resources'])),
             'template_path': 'tasks/view.html',
         }
-
-class TaskWallView(BaseTaskView, TemplateView):
-    tab = 'wall'
-
-    def update_context(self):
-        return {'template_path': 'disqus/comments.html'}
 
 class CreateTaskView(CreateView):
     template_name = 'tasks/create.html'

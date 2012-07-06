@@ -204,11 +204,6 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 		.gr-popular-list .gr-info-bar {margin-top: .5em;}		
 		.gr-popular-list li a {color: #000;}		
 
-/* Disqus bugs */
-#dsq-content .dsq-show-tools .dsq-post-tools  {height: 34px !important;}
-#dsq-content #dsq-messagesx-toolbar-icon {height: 22px !important; width: auto !important;}
-
-
 /*Static pages*/
 
 .gr-job-item {border-bottom: 1px solid #ddd; padding: 25px 0 15px;}

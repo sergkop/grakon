@@ -16,8 +16,8 @@
                 </div>
 
                 <div class="gr-info-bar">
-                    <div class="gr-fl">     
-                        {% include "elements/comments.html" %}
+                    <div class="gr-fl">
+                        {% include "comments/counter.html" %}
 
                         <span class="gr-bullet">&nbsp;</span>
                         <span class="dimmed gr-pseudolink js-follow">Следят: {{ info.participants.follower.count }}</span>
@@ -39,6 +39,7 @@
                     <div class="gr-fr dimmed">{{ info.instance.add_time }}</div>
                     <div class="ym-clearfix">&nbsp;</div>
                 </div>
+
                 <div class="gr-slider js-follow-content">
                     <div class="gr-close js-slide-close">&nbsp;</div>
                     <div class="dimmed">
@@ -46,6 +47,10 @@
                             {% include "participants/list.html" %}
                         {% endwith %}
                     </div>
+                </div>
+
+                <div class="hidden js-comments">
+                    {% include "comments/list.html" %}
                 </div>
             </div>
         {% endfor %}

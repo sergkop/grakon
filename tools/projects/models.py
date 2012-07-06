@@ -28,8 +28,6 @@ class Project(BaseEntityModel):
 
     roles = ['admin', 'follower']
 
-    disqus_category = 'projects'
-
     follow_button = {
         'role': 'follower',
         'cancel_msg': u'Вы хотите отписаться от новостей об этом проекте?',
@@ -39,12 +37,6 @@ class Project(BaseEntityModel):
         'confirm_btn': u'Следить',
         'confirm_btn_long': u'Следить за проектом',
     }
-
-    def disqus_id(self):
-        return 'project/' + str(self.id)
-
-    def disqus_url(self):
-        return reverse('project_wall', args=[self.id])
 
     def calc_rating(self):
         # Number of people provided resources for project

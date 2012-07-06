@@ -11,7 +11,6 @@ from elements.participants.models import EntityParticipant
 from elements.utils import table_data
 from elements.views import entity_tabs_view
 from locations.models import Location
-from services.disqus import disqus_page_params
 
 class BaseLocationView(object):
     template_name = 'locations/base.html'
@@ -41,10 +40,9 @@ class BaseLocationView(object):
 
         self.tabs = [
             #('map', u'Карта', reverse('location_map', args=[location.id]), '', 'locations/map.html'),
-            #('tools', u'Инструменты', self.tools_url, '', 'locations/tools.html'),
             ('tasks', u'Задачи: %i' % tasks_count, reverse('location_tasks', args=[location.id]), '', 'tasks/list.html'),
             ('projects', u'Проекты: %i' % projects_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
-            ('wall', u'Комментарии:', reverse('location_wall', args=[location.id]), 'wall-tab', 'locations/wall.html'),
+            #('wall', u'Комментарии:', reverse('location_wall', args=[location.id]), 'wall-tab', 'locations/wall.html'),
             ('participants', u'Участники: %i' % self.info['participants']['count'], reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
         ]
 
@@ -61,7 +59,6 @@ class BaseLocationView(object):
             'is_location_page': True,
         })
         ctx.update(self.update_context())
-        ctx.update(disqus_page_params('loc/'+str(loc_id), reverse('location_wall', args=[location.id]), 'locations'))
         return ctx
 
 class LocationTasksView(BaseLocationView, TemplateView):

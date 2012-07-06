@@ -166,16 +166,8 @@ class BaseEntityModel(models.Model):
 
     editable_fields = [] # Names of model text fields, which can be updated by ajax requests
 
-    disqus_category = ''
-
     class Meta:
         abstract = True
-
-    def disqus_id(self):
-        return ''
-
-    def disqus_url(self):
-        return ''
 
     def cache_key(self):
         return self.cache_prefix + str(self.id)
@@ -203,9 +195,6 @@ class BaseEntityModel(models.Model):
 
         res.update({
             'url': self.get_absolute_url(),
-            'disqus_category': self.disqus_category,
-            'disqus_id': self.disqus_id(),
-            'disqus_url': self.disqus_url(),
             'follow_button': getattr(self, 'follow_button', None), # TODO: exclude it from here
         })
         return res

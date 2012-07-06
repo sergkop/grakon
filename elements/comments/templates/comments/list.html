@@ -1,0 +1,22 @@
+{% load elements %}
+
+<div id="comments-{{ info.ct }}-{{ info.instance.id }}">
+    {% show_comments info %}
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        new Comment.CommentListView({el: $("#comments-{{ info.ct }}-{{ info.instance.id }} > .js-comments")});
+    });
+</script>
+
+<!--div id="comments"></div>
+
+<script type="text/javascript">
+    $(function(){
+        var html = Comment.generateCommentsList({{ comments_data|safe }}, {{ info.ct }}, {{ info.instance.id }});
+        $("#comments").html(html);
+
+        new Comment.CommentListView({el: $("#comments > .js-comments")});
+    });
+</script-->

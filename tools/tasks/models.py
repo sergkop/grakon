@@ -34,7 +34,7 @@ class TaskManager(BaseEntityManager):
             }
 
 # TODO: introduce choices for types
-@entity_class(['locations', 'participants'])
+@entity_class(['locations', 'participants', 'comments'])
 class Task(BaseEntityModel):
     title = models.CharField(u'Формулировка', max_length=250,
             help_text=u'краткая формулировка гражданской задачи в виде вопроса. Лучше всего начать ее со слова "как", например: "как быстро и недорого обустроить свой двор?"')
@@ -58,14 +58,6 @@ class Task(BaseEntityModel):
         'confirm_btn': u'Следить',
         'confirm_btn_long': u'Следить за задачей',
     }
-
-    disqus_category = 'tasks'
-
-    def disqus_id(self):
-        return 'task/' + str(self.id)
-
-    def disqus_url(self):
-        return reverse('task_wall', args=[self.id])
 
     def calc_rating(self):
         # Number of people provided resources for task ideas

@@ -27,7 +27,7 @@ class IdeaManager(BaseEntityManager):
             data[id]['projects']['entities'] = [proj_info[proj_id] for proj_id in data[id]['projects']['ids']]
 
 # TODO: reset cache for related projects on save (and vice versa)
-@entity_class(['participants', 'resources'])
+@entity_class(['participants', 'resources', 'comments'])
 class Idea(BaseEntityModel):
     task = models.ForeignKey(Task, related_name='ideas')
     title = models.CharField(u'Название', max_length=150)
@@ -41,14 +41,6 @@ class Idea(BaseEntityModel):
     editable_fields = ['title', 'description']
 
     roles = ['admin']
-
-    disqus_category = 'ideas'
-
-    def disqus_id(self):
-        return 'idea/' + str(self.id)
-
-    def disqus_url(self):
-        return self.get_absolute_url()
 
     def calc_rating(self):
         # Number of people provided resources for idea

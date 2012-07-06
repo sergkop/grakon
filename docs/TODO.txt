@@ -251,7 +251,6 @@ Social registration
     * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
     * create google oauth2 app from grakon account (?)
     * file with all passwords, social applications (where to get them)
-    * add Facebook App ID to disqus
 ---------------------------------------------------------------------------------
 * decorator to restrict permissions on access to edit/create views
 
@@ -427,7 +426,5 @@ Deployment:
 * put all our media (video, presentations, logos, infographics, etc.) online in social networks
 
 * use pylint, pyflakes for code checking (pylint --generate-rcfile > config_path; pylint --rcfile=config_path services/ > report.txt)
-
-* use disqus api - https://github.com/disqus/DISQUS-API-Recipes/tree/master/python/oauth, https://github.com/disqus/disqus-python
 
 * move reformal options to settings

@@ -53,7 +53,9 @@ def media_files(request):
         'libs/jquery.placeholder.min.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js',
         'js/main.js',
-        'js/resources.js'
+        'js/resources.js',
+        'js/comments.js',
+        'js/locations.js',
     )
     media.add_js(js)
 

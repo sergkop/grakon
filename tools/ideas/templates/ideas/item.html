@@ -47,17 +47,20 @@
     </div>
 
     <div class="gr-info-bar">
-        {% include "elements/comments.html" %}
+        <div class="gr-fl">
+            {% include "comments/counter.html" %}
 
-        {% if info.projects.entities %}
+            {% if info.projects.entities %}
+                <span class="gr-bullet">&nbsp;</span>
+                <span class="dimmed gr-pseudolink js-projects">Проекты: {{ info.projects.count }}</span>
+            {% endif %}
+
             <span class="gr-bullet">&nbsp;</span>
-            <span class="dimmed gr-pseudolink js-projects">Проекты: {{ info.projects.count }}</span>
-        {% endif %}
-
-        <span class="gr-bullet">&nbsp;</span>
-        <a class="bold js-link-to-project">Связать с проектом</a>
+            <a class="bold js-link-to-project">Связать с проектом</a>
+        </div>
 
         <span class="gr-fr dimmed"><a href="{{ info.instance.url }}" class="dimmed">{{ info.instance.add_time }}</a></span>
+        <div class="ym-clearfix">&nbsp;</div>
     </div>
 
     <div class="gr-slider js-projects-content">
@@ -67,5 +70,9 @@
                 <li><a href="{{ project.instance.url }}">{{ project.instance.title }}</a></li>
             {% endfor %}
         </ul>
+    </div>
+
+    <div class="hidden js-comments">
+        {% include "comments/list.html" %}
     </div>
 </div>

@@ -40,12 +40,6 @@
         padding-right: .3em;
     }
 	
-	.jquery_tabs ul.tabs-list li a.disqus-counter {
-        line-height: 1.5em;
-        padding-left: 0;
-        padding-right: 2em;
-    }
-
 	.jquery_tabs .tabhead {
 		position:absolute;
 		left:-32768px; /* LTR */

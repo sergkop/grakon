@@ -65,8 +65,8 @@ comments_templates = {
 }
 
 @register.simple_tag(takes_context=True)
-def show_comments(context, template_path, info):
-    template = get_mustache_template(template_path)
+def show_comments(context, info):
+    template = get_mustache_template('comments/list.mustache')
 
     # TODO: check that corresponding entity model has comments feature
 
@@ -76,7 +76,7 @@ def show_comments(context, template_path, info):
     ctx = {
         'ct': info['ct'],
         'e_id': info['instance']['id'],
-        'comments': info['comments'],
+        'comments': info['comments']['data'],
         'PROFILE': context['request'].PROFILE,
     }
     return comments_renderer.render(template, ctx)

@@ -10,7 +10,6 @@ from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.utils import authenticated_ajax_post
 from elements.views import entity_base_view, entity_tabs_view
-from services.disqus import disqus_page_params
 from tools.ideas.models import Idea
 from tools.projects.forms import ProjectForm
 from tools.projects.models import Project, ProjectIdeas
@@ -31,7 +30,7 @@ class BaseProjectView(object):
 
         self.tabs = [
             ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
-            ('wall', u'Комментарии:', reverse('project_wall', args=[id]), 'wall-tab', 'projects/wall.html'),
+            ('wall', u'Комментарии: '+unicode(ctx['info']['comments']['count']), reverse('project_wall', args=[id]), '', 'projects/wall.html'),
             ('participants', u'Участники: %i' % self.info['providers'], reverse('project_participants', args=[id]), '', 'projects/participants.html'),
         ]
 
@@ -46,7 +45,6 @@ class BaseProjectView(object):
             'project': self.entity,
             'admin': ctx['info']['participants']['admin']['entities'][0], # TODO: fix it
         })
-        ctx.update(disqus_page_params('project/'+str(id), reverse('project_wall', args=[id]), 'projects'))
         return ctx
 
 class ProjectView(BaseProjectView, TemplateView):
@@ -59,11 +57,6 @@ class ProjectView(BaseProjectView, TemplateView):
 
 class ProjectWallView(BaseProjectView, TemplateView):
     tab = 'wall'
-
-    def update_context(self):
-        # TODO: remove it
-        import json
-        return {'comments_data': json.dumps(self.info['comments'], ensure_ascii=False)}
 
 class ProjectParticipantsView(BaseProjectView, TemplateView):
     tab = 'participants'

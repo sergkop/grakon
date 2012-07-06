@@ -18,12 +18,3 @@ EMAILS = {
 }
 
 SLOGAN = u'Cоцсеть активистов, где виртуальные лайки становятся реальными ресурсами'
-
-DISQUS_SHORTNAME = 'grakon2'
-DISQUS_CATEGORIES = {
-    'general': 1444561,
-    'locations': 1444565,
-    'tasks': 1470945,
-    'ideas': 1482947,
-    'projects': 1490095,
-}

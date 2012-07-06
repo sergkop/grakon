@@ -15,9 +15,11 @@ class EntityCommentManager(BaseEntityPropertyManager):
                 .in_bulk(set(c.person_id for c in comments))
 
         for id in ids:
+            count = 0
             comments_by_parent = {}
             for comment in filter(lambda c: c.entity_id==id, comments):
                 comments_by_parent.setdefault(comment.parent_id, []).append(comment)
+                count += 1
 
             # Sort comments by time
             for parent_id in comments_by_parent:
@@ -43,7 +45,10 @@ class EntityCommentManager(BaseEntityPropertyManager):
                     'children': [get_comment_data(child) for child in comments_by_parent.get(comment.id, [])],
                 }
 
-            res[id] = [get_comment_data(comment) for comment in comments_by_parent.get(None, [])]
+            res[id] = {
+                'count': count,
+                'data': [get_comment_data(comment) for comment in comments_by_parent.get(None, [])],
+            }
         return res
 
     def add(self, entity, profile, comment, parent_id=None):

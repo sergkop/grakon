@@ -6,7 +6,6 @@ from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.utils import clean_html, entity_post_method
 from elements.views import entity_base_view
-from services.disqus import disqus_page_params
 from tools.ideas.forms import IdeaForm
 from tools.ideas.models import Idea, NewIdeaNotification
 
@@ -32,7 +31,6 @@ class IdeaView(TemplateView):
             'admin': self.info['participants']['admin']['entities'][0],
             'projects': projects,
         })
-        ctx.update(disqus_page_params('idea/'+str(id), self.entity.get_absolute_url(), 'ideas'))
         return ctx
 
 @entity_post_method
