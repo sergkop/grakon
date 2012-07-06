@@ -11,16 +11,6 @@
 {% endblock %}
 
 {% block right_column %}
-    <div align="center" class="gr-mb30">
-        <a id="add_idea_btn" class="gr-follow-button" href="{{ info.instance.url }}#add_idea">Добавить идею</a>
-
-        <script type="text/javascript">
-            {% if not request.user.is_authenticated %}
-                $("#add_idea_btn").click(login_dialog_init);
-            {% endif %}
-        </script>
-    </div>
-
     <div class="gr-side-item gr-mb20">
         <h4>Поддержали ресурсами:</h4>
         <p class="dimmed">

@@ -57,7 +57,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
     .gr-side-list li:last-child {border-bottom: none;}
 
 /*Кнопки соцсетей*/
-.gr-share-icons {float: right; margin: 10px 0;}
+.gr-share-icons {float: right;}
+    .jquery_tabs .gr-share-icons {width: 30%; padding: 0 0 1.8em 1.8em;}
 	td.gr-share-icons {margin: 0; vertical-align: middle; float: none;}
 		td.gr-share-icons a {margin: 0;}
 	.gr-share-icons img {opacity: .5;}
@@ -78,7 +79,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-pagination-arrow-previous:hover {background-position: 0px -39px;}
 	.gr-pagination-arrow-next {background-position: 0 -19px; margin-left: 5px;}
 	.gr-pagination-arrow-next:hover {background-position: 0 -59px;}
-.gr-grey-button {font-weight: normal; color: #000;}
+
 
 
 /* Страница задачи */
@@ -96,6 +97,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			 .gr-slider .gr-add span {cursor: pointer;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
+        .gr-ideas-content h4 a {color: #000;}
+            .gr-ideas-content h4 a:hover {color: #009EC5;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
 	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 .3em .3em 0}
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; width: 7px; margin: 0 0 0 .5em; display: inline-block}
@@ -103,7 +106,9 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
     .gr-resource-item-desc {padding-left: 1em;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
-	.gr-follow-button {font-size: 1.4em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-transform: uppercase; text-decoration: none !important;}
+	.gr-follow-button {font-size: 1.1em; font-weight: bold; padding: .8em 1em; color: #fff; display: block; border-radius: .3em; text-decoration: none !important; box-shadow: inset 0 1px 0 #8acff1; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); border: 1px solid #009ec5; text-align: center;} 
+        .gr-grey-button {color: #000; text-shadow: none; border-color: #b8b8b8; box-shadow: inset 0 1px 0 #fff; }
+        
 	.gr-editing {background: url(../images/icons/add.png) 0 -284px no-repeat; cursor: pointer; width: 17px; height: 17px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
 		.gr-editing:hover, .gr-resource-item-active:hover b {/*background-position: 0 -262px;*/}
 		h1 .gr-editing {margin-left: 0;} 

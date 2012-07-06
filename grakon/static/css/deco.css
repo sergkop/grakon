@@ -18,124 +18,28 @@ footer {
     background: linear-gradient(top, #f0f0f0, #fff);
 }
 
-.gr-follow-button {
-	background-color: #7aaa51;
-	background: -moz-linear-gradient(top, #96bc53, #79aa51);
-	background: -ms-linear-gradient(top, #96bc53, #79aa51);
-	background: -o-linear-gradient(top, #96bc53, #79aa51);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#96bc53), to(#79aa51));
-	background: -webkit-linear-gradient(top, #96bc53, #79aa51);
-	background: linear-gradient(top, #96bc53, #79aa51);
-	box-shadow: inset 0 1px 0 #c2d89c,  inset 0 -1px 0 #5a984b;
+.ym-hlist ul li.on a, .ym-button, .ui-dialog .ui-dialog-buttonpane button, .gr-follow-button {
+	background-color: #1A98C2;	
+    background: -moz-linear-gradient(top, #5cbceb, #1A98C2);
+    background: -ms-linear-gradient(top, #5cbceb, #1A98C2);
+    background: -o-linear-gradient(top, #5cbceb, #1A98C2);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#5cbceb), to(#1A98C2));
+    background: -webkit-linear-gradient(top, #5cbceb, #1A98C2);
+    background: linear-gradient(top, #5cbceb, #1A98C2);
 }
 
-.gr-follow-button:hover {
-	background-color: #6f9d49;
-	background: -moz-linear-gradient(top, #a3c667, #6f9d49);
-	background: -ms-linear-gradient(top, #a3c667, #6f9d49);
-	background: -o-linear-gradient(top, #a3c667, #6f9d49);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#a3c667), to(#6f9d49));
-	background: -webkit-linear-gradient(top, #a3c667, #6f9d49);
-	background: linear-gradient(top, #a3c667, #6f9d49);
+.ym-hlist ul li.on a:hover, .ym-button:hover, .gr-follow-button:hover {
+	background-color: #1582a7;
+    background: -moz-linear-gradient(top, #4bafe1, #1582a7);
+    background: -ms-linear-gradient(top, #4bafe1, #1582a7);
+    background: -o-linear-gradient(top, #4bafe1, #1582a7);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#4bafe1), to(#1582a7));
+    background: -webkit-linear-gradient(top, #4bafe1, #1582a7);
+    background: linear-gradient(top, #4bafe1, #1582a7);
 }
 
-.gr-follow-button:active {
-	background-color: #78a950;
-	background: -moz-linear-gradient(top, #95bc53, #78a950);
-	background: -ms-linear-gradient(top, #95bc53, #78a950);
-	background: -o-linear-gradient(top, #95bc53, #78a950);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#95bc53), to(#78a950));
-	background: -webkit-linear-gradient(top, #95bc53, #78a950);
-	background: linear-gradient(top, #95bc53, #78a950);
-}
-
-.gr-follow-button-blue {
-	background-color: #5eaad1;
-	background: -moz-linear-gradient(top, #82cef3, #5eaad1);
-	background: -ms-linear-gradient(top, #82cef3, #5eaad1);
-	background: -o-linear-gradient(top, #82cef3, #5eaad1);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#82cef3), to(#5eaad1));
-	background: -webkit-linear-gradient(top, #82cef3, #5eaad1);
-	background: linear-gradient(top, #82cef3, #5eaad1);
-	box-shadow: inset 0 1px 0 #b8e7fe,  inset 0 -1px 0 #3695c6;
-}
-
-.gr-follow-button-blue:hover {
-	background-color: #4aa8d6;
-	background: -moz-linear-gradient(top, #83d5fd, #4aa8d6);
-	background: -ms-linear-gradient(top, #83d5fd, #4aa8d6);
-	background: -o-linear-gradient(top, #83d5fd, #4aa8d6);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#83d5fd), to(#4aa8d6));
-	background: -webkit-linear-gradient(top, #83d5fd, #4aa8d6);
-	background: linear-gradient(top, #83d5fd, #4aa8d6);
-}
-
-.gr-follow-button-blue:active {
-	background-color: #4aa8d6;
-	background: -moz-linear-gradient(top, #64c2f0, #48a7d5);
-	background: -ms-linear-gradient(top, #64c2f0, #48a7d5);
-	background: -o-linear-gradient(top, #64c2f0, #48a7d5);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#64c2f0), to(#48a7d5));
-	background: -webkit-linear-gradient(top, #64c2f0, #48a7d5);
-	background: linear-gradient(top, #64c2f0, #48a7d5);
-}
-
-.ym-hlist ul li.on a, .ym-button, .ui-dialog .ui-dialog-buttonpane button {
-	background-color: #4aa9d7;	
-	background: -moz-linear-gradient(top, #66c3f0, #4aa9d7);
-	background: -ms-linear-gradient(top, #66c3f0, #4aa9d7);
-	background: -o-linear-gradient(top, #66c3f0, #4aa9d7);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#66c3f0), to(#4aa9d7));
-	background: -webkit-linear-gradient(top, #66c3f0, #4aa9d7);
-	background: linear-gradient(top, #66c3f0, #4aa9d7);	
-}
-
-.ym-hlist ul li.on a:hover, .ym-button:hover {
-	background-color: #4eabd8;	
-	background: -moz-linear-gradient(top, #84d2f8, #4eabd8);
-	background: -ms-linear-gradient(top, #84d2f8, #4eabd8);
-	background: -o-linear-gradient(top, #84d2f8, #4eabd8);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#84d2f8), to(#4eabd8));
-	background: -webkit-linear-gradient(top, #84d2f8, #4eabd8);
-	background: linear-gradient(top, #84d2f8, #4eabd8);
-}
-
-.ym-hlist ul li.on a:active, .ym-button:active {
-	background-color: #4eabd8;	
-	background: -moz-linear-gradient(top, #62c1ef, #48a7d5);
-	background: -ms-linear-gradient(top, #62c1ef, #48a7d5);
-	background: -o-linear-gradient(top, #62c1ef, #48a7d5);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#62c1ef), to(#48a7d5));
-	background: -webkit-linear-gradient(top, #62c1ef, #48a7d5);
-	background: linear-gradient(top, #62c1ef, #48a7d5);
-}
-
-.gr-green-button {
-	background: none;
-	background-color: #94bb53;
-	box-shadow: inset 0 1px 0 #c2d89c,  inset 0 -1px 0 #5a984b;	
-}
-
-.gr-green-button:hover {
-	background-color: #7aab52;
-	background: -moz-linear-gradient(top, #a4c668, #7aab52);
-	background: -ms-linear-gradient(top, #a4c668, #7aab52);
-	background: -o-linear-gradient(top, #a4c668, #7aab52);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#a4c668), to(#7aab52));
-	background: -webkit-linear-gradient(top, #a4c668, #7aab52);
-	background: linear-gradient(top, #a4c668, #7aab52);
-	
-}
-
-.gr-green-button:active {
-	background-color: #76a64f;
-	background: -moz-linear-gradient(top, #95bb53, #76a64f);
-	background: -ms-linear-gradient(top, #95bb53, #76a64f);
-	background: -o-linear-gradient(top, #95bb53, #76a64f);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#95bb53), to(#76a64f));
-	background: -webkit-linear-gradient(top, #95bb53, #76a64f);
-	background: linear-gradient(top, #95bb53, #76a64f);
-	box-shadow: inset 0 -1px 0 #0b6c9e;
+.ym-hlist ul li.on a:active, .ym-button:active, .gr-follow-button:active {
+	box-shadow: inset 0 2px 4px #308dc3;
 }
 
 

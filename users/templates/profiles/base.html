@@ -16,7 +16,7 @@
     {% if not is_admin %}
         {% include "dialogs/send_message.html" %}
 
-        {% with is_participant=is_follower button=profile.follow_button btn_class="ym-button gr-green-button gr-mb10" %}
+        {% with is_participant=is_follower button=profile.follow_button btn_class="gr-follow-button  gr-grey-button gr-mb10" %}
             {% include "participants/participate_button.html" %}
         {% endwith %}
     {% endif %}

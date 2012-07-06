@@ -6,14 +6,12 @@
 
 {% block top %}
     {% with title_name="Идея" text=idea.title field="title" %}
-        {% include "elements/title_edit.html" %}
+        <h1>Идея к задаче: <a href="{{ idea.task.get_absolute_url }}">{{idea.task.title}}</a></h1>
     {% endwith %}
 {% endblock %}
 
 {% block right_column %}
-    <div align="center" class="gr-mb20">
-        <a class="gr-follow-button" href="{{ idea.task.get_absolute_url }}">Вернуться к задаче</a>
-    </div>
+            &nbsp;
 {% endblock %}
 
 {% block content %}
