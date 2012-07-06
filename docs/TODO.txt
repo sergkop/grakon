@@ -6,6 +6,8 @@ Notifications
 * unsubscribe from letters + settings
 
 
+* remove extra class for tabs (not used after depricating disqus)
+
 * in ajax ports make sure that entity content type has allowed value
 
 * automatically add target="_blank" to links in emails

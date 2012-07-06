@@ -35,11 +35,7 @@
 		line-height: 1.5em;
 		padding: .8em 1.5em .6em;
 	}
-	
-	.jquery_tabs ul.tabs-list li.wall-tab a {
-        padding-right: .3em;
-    }
-	
+
 	.jquery_tabs .tabhead {
 		position:absolute;
 		left:-32768px; /* LTR */

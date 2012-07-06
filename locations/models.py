@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.db import models
 from django.db.models import Q
 
-from elements.models import ENTITIES_MODELS
+from elements.models import ENTITIES_MODELS, FEATURES_MODELS
 from services.cache import cache_function
 
 class LocationManager(models.Manager):
@@ -33,6 +33,8 @@ class LocationManager(models.Manager):
         if len(other_ids) > 0:
             other_res = dict((id, {}) for id in other_ids)
 
+            comments_data = FEATURES_MODELS['comments'].objects.get_for(Location, other_ids)
+
             ct_id = ContentType.objects.get_for_model(self.model).id
             locations = self.filter(id__in=other_ids).select_related()
             participants_ids = []
@@ -56,8 +58,10 @@ class LocationManager(models.Manager):
                     'entities': [{'id': id} for id in participants_data['ids']],
                 }
 
-            from users.models import Profile
-            profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+                # Comments
+                other_res[loc.id]['comments'] = comments_data[loc.id]
+
+            profiles_by_id = ENTITIES_MODELS['participants'].objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
                     .in_bulk(set(participants_ids))
 
             for loc in locations:
@@ -100,7 +104,7 @@ class Location(models.Model):
     cache_prefix = 'location_info'
 
     # A hack to implement participants
-    features = ['participants']
+    features = ['participants', 'comments']
     roles = ['follower']
 
     def level(self):

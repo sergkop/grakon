@@ -73,9 +73,12 @@ def show_comments(context, info):
     # TODO: move getting renderer out of here
     comments_renderer = mustache_renderer(comments_templates)
 
+    # Hack to make it work for locations and entities
+    entity_id = info['instance']['id'] if type(info['instance']) is dict else getattr(info['instance'], 'id')
+
     ctx = {
         'ct': info['ct'],
-        'e_id': info['instance']['id'],
+        'e_id': entity_id,
         'comments': info['comments']['data'],
         'PROFILE': context['request'].PROFILE,
     }
