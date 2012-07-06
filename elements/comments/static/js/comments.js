@@ -32,7 +32,6 @@ var Comment = {
         return $( Mustache.render("{{>comment_field}}", {}, PARTIALS) );
     },
 
-    // This view should not be shown to unauthenticated users
     // Takes keep_on_submit option
     AddCommentFieldView: Backbone.View.extend({
         events: {"click .ym-button": "addComment"},

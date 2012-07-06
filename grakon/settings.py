@@ -188,6 +188,9 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons3': "",
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
+    'plugins': "autoresize",
+    "autoresize_min_height": 300,
+    "autoresize_max_height": 500,
 }
 TINYMCE_COMPRESSOR = True
 
