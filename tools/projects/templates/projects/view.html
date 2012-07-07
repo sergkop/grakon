@@ -1,11 +1,13 @@
 <div class="gr-descr">
-    <div class="gr-fl">
-        {% with person=admin %}
-            {% include "participants/person.html" %}
-        {% endwith %}
+    <div class="gr-mb20">
+        <div class="gr-fl">
+            {% with person=admin %}
+                {% include "participants/person.html" %}
+            {% endwith %}
+        </div>
+        <div class="dimmed" align="right">{{ info.instance.add_time }}</div>
+        <div class="ym-clearfix">&nbsp;</div>
     </div>
-    <div class="dimmed" align="right">{{ info.instance.add_time }}</div>
-    <div class="ym-clearfix">&nbsp;</div>
 
     <div class="gr-ideas-list">
         {% if project.deadline or is_admin %}

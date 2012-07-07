@@ -24,8 +24,9 @@
             <div class="gr-resource-needs gr-resource-highlighted">
                 {% if is_admin %}
                     <!--div class="gr-close" onclick="remove_project_resource({{ info.ct }}, {{ info.instance.id }}, '{{ resource.name }}')">&nbsp;</div-->
+                    <h3>{{ resource.name }}</h3>
                 {% else %}
-                    <i class="gr-add">&nbsp;</i>
+                    <h3><i class="gr-add">&nbsp;</i>{{ resource.name }}</h3>
 
                     <div class="gr-small-popup ym-form js-provide-resource-popup">
                         <div class="gr-close js-close">&nbsp;</div>
@@ -40,7 +41,7 @@
                     </div>
                 {% endif %}
 
-                <h2>{{ resource.name }}</h2>
+                
                 <p>{{ resource.description }}</p>
                 {% if is_admin %}
                     <div style="text-align: right;"><i class="gr-editing">&nbsp;</i></div>

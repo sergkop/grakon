@@ -56,25 +56,26 @@ footer {
         background: linear-gradient(top, #fff, #e6e6e6);
 }
 
-.gr-grey-button:hover {
+
+.gr-resource-highlighted {
+    background-color: #e7e7e7;    
+    background: -moz-linear-gradient(top, white, #e7e7e7);
+    background: -ms-linear-gradient(top, white, #e7e7e7);
+    background: -o-linear-gradient(top, white, #e7e7e7);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#e7e7e7));
+    background: -webkit-linear-gradient(top, white, #e7e7e7);
+    background: linear-gradient(top, white, #e7e7e7);   
+}
+
+.gr-grey-button:hover, .gr-resource-highlighted:hover  {
     background: none;
     background-color: #e6e6e6; 
     color: #333;
 }
 
-.gr-grey-button:active {
+.gr-grey-button:active, .gr-resource-highlighted:active  {
     background: none;
     background-color: #e6e6e6; 
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.gr-resource-needs:hover {
-    background-color: #f0f9ff;
-    background: -moz-linear-gradient(top, #fff, #f0f9ff);
-    background: -ms-linear-gradient(top, #fff, #f0f9ff);
-    background: -o-linear-gradient(top, #fff, #f0f9ff);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#f0f9ff));
-    background: -webkit-linear-gradient(top, #fff, #f0f9ff);
-    background: linear-gradient(top, #fff, #f0f9ff);
 }
 

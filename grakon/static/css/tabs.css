@@ -18,7 +18,7 @@
 
 
 	.jquery_tabs {
-		margin:0 0 1em;
+		margin:0;
 	}
 
 	.jquery_tabs ul.tabs-list {
@@ -33,7 +33,7 @@
 
 	.jquery_tabs ul.tabs-list li a {
 		line-height: 1.5em;
-		padding: .8em 1.5em .6em;
+		padding: 1em 1.5em .9em;
 	}
 
 	.jquery_tabs .tabhead {

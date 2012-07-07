@@ -451,7 +451,7 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content { background-color: #fff; border: 2px solid #ddd; border-width: 2px 0; font-size: .9em; margin-top: -9px; padding-bottom: 3em;
+	.gr-content { background-color: #fff; border: 2px solid #ddd; border-width: 2px 0; font-size: .9em; margin-top: -2px; padding-bottom: 3em;
 	box-shadow: 100px -20px 120px #f4f4f4, -100px -20px 120px #f4f4f4}
 		#main .gr-content {box-shadow: none; border-top: none; background: #f0f9ff url(../../images/bg-main-icons.jpg) 0; padding: 1em 0}
 		#search .gr-content {box-shadow: none; border-top: none; padding: 1em 0}

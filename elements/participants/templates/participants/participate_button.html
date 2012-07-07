@@ -4,7 +4,7 @@
 
 {% with role=button.role id=info.instance.id ct=info.ct %}
     {% if is_participant %}
-        <a id="cancel_{{ role }}_btn_{{ ct }}_{{ id }}" class="{{ btn_class }}"><span>{{ button.cancel_btn_long }}</span></a>
+        <a id="cancel_{{ role }}_btn_{{ ct }}_{{ id }}" class="{{ btn_class }} {{ pressed_button }}"><span>{{ button.cancel_btn_long }}</span></a>
     {% else %}
         <a id="confirm_{{ role }}_btn_{{ ct }}_{{ id }}" class="{{ btn_class }}"><span>{{ button.confirm_btn_long }}</span></a>
     {% endif %}

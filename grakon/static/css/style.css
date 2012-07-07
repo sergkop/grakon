@@ -3,10 +3,12 @@ input {vertical-align: middle;}
 input[type=radio] {vertical-align: top;}
 
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
-    .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 24px; background:url(../images/bg-breadcrumbs.png) 0 -52px no-repeat; z-index:1}
-	.gr-breadcrumbs li.on a:hover  i {background-position: 0 -79px;} 
-	.gr-breadcrumbs li.on a i, .gr-breadcrumbs li.on a:active i {background-position: 0 -26px;}
-	.gr-breadcrumbs li.on a {color: #fff;}
+    .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 26px; background:url(../images/bg-breadcrumbs.png) 0 -1px no-repeat; z-index:1}
+	.gr-breadcrumbs li.on a:hover  i {background-position: 0 -56px;} 
+	.gr-breadcrumbs li.on a i {background-position: 0 -28px;}
+    .gr-breadcrumbs li.on a:active i {background-position: 0 -84px;}
+	.gr-breadcrumbs li.on a {color: #fff; border-color: #009dc4; box-shadow: inset 0 1px 0 #8acff1;}
+        .gr-breadcrumbs li.on a:hover {box-shadow: inset 0 1px 0 #7bc5e8;}
 
 /*Общие стили для постоянного использования*/
 .gr-fr {float: right !important;}
@@ -24,6 +26,7 @@ input[type=radio] {vertical-align: top;}
 .gr-mt30 {margin-top: 3em !important;}
 .gr-mb30 {margin-bottom: 3em !important;}
 .gr-pt20 {padding-top: 2em !important;}
+.gr-pb10 {padding-bottom: 1em !important;}
 .gr-pb20 {padding-bottom: 2em !important;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
 .gr-bb-grey-lt {border-bottom: 1px solid #ddd;}
@@ -47,10 +50,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 /*Sidebars*/
 .gr-side-item {position: relative;} 
 
-.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add-2.png) 0 0 no-repeat; position: absolute; left: -30px; top: 0; width: 21px; height: 21px; cursor: pointer;}
+.gr-ideas-item .gr-add span.gr-add-icon {background:url(../images/icons/add-2.png) 0 0 no-repeat; width: 27px; height: 28px; cursor: pointer;}
         .gr-ideas-item .gr-add span.gr-add-profile {top: 4px;}
-	.gr-ideas-item .gr-add span.gr-add-icon:hover {text-decoration: none; border-bottom: none !important; background-position: 0 -26px;}
-	.gr-ideas-item .gr-add span.gr-add-icon:active {background-position: 0 -52px;}
+	.gr-ideas-item .gr-add span.gr-add-icon:hover {text-decoration: none; border-bottom: none !important; background-position: 0 -28px;}
+	.gr-ideas-item .gr-add span.gr-add-icon:active {background-position: 0 -58px;}
 
 .gr-side-list, .gr-side-list li {margin: 0; padding: 0; list-style-type: none;}	
     .gr-side-list li {padding-bottom: .7em; margin-bottom: .7em; border-bottom: 1px solid #ddd;}
@@ -58,7 +61,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Кнопки соцсетей*/
 .gr-share-icons {float: right;}
-    .jquery_tabs .gr-share-icons {width: 30%; padding: 0 0 1.8em 1.8em;}
+    .jquery_tabs .gr-share-icons {width: 30%; padding: .7em 0 0 1.8em;}
 	td.gr-share-icons {margin: 0; vertical-align: middle; float: none;}
 		td.gr-share-icons a {margin: 0;}
 	.gr-share-icons img {opacity: .5;}
@@ -91,16 +94,16 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #ddd; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
 	.gr-ideas-list .gr-ideas-item:last-child, .gr-ideas-list .gr-ideas-item-last {border: none; padding-top: 0;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
-	.gr-add {font-size: 1.3em; font-weight: bold; color: #009ec5; position: relative; display: inline-block;}
-		.gr-ideas-item .gr-add span {background:url(../images/icons/add.png) -9px -49px no-repeat;  padding: 0 0 0 1em;}
-			.gr-ideas-item .gr-idea-selected span {color: #000; background-position: -9px -63px;}
+	.gr-add {font-size: 1.1em; font-weight: bold; color: #b5d188; position: absolute; top: -5px; left: -40px; text-align: center}
+        .gr-slider .gr-add {color: #80ab56;}
+		.gr-ideas-item .gr-add span {display: block; width: 26px; height: 26px; background:url(../images/icons/add.png) 0 -51px no-repeat;}
 			 .gr-slider .gr-add span {cursor: pointer;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
 	.gr-ideas-content {margin: 0 0 20px; position: relative;}
         .gr-ideas-content h4 a {color: #000;}
             .gr-ideas-content h4 a:hover {color: #009EC5;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
-	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 .3em .3em 0}
+	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 .5em .5em 0}
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; width: 7px; margin: 0 0 0 .5em; display: inline-block}
 		.gr-resource-item b {background:url(../images/icons/add.png) 0 -206px no-repeat;  width: 13px; height: 16px; cursor: pointer;  margin: 2px 0 0 .5em; display: inline-block;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
@@ -110,7 +113,8 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
         .gr-grey-button {color: #000; text-shadow: none; border-color: #b8b8b8; box-shadow: inset 0 1px 0 #fff; }
         
 	.gr-editing {background: url(../images/icons/add.png) 0 -284px no-repeat; cursor: pointer; width: 17px; height: 17px; margin-left: .3em; vertical-align:middle;display: inline-block; text-decoration: none !important;}
-		.gr-editing:hover, .gr-resource-item-active:hover b {/*background-position: 0 -262px;*/}
+		.gr-editing:hover, .gr-resource-item-active:hover b {background-position: 1px -224px;}
+		.gr-editing:active, .gr-resource-item-active:active b {background-position: 1px -261px;}
 		h1 .gr-editing {margin-left: 0;} 
         .gr-editor {border: 1px solid #CCC; padding: 5px 20px 5px 5px; background-color: #fff; font-weight: normal; margin-right: .5em; min-height: 1.6em;}
         .gr-editor-btn {cursor: pointer; margin-right: 1.5em; line-height: 2.5em; color: #009EC5;}
@@ -119,7 +123,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
         .bold {font-weight: bold;}
 
-.gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;}	
+.gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; /*padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;*/}	
 	.gr-close { float: right; width: 15px; height: 15px; background:url(../images/icons/add.png) -7px -104px no-repeat; cursor: pointer; z-index:1;}
 		.gr-close:hover {background-position: 0 -191px;}
 	.gr-slider-inactive {border-color: #fff; background-color: #fff;}
@@ -140,20 +144,20 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	
 	
 /* Страница проекта */
-.gr-resource-needs {border: 2px solid #c5c9d2; margin-bottom: 1em; position: relative; padding: 1em 1.2em 1em 2.5em; }
-	.gr-resource-needs  h2 {margin: 0 0 .4em;}
-	.gr-resource-needs  p {margin:  1em 0 0;}
+.gr-resource-needs {margin-bottom: 1em; position: relative; padding: 1em; border-radius: .3em; background-color: #b5d188; }
+	.gr-resource-needs  h3 {color: #fff;  margin-bottom: .25em;}
+	.gr-resource-needs  p {margin:  0;}
 	.gr-small-popup  {position: absolute; z-index: 1; top: 0; left: 0; background: #f7fcff; border: 3px solid #b5d188; padding: .7em; border-radius: .5em; box-shadow: 1px 1px 2px #c6d3db; line-height: 1.3em; width: 100%;}
 		.gr-hover-popup {width: 135px;}
 		.gr-add-popup {top: -10px; left: -50px; width: 250px; position: absolute; z-index:2;}
 		.gr-small-popup i {position: absolute; top: -7px; left: 50%; margin-left: -5px; width: 10px; height: 7px; background:url(../images/icons/add.png) -10px -138px no-repeat;}
 		.gr-join {background:url(../images/icons/add.png) 0 -149px no-repeat; padding: 0 0 .2em 2em;} 
 		.gr-small-popup .highlight {cursor: pointer;}
-	.gr-resource-highlighted {background-color: #f0f9ff; border: 1px solid #009ec5; box-shadow: 1px 1px 0 #e4e4e4; cursor: pointer;} 
-		.gr-resource-highlighted h2 {color: #009ec5;}	
-	.gr-resource-needs .gr-add {position: absolute; top: 1.2em; left: .5em; background: url(../images/icons/add.png) 0 -165px no-repeat; width: 13px; height: 13px; cursor: pointer;}
-		.gr-resource-needs:hover .gr-add {background-position: 0 -244px;}
-		.gr-resource-needs .gr-add:active {background-position: 0 -165px;}
+	.gr-resource-highlighted {border: 1px solid #b8b8b8; box-shadow: 1px 1px 0 #e4e4e4; cursor: pointer;} 
+		.gr-resource-highlighted h3 {color: #7aa94f;  margin-bottom: .5em;}	
+	.gr-resource-needs .gr-add {position: relative; top: 0; left: 0; background: url(../images/icons/add-2.png) 0 0 no-repeat; padding-left: 25px; cursor: pointer; line-height: 0;}
+		.gr-resource-needs:hover .gr-add {background-position: 0 -28px;}
+		.gr-resource-needs .gr-add:active {background-position: 0 -58px;}
 		.gr-add-popup .gr-close {display: block;}
 
 

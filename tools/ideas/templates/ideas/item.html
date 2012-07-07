@@ -2,9 +2,10 @@
     <div class="gr-ideas-content">
         <div class="gr-slider gr-slider-inactive">
             <div class="gr-close js-close-inactive">&nbsp;</div>
-            <div class="gr-add gr-idea-selected">
+            <div class="gr-add">
                 <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы">&nbsp;</span>
-                <span class="js-resources-list">{{ info.resources|length }}</span>
+                {{ info.resources|length }}
+                <!--<span class="gr-resources-counter js-resources-list">{{ info.resources|length }}</span>-->
             </div>
 
             <ul class="gr-source-list-slider js-resource-items">

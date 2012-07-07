@@ -3,8 +3,9 @@
         {% for info in pagination_entities %}
             <div class="gr-ideas-item">
                 <div class="gr-ideas-content">
-                    <div class="gr-add gr-idea-selected">
-                        <span>{{ info.providers }}</span>
+                    <div class="gr-add">
+                        <span>&nbsp;</span>
+                        {{ info.providers }}
                     </div>
                     <h4><a href="{{ info.instance.url }}">{{ info.instance.title }}</a></h4>
                     <div class="gr-mb10">
