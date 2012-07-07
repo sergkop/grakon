@@ -61,7 +61,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Кнопки соцсетей*/
 .gr-share-icons {float: right;}
-    .jquery_tabs .gr-share-icons {width: 30%; padding: .7em 0 0 1.8em;}
+    .jquery_tabs .gr-share-icons {width: 30%; padding: .7em 0 .7em 1.8em;}
 	td.gr-share-icons {margin: 0; vertical-align: middle; float: none;}
 		td.gr-share-icons a {margin: 0;}
 	.gr-share-icons img {opacity: .5;}
@@ -96,6 +96,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
 	.gr-add {font-size: 1.1em; font-weight: bold; color: #b5d188; position: absolute; top: -5px; left: -40px; text-align: center}
         .gr-slider .gr-add {color: #80ab56;}
+        .gr-slider .gr-add i {font-style: normal; cursor: pointer;}
 		.gr-ideas-item .gr-add span {display: block; width: 26px; height: 26px; background:url(../images/icons/add.png) 0 -51px no-repeat;}
 			 .gr-slider .gr-add span {cursor: pointer;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
@@ -123,10 +124,10 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
         .bold {font-weight: bold;}
 
-.gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; /*padding: .5em .7em; line-height: 1.8em; margin-bottom: 1em;*/}	
+.gr-slider {position: relative; border: 1px solid #82d1fa; border-width: 1px 0; background-color: #f0f9ff; padding: .5em .7em; /*line-height: 1.8em;*/  margin-bottom: 1em;}	
 	.gr-close { float: right; width: 15px; height: 15px; background:url(../images/icons/add.png) -7px -104px no-repeat; cursor: pointer; z-index:1;}
 		.gr-close:hover {background-position: 0 -191px;}
-	.gr-slider-inactive {border-color: #fff; background-color: #fff;}
+	.gr-slider-inactive {border-color: #fff; background-color: #fff; padding: 0; margin: 0;}
 		.gr-slider-inactive .gr-close {display: none;}
 	
 	.gr-source-list-slider, .gr-source-list-slider li {margin: 0; padding: 0; list-style-type: none; color: #000; }   

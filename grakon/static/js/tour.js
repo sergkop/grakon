@@ -140,11 +140,12 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-ideas-item:first h3',
+                    sel:        '.js-resources-list:first',
                     msg:        '<p>По клику на счетчик ресурсов открывается более подробная информация о пользователях, поддержавших идею.</p>',
-                    elemPos:    'bc',
-                    boxPos:     'tc',
+                    elemPos:    'br',
+                    boxPos:     'tl',
                     offsetTop:  20,
+                    offsetLeft:  20,
                     delay:      1000,
                     onStart:    function(e, b){
                             this.spotlight({
@@ -157,7 +158,7 @@ $(function(){
                     }
                 },
                 {
-                    sel:        '.gr-ideas-item:first h3',
+                    sel:        '.gr-ideas-item:first',
                     msg:        '<p>Вернемся на страницу региона</p>',
                     elemPos:    'bc',
                     boxPos:     'tc',
@@ -195,7 +196,7 @@ $(function(){
                     msg:        '<p>Здесь автор описывает суть и&nbsp;план реализации проекта, определяет дедлайн...</p>',
                     elemPos:    'tr',
                     boxPos:     'tl',
-                    offsetTop:  20,
+                    offsetTop:  10,
                     offsetLeft: 10,
                     delay:      3000,
                     onStart:    function(e, b){
@@ -220,7 +221,7 @@ $(function(){
                 },
                 {
                     sel:        '.gr-descr',
-                    msg:        '<p align="center"><big>Когда вся команда собрана и&nbsp;ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p>',
+                    msg:        '<p align="center"><big>Когда вся команда собрана и&nbsp;ресурсы найдены, начинайте воплощать ваши идеи в&nbsp;жизнь!</big></p><p align="center"><a href="/">На главную</a>&nbsp; &nbsp; &nbsp; &nbsp;<a href="/register">Регистрация</a></p>',
                     elemPos:    'tc',
                     boxPos:     'tc',
                     delay:      3000
