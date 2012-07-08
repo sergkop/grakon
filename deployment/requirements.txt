@@ -24,6 +24,7 @@ dnspython
 boto
 
 # Background tasks
+supervisor
 django-celery<2.6
 
 # Misc

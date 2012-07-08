@@ -25,11 +25,12 @@ def web_server():
     env.env_path = env.conf['env_path'] = os.path.join(proj_path, 'env/') # virtualenv dir
     env.manage_path = os.path.join(env.code_path, 'manage.py') # path to manage.py
 
+    # TODO: logs directory should be located on database server
+    env.logs_path = env.conf['logs_path'] = os.path.join(proj_path, 'logs/')
+
     # Static files
     env.static_path = env.conf['static_path'] = os.path.join(proj_path, 'static/')
     env.STATIC_ROOT = env.conf['STATIC_ROOT'] = os.path.join(env.static_path, 'static/')
-
-    return env.conf
 
 UBUNTU_PACKAGES = [
     # Python
@@ -140,7 +141,7 @@ def init_db():
 def prepare_code():
     env.user = env.deploy_user # TODO: do we need it?
 
-    cmd('mkdir -p %s %s %s' % (env.code_path, env.env_path, env.STATIC_ROOT))
+    cmd('mkdir -p %s %s %s' % (env.code_path, env.env_path, env.STATIC_ROOT, env.logs_path))
 
     cmd('git clone %s %s' % (REPOSITORY, env.code_path))
     # TODO: detect if requirements.txt was updated in git pull and run pip install -r requirements.txt
@@ -167,9 +168,13 @@ def prepare_code():
 
     # fcgi starting script
     server_sh_path = os.path.join(env.code_path, 'deployment', 'server.sh')
-    file_from_template(os.path.join(env.code_path, 'deployment', 'server.sh.template'),
+    file_from_template(os.path.join(env.code_path, 'deployment', 'templates', 'server.sh.template'),
             server_sh_path, env.conf)
     sudo("chmod +x %s" % server_sh_path)
+
+    # superuserd config file
+    file_from_template(os.path.join(env.code_path, 'deployment', 'supervisor.conf'),
+            os.path.join(env.code_path, 'deployment', 'templates', 'supervisor.conf'), env.conf)
 
     # TODO: change socket file owner to nginx user (www-data)
 
@@ -177,7 +182,7 @@ def prepare_code():
 
     # Nginx configuration
     sudo('cp /etc/nginx/nginx.conf /etc/nginx/nginx-prev.conf')
-    file_from_template(os.path.join(env.code_path, 'deployment', 'nginx.conf.template'),
+    file_from_template(os.path.join(env.code_path, 'deployment', 'templates', 'nginx.conf.template'),
             '/etc/nginx/nginx.conf', env.conf)
 
     deploy_static_files()

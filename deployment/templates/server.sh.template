@@ -1,8 +1,6 @@
 #!/bin/bash
-NAME=grakon
-
-PIDFILE=/var/run/$NAME.pid
-SOCKET=%(path)s$NAME.sock
+PIDFILE=/var/run/grakon.pid
+SOCKET=%(path)sgrakon.sock
 
 METHOD="prefork"
 
