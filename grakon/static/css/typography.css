@@ -73,9 +73,9 @@
 	}
 
 	h1 {
-		font-size:1.8em;
+		font-size:2em;
 		font-weight: bold;
-		margin: 0 0 .5em;
+		margin: 0 0 .9em;
 	}
 	
 	h1 small {
@@ -138,7 +138,7 @@
 	ul,
 	ol{
 		font-size:1em;
-		margin: 1.5em 0 0 1em;
+		margin: 1.5em 0 1em 1em;
 	}
 
 	ul {

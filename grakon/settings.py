@@ -176,7 +176,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # TODO: remove unlink button?
-TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce.js'
+TINYMCE_JS_URL = STATIC_URL + 'libs/tiny_mce/tiny_mce_src.js'
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'libs', 'tiny_mce')
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',

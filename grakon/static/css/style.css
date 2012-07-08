@@ -93,7 +93,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 .gr-ideas-list {}
 	.gr-ideas-item {position: relative; margin: 0 0 20px 0; border-bottom: 1px solid #ddd; box-shadow: 0 -1px 0#82d1fa #e7e7e7;}
 	.gr-ideas-list .gr-ideas-item:last-child, .gr-ideas-list .gr-ideas-item-last {border: none; padding-top: 0;}
-	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #f0f9ff; padding: 10px; border: 1px solid #82d1fa; border-width: 1px 0;}
+	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #d9edf7; padding: 10px;}
 	.gr-add {font-size: 1.1em; font-weight: bold; color: #b5d188; position: absolute; top: -5px; left: -40px; text-align: center}
         .gr-slider .gr-add {color: #80ab56;}
         .gr-slider .gr-add i {font-style: normal; cursor: pointer;}
