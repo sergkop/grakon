@@ -29,7 +29,7 @@ def entity_tabs_view(view):
     return {
         'tab': view.tab,
         'tabs': view.tabs,
-        'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][4],
+        'template_path': filter(lambda t: t[0]==view.tab, view.tabs)[0][3],
     }
 
 # TODO: fix it

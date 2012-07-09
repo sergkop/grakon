@@ -6,8 +6,8 @@ from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
 from elements.utils import clean_html, entity_post_method
 from elements.views import entity_base_view
-from tools.ideas.forms import IdeaForm
-from tools.ideas.models import Idea, NewIdeaNotification
+from tools.ideas.models import Idea
+from tools.ideas.notification import NewIdeaNotification
 
 class IdeaView(TemplateView):
     template_name = 'ideas/view.html'
@@ -26,7 +26,6 @@ class IdeaView(TemplateView):
 
         projects = [pi.project for pi in self.entity.projects.select_related('project')]
         ctx.update({
-            'title': u'Идея: '+self.entity.title,
             'idea': self.entity,
             'admin': self.info['participants']['admin']['entities'][0],
             'projects': projects,
@@ -35,12 +34,11 @@ class IdeaView(TemplateView):
 
 @entity_post_method
 def add_idea(request, entity):
-    form = IdeaForm(request.POST)
-    if not form.is_valid():
-        return HttpResponse('Форма заполнена неверно')
+    description = request.POST.get('description', '').strip()
+    if description == '':
+        return HttpResponse(u'Пожалуйста, опишите идею')
 
-    idea = Idea.objects.create(task=entity, title=form.cleaned_data['title'],
-            description=clean_html(form.cleaned_data['description']))
+    idea = Idea.objects.create(task=entity, description=clean_html(description))
 
     EntityParticipant.objects.add(idea, request.profile, 'admin')
 

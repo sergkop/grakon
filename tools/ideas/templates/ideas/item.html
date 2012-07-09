@@ -5,7 +5,6 @@
             <div class="gr-add">
                 <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы">&nbsp;</span>
                 <i class="js-resources-list">{{ info.resources|length }}</i>
-                <!--<span class="gr-resources-counter js-resources-list">{{ info.resources|length }}</span>-->
             </div>
 
             <ul class="gr-source-list-slider js-resource-items">
@@ -39,9 +38,13 @@
         </div>
 
         <div class="gr-mb10">
-            {% with person=info.participants.admin.entities.0 %}
-                {% include "participants/person.html" %}
-            {% endwith %}
+            {% if show_idea_admin %}
+                {% with person=info.participants.admin.entities.0 %}
+                    {% include "participants/person.html" %}
+                {% endwith %}
+            {% else %}
+                <b><a href="{{ info.task.url }}">{{ info.task.title }}</a></b>
+            {% endif %}
         </div>
         <div>{{ info.instance.description|safe }}</div>
     </div>

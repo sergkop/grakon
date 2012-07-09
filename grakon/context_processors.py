@@ -51,6 +51,7 @@ def media_files(request):
         'libs/backbone.js',
         'libs/chosen/chosen.jquery.min.js',
         'libs/jquery.placeholder.min.js',
+        'libs/jquery.autosize.js',
         reverse('code_data') if settings.DEBUG else 'js/code_data.js',
         'js/main.js',
         'js/resources.js',

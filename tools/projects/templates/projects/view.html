@@ -45,11 +45,10 @@
         {% if ideas %}
             <div class="gr-ideas-item">
                 <h5>Идеи:</h5>
-                <p>
-                    {% for idea in ideas %}
-                        <a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a><br />
-                    {% endfor %}
-                </p>
+                {% for idea in ideas %}
+                    <a href="{{ idea.get_absolute_url }}">{{ idea.task.title }}</a>
+                    <div>{{ idea.description|safe }}</div>
+                {% endfor %}
             </div>
         {% endif %}
     </div>

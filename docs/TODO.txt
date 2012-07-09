@@ -1,34 +1,22 @@
+Оксана:
+    * заглушка для пустой страницы комментов и незалогиненных пользователей
+    * На страницах идей и задач нет табов, но стоит такой же отступ как и на остальных, что создает много пустого места и выглядит странно
+
+* help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select"
+
+* drop idea names (show task names in lists + short version of idea on main page, project)
+
+* add resource button delays opening popup for over 1 sec
+
 Notifications
     * notifications about adding resources
     * configure celery to perform tasks periodically
-    * run celery as a daemon
+    * fix texts for notifications
+    * hide list of notifications in one email
 
 * unsubscribe from letters + settings
-
-
-* remove extra class for tabs (not used after depricating disqus)
-
-* in ajax ports make sure that entity content type has allowed value
-
 * automatically add target="_blank" to links in emails
-* template filter to produce html code for emails
-
-* 2 accounts didn't receive email verification letter
-
-* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
-* use Amazon SNS to receive bounce and complaints notifications
-* model with emails which should be blacklisted
-* send emails about считайте сами
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
-* reinstall pydkim on server
 * redirect url to track pressing on external links in emails
-
-* bug with providing resources to project (error on backend)
-
-* write docs (entities, features, info, ajax ports, code_data)
-
-* move html blocks for entities items in special templates and add template path to entity models
-* make ideas, tasks editable in lists
 
 * use tinymce parameters from settings.py in js
 * remove tinymce buttons opening popups
@@ -36,11 +24,39 @@ Notifications
 * rewrite tinymce widget
 * getContent() should be taken for specific tinymce instances, not active
 
+
+* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+* use Amazon SNS to receive bounce and complaints notifications
+* model with emails which should be blacklisted
+* send emails about считайте сами
+* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
+* reinstall pydkim on server
+
+
+UI:
+    * how to show logged out user if he can add idea?
+    * pressing enter in comments doesn't add new line in final text - use it for submit?
+    * на страницах "своих" локейшнов есть кнопки "отписаться" в правом столбце. Они довольно не понятны:
+      от чего отписаться? например, на вкладке комментов - отписаться от комментов? Давайте вообще выкинем
+      эти кнопки. Пусть пользователи отписываются от локэйшнов через страницу профайла.
+    * счетчики под плюсиками 0- непонятно, что они кликабельны
+
+* consider all the cases for showing lists under task/idea (press one button first, then another)
+
+* in ajax ports make sure that entity content type has allowed value
+
+* autolinking in comments
+
+* template filter to produce html code for emails
+
+* write docs (entities, features, info, ajax ports, code_data)
+
+* move html blocks for entities items in special templates and add template path to entity models
+* make ideas, tasks editable in lists
+
 * don't load social networks scripts (include loading scripts in elements/share.html)
 
 * links in breadcrumbs should depend on type of page or tab on location
-
-* system of comments
 
 * add tabs names to title for entities, image url and description should be specified as context variable
 
@@ -49,9 +65,6 @@ Search
     * #search in styles and body, {% block body %}
     * qfilter in Location.get_entities
     * reimplement SearchForm and view
-
-
-* on deleting entities profile rating is not updated
 
 * include other factors in users sorting (number of contacts, etc.)
 
@@ -74,16 +87,12 @@ Search
 
 * descriptions of html fields in forms are not shown (show inside field as grey text)
 
-* small html fixes of idea page with Yulia
-
 * update ratings on any changes (adding, deleting, following, etc)
 * override save() method of EntityProperty models to reset cache
 
 * sorting lists by popularity, date (choose sorting type)
 
 * drop yandex metrika?
-
-* drop idea names
 
 * ability to delete ideas, tasks (without resources), projects
 
@@ -95,15 +104,11 @@ Search
 
 * resources in adding idea popup
 
-* idea title is not always a link (link was removed)
-
 * count down counter under resource description
 
 * special location placeholder for empty tasks and projects lists should be moved to templates in locations
 
 * use entity_base_view in location
-
-* Убрать пустые параграфы из описания задачи/проекта. Мы можем как-то это контролировать?
 
 * on task list page get_related_info is called twice
 
@@ -115,13 +120,10 @@ Yulia:
     * send message dialog
     * feedback form formatting
     * in chrome human icon above ideas on task page has blue top line
-    * help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select" 
-    * idea page formatting, in particular - (пусто) when no resources are added
     * popup for linking idea to project
     * remove underlining links in main menu
     * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
-
-* consider all the cases for showing lists under task/idea (press one button first, then another)
+    * when user closes slidedown list of followers or projects, boldness of link doesn't go away
 
 * can admin unfollow an entity?
 
@@ -138,9 +140,11 @@ Yulia:
 
 * open share dialogs in popups (vk, fb, twitter)
 -------------------------------------------------------------------------------
-* when mouse is over the date - show exact time in hover
+* update comment counters when comment is added
 
-* split requirements to deploy and develop, use inclusion
+* in forms near location selector allow to chose current location using geolocation
+
+* when mouse is over the date - show exact time in hover
 
 * conventions file for front-end developer (docs about tabs and buttons, page layout)
 
@@ -182,11 +186,14 @@ Dialog forms:
 * link social likes to the page on which they are located
 
 Deployment:
+    * split requirements to deploy and develop, use inclusion
     * switch to uwsgi
     * database backups
     * configure firewall (ufw)
     * introduce separate server for db, static and media files, memcached
     * describe deployment process in docs
+    * start using https://github.com/ronnix/fabtools and https://github.com/sebastien/cuisine
+    * monitoring https://github.com/sebastien/watchdog
 
 Performance:
     * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)

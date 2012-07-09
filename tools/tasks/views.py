@@ -8,8 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from elements.locations.utils import breadcrumbs_context
 from elements.participants.models import EntityParticipant
-from elements.resources.models import RESOURCE_CHOICES
-from elements.views import entity_base_view, entity_tabs_view
+from elements.views import entity_base_view
 from tools.ideas.models import Idea
 from tools.tasks.forms import TaskForm
 from tools.tasks.models import Task
@@ -55,7 +54,7 @@ class BaseTaskView(object):
             'supporters': supporters_by_id.values(),
             'idea_admins': idea_admins_by_id.values(),
 
-            'RESOURCE_CHOICES': RESOURCE_CHOICES, # TODO: use idea form instead
+            'show_idea_admin': True,
         })
         return ctx
 

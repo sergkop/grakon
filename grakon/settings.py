@@ -182,15 +182,15 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
     'relative_urls': False,
     'width': '100%',
-    'height': 200,
+    'height': 180,
     'theme_advanced_buttons1': "bold,italic,underline,|,bullist,numlist,|,link,unlink,",
     'theme_advanced_buttons2': "",
     'theme_advanced_buttons3': "",
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
     'plugins': "autoresize",
-    "autoresize_min_height": 200,
-    "autoresize_max_height": 500,
+    "autoresize_min_height": 180,
+    "autoresize_max_height": 450,
 }
 TINYMCE_COMPRESSOR = True
 

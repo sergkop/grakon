@@ -118,7 +118,7 @@ def is_entity_admin(entity, profile):
 def provided_entity_method(func):
     """
     Декоратор для entity_post_method view. Пытается достать провайдера и проверить из запроса.
-    Посылает провайдер 3м аргументов в декорированный метод
+    Посылает провайдер 3м аргументом в декорированный метод
     """
     def wrapper(request, entity):
 

@@ -2,7 +2,6 @@
 from django.db import models
 
 from elements.models import BaseEntityManager, BaseEntityModel, entity_class, HTMLField
-from notifications.models import NotificationType, register_notification
 from tools.tasks.models import Task
 
 class IdeaManager(BaseEntityManager):
@@ -18,6 +17,17 @@ class IdeaManager(BaseEntityManager):
         for id in ids:
             data[id]['projects']['count'] = len(data[id]['projects']['ids'])
 
+        # Get related tasks
+        task_ids = {data[id]['instance']['task_id'] for id in ids}
+        tasks_by_id = Task.objects.in_bulk(task_ids)
+
+        for id in ids:
+            task = tasks_by_id[data[id]['instance']['task_id']]
+            data[id]['task'] = {
+                'title': task.title,
+                'url': task.get_absolute_url(),
+            }
+
     def get_related_info(self, data, ids):
         from tools.projects.models import Project
         proj_ids = [proj_id for id in ids for proj_id in data[id]['projects']['ids']]
@@ -30,7 +40,6 @@ class IdeaManager(BaseEntityManager):
 @entity_class(['participants', 'resources', 'comments'])
 class Idea(BaseEntityModel):
     task = models.ForeignKey(Task, related_name='ideas')
-    title = models.CharField(u'Название', max_length=150)
     description = HTMLField(u'Описание', blank=True)
 
     objects = IdeaManager()
@@ -38,7 +47,7 @@ class Idea(BaseEntityModel):
     entity_name = 'ideas'
     entity_title = u'Идеи'
     cache_prefix = 'idea/'
-    editable_fields = ['title', 'description']
+    editable_fields = ['description']
 
     roles = ['admin']
 
@@ -51,45 +60,4 @@ class Idea(BaseEntityModel):
         return ('idea', [self.id])
 
     def __unicode__(self):
-        return self.title
-
-@register_notification
-class NewIdeaNotification(NotificationType):
-    """ data = idea_id """
-    name = 'new_idea'
-    template = 'notifications/new_idea.html'
-
-    @classmethod
-    def recipients(cls, data):
-        idea_id = data
-        idea = Idea.objects.select_related('task').get(id=idea_id)
-
-        idea_info = idea.info(related=False)
-        task_info = idea.task.info(related=True)
-
-        res = []
-
-        # Creators of idea
-        res += [idea_admin['id'] for idea_info in task_info['ideas']['entities']
-                for idea_admin in idea_info['participants']['admin']['entities']]
-
-        # Providers of idea resources
-        res += [provider for idea_info in task_info['ideas']['entities']
-                for provider in idea_info['resources'].keys()]
-
-        # Creator of task
-        res += [e['id'] for e in task_info['participants']['admin']['entities']]
-
-        # Followers of task
-        res += [e['id'] for e in task_info['participants']['follower']['entities']]
-
-        # Exclude creator of the idea
-        res = set(res) - set([idea_info['participants']['admin']['entities'][0]['id']])
-
-        return res
-
-    @classmethod
-    def context(cls, data):
-        idea_id = data
-        idea = Idea.objects.select_related('task').get(id=idea_id)
-        return {'idea': idea, 'task': idea.task}
+        return 'Idea for task "%s"' % self.task.title

@@ -29,10 +29,10 @@ class BaseProfileView(object):
         ctx.update(entity_base_view(self, Profile, {'username': username}))
 
         self.tabs = [
-            ('view', u'Инфо', reverse('profile', args=[username]), '', 'profiles/view.html'),
-            ('tasks', u'Задачи: %i' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[username]), '', 'tasks/list.html'),
-            ('projects', u'Проекты: %i' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[username]), '', 'projects/list.html'),
-            ('ideas', u'Идеи: %i' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[username]), '', 'ideas/list.html'),
+            ('view', u'Инфо', reverse('profile', args=[username]), 'profiles/view.html'),
+            ('tasks', u'Задачи: %i' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[username]), 'tasks/list.html'),
+            ('projects', u'Проекты: %i' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[username]), 'projects/list.html'),
+            ('ideas', u'Идеи: %i' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[username]), 'ideas/list.html'),
         ]
 
         ctx.update(entity_tabs_view(self))

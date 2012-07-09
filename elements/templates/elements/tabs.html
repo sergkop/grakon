@@ -1,11 +1,11 @@
 <ul class="tabs-list">
     {% for tab in tabs %}
         {% if tab.0 == active %}
-            <li class="current {{ tab.3 }}">
+            <li class="current">
                 <a href="{{ tab.2 }}">{{ tab.1 }}</a>
             </li>
         {% else %}
-            <li class="{{ tab.3 }}">
+            <li>
                 <a href="{{ tab.2 }}">{{ tab.1 }}</a>
             </li>
         {% endif %}

@@ -68,7 +68,26 @@ class EntityResourceManager(BaseEntityPropertyManager):
         self.remove(entity, old_resource, provider=provider)
         self.add(entity, new_resource, provider=provider, description=description)
 
+    # Used in registration form
+    def update(self, entity, resources):
+        if self.model.feature not in type(entity).features:
+            return
 
+        # Filter out resources not from the list
+        if type(entity).entity_name != 'projects':
+            resources = set(RESOURCE_DICT.keys()) & set(resources)
+
+        entity_resources = list(getattr(entity, self.model.feature).all())
+        new_resources = resources - set(er.resource for er in entity_resources)
+
+        for er in entity_resources:
+            if er.resource not in resources:
+                er.delete()
+
+        # TODO: this can cause IntegrityError
+        self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
+
+        entity.clear_cache()
 
 @reset_cache
 def update_resources(entity, resources):

@@ -4,6 +4,8 @@ $(function(){
 
     $("input[placeholder], textarea[placeholder]").placeholder();
 
+    $("textarea").autosize();
+
     // Show/hide resources provided for idea
     $(".js-resources-list").click(function(){
         var slider = $(this).parent().parent();
@@ -13,7 +15,7 @@ $(function(){
 
     // Show/hide projects related to idea
     $(".js-projects").click(function(){
-        $(this).parent().parent().children(".js-projects-content").toggle();
+        $(this).parent().parent().parent().children(".js-projects-content").toggle();
         $(this).toggleClass("gr-active-link");
     });
 

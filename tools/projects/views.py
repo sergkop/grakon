@@ -29,9 +29,9 @@ class BaseProjectView(object):
         ctx.update(entity_base_view(self, Project, {'id': id}))
 
         self.tabs = [
-            ('view', u'Описание', reverse('project', args=[id]), '', 'projects/view.html'),
-            ('wall', u'Комментарии: %i' % ctx['info']['comments']['count'], reverse('project_wall', args=[id]), '', 'projects/wall.html'),
-            ('participants', u'Участники: %i' % self.info['providers'], reverse('project_participants', args=[id]), '', 'projects/participants.html'),
+            ('view', u'Описание', reverse('project', args=[id]), 'projects/view.html'),
+            ('wall', u'Комментарии: %i' % ctx['info']['comments']['count'], reverse('project_wall', args=[id]), 'projects/wall.html'),
+            ('participants', u'Участники: %i' % self.info['providers'], reverse('project_participants', args=[id]), 'projects/participants.html'),
         ]
 
         ctx.update(entity_tabs_view(self))

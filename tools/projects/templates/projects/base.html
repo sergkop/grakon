@@ -12,7 +12,7 @@
 
 {% block right_column %}
     <div align="center" class="gr-mb20">
-        {% with is_participant=is_follower button=project.follow_button btn_class="gr-follow-button" %}
+        {% with is_participant=is_follower button=project.follow_button btn_class="gr-follow-button" pressed_button="gr-grey-button" %}
             {% include "participants/participate_button.html" %}
         {% endwith %}
     </div>
@@ -41,8 +41,8 @@
                     </div>
                 {% endif %}
 
-                
                 <p>{{ resource.description }}</p>
+
                 {% if is_admin %}
                     <div style="text-align: right;"><i class="gr-editing">&nbsp;</i></div>
 

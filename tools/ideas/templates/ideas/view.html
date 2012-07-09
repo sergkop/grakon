@@ -5,13 +5,11 @@
 {% endblock %}
 
 {% block top %}
-    {% with title_name="Идея" text=idea.title field="title" %}
-        <h1>Идея к задаче: <a href="{{ idea.task.get_absolute_url }}">{{idea.task.title}}</a></h1>
-    {% endwith %}
+    <h1>Идея к задаче: <a href="{{ idea.task.get_absolute_url }}">{{ idea.task.title }}</a></h1>
 {% endblock %}
 
 {% block right_column %}
-            &nbsp;
+    &nbsp;
 {% endblock %}
 
 {% block content %}

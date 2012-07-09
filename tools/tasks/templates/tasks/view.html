@@ -77,10 +77,25 @@
     </div>
 
     <script type="text/javascript">
-        $(function(){tinymce_editor("add_idea_textarea")});
-    </script>
+        $(function(){
+            tinymce_editor("add_idea_textarea")
 
-    {% include "dialogs/add_idea.html" %}
+            $("#add_idea_btn").click(function(){
+                // TODO: take related editor, not active
+                var description = $.trim( tinyMCE.activeEditor.getContent() );
+                if (description == ""){
+                    alert("Пожалуйста, опишите идею");
+                    return;
+                }
+
+                post_shortcut("{% url add_idea %}", {
+                    "ct": {{ info.ct }},
+                    "id": {{ info.instance.id }},
+                    "description": description
+                }, function(){}, true)();
+            });
+        });
+    </script>
 
     {#  шаблон для динамического создания новых ресурсов на странице  #}
     <div id="resource-template" style="display: none;">

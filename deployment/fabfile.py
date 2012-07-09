@@ -133,6 +133,8 @@ def restart_web_server():
     # sudo('/etc/init.d/postgresql restart')
     sudo('/etc/init.d/memcached restart')
 
+    # TODO: restart celery (via superuserd?), start supervisord if not started
+
 def init_db():
     virtualenv('python %s syncdb --all' % env.manage_path) # TODO: don't create superuser before migrate
     virtualenv('python %s migrate --fake' % env.manage_path)
@@ -141,7 +143,10 @@ def init_db():
 def prepare_code():
     env.user = env.deploy_user # TODO: do we need it?
 
-    cmd('mkdir -p %s %s %s' % (env.code_path, env.env_path, env.STATIC_ROOT, env.logs_path))
+    cmd('mkdir -p %s %s %s %s' % (
+            env.code_path, env.env_path, env.STATIC_ROOT,
+            os.path.join(env.logs_path, 'superuserd'))
+    )
 
     cmd('git clone %s %s' % (REPOSITORY, env.code_path))
     # TODO: detect if requirements.txt was updated in git pull and run pip install -r requirements.txt
@@ -173,8 +178,8 @@ def prepare_code():
     sudo("chmod +x %s" % server_sh_path)
 
     # superuserd config file
-    file_from_template(os.path.join(env.code_path, 'deployment', 'supervisor.conf'),
-            os.path.join(env.code_path, 'deployment', 'templates', 'supervisor.conf'), env.conf)
+    file_from_template(os.path.join(env.code_path, 'deployment', 'templates', 'supervisor.conf.template'),
+            os.path.join(env.code_path, 'deployment', 'supervisor.conf'), env.conf)
 
     # TODO: change socket file owner to nginx user (www-data)
 

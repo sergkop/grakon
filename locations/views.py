@@ -40,10 +40,10 @@ class BaseLocationView(object):
 
         self.tabs = [
             #('map', u'Карта', reverse('location_map', args=[location.id]), '', 'locations/map.html'),
-            ('tasks', u'Задачи: %i' % tasks_count, reverse('location_tasks', args=[location.id]), '', 'tasks/list.html'),
-            ('projects', u'Проекты: %i' % projects_count, reverse('location_projects', args=[location.id]), '', 'projects/list.html'),
-            ('wall', u'Комментарии: %i' % self.info['comments']['count'], reverse('location_wall', args=[location.id]), '', 'locations/wall.html'),
-            ('participants', u'Участники: %i' % self.info['participants']['count'], reverse('location_participants', args=[location.id]), '', 'locations/participants.html'),
+            ('tasks', u'Задачи: %i' % tasks_count, reverse('location_tasks', args=[location.id]), 'tasks/list.html'),
+            ('projects', u'Проекты: %i' % projects_count, reverse('location_projects', args=[location.id]), 'projects/list.html'),
+            ('wall', u'Комментарии: %i' % self.info['comments']['count'], reverse('location_wall', args=[location.id]), 'locations/wall.html'),
+            ('participants', u'Участники: %i' % self.info['participants']['count'], reverse('location_participants', args=[location.id]), 'locations/participants.html'),
         ]
 
         ctx.update(entity_tabs_view(self))
