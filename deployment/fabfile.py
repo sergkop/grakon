@@ -133,7 +133,8 @@ def restart_web_server():
     # sudo('/etc/init.d/postgresql restart')
     sudo('/etc/init.d/memcached restart')
 
-    # TODO: restart celery (via superuserd?), start supervisord if not started
+    # TODO: start supervisord if not started
+    # TODO: restart celery (via superuserd?) - no root
 
 def init_db():
     virtualenv('python %s syncdb --all' % env.manage_path) # TODO: don't create superuser before migrate

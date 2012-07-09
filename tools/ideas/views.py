@@ -26,6 +26,7 @@ class IdeaView(TemplateView):
 
         projects = [pi.project for pi in self.entity.projects.select_related('project')]
         ctx.update({
+            'title': u'Идея к задаче "%s"' % self.entity.task.title,
             'idea': self.entity,
             'admin': self.info['participants']['admin']['entities'][0],
             'projects': projects,

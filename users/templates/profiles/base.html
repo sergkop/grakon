@@ -13,7 +13,15 @@
 {% endblock %}
 
 {% block right_column %}
-    {% if not is_admin %}
+    {% if is_admin %}
+        <a href="{% url create_task %}" class="gr-follow-button gr-mb10">
+            <span>Добавить задачу</span>
+        </a>
+
+        <a href="{% url create_project %}" class="gr-follow-button gr-mb10">
+            <span>Добавить проект</span>
+        </a>
+    {% else %}
         {% include "dialogs/send_message.html" %}
 
         {% with is_participant=is_follower button=profile.follow_button btn_class="gr-follow-button gr-mb10" pressed_button="gr-grey-button" %}

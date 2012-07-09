@@ -9,7 +9,7 @@ class LocationSelectWidget(Widget):
         """ value is a location path - the list [region_id, district_id, location_id] """
         value = value or []
 
-        html = '<div id="%s">%s</div>' % (name, render_to_string('locations/select.html'))
+        html = '<div id="%s" class="gr-fl">%s</div>' % (name, render_to_string('locations/select.html'))
         html += '<script type="text/javascript">' \
                     '$().ready(function(){' \
                         '(new SelectLocation({el: $("#%s"), path: %s})).render();' \

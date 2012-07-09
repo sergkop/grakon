@@ -213,6 +213,7 @@ LIST_COUNT = {
 }
 
 #CELERYD_FORCE_EXECV = True
+CELERY_SEND_TASK_ERROR_EMAILS = True
 
 import djcelery
 djcelery.setup_loader()
