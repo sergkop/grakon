@@ -9,6 +9,9 @@ def entity_object_action(func):
     """
     def wrapper(self, entity, resource, provider=None, *args, **kwargs):
 
+        if not resource:
+            return 'Не указан ресурс'
+
         if self.model.feature not in type(entity).features:
             return
 
