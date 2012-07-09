@@ -178,7 +178,7 @@
 		margin: 0 0 1em 0;
 	}
 	
-		.gr-descr p, .gr-descr li, .gr-ideas-list p, .gr-ideas-list li {font-size: 1.1em;}
+		.gr-descr p, .gr-descr li, .gr-ideas-list p, .gr-ideas-list li, .gr-comments-container p {font-size: 1.1em;}
 			.gr-descr li li, .gr-ideas-list li li {font-size: 1em;}
 			.gr-descr p.gr-editor {margin-bottom: 0;} 
 

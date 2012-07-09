@@ -179,7 +179,7 @@
   background-color: #7bab51;
 }
 .chzn-container-multi .chzn-choices .search-choice:hover .search-choice-close {
-  background-position: 0 -262px;
+  background-position: -1px -305px
 }
 /* @end */
 
