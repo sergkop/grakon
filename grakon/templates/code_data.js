@@ -21,7 +21,7 @@ function create_tinymce_widget(textarea_id){
     tinyMCE.init({
         "elements": textarea_id,
         "width": "100%",
-        "height": 180,
+        "height": 100,
 
         "theme": "advanced",
         "theme_advanced_toolbar_location": "top",
@@ -32,8 +32,8 @@ function create_tinymce_widget(textarea_id){
 
         {% if not DEBUG %}
             "plugins": "autoresize",
-            "autoresize_min_height": 180,
-            "autoresize_max_height": 450,
+            "autoresize_min_height": 100,
+            "autoresize_max_height": 100,
         {% endif %}
 
         "relative_urls": false,
