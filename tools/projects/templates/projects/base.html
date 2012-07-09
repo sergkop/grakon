@@ -17,14 +17,17 @@
         {% endwith %}
     </div>
 
-    <div class="gr-side-item gr-mb15">
+    <div class="gr-side-item gr-mb15"  ct="{{ info.ct }}" instance_id="{{ info.instance.id }}">
         <h4>Требуется:</h4>
-
+        <div class="gr-resource-items">
         {% for resource in info.resources.none.data %}
             <div class="gr-resource-needs gr-resource-highlighted">
                 {% if is_admin %}
                     <!--div class="gr-close" onclick="remove_project_resource({{ info.ct }}, {{ info.instance.id }}, '{{ resource.name }}')">&nbsp;</div-->
                     <h3>{{ resource.name }}</h3>
+                    <p>{{ resource.description }}</p>
+                    <div style="text-align: right;"><i class="gr-editing js-edit-resource">&nbsp;</i></div>
+
                 {% else %}
                     <h3><i class="gr-add">&nbsp;</i>{{ resource.name }}</h3>
 
@@ -39,70 +42,61 @@
                             <span class="highlight fr js-provide-resource-btn">Предоставить</span>
                         </div>
                     </div>
-                {% endif %}
-
-                <p>{{ resource.description }}</p>
-
-                {% if is_admin %}
-                    <div style="text-align: right;"><i class="gr-editing">&nbsp;</i></div>
-
-                    {% comment %}
-                    <script type="text/javascript">
-                        $(function(){
-                            new TextFieldEditor({el: $("#{{ field }}_text"), edit_btn: $("#{{ field }}_edit_btn"),
-                                    add_btn: $("#{{ field }}_add_btn"),
-                                    ct: {{ info.ct }}, entity_id: {{ info.instance.id }},
-                                    field: "{{ field }}", type: "text"});
-                        });
-                    </script>
-                    {% endcomment %}
-                {% endif %}
-
-                {% if request.user.is_authenticated %}
-                    <script type="text/javascript">
-                        $(".gr-resource-highlighted").click(function(){
-                            console.log("here");
-                            var popup = $(this).children(".js-provide-resource-popup");
-                            popup.show();
-
-                            // TODO: this is a hack
-                            popup.find(".js-provide-resource-btn").unbind('click').click(function(){
-                                post_shortcut(ADD_RESOURCE_URL, {
-                                    "ct": {{ info.ct }},
-                                    "id": {{ info.instance.id }},
-                                    "resource": popup.children("h3").text(),
-                                    "description": popup.children("textarea").val(),
-                                    "provider": "true"
-                                }, function(){
-                                    popup.hide();
-                                }, true)();
-                            });
-                        });
-                    </script>
-                {% else %}
-                    <script type="text/javascript">
-                        $(".gr-resource-highlighted").click(login_dialog_init);
-                    </script>
+                    <p>{{ resource.description }}</p>
                 {% endif %}
             </div>
         {% endfor %}
-    </div>
+        </div>
+        {% if request.user.is_authenticated %}
+            <script type="text/javascript">
+                $(function() {
+                    $(".gr-resource-highlighted").click(function(){
+                        console.log("here");
+                        var popup = $(this).children(".js-provide-resource-popup");
+                        popup.show();
 
-    {% if is_admin %}
+                        // TODO: this is a hack
+                        popup.find(".js-provide-resource-btn").unbind('click').click(function(){
+                            post_shortcut(ADD_RESOURCE_URL, {
+                                "ct": {{ info.ct }},
+                                "id": {{ info.instance.id }},
+                                "resource": popup.children("h3").text(),
+                                "description": popup.children("textarea").val(),
+                                "provider": "true"
+                            }, function(){
+                                popup.hide();
+                            }, true)();
+                        })
+                    })
+                })
+            </script>
+        {% else %}
+            <script type="text/javascript">
+                $(".gr-resource-highlighted").click(login_dialog_init);
+            </script>
+        {% endif %}
+
+        {% if is_admin %}
+            <script type="text/javascript">
+                $(function() {
+                    $(".gr-resource-items").each(function() {
+                        new Resource.ListView({
+                            el: $(this),
+                            itemSel: '.gr-resource-needs',
+                            itemClass: Resource.BlockItemView,
+                            popupClass: Resource.PopupEditorView,
+                            addBtn: $(".js-open-add-resource-button")
+                        });
+                    })
+                })
+            </script>
         <div class="gr-side-item">
             <span class="ym-button gr-green-button js-open-add-resource-button">Добавить ресурс</span>
-
-            <div id="add_project_resource_popup" class="gr-small-popup ym-form">
-                <div class="gr-close js-close">&nbsp;</div>
-                <div class="ym-clearfix">&nbsp;</div>
-                <input type="text" placeholder="Название ресурса" style="width:100%" class="gr-mb10 gr-mt10"/>
-                <textarea style="width:100%" rows="5" placeholder="Описание (не более 140 символов)" maxlength="140"></textarea>
-                <div align="right" class="gr-mt5">
-                    <span id="add_project_resource_btn" class="highlight" onclick="add_project_resource({{ info.ct }}, {{ info.instance.id }})">Добавить</span>
-                </div>
-            </div>
         </div>
-    {% endif %}
+        {% endif %}
+
+    </div>
+
 {% endblock %}
 
 {% block content %}

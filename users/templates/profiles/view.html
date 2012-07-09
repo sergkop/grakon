@@ -24,7 +24,9 @@
                         new Resource.ListView({
                             el: $(".resources-list"),
                             addBtn: $(".add-resource-btn"),
-                            itemTpl: $("#resource-template").html()
+                            itemSel: '.gr-resource-item',
+                            itemClass: Resource.LabelItemView,
+                            popupClass: Resource.PopupSelectorView
                         });
                     })
                 </script>
@@ -55,16 +57,6 @@
         </div>
     </div>
 </div>
-
-{# Попап окно с формой добавления ресурса #}
-{% if is_admin %}
-    {#  шаблон для динамического создания новых ресурсов на странице  #}
-    <div id="resource-template" style="display: none;">
-        {% with resource_editable=is_admin %}
-            {% include "resources/item.html" %}
-        {% endwith %}
-    </div>
-{% endif %}
 
 {# Попап описания ресурса #}
 {% include "resources/description_popup.html" %}

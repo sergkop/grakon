@@ -1,9 +1,11 @@
 var Resource = {
 
-    /* View, отрисовывающий плашку ресурса */
+    /* Базовый View ресурса */
     ItemView: Backbone.View.extend({
+        template: '',
+
         initialize: function(){
-            _.extend(this, _.pick(this.options, 'parent', 'provider'))
+            _.extend(this, _.pick(this.options, 'parent', 'provider'));
         },
 
         events: {
@@ -20,18 +22,12 @@ var Resource = {
                 return;
             }
 
-            // координаты для попапа
-            var position = {
-                top: this.$el.offset().top,
-                left: (this.$el.offset().left+this.$el.width()*1.5)
-            };
-
-            var popupView = new Resource.PopupView({
+            var popupView = new this.parent.popupClass({
                 ct: this.parent.ct,
                 entity_id: this.parent.entity_id,
                 mode: "edit",
                 provider: this.provider,
-                position: position,
+                position: this.getPopupPosition(),
                 callback: this.updateLayout,
                 removeCallback: this.remove,
                 caller: this
@@ -40,15 +36,21 @@ var Resource = {
             popupView.show();
         },
 
+        addNew: function(obj){
 
-        fetchFromHTML: function() {
             this.obj = {
-                title:  $.trim(this.$el.text()),
-                value: this.$el.attr("name"),
-                descr:  this.$el.attr("descr")
+                value: obj.resource,
+                title: obj.title,
+                descr: obj.description
             };
 
-            this.parent.existingResources.push(this.$el.attr("name"));
+            this.parent.existingResources.push(this.obj.value);
+
+            this.parent.$el.append(Mustache.render(this.template, {resource: this.obj}));
+            this.$el = $(this.parent.itemSel, this.parent.$el).last();
+
+            $('.js-edit-resource', this.$el).last().click($.proxy( this.renderEditWindow, this ));
+
         },
 
         updateLayout: function(obj) {
@@ -64,38 +66,27 @@ var Resource = {
             this.render()
         },
 
-        render: function() {
-            $(".gr-resource-title", this.$el).text(this.obj.title);
-            this.$el.attr("name", this.obj.value);
-
-            if (this.obj.descr) {
-                this.$el.addClass("gr-resource-item-active");
-            } else {
-                this.$el.removeClass("gr-resource-item-active");
-            }
-
-            this.$el.attr("descr", this.obj.descr)
-        },
-
         remove: function() {
             this.parent.existingResources = _.without(this.parent.existingResources, this.obj.value);
             this.$el.remove()
         }
     }),
 
+
     /** View, отвечающий за список ресурсов
      * Параметры:
      * @param el        Элемент списка на странице
-     * @param addBtn    Элемент списка на странице
-     * @param popupTpl  Строка-шаблон попап-окна
-     * @param itemTpl   Строка-шаблон для создания новых элементов
+     * @param addBtn    Элемент кнопки добавления ресурсов на странице
+     * @param itemSel   Селектор отдельного элемента ресурса
+     * @param itemClass Класс для View отдельного ресурса в списке
+     * @param popupClass Класс для View попап окна
      * @param [provider="true"] Необязательный флаг провайдера
      */
     ListView: Backbone.View.extend({
         initialize: function(){
             var view = this;
 
-            _.extend(this, _.pick(this.options, 'provider', 'addBtn', 'itemTpl'));
+            _.extend(this, _.pick(this.options, 'provider', 'addBtn', 'itemSel', 'itemClass', 'popupClass'));
 
             this.existingResources = [];
             this.getEntityParams(this.$el);
@@ -103,10 +94,9 @@ var Resource = {
             // показ попапа для добавления ресурса
             this.addBtn.click( $.proxy( this.renderAddWindow, this ) );
 
-
             // для всех существующих ресурсов создаются вьюшки
-            $(".gr-resource-item", this.$el).each(function() {
-                new Resource.ItemView({
+            $(this.itemSel, this.$el).each(function() {
+                new view.itemClass({
                     el: $(this),
                     parent: view,
                     provider: view.provider
@@ -125,7 +115,7 @@ var Resource = {
                 this.entity_id = entity_id
             } else {
                 var cont = this.$el.closest("[ct][instance_id]"); // ближайший контейнер с обоими аттрибутами
-                if (cont) {
+                if (cont.length > 0) {
                     this.getEntityParams(cont)
                 } else {
                     console.log('ct & instance_id not found')
@@ -134,15 +124,10 @@ var Resource = {
         },
 
         updateLayout: function(obj) {
-            $(".gr-resource-item", this.$el).last().parent().append(this.itemTpl);
-
-            var newItem = $(".gr-resource-item", this.$el).last();
-
-            new Resource.ItemView({
-                el: newItem,
+            new this.itemClass({
                 parent: this,
                 provider: this.provider
-            }).updateLayout(obj)
+            }).addNew(obj)
         },
 
         renderAddWindow: function(){
@@ -159,7 +144,7 @@ var Resource = {
             };
 
 
-            var popupView = new Resource.PopupView({
+            var popupView = new this.popupClass({
                 ct: this.ct,
                 entity_id: this.entity_id,
                 provider: this.provider,
@@ -174,26 +159,10 @@ var Resource = {
     }),
 
 
-    /* View, окна добавления / редактирования ресурса */
-    PopupView: Backbone.View.extend({
+    /* Базовый View, всплывающего окна добавления / редактирования ресурса */
+    PopupWindowView: Backbone.View.extend({
 
-        template:   '<div id="{{popup_id}}" class="gr-small-popup gr-add-popup">' +
-                        '<span class="popup-action-label">{{actionLabel}}</span>' +
-                        '<div class="gr-close">&nbsp;</div>' +
-                        '<select class="gr-mb10 gr-mt10" style="width:100%">' +
-                            '{{#options}}' +
-                                '<option value="{{value}}" {{selected}}>{{title}}</option>' +
-                            '{{/options}}' +
-                        '</select>' +
-                        '<textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)">' +
-                            '{{descr}}' +
-                        '</textarea>' +
-                        '<div align="right" class="gr-mt5">' +
-                            '{{#buttons}}' +
-                                '&nbsp;<span class="{{class}} highlight">{{text}}</span>' +
-                            '{{/buttons}}' +
-                        '</div>' +
-                    '</div>',
+        template: '', // должно быть переопределено в потомках
 
         initialize: function() {
             this.el = "add_resource_popup";
@@ -220,20 +189,14 @@ var Resource = {
         },
 
         createNew: function() {
-            var context = {popup_id: this.el},
-                options = this.fetchAllowedResources();
+            var context = {popup_id: this.el};
 
             if (this.mode === 'new') {
-                options.unshift({title:"Выбрать ресурс", selected: "selected", value: ""});
-
                 _.extend(context, {
                     actionLabel: "Новый ресурс",
                     buttons: [{ text: "Добавить", class: "add_resource_btn" }]
                 })
             } else {
-                // считаем что здесь режим редактирования и вызывала окно вьюшка отдельного ресурса
-                options.unshift({title:this.caller.obj.title, selected: "selected", value: this.caller.obj.value});
-
                 _.extend(context, {
                     actionLabel: "Изменить ресурс",
                     buttons: [
@@ -244,7 +207,8 @@ var Resource = {
                 })
             }
 
-            context.options = options;
+            this.updateContext(context);
+
             // создаем попап по шаблону
             $("body").append(Mustache.render(this.template, context));
             // ссылка для view
@@ -252,18 +216,7 @@ var Resource = {
             this.condifgurePosition();
         },
 
-        fetchAllowedResources: function() {
-            var popup = this,
-                data  = [];
 
-            _.each(RESOURCES, function(item) {
-                if (!_.include(popup.caller.existingResources, item[0])) {
-                    data.push({title:item[1], value: item[0]})
-                }
-            });
-
-            return data
-        },
 
         /* Выставляем позицию попапа */
         condifgurePosition: function() {
@@ -291,11 +244,7 @@ var Resource = {
 
         sendResourceActionRequest: function(url, callback) {
             var view = this,
-                data = {
-                    title: $("select option:selected", this.$el).text(),
-                    resource: $("select", this.$el).val(),
-                    description: $("textarea", this.$el).val()
-                };
+                data = this.fetchFromHTML();
 
             _.extend(this.params, data);
 
@@ -326,6 +275,167 @@ var Resource = {
         }
     })
 }
+
+_.extend(Resource, {
+
+     /* view ресурса в виде плашки с выпадающим описанием */
+    LabelItemView: Resource.ItemView.extend({
+        template: '<span class="gr-resource-item {{#resource.descr}}gr-resource-item-active{{/resource.descr}}" name="{{resource.value}}" descr="{{resource.descr}}">' +
+                    '<span class="gr-resource-title">{{resource.title}}</span><i>&nbsp;</i>' +
+                    '<b class="js-edit-resource">&nbsp;</b>' +
+                  '</span>',
+
+        getPopupPosition: function() {
+            return {
+                top: this.$el.offset().top,
+                left: (this.$el.offset().left+this.$el.width()*1.5)
+            }
+        },
+
+        fetchFromHTML: function() {
+            this.obj = {
+                title:  $.trim(this.$el.text()),
+                value: this.$el.attr("name"),
+                descr:  this.$el.attr("descr")
+            };
+
+            this.parent.existingResources.push(this.$el.attr("name"));
+        },
+
+        render: function() {
+            $(".gr-resource-title", this.$el).text(this.obj.title);
+            this.$el.attr("name", this.obj.value);
+
+            if (this.obj.descr) {
+                this.$el.addClass("gr-resource-item-active");
+            } else {
+                this.$el.removeClass("gr-resource-item-active");
+            }
+
+            this.$el.attr("descr", this.obj.descr)
+        }
+    }),
+
+    /* view ресурса в виде блока */
+    BlockItemView: Resource.ItemView.extend({
+        template: '<div class="gr-resource-needs gr-resource-highlighted">' +
+                    '<h3>{{resource.value}}</h3>' +
+                    '<p>{{resource.descr}}</p>' +
+                    '<div style="text-align: right;"><i class="gr-editing js-edit-resource">&nbsp;</i></div>' +
+                  '</div>',
+
+        getPopupPosition: function() {
+            return {
+                top: this.$el.offset().top,
+                left: (this.$el.offset().left)
+            }
+        },
+
+        fetchFromHTML: function() {
+            this.obj = {
+                title: $('h3', this.$el).text(),
+                value: $('h3', this.$el).text(),
+                descr: $('p', this.$el).text()
+            };
+
+            this.parent.existingResources.push(this.$el.attr("name"));
+        },
+
+        render: function() {
+            $("h3", this.$el).text(this.obj.value);
+            $("p", this.$el).text(this.obj.descr);
+        }
+    }),
+
+    /* Класс всплывающего окна с selector'ом доступных ресурсов */
+    PopupSelectorView: Resource.PopupWindowView.extend({
+
+        template:   '<div id="{{popup_id}}" class="gr-small-popup gr-add-popup">' +
+                        '<span class="popup-action-label">{{actionLabel}}</span>' +
+                        '<div class="gr-close">&nbsp;</div>' +
+                        '<select class="gr-mb10 gr-mt10" style="width:100%">' +
+                            '{{#options}}' +
+                                '<option value="{{value}}" {{selected}}>{{title}}</option>' +
+                            '{{/options}}' +
+                        '</select>' +
+                        '<textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)">' +
+                            '{{descr}}' +
+                        '</textarea>' +
+                        '<div align="right" class="gr-mt5">' +
+                            '{{#buttons}}' +
+                                '&nbsp;<span class="{{class}} highlight">{{text}}</span>' +
+                            '{{/buttons}}' +
+                        '</div>' +
+                    '</div>',
+
+        updateContext: function(context) {
+            var options = this.fetchAllowedResources();
+
+            if (this.mode === "new") {
+                options.unshift({title:"Выбрать ресурс", selected: "selected", value: ""});
+
+            } else {
+                // считаем что здесь режим редактирования и вызывала окно вьюшка отдельного ресурса
+                options.unshift({title:this.caller.obj.title, selected: "selected", value: this.caller.obj.value});
+            }
+
+            context.options = options
+        },
+
+        fetchAllowedResources: function() {
+            var popup = this,
+                data  = [];
+
+            _.each(RESOURCES, function(item) {
+                if (!_.include(popup.caller.existingResources, item[0])) {
+                    data.push({title:item[1], value: item[0]})
+                }
+            });
+
+            return data
+        },
+
+        fetchFromHTML: function() {
+            return {
+                title: $("select option:selected", this.$el).text(),
+                resource: $("select", this.$el).val(),
+                description: $("textarea", this.$el).val()
+            };
+        }
+    }),
+
+    /* Класс всплывающего окна с input'ом для свободного добавления/редактирования ресурсов */
+    PopupEditorView: Resource.PopupWindowView.extend({
+
+        template:   '<div id="{{popup_id}}" class="gr-small-popup gr-add-popup">' +
+                        '<span class="popup-action-label">{{actionLabel}}</span>' +
+                        '<div class="gr-close">&nbsp;</div>' +
+                        '<input type="text" placeholder="Название ресурса" class="gr-mb10 gr-mt10" style="width:100%" value="{{value}}"/>' +
+                        '<textarea style="width:100%" maxlength="140" rows="4" placeholder="Описание (не более 140 символов)">' +
+                            '{{descr}}' +
+                        '</textarea>' +
+                        '<div align="right" class="gr-mt5">' +
+                            '{{#buttons}}' +
+                                '&nbsp;<span class="{{class}} highlight">{{text}}</span>' +
+                            '{{/buttons}}' +
+                        '</div>' +
+                    '</div>',
+
+        updateContext: function(context) {
+            if (this.mode === "edit") {
+                context.value = this.caller.obj.value
+            }
+        },
+
+        fetchFromHTML: function() {
+            return {
+                title: $("input", this.$el).val(),
+                resource: $("input", this.$el).val(),
+                description: $("textarea", this.$el).val()
+            };
+        }
+    })
+})
 
 $(function() {
     // Show/hide popups with descriptions of idea resources

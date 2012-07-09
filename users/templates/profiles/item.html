@@ -11,7 +11,9 @@
                 new Resource.ListView({
                     el: $(".resources-list"),
                     addBtn: $(".add-resource-btn"),
-                    itemTpl: $("#resource-template").html()
+                    itemSel: '.gr-resource-item',
+                    itemClass: Resource.LabelItemView,
+                    popupClass: Resource.PopupSelectorView
                 });
             })
         </script>

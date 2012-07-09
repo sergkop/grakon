@@ -27,7 +27,9 @@
                         $(".js-resource-items li").each(function() {
                             new Resource.ListView({
                                 el: $(this),
-                                itemTpl: $("#resource-template").html(),
+                                itemSel: '.gr-resource-item',
+                                itemClass: Resource.LabelItemView,
+                                popupClass: Resource.PopupSelectorView,
                                 addBtn: $(".add-resource-btn"),
                                 provider: "true"
                             });
