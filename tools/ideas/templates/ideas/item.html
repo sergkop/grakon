@@ -9,7 +9,7 @@
 
             <ul class="gr-source-list-slider js-resource-items">
                 {% for provider_resources in info.resources.values %}
-                    <li>
+                    <li {% if provider_resources.provider.id == request.profile.id %}own{% endif %}>
                         <a href="{{ provider_resources.provider.url }}">{{ provider_resources.provider.full_name }}</a>&nbsp;&nbsp;
                         {% with resources=provider_resources.data %}
                             {% if provider_resources.provider.id == request.profile.id %}
@@ -24,16 +24,42 @@
                 {% endfor %}
                 <script>
                     $(function() {
-                        $(".js-resource-items li").each(function() {
+
+                        var idea =$('.gr-ideas-item[ct="{{ info.ct }}"][instance_id="{{ info.instance.id }}"]'),
+                            ownResourcesList = $(".js-resource-items li[own]", idea),
+                            addBtn = $(".add-resource-btn", idea);
+
+                        if (ownResourcesList.length) {
+
                             new Resource.ListView({
-                                el: $(this),
-                                itemSel: '.gr-resource-item',
+                                el: ownResourcesList,
+                                itemSel: ".gr-resource-item",
                                 itemClass: Resource.LabelItemView,
                                 popupClass: Resource.PopupSelectorView,
-                                addBtn: $(".add-resource-btn"),
+                                addBtn: addBtn,
                                 provider: "true"
                             });
-                        })
+                        } else {
+                            {# если в списке учавствующих в идее нет себя -- при первом клике на "+" надо себя добавлять  #}
+                            var profileLink = '<li own><a href="{{ request.PROFILE.url }}">{{ request.PROFILE.full_name }}</a>&nbsp;&nbsp;</li>'
+
+                            addBtn.one("click", function(){
+                                $(".js-resource-items", idea).append(profileLink);
+
+                                new Resource.ListView({
+                                    el: $(".js-resource-items li[own]", idea),
+                                    itemSel: ".gr-resource-item",
+                                    itemClass: Resource.LabelItemView,
+                                    popupClass: Resource.PopupSelectorView,
+                                    addBtn: addBtn,
+                                    provider: "true"
+                                });
+
+                                $(".js-resources-list", idea).click();
+                                this.click()
+                            })
+                        }
+
                     })
                 </script>
             </ul>
