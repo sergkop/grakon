@@ -33,7 +33,7 @@ function create_tinymce_widget(textarea_id){
         {% if not DEBUG %}
             "plugins": "autoresize",
             "autoresize_min_height": 100,
-            "autoresize_max_height": 100,
+            "autoresize_max_height": 400,
         {% endif %}
 
         "relative_urls": false,
