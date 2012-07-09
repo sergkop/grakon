@@ -72,7 +72,7 @@
 	
 	nav {margin-bottom: .8em; padding-top: 2.5em}
 	
-	footer {height: 3.3em; position: relative; padding: .8em 0 1em; font-size: .9em;}
+	footer {height: 3.3em; position: relative; padding: .8em 0 1em; font-size: .9em; border-top: 2px solid #ddd;}
 
 	header {padding: 0.1em 0; position: fixed; width: 100%; height: 38px; z-index:15000;}
 	
@@ -451,8 +451,8 @@
 	.ym-full .ym-fbox-select select { width:94.8%; }
 	.ym-columnar .ym-fbox-select select { width:68.8%; }
 	
-	.gr-content { background-color: #fff; border: 2px solid #ddd; border-width: 2px 0; font-size: .9em; margin-top: -2px; padding-bottom: 3em;
-	box-shadow: 100px -20px 120px #f4f4f4, -100px -20px 120px #f4f4f4}
+	.gr-content { background-color: #fff; border-top: 2px solid #ddd; font-size: .9em; margin-top: -2px; padding-bottom: 3em;
+	box-shadow: 0 90px 0 #fff, 100px -40px 100px #f4f4f4, -100px -40px 100px #f4f4f4}
 		#main .gr-content {box-shadow: none; border-top: none; background: #f0f9ff url(../../images/bg-main-icons.jpg) 0; padding: 1em 0}
 		#search .gr-content {box-shadow: none; border-top: none; padding: 1em 0}
 	

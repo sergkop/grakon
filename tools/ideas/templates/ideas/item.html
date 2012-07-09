@@ -10,7 +10,7 @@
             <ul class="gr-source-list-slider js-resource-items">
                 {% for provider_resources in info.resources.values %}
                     <li>
-                        <a href="{{ provider_resources.provider.url }}">{{ provider_resources.provider.full_name }}</a>
+                        <a href="{{ provider_resources.provider.url }}">{{ provider_resources.provider.full_name }}</a>&nbsp;&nbsp;
                         {% with resources=provider_resources.data %}
                             {% if provider_resources.provider.id == request.profile.id %}
                                 {% with resource_editable="true" %}
@@ -43,7 +43,7 @@
                     {% include "participants/person.html" %}
                 {% endwith %}
             {% else %}
-                <b><a href="{{ info.task.url }}">{{ info.task.title }}</a></b>
+                <h4><a href="{{ info.task.url }}">{{ info.task.title }}</a></h4>
             {% endif %}
         </div>
         <div>{{ info.instance.description|safe }}</div>

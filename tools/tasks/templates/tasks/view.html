@@ -42,23 +42,25 @@
         {% include "comments/list.html" %}
     </div>
 
-    <div class="gr-mt10 gr-bb-grey-lt">&nbsp;</div>
+    {% if ideas %} <div class="gr-mt10 gr-bb-grey-lt">&nbsp;</div>{% endif %}
 </div>
 
-<div id="tour-content">
+{% if ideas %}   
+    <div id="tour-content">
     <a name="ideas"></a>
-    <h2>Идеи</h2>
+        <h2>Идеи</h2>
 
-    <div class="gr-ideas-list">
-        {% for info in ideas %}
-            {% include "ideas/item.html" %}
-        {% endfor %}
+        <div class="gr-ideas-list">
+            {% for info in ideas %}
+                {% include "ideas/item.html" %}
+            {% endfor %}
 
-        {% include "resources/description_popup.html" %}
+            {% include "resources/description_popup.html" %}
 
-        {% include "ideas/link_to_project.html" %}
+            {% include "ideas/link_to_project.html" %}
+        </div>
     </div>
-</div>
+{% endif %}
 
 {% if request.user.is_authenticated %}
     <a name="add_idea" />
@@ -103,4 +105,11 @@
             {% include "resources/item.html" %}
         {% endwith %}
     </div>
+{% else %}
+    <div align="center" class="gr-mt30">
+        <span class="gr-follow-button js-add-task-button">Добавить идею</span>
+    </div>
+        <script type="text/javascript">
+        $(".js-add-task-button").click(login_dialog_init);
+    </script>
 {% endif %}
