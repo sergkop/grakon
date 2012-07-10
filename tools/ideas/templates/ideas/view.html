@@ -64,48 +64,46 @@
                             {% endwith %}
                         </li>
                     {% endfor %}
-                    <script>
-                        {#  FIXME: весь этот код очень похож на ideas/item.html #}
-                        $(function() {
-
-                            var idea =$('.gr-ideas-item[ct="{{ info.ct }}"][instance_id="{{ info.instance.id }}"]'),
-                                    ownResourcesList = $(".resource-items li[own]", idea),
-                                    addBtn = $(".add-resource-btn", idea);
-
-                            if (ownResourcesList.length) {
-
-                                new Resource.ListView({
-                                    el: ownResourcesList,
-                                    itemSel: ".gr-resource-item",
-                                    itemClass: Resource.LabelItemView,
-                                    popupClass: Resource.PopupSelectorView,
-                                    addBtn: addBtn,
-                                    provider: "true"
-                                });
-                            } else {
-                            {# если в списке учавствующих в идее нет себя -- при первом клике на "+" надо себя добавлять  #}
-                                var profileLink = '<li own><a href="{{ request.PROFILE.url }}">{{ request.PROFILE.full_name }}</a>&nbsp;&nbsp;</li>'
-
-                                addBtn.one("click", function(){
-                                    $(".js-resource-items", idea).append(profileLink);
-
-                                    new Resource.ListView({
-                                        el: $(".resource-items li[own]", idea),
-                                        itemSel: ".gr-resource-item",
-                                        itemClass: Resource.LabelItemView,
-                                        popupClass: Resource.PopupSelectorView,
-                                        addBtn: addBtn,
-                                        provider: "true"
-                                    });
-
-                                    this.click()
-                                })
-                            }
-                        })
-                    </script>
-                {% else %}
-                    <li class="dimmed gr-mt3">(пусто)</li>
                 {% endif %}
+                <script>
+                {#  FIXME: весь этот код очень похож на ideas/item.html #}
+                $(function() {
+
+                    var idea =$('.gr-ideas-item[ct="{{ info.ct }}"][instance_id="{{ info.instance.id }}"]'),
+                            ownResourcesList = $(".resource-items li[own]", idea),
+                            addBtn = $(".add-resource-btn", idea);
+
+                    if (ownResourcesList.length) {
+
+                        new Resource.ListView({
+                            el: ownResourcesList,
+                            itemSel: ".gr-resource-item",
+                            itemClass: Resource.LabelItemView,
+                            popupClass: Resource.PopupSelectorView,
+                            addBtn: addBtn,
+                            provider: "true"
+                        });
+                    } else {
+                    {# если в списке учавствующих в идее нет себя -- при первом клике на "+" надо себя добавлять  #}
+                        var profileLink = '<li own><a href="{{ request.PROFILE.url }}">{{ request.PROFILE.full_name }}</a>&nbsp;&nbsp;</li>'
+
+                        addBtn.one("click", function(){
+                            $(".resource-items", idea).append(profileLink);
+
+                            new Resource.ListView({
+                                el: $(".resource-items li[own]", idea),
+                                itemSel: ".gr-resource-item",
+                                itemClass: Resource.LabelItemView,
+                                popupClass: Resource.PopupSelectorView,
+                                addBtn: addBtn,
+                                provider: "true"
+                            });
+
+                            this.click()
+                        })
+                    }
+                })
+                </script>
                 </ul>
             </div>
         </div>
