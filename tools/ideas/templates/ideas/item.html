@@ -4,7 +4,7 @@
             <div class="gr-close js-close-inactive">&nbsp;</div>
             <div class="gr-add">
                 <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы">&nbsp;</span>
-                <i class="{% if info.resources|length  > 0 %}js-resources-list gr-cursor-pointer{% else %} {% endif %}" >{{ info.resources|length }}</i>
+                <i {% if info.resources|length  > 0 %}class="js-resources-list gr-cursor-pointer"{% endif %} >{{ info.resources|length }}</i>
             </div>
 
             <ul class="gr-source-list-slider js-resource-items">
