@@ -31,6 +31,7 @@ input[type=radio] {vertical-align: top;}
 .gr-bb-grey {border-bottom: 3px solid #e0e2e6;}
 .gr-bb-grey-lt {border-bottom: 1px solid #ddd;}
 .gr-noborder {border: none !important; box-shadow: none !important;}
+.gr-cursor-pointer {cursor: pointer;}
 
 /*Элементы header*/
 .gr-logo {margin-left: -45px;}
@@ -97,7 +98,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-answer {margin: 0 0 20px 0; background-color: #d9edf7; padding: 10px;}
 	.gr-add {font-size: 1.1em; font-weight: bold; color: #b5d188; position: absolute; top: -5px; left: -40px; text-align: center}
         .gr-slider .gr-add {color: #80ab56;}
-        .gr-slider .gr-add i {font-style: normal; cursor: pointer;}
+        .gr-slider .gr-add i {font-style: normal;}
 		.gr-ideas-item .gr-add span {display: block; width: 26px; height: 26px; background:url(../images/icons/add.png) 0 -51px no-repeat;}
 			 .gr-slider .gr-add span {cursor: pointer;}
 			 .gr-slider .gr-add span:hover {text-decoration: none; border-bottom: 1px dotted;}
@@ -107,7 +108,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 	.gr-ideas-item .gr-info-bar  {border-bottom: none;}
 	.gr-resource-item {padding: .2em .7em .3em; display: inline-block; color: #000; background-color: #b5d188; border-radius: .3em; line-height: 1.6em; position: relative;  cursor: default; margin: 0 .5em .5em 0}
 		.gr-resource-item-active i {background:url(../images/icons/add.png) -15px -122px no-repeat; width: 7px; margin: 0 0 0 .5em; display: inline-block}
-		.gr-resource-item b {background:url(../images/icons/add.png) 0 -206px no-repeat;  width: 13px; height: 16px; cursor: pointer;  margin: 2px 0 0 .5em; display: inline-block;}
+		.gr-resource-item b {background:url(../images/icons/add.png) 0 -124px no-repeat;  width: 10px; height: 16px; cursor: pointer;  margin: 2px 0 0 .3em; display: inline-block;}
 		.gr-resource-item-active:hover {background-color: #7bab51;}
     .gr-resource-item-desc {padding-left: 1em;}
 	ul.gr-user li  {padding: 0.5em 0.2em;}
@@ -254,7 +255,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 .gr-add-comment td .ym-button {margin: 0 0 0 1em;}
 .gr-add-comment textarea {font-size: 1.2em; width: 100%}
 .gr-comment {padding: 10px 0;}
-.gr-comment .gr-info-bar {padding: 0 0 1em; font-size: .9em; border-bottom: 1px solid #ddd;}   
+.gr-comment .gr-info-bar {padding: 0 0 1em; border-bottom: 1px solid #ddd;}   
     .gr-comment .gr-info-bar .highlight {cursor: pointer;}
     .gr-comment .gr-info-bar .gr-add-comment {margin-bottom: 0;}    
 .gr-child-comments {margin-left: 44px;}
