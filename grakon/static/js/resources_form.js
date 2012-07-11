@@ -33,8 +33,8 @@ Resource.Form = {
             this.$el.attr("name", this.obj.value);
             this.$el.attr("descr", this.obj.descr);
 
-            $("input[type=hidden][name^=resource\[value\]]", this.$el).attr("value", this.obj.value);
-            $("input[type=hidden][name^=resource\[descr\]]", this.$el).attr("value", this.obj.descr);
+            $('input[type=hidden][name$="__resource"]', this.$el).attr("value", this.obj.value);
+            $('input[type=hidden][name$="__description"]', this.$el).attr("value", this.obj.descr);
 
 
             if (this.obj.descr) {
