@@ -1,254 +1,98 @@
-Оксана:
-    * заглушка для пустой страницы комментов и незалогиненных пользователей
-    * На страницах идей и задач нет табов, но стоит такой же отступ как и на остальных, что создает много пустого места и выглядит странно
-
-* help text against location select in task create form is below widget / нужно добавить класс "gr-fl" к id="location_select"
-
-* drop idea names (show task names in lists + short version of idea on main page, project)
-
-* add resource button delays opening popup for over 1 sec
+UI:
+    * Bug with cross and edit icon in resources
+    * поменять кнопки на главной
+    * счетчики под плюсиками 0 - непонятно, что они кликабельны
+    * on adding resource to idea list is not shown
 
 Notifications
     * notifications about adding resources
-    * configure celery to perform tasks periodically
     * fix texts for notifications
     * hide list of notifications in one email
 
-* unsubscribe from letters + settings
-* automatically add target="_blank" to links in emails
-* redirect url to track pressing on external links in emails
+* unsubscribe from letters + subscription configuration
 
-* use tinymce parameters from settings.py in js
-* remove tinymce buttons opening popups
-* tinymce can be loaded twice due to inclusion in base.html
-* rewrite tinymce widget
-* getContent() should be taken for specific tinymce instances, not active
+* sort resources in project right panel by creation time
+* sort resources in idea and profile (by title?)
 
+* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+* use ga events to monitor pressing buttons, registration and other activities
+* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
+* separate analytics of elections site
+* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
+-------------------------------------------------
+* client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
 
-* script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
-* use Amazon SNS to receive bounce and complaints notifications
-* model with emails which should be blacklisted
-* send emails about считайте сами
-* Emails: DomainKeys, Sender ID, DKIM, SPF (dns configuration + document it)
-* reinstall pydkim on server
+Emails:
+    * redirect url to track pressing on external links in emails
+    * automatically add target="_blank" to links in emails (is it needed?)
+    * 3 lists of old emails - active, unknown, inactive; unsent emails
+    * use Amazon SNS to receive bounce and complaints notifications
+    * suggest users to add our emails to contacts lists
+    * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+    * send emails about считайте сами
+    * model with emails which should be blacklisted
+    * Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
 
+* show notifications on the website
+* configure celery to perform notification tasks periodically
 
-UI:
-    * how to show logged out user if he can add idea?
-    * pressing enter in comments doesn't add new line in final text - use it for submit?
-    * на страницах "своих" локейшнов есть кнопки "отписаться" в правом столбце. Они довольно не понятны:
-      от чего отписаться? например, на вкладке комментов - отписаться от комментов? Давайте вообще выкинем
-      эти кнопки. Пусть пользователи отписываются от локэйшнов через страницу профайла.
-    * счетчики под плюсиками 0- непонятно, что они кликабельны
-
-* consider all the cases for showing lists under task/idea (press one button first, then another)
-
-* in ajax ports make sure that entity content type has allowed value
-
-* autolinking in comments
-
-* template filter to produce html code for emails
-
-* write docs (entities, features, info, ajax ports, code_data)
-
-* move html blocks for entities items in special templates and add template path to entity models
-* make ideas, tasks editable in lists
-
-* don't load social networks scripts (include loading scripts in elements/share.html)
+Account activation:
+    * fix sending profile activation email via admin
+    * what happens when account activation link expires? is it possible to register again?
 
 * links in breadcrumbs should depend on type of page or tab on location
 
-* add tabs names to title for entities, image url and description should be specified as context variable
+* get comment id from ajax request
+
+* tags for projects, tasks (like ЖКХ, здравоохранение, etc.)
 
 Search
     * min-width in locations/select.html
     * #search in styles and body, {% block body %}
     * qfilter in Location.get_entities
     * reimplement SearchForm and view
+    * full-text search of entities
+    * autocompletion
+
+* display data for logged in user at main page (no redirect) - data from followed entities
+* minification of static files (http://developer.yahoo.com/yui/compressor/)
+
+* new widget for location editor; add location in location list editor
+
+* autolinking in comments
+
+* ability to delete ideas, tasks (without resources), projects, comments
+* ability to request entity deletion (like with profiles)
+
+* don't load social networks scripts (include loading scripts in elements/share.html)
+
+* add tabs names to title for entities, image url and description should be specified as context variable
+* in url crop GA campaign get parameters
 
 * include other factors in users sorting (number of contacts, etc.)
-
-* statistics for last day, week, month in dashboard is wrong
-* stats for read/unread emails
-* some messages are not sent
-
-* update init_database
-* add more content to init_database
-
-* sort resources in project right panel by creation time
-* edit own resources on idea page and in lists
-* add resource button on idea page
-
-* popup before admin removes project resource
-
-* other option for resources
-* resources editing
-* resources editor on profile page (combine with editor in registration form)
-
-* descriptions of html fields in forms are not shown (show inside field as grey text)
 
 * update ratings on any changes (adding, deleting, following, etc)
 * override save() method of EntityProperty models to reset cache
 
-* sorting lists by popularity, date (choose sorting type)
-
 * drop yandex metrika?
-
-* ability to delete ideas, tasks (without resources), projects
-
-* reimplement popup windows in project
-
-* hide follow/unfollow button for admin
-
-* analytics of registration form
-
-* resources in adding idea popup
-
-* count down counter under resource description
-
-* special location placeholder for empty tasks and projects lists should be moved to templates in locations
-
-* use entity_base_view in location
-
-* on task list page get_related_info is called twice
-
-* new widget for location editor; add location in location list editor
-
-* add task and add project forms should open with initialized location
-
-Yulia:
-    * send message dialog
-    * feedback form formatting
-    * in chrome human icon above ideas on task page has blue top line
-    * popup for linking idea to project
-    * remove underlining links in main menu
-    * link to feedback form (or our email), 'read us' buttons in email template (Yulia)
-    * when user closes slidedown list of followers or projects, boldness of link doesn't go away
-
-* can admin unfollow an entity?
-
-* fill in create form fields with grey example values
-
-* typography http://jevix.ru/
-
-* settings page (change password, request account deletion)
-
-* use jinja instead of django templates (?) Check rendering time
 
 * no breadcrumbs on create form pages
 * in registration form check that russian letters are used in first and last name
 
 * open share dialogs in popups (vk, fb, twitter)
--------------------------------------------------------------------------------
-* update comment counters when comment is added
-
-* in forms near location selector allow to chose current location using geolocation
-
-* when mouse is over the date - show exact time in hover
-
-* conventions file for front-end developer (docs about tabs and buttons, page layout)
-
-* display data for logged in user at main page (no redirect) - data from followed entities
-
-* project-ideas connection (editing ideas of the project)
-* linking idea to project on idea page
-
-* don't reload page after adding/removing resource to idea
-
-* set of permissions (verified users)
-
-* solve issues with several locations and is_main, allow to restrict a single related location for entity model
 
 * how to edit task/project location?
 
 * in User admin table show is_active field
 
-* when text field text is longer than 140 - text is cut
-
-* user's avatar, use it in comments, emails
-
-* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
-
-* sitemaps
-
-Static files:
-    * move static and media files to a separate domain
-    * minification of static files (http://developer.yahoo.com/yui/compressor/)
-
-*  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
-
-Dialog forms:
-    * check form data for posts
-    * use django forms to generate forms in dialogs (fix officials)
-
-* depricate account activated page and registration failed page
-
-* link social likes to the page on which they are located
-
-Deployment:
-    * split requirements to deploy and develop, use inclusion
-    * switch to uwsgi
-    * database backups
-    * configure firewall (ufw)
-    * introduce separate server for db, static and media files, memcached
-    * describe deployment process in docs
-    * start using https://github.com/ronnix/fabtools and https://github.com/sebastien/cuisine
-    * monitoring https://github.com/sebastien/watchdog
-
-Performance:
-    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
-    * activate compression for tinymce
-
-* check admin rights in elements.views.check_permissions (check that it works)
-
-* ability to edit html in message (special filtering of html for emails)
-
-* ability to request entity deletion (like with profiles)
+* database backups
 
 * Invite friends button under contacts in profile
 
-* separate getting counters and pagination entities/ids
+* suggest tasks, projects to follow (based on geography)
 
-* block at the bottom of the page (for scripts)
-* move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
-
-* dashboard like google account reports; view email statistics by type; date boundaries
-* 3 lists of old emails - active, unknown, inactive; unsent emails
-* email blacklist
-
-* 'Новости' tab for all entities
-
-* popup with user info when mouse is over the link
-
-* Activating compessing in tinymce breaks popups (on development server only)
-
-Account activation:
-    * fix sending profile activation email via admin
-    * what happens when account activation link expires? is it possible to register again?
-
-* README
-
-Emails:
-    * subscription configuration
-    * page with form for writing messages (put link on it in emails)
-    * send email notifying that user has been added to contacts (+ ability to unsubscribe)
-
-Analytics:
-    * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
-    * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
-    * use ga events to monitor pressing buttons, registration and other activities
-    * use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
-    * analyze average time spent on site, how often user returns, what he does
-
-* system of notifications (show them in top panel + send accumulating email once a day)
-
-* unsubscribe from location button on location page; put this button in the center as with officials, events
-
-* complaints
-
-* ability to add admins
-
-* ability to read messages on website
+* Don't ask password in registration until email is confirmed (like in gravatar.com)
+* allow user to start working without confirmation of his email, but limit his functionality (?)
 
 Social registration
     * configure registration with fb, vk, google
@@ -260,9 +104,153 @@ Social registration
     * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
     * create google oauth2 app from grakon account (?)
     * file with all passwords, social applications (where to get them)
----------------------------------------------------------------------------------
-* decorator to restrict permissions on access to edit/create views
 
+* предлагать друзей на площадке пользуясь списком друзей в соц сетях
+* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
+
+Yulia:
+    * send message dialog
+    * feedback form formatting
+    * popup for linking idea to project
+    * when user closes slidedown list of followers or projects, boldness of link doesn't go away
+    * form fields are not highlighted anymore (with uniform script)
+    * consider all the cases for showing lists under task/idea (press one button first, then another, also close)
+
+* restructure main menu
+
+* use tinymce parameters from settings.py in js
+* rewrite tinymce widget
+* getContent() should be taken for specific tinymce instances, not active
+
+* when user is removed his projects, tasks, ideas are left and cause errors
+-------------------------------------------------------------------------
+Testing:
+    * perform code testing after commit (github hooks)
+    * testing in browsers, selenium, http://www.browserstack.com
+    * tests and test coverage
+
+* use celery to send messages
+
+UI:
+    * pressing enter in comments doesn't add new line in final text - use it for submit?
+    * на страницах "своих" локейшнов есть кнопки "отписаться" в правом столбце. Они довольно не понятны:
+      от чего отписаться? например, на вкладке комментов - отписаться от комментов? Давайте вообще выкинем
+      эти кнопки. Пусть пользователи отписываются от локэйшнов через страницу профайла.
+
+* template filter to produce html code for emails
+    * http://www.campaignmonitor.com/css/
+    * http://htmlemailboilerplate.com/
+    * http://www.sitepoint.com/code-html-email-newsletters/
+    * http://www.1stwebdesigner.com/tutorials/ultimate-guide-html-emails/
+
+* move html blocks for entities items in special templates and add template path to entity models
+* make ideas, tasks editable in lists
+
+* descriptions of html fields in forms are not shown (show inside field as grey text)
+
+Code improvements:
+    * write docs (entities, features, info, ajax ports, code_data)
+
+    * update init_database
+    * add more content to init_database
+
+    * special location placeholder for empty tasks and projects lists should be moved to templates in locations
+
+    * use entity_base_view in location
+
+    * on task list page get_related_info is called twice
+
+    * in ajax ports make sure that entity content type has allowed value
+
+    * depricate account activated page and registration failed page
+
+* statistics for last day, week, month in dashboard is wrong
+* stats for read/unread emails
+* some messages are not sent
+
+* sorting lists by popularity, date (choose sorting type)
+
+* hide follow/unfollow button for admin
+* can admin unfollow an entity?
+
+* add task and add project forms should open with initialized location
+
+* typography http://jevix.ru/
+
+* settings page (change password, request account deletion)
+
+* use jinja instead of django templates (?) Check rendering time
+-------------------------------------------------------------------------------
+* update comment counters when comment is added
+
+* in forms near location selector allow to chose current location using geolocation
+
+* when mouse is over the date - show exact time in hover
+
+* conventions file for front-end developer (docs about tabs and buttons, page layout)
+
+* project-ideas connection (editing ideas of the project)
+* linking idea to project on idea page
+
+* set of permissions (verified users)
+
+* solve issues with several locations and is_main, allow to restrict a single related location for entity model
+
+* when text field text is longer than 140 - text is cut
+
+* user's avatar, use it in comments, emails
+
+* in datetime widget set russian names for months and days of week - http://trentrichardson.com/examples/timepicker/ (move to main.js)
+
+* sitemaps
+
+*  RuntimeWarning: DateTimeField received a naive datetime while time zone support is active when sending message
+
+Deployment:
+    * split requirements to deploy and develop, use inclusion
+    * switch to uwsgi
+    * configure firewall (ufw)
+    * introduce separate server for db, static and media files, memcached
+    * describe deployment process in docs
+    * start using https://github.com/ronnix/fabtools and https://github.com/sebastien/cuisine
+    * monitoring https://github.com/sebastien/watchdog
+
+Performance:
+    * multi-key indices in db (http://www.postgresql.org/docs/9.1/interactive/indexes-multicolumn.html)
+    * move scripts loading at the bottom of html (or use defer), use firebug profiler and Net tab
+
+* ability to edit html in message (special filtering of html for emails)
+
+* separate getting counters and pagination entities/ids
+
+* 'Новости' tab for all entities
+
+* popup with user info when mouse is over the link
+
+* Activating compessing in tinymce breaks popups (on development server only)
+
+* README
+
+Emails:
+    * page with form for writing messages (put link on it in emails)
+    * send email notifying that user has been added to contacts (+ ability to unsubscribe)
+
+* complaints
+
+* ability to add admins
+
+* ability to read messages on website
+
+Analytics:
+    * analyze when user visited site/logged in last time
+    * configure logging, sentry
+    * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
+      which pages are visited
+    * use page visits analytics to determine optimal caching times
+    * analyze average time spent on site, how often user returns, what he does
+    * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
+    * get statistics on db usage
+---------------------------------------------------------------------------------
 * denormalization of counters
 
 * ability to specify yandex money account when asking for money
@@ -286,19 +274,14 @@ SEO:
 
 * popups with user's info and points in right panel
 
-* form fields are not highlighted anymore (with uniform script)
-
 * Give rating for comments, negative for complaints
 
 * pages for tools and users (with search) + bring them back in main menu
 
 * дополнительные поля в профайле (телефон, скайп, сайт, возраст?->дата рождения)
 
-Front-end:
-    * show g+ and vk buttons in dev mode; add these buttons to pages
-    * share and share_horizontal overlap a lot
-
 Misc:
+    * share and share_horizontal overlap a lot
     * replace grakon_share_logo.jpg with logos/share.jpg (google oauth2 app), smaller version (60x60),
         move logo url to settings
     * add tips to buttons and ? signs to get help on features of the system
@@ -306,11 +289,9 @@ Misc:
 
 * http://analytics.blogspot.co.uk/2012/05/new-google-analytics-easy-dashboard.html
 
-* Check that urls are specified properly in templates (look for "/ and http://grakon.org
+* Check that urls are specified properly in templates (look for "/ and http://grakon.org)
 
 * privacy settings
-
-* add per_page selector in paginator
 
 * ability to choose timezone/determine it from location
 --------------------------------------
@@ -322,16 +303,7 @@ Misc:
 
 * can we speed up get_for by not taking all entities, just those within requested limit?
 
-* separate analytics of elections site
-* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
-
-* Registration form should take get parameters
 * Fill in registration form with location or login
-* Don't ask password in registration until email is confirmed (like in gravatar.com)
-
-* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
-
-* combine create pages with search pages
 
 * display entities assigned to higher levels of hierarchy on lower levels?
 
@@ -341,10 +313,6 @@ Misc:
 
 * move password change views to users (from auth)
 * reasons to register on registration page (merge with landing page)
-
-* use celery to send emails (method for delayed sending of email)
-
-* allow user to start working without confirmation of his email, but limit his functionality (?)
 
 * captchas
 
@@ -358,7 +326,6 @@ Emails:
     * list-unsubscribe header
     * messages, subscription @grakon.org (send messages of different types from different emails)
     * analyze email postfixes, detect sending problems, configure properly
-    * suggest users to add our emails to contacts lists
 
 Front-end
     * take only necessary parts of jquery-ui, compress
@@ -370,20 +337,6 @@ Front-end
     * http://www.modernizr.com/
 
     * automate search for unused and missing images, style classes
-
-Analytics:
-    * analyze when user visited site/logged in last time
-    * configure logging, sentry
-    * analyze access logs, use google analytics api; regularly build and analyze statistics of visits,
-      which pages are visited
-    * use page visits analytics to determine optimal caching times
-    * use Graphite for server monitoring - http://blog.mozilla.com/webdev/2012/04/05/tracking-deployments-in-graphite/
-    * get statistics on db usage
-
-Testing:
-    * perform code testing after commit (github hooks)
-    * testing in browsers, selenium, http://www.browserstack.com
-    * tests and test coverage
 
 Performance:
     * make lazy reformal loading
@@ -411,8 +364,6 @@ Celery:
 
 * update select widget in breadcrumbs with chosen (?)
 
-* search + autocompletion
-
 Deployment:
     * far expires date in nginx
     * configure nginx (see config settings)
@@ -420,13 +371,9 @@ Deployment:
     * describe complete deployment process - file access rights, running services, directories and users to create, creating database, etc.
     * separate server for media files? (512 mb)
 
-* предлагать друзей на площадке пользуясь списком друзей в соц сетях
-
 * project news page - store in db, rss + ability to post to social networks automatically
 
 * don't use cache for anonymous users on the dev server (for convinience)
-
-* start using celery
 
 * use twisted inside scrapy to download pages with several parallel processes
 

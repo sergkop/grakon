@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from elements.models import BaseEntityProperty, BaseEntityPropertyManager, feature_model
-from elements.resources.data import RESOURCE_DICT, RESOURCE_CHOICES
+from elements.resources.data import RESOURCE_DICT
 from elements.resources.utils import entity_object_action
 from elements.utils import reset_cache
 
@@ -56,6 +56,8 @@ class EntityResourceManager(BaseEntityPropertyManager):
         if not created:
             entity_resource.description = description
             entity_resource.save()
+
+        return entity_resource
 
     @entity_object_action
     def remove(self, entity, resource, provider=None):

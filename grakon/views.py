@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
-from elements.resources.models import RESOURCE_CHOICES
+from elements.resources.data import RESOURCE_CHOICES
 from elements.templatetags.elements import comments_templates, get_mustache_template
 from grakon.utils import project_settings
 from services.cache import cache_view

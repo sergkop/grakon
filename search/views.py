@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from elements.locations.widgets import LocationSelectWidget
-from elements.resources.models import RESOURCE_CHOICES
+from elements.resources.data import RESOURCE_CHOICES
 from elements.utils import table_data
 from locations.models import Location
 from search.forms import SearchForm

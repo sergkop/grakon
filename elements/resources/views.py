@@ -2,15 +2,22 @@
 from django.http import HttpResponse
 
 from elements.resources.models import EntityResource
+from elements.resources.notification import NewResourceNotification
 from elements.utils import entity_post_method, provided_entity_method
 
 @entity_post_method
 @provided_entity_method
 def add_resource(request, entity, provider):
     """ Добавляет ресурс """
-    EntityResource.objects.add(entity, request.POST.get('resource', ''),
+    res = EntityResource.objects.add(entity, request.POST.get('resource', ''),
             description=request.POST.get('description', ''), provider=provider)
 
+    print type(res)
+    if type(res) is not unicode:
+        print "send", res.id
+        NewResourceNotification.send(res.id)
+
+    # TODO: return error HttpResponse(res) is type(res) is unicode + show it in client
     return HttpResponse('ok')
 
 @entity_post_method

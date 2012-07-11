@@ -41,8 +41,4 @@ class NewIdeaNotification(NotificationType):
     def context(cls, data):
         idea_id = data
         idea = Idea.objects.select_related('task').get(id=idea_id)
-        
-        from pprint import pprint
-        pprint(idea.info(related=False))
-        
         return {'idea_info': idea.info(related=False), 'task': idea.task}

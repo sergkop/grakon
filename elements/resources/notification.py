@@ -1,3 +1,4 @@
+from elements.resources.data import RESOURCE_DICT
 from elements.resources.models import EntityResource
 from notifications.models import NotificationType, register_notification
 
@@ -35,7 +36,7 @@ class NewResourceNotification(NotificationType):
             res += [e['id'] for e in task_info['participants']['follower']['entities']]
 
             # Exclude provider of resource
-            res = set(res) - {idea.provider}
+            res = set(res) - {idea.info(related=False)['participants']['admin']['entities'][0]['id']}
 
         elif entity.entity_name == 'resources':
             pass
@@ -46,4 +47,10 @@ class NewResourceNotification(NotificationType):
     def context(cls, data):
         resource_id = data
         resource = EntityResource.objects.get(id=resource_id)
-        return {'resource': resource}
+
+        if resource.entity.entity_name == 'ideas':
+            resource_title = RESOURCE_DICT[resource.resource]
+        elif resource.entity.entity_name == 'resources':
+            resource_title = resource.resource
+
+        return {'resource': resource, 'resource_title': resource_title}

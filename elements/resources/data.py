@@ -29,10 +29,10 @@ RESOURCE_CHOICES = (
     ('interpreter', u'переводчик'),
     ('strong', u'физическая сила'),
     ('auditory', u'большое количество друзей'),
+    ('other', u'Другое'),
 
     #('people', u'Человеческие ресурсы'), #u'Возможность предоставить волонтеров или наемных рабочих со скидкой'),
     # учитель/преподаватель
-    #('other', u'Другое', u''),
-    )
+)
 
 RESOURCE_DICT = dict((name, title) for name, title in RESOURCE_CHOICES)

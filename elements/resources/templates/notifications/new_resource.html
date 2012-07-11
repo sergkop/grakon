@@ -1,0 +1,8 @@
+{% if resource.entity.entity_name == "ideas" %}
+    Пользователь <a href="{{ URL_PREFIX }}{{ resource.provider.get_absolute_url }}">{{ resource.provider }}</a> поддержал ресурсом
+    "{{ resource_title }}" <a href="{{ URL_PREFIX }}{{ resource.entity.get_absolute_url }}">идею</a>
+    <br/>
+    {{ resource.entity.description|safe }}
+{% else %}
+    
+{% endif %}

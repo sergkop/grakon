@@ -1,8 +1,7 @@
 {% extends "letters/base.html" %}
 
 {% block content %}
-    <!--p>Новости на площадке Гракон за последнее время:</p-->
     {% for notification in notifications %}
-        {{ notification }}<br/>
+        {{ notification }}
     {% endfor %}
 {% endblock %}

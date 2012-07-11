@@ -68,8 +68,7 @@ def send_email(recipient, subject, template, ctx, type, from_email='noreply', re
     """
     To enable DKIM signing you should specify values for the DKIM_PRIVATE_KEY and DKIM_DOMAIN settings.
     You can generate a private key with a command such as openssl genrsa 512 and get the public key portion
-    with openssl rsa -pubout <private.key. The public key should be published to ses._domainkey.example.com
-    if your domain is example.com. You can use a different name instead of ses by changing the DKIM_SELECTOR setting.
+    with openssl rsa -pubout <private.key. The public key should be published to ses._domainkey.grakon.org
     """
     # TODO: test it
     sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,

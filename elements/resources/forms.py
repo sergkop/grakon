@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from elements.resources.models import EntityResource, RESOURCE_CHOICES
+from elements.resources.data import RESOURCE_CHOICES
+from elements.resources.models import EntityResource
 from elements.resources.widgets import ResourcesSelectWidget
 
 def resources_init(cls):

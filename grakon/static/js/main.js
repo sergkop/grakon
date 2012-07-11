@@ -5,9 +5,9 @@ $(function(){
     $("input[placeholder], textarea[placeholder]").placeholder();
 
     $("textarea").autosize();
-    
+
     /* Для того, что бы ресайз выполнялся и при добавлении комментариев второго уровня */
-    $('body').bind('click',function(){$("textarea").autosize();});
+    //$('body').bind('click',function(){$("textarea").autosize();});
 
     // Show/hide resources provided for idea
     $(".js-resources-list").click(function(){
