@@ -37,7 +37,7 @@ var Comment = {
         events: {"click .ym-button": "addComment"},
 
         initialize: function(){
-            this.textarea = $("textarea", this.$el);
+            this.textarea = $("textarea", this.$el).autosize();
 
             this.entity_id = this.$el.parent().parent().attr("e_id");
             this.ct_id = this.$el.parent().parent().attr("ct");

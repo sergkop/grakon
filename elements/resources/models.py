@@ -45,6 +45,7 @@ class EntityResourceManager(BaseEntityPropertyManager):
         return res
 
     def get_related_info(self, data, ids):
+        # This method must be kept here since it overrides a method with code
         pass
 
     @entity_object_action
@@ -63,7 +64,6 @@ class EntityResourceManager(BaseEntityPropertyManager):
     def remove(self, entity, resource, provider=None):
         """ Удаляет ресурс, привязанный к сущности """
         getattr(entity, self.model.feature).filter(resource=resource, provider=provider).delete()
-
 
     def edit(self, entity, old_resource, new_resource, provider=None, description=''):
         """ Удаляет, потом создает ресурс, привязанный к сущности """
@@ -108,7 +108,6 @@ class EntityResourceManager(BaseEntityPropertyManager):
 def update_resources(entity, resources):
     EntityResource.objects.update(entity, resources)
 
-# TODO: add 'other' option for resource type
 @feature_model
 class EntityResource(BaseEntityProperty):
     resource = models.CharField(u'Ресурс', max_length=100, db_index=True)

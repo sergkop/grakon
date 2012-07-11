@@ -3,7 +3,7 @@ $(function(){
         tourId:             'intro',
         onTourClose: function(){
                 if(!PROFILE.username) {
-                       window.document.location.href='/register?utm_campaign=tour&utm_medium=link&utm_source=main_page';  
+                       window.document.location.href='/register?utm_campaign=register&utm_medium=link&utm_source=tour';  
                 }
                 else{
                          window.document.location.href='/location/1/tasks';  

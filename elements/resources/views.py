@@ -12,9 +12,7 @@ def add_resource(request, entity, provider):
     res = EntityResource.objects.add(entity, request.POST.get('resource', ''),
             description=request.POST.get('description', ''), provider=provider)
 
-    print type(res)
     if type(res) is not unicode:
-        print "send", res.id
         NewResourceNotification.send(res.id)
 
     # TODO: return error HttpResponse(res) is type(res) is unicode + show it in client

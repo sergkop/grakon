@@ -4,11 +4,6 @@ $(function(){
 
     $("input[placeholder], textarea[placeholder]").placeholder();
 
-    $("textarea").autosize();
-
-    /* Для того, что бы ресайз выполнялся и при добавлении комментариев второго уровня */
-    //$('body').bind('click',function(){$("textarea").autosize();});
-
     // Show/hide resources provided for idea
     $(".js-resources-list").click(function(){
         var slider = $(this).parent().parent();
@@ -125,6 +120,8 @@ function post_shortcut(url, params, on_success, reload_page, form_id){
 function login_dialog_init(){
     $("#login_dialog").dialog("open");
     $('#login_form [name="csrfmiddlewaretoken"]').val(get_cookie("csrftoken"));
+
+    _gaq.push(["_trackEvent", "login", "open_dialog"]);
 }
 
 function select_resources(input){

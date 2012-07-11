@@ -40,9 +40,7 @@
 
     {% block head %}{% endblock %}
 
-    {% if not DEBUG %}
-        {% include "services/google-analytics.html" %}
-    {% endif %}
+    {% include "services/google-analytics.html" %}
 </head>
 {% block body %}<body {% if is_main %}id="main"{% endif %}>{% endblock %}
     <div class="gr-wrapper">
@@ -52,7 +50,7 @@
                 <div class="gr-login-info">
                     <!--div class="gr-job"><a href="{% url how_to_help %}">Ищем специалистов!</a></div-->
                     <a href="http://elections.grakon.org" target="_blank">Выборы</a>
-                    <a href="{% url about %}">О проекте</a>
+                    <a href="{% url about %}?utm_campaign=about&utm_medium=link&utm_source=main_menu">О проекте</a>
                     <a href="{% url how_to_help %}">Как помочь</a>
                     <a href="{% url partners %}">Партнеры</a>
 

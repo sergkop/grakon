@@ -1,20 +1,24 @@
+* restart celery + test notifications
+
+* Bug with cross and edit icon in resources
+* on adding resource to idea list is not shown
+
+-------------------------------------------------
 UI:
-    * Bug with cross and edit icon in resources
     * поменять кнопки на главной
     * счетчики под плюсиками 0 - непонятно, что они кликабельны
-    * on adding resource to idea list is not shown
 
-* unsubscribe from letters + subscription configuration
-
-* sort resources in project right panel by creation time
-* sort resources in idea and profile (by title?)
-
+* separate analytics of elections site
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 * use ga events to monitor pressing buttons, registration and other activities
 * use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
-* separate analytics of elections site
 * exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
--------------------------------------------------
+
+* unsubscribe from letters + subscription configuration
+
+* sort resources in idea and profile (by title?)
+* sort resources in project right panel by creation time
+
 * client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
 
 Emails:
