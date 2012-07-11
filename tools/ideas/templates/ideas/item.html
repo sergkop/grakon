@@ -4,7 +4,7 @@
             <div class="gr-close js-close-inactive">&nbsp;</div>
             <div class="gr-add">
                 <span class="gr-add-icon add-resource-btn" title="Добавить ресурсы">&nbsp;</span>
-                <i {% if info.resources %}class="js-resources-list gr-cursor-pointer"{% endif %} >{{ info.resources|length }}</i>
+                <i class="js-resources-list gr-cursor-pointer">{{ info.resources|length }}</i>
             </div>
 
             <ul class="gr-source-list-slider js-resource-items">
@@ -39,10 +39,17 @@
                                 addBtn: addBtn,
                                 provider: "true"
                             });
+
+                            // FIXME: this is a hack which doesn't work when addBtn is pressed a few times
+                            addBtn.one("click", function(){
+                                $(".js-resources-list", idea).click();
+                                $(this).click();
+                            });
                         } else {
                             {# если в списке учавствующих в идее нет себя -- при первом клике на "+" надо себя добавлять  #}
                             var profileLink = '<li own><a href="{{ request.PROFILE.url }}">{{ request.PROFILE.full_name }}</a>&nbsp;&nbsp;</li>'
 
+                            // FIXME: don't use one() here because a combination of clicks on counter and + results in list of resources being hidden
                             addBtn.one("click", function(){
                                 $(".js-resource-items", idea).append(profileLink);
 
@@ -56,8 +63,8 @@
                                 });
 
                                 $(".js-resources-list", idea).click();
-                                $(this).click()
-                            })
+                                $(this).click();
+                            });
                         }
 
                     })

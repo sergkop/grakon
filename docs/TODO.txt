@@ -1,9 +1,3 @@
-* restart celery + test notifications
-
-* Bug with cross and edit icon in resources
-* on adding resource to idea list is not shown
-
--------------------------------------------------
 UI:
     * поменять кнопки на главной
     * счетчики под плюсиками 0 - непонятно, что они кликабельны

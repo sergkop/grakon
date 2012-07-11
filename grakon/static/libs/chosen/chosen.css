@@ -169,18 +169,19 @@
 }
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close {
   display: inline-block;
-  width: 16px;
+  width: 10px;
   height: 16px;
-  margin: 0 0 0 .6em;
-  background:url(../../images/icons/add.png) 0 -206px no-repeat; 
+  margin: 2px 0 0 .3em;
+  background:url(../../images/icons/add.png) 0 -124px no-repeat; 
   vertical-align:middle;
+  cursor: pointer;
 }
 .chzn-container-multi .chzn-choices .search-choice:hover {
   background-color: #7bab51;
 }
-.chzn-container-multi .chzn-choices .search-choice:hover .search-choice-close {
+/*.chzn-container-multi .chzn-choices .search-choice:hover .search-choice-close {
   background-position: -1px -305px
-}
+}*/
 /* @end */
 
 /* @group Results */
