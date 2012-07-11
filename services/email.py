@@ -39,8 +39,12 @@ def send_email(recipient, subject, template, ctx, type, from_email='noreply', re
     for a in xml.findall('.//a'):
         url = a.get('href')
         if url.startswith(settings.URL_PREFIX):
-            url += '&' if '?' in url else '?'
-            url += params
+            # If hash is inside url - move it to the end of the newly generated link
+            if '#' in url:
+                start, end = url.split('#')
+                url = start + ('&' if '?' in url else '?') + params + '#' + end
+            else:
+                url += ('&' if '?' in url else '?') + params
 
         a.set('href', url)
 

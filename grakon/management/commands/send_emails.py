@@ -9,11 +9,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from services.email import send_email
 
-        with open('/home/serg/moscow_emails.txt') as f:
+        with open('/home/serg/gn1.txt') as f:
             emails = [line.strip() for line in f]
 
         for email in emails:
             print email
-            send_email(None, u'Объединенная Группа Общественного Наблюдения в Москве',
-                    'letters/OGON.html', {}, 'ogon_letter', 'noreply', to_email=email)
+            send_email(None, u'Приглашение к участнию в новой площадке Гракон',
+                    'letters/gn_invitation.html', {}, 'gn_invitation', 'noreply', to_email=email)
             sleep(0.2)
