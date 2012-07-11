@@ -2,7 +2,7 @@
 from django import forms
 
 from elements.resources.models import EntityResource, RESOURCE_CHOICES
-from elements.resources.widgets import ResourcesSelectWidget
+from elements.resources.widgets import ResourcesSelectWidget, ResourceLabelsAreaWidget
 
 def resources_init(cls):
     # TODO: take resources label as an argument (and description)
@@ -27,3 +27,31 @@ def resources_init(cls):
     new_cls.save = new_save
 
     return new_cls
+
+
+def labeled_resources_init(cls):
+    """ Добавляет на форму элемент выбора ресурсов и их обработчик при ее сохранении """
+
+    attrs = {'resource_labels': forms.Field(label=u'Требуемые ресурсы', required=False, widget=ResourceLabelsAreaWidget,
+        help_text=u'Можно выбрать несколько')}
+    new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
+
+    def fetch_resources(data):
+        resources = {}
+        for key in data.keys():
+            if 'resource__' in key:
+                _, index, field = key.split('__')
+                temp = resources.setdefault( index, {} )
+                temp[field] = data[key]
+
+        return resources.values()
+
+    save = new_cls.save
+    def new_save(form):
+        entity = save(form)
+        #entity.update_resources(fetch_resources( form.data ))
+        return entity
+    new_cls.save = new_save
+
+    return new_cls
+

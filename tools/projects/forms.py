@@ -4,9 +4,11 @@ from django import forms
 from crispy_forms.layout import Fieldset, Layout
 
 from elements.locations.forms import location_init
+from elements.resources.forms import labeled_resources_init
 from elements.utils import form_helper
 from tools.projects.models import Project
 
+@labeled_resources_init
 @location_init(False, u'Место')
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -14,5 +16,5 @@ class ProjectForm(forms.ModelForm):
 
     helper = form_helper('', u'Сохранить')
     helper.layout = Layout(
-        Fieldset('', 'title', 'deadline', 'goals', 'about', 'team', 'location_select'),
+        Fieldset('', 'title', 'deadline', 'goals', 'about', 'team', 'location_select', 'resource_labels'),
     )
