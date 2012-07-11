@@ -70,6 +70,17 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
     # Used in registration form
     def update(self, entity, resources):
+        """ метод может работать как просто со списком названий ресурсов, так и со списокм словарей формата   [{'resource': resource, 'description': description}, ] """
+
+        # если пришел список строк -- значит пришли лишь имена ресурсов, без описаний
+        if type(resources[0]) is str or type(resources[0]) is unicode:
+            full_resources = [{'resource': resource, 'description': ''} for resource in resources]
+        elif type(resources[0]) is dict:
+            full_resources = resources
+            resources = set([item['resource'] for item in resources])
+        else:
+            return
+
         if self.model.feature not in type(entity).features:
             return
 
@@ -78,14 +89,16 @@ class EntityResourceManager(BaseEntityPropertyManager):
             resources = set(RESOURCE_DICT.keys()) & set(resources)
 
         entity_resources = list(getattr(entity, self.model.feature).all())
-        new_resources = resources - set(er.resource for er in entity_resources)
+        allowed_resources = resources - set(er.resource for er in entity_resources)
+        new_resources = filter(lambda item: item['resource'] in allowed_resources, full_resources)
 
         for er in entity_resources:
             if er.resource not in resources:
                 er.delete()
 
         # TODO: this can cause IntegrityError
-        self.bulk_create([self.model(entity=entity, resource=resource) for resource in new_resources])
+        self.bulk_create([self.model(entity=entity, resource=resource['resource'],
+                description=resource['description']) for resource in new_resources])
 
         entity.clear_cache()
 

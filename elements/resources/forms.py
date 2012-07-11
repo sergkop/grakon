@@ -49,7 +49,7 @@ def labeled_resources_init(cls):
     save = new_cls.save
     def new_save(form):
         entity = save(form)
-        #entity.update_resources(fetch_resources( form.data ))
+        entity.update_resources(fetch_resources( form.data ))
         return entity
     new_cls.save = new_save
 

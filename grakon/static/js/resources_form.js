@@ -12,7 +12,6 @@ Resource.Form = {
                    '</span>',
 
 
-
         updateObj: function(obj) {
             var index = this.parent.existingResources.indexOf(obj.resource);
 
@@ -43,13 +42,11 @@ Resource.Form = {
             } else {
                 this.$el.removeClass("gr-resource-item-active");
             }
-
         }
     }),
 
     /* Класс всплывающего окна с input'ом для свободного добавления/редактирования ресурсов */
     FPopupEditorView: Resource.PopupEditorView.extend({
-
 
         sendResourceActionRequest: function(url, callback) {
             var data = this.fetchFromHTML();
