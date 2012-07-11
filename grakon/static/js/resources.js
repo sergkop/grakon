@@ -6,6 +6,7 @@ var Resource = {
 
         initialize: function(){
             _.extend(this, _.pick(this.options, 'parent', 'provider'));
+            this.obj = {}
         },
 
         events: {
@@ -36,15 +37,21 @@ var Resource = {
             popupView.show();
         },
 
-        addNew: function(obj){
+        updateObj: function(obj) {
 
-            this.obj = {
+            _.extend(this.obj, {
                 value: obj.resource,
                 title: obj.title,
                 descr: obj.description
-            };
+            });
 
-            this.parent.existingResources.push(this.obj.value);
+            if (this.parent.existingResources.indexOf(this.obj.value) === -1) {
+                this.parent.existingResources.push(this.obj.value)
+            }
+        },
+
+        addNew: function(obj){
+            this.updateObj(obj);
 
             this.parent.$el.append(Mustache.render(this.template, {resource: this.obj}));
             this.$el = $(this.parent.itemSel, this.parent.$el).last();
@@ -54,15 +61,7 @@ var Resource = {
         },
 
         updateLayout: function(obj) {
-
-            this.obj = {
-                value: obj.resource,
-                title: obj.title,
-                descr: obj.description
-            };
-
-            this.parent.existingResources.push(this.obj.value);
-
+            this.updateObj(obj);
             this.render()
         },
 

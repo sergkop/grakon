@@ -38,8 +38,20 @@ class NewResourceNotification(NotificationType):
             # Exclude provider of resource
             res = set(res) - {idea.info(related=False)['participants']['admin']['entities'][0]['id']}
 
-        elif entity.entity_name == 'resources':
-            pass
+        elif entity.entity_name == 'projects' and resource.provider_id:
+            project = entity
+            project_info = project.info(related=True)
+
+            # Creator of project
+            res += [project_info['participants']['admin']['entities'][0]['id']]
+
+            # Followers of project
+            res += [e['id'] for e in project_info['participants']['follower']['entities']]
+
+            # Providers of project resources
+            res += list(set(project_info['resources'].keys()) - {'none'})
+
+            res = set(res) - {resource.provider_id}
 
         return res
 
@@ -48,9 +60,11 @@ class NewResourceNotification(NotificationType):
         resource_id = data
         resource = EntityResource.objects.get(id=resource_id)
 
-        if resource.entity.entity_name == 'ideas':
-            resource_title = RESOURCE_DICT[resource.resource]
-        elif resource.entity.entity_name == 'resources':
-            resource_title = resource.resource
+        ctx = {'resource': resource}
 
-        return {'resource': resource, 'resource_title': resource_title}
+        if resource.entity.entity_name == 'ideas':
+            ctx['resource_title'] = RESOURCE_DICT[resource.resource]
+        elif resource.entity.entity_name == 'projects' and resource.provider_id:
+            ctx['resource_title'] = resource.resource
+
+        return ctx

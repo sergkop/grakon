@@ -4,5 +4,9 @@
     <br/>
     {{ resource.entity.description|safe }}
 {% else %}
-    
+    {% if resource.entity.entity_name == "projects" %}
+        Пользователь <a href="{{ URL_PREFIX }}{{ resource.provider.get_absolute_url }}">{{ resource.provider }}</a> поддержал ресурсом
+        <a href="{{ URL_PREFIX }}{% url project_participants resource.entity.id %}">"{{ resource_title }}"</a> проект
+        <a href="{{ URL_PREFIX }}{{ resource.entity.get_absolute_url }}">{{ resource.entity.title }}</a>.
+    {% endif %}
 {% endif %}

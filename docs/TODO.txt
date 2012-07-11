@@ -4,11 +4,6 @@ UI:
     * счетчики под плюсиками 0 - непонятно, что они кликабельны
     * on adding resource to idea list is not shown
 
-Notifications
-    * notifications about adding resources
-    * fix texts for notifications
-    * hide list of notifications in one email
-
 * unsubscribe from letters + subscription configuration
 
 * sort resources in project right panel by creation time

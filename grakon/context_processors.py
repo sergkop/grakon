@@ -55,6 +55,7 @@ def media_files(request):
         reverse('code_data') if settings.DEBUG else 'js/code_data.js',
         'js/main.js',
         'js/resources.js',
+        'js/resources_form.js',
         'js/comments.js',
         'js/locations.js',
     )
