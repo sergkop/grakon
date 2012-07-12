@@ -12,6 +12,7 @@ Resource.Form = {
                    '</span>',
 
 
+        //FIXME: использовать здесь вызов метода родителя, а не копипастить
         updateObj: function(obj) {
             var index = this.parent.existingResources.indexOf(obj.resource);
 
@@ -28,20 +29,20 @@ Resource.Form = {
 
         },
 
+        //FIXME: использовать здесь вызов метода родителя, а не копипастить
         render: function() {
             $(".gr-resource-title", this.$el).text(this.obj.title);
             this.$el.attr("name", this.obj.value);
             this.$el.attr("descr", this.obj.descr);
-
-            $('input[type=hidden][name$="__resource"]', this.$el).attr("value", this.obj.value);
-            $('input[type=hidden][name$="__description"]', this.$el).attr("value", this.obj.descr);
-
 
             if (this.obj.descr) {
                 this.$el.addClass("gr-resource-item-active");
             } else {
                 this.$el.removeClass("gr-resource-item-active");
             }
+
+            $('input[type=hidden][name$="__resource"]', this.$el).attr("value", this.obj.value);
+            $('input[type=hidden][name$="__description"]', this.$el).attr("value", this.obj.descr);
         }
     }),
 
@@ -51,13 +52,15 @@ Resource.Form = {
         sendResourceActionRequest: function(url, callback) {
             var data = this.fetchFromHTML();
 
-            _.extend(this.params, data);
+            if(this.validate(data)) {
+                _.extend(this.params, data);
 
-            if (callback) {
-                callback.call(this.caller, this.params)
+                if (callback) {
+                    callback.call(this.caller, this.params)
+                }
+
+                this.remove()
             }
-
-            this.remove()
         }
     })
 }

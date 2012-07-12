@@ -17,6 +17,8 @@ class ResourceLabelsAreaWidget(Widget):
     """ Виджет представляет из себя div с добавляющимися в него полями ресурсов типа input type=hidden  """
     def render(self, name, value, attrs=None):
 
+        #TODO: вынести HTML либо в обычный, либо в Mustache шаблон
+
         wrapper =  '<div class="gr-ideas-item">' \
                         '%s' \
                    '</div>'

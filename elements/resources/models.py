@@ -74,12 +74,14 @@ class EntityResourceManager(BaseEntityPropertyManager):
     def update(self, entity, resources):
         """ метод может работать как просто со списком названий ресурсов, так и со списокм словарей формата   [{'resource': resource, 'description': description}, ] """
 
-        if len(resources) == 0:
+        # пустой список ресурсов
+        if not len(resources):
             return
 
         # если пришел список строк -- значит пришли лишь имена ресурсов, без описаний
         if type(resources[0]) is str or type(resources[0]) is unicode:
             full_resources = [{'resource': resource, 'description': ''} for resource in resources]
+        # если пришел список dict'ов -- значит это полный список ресурсов, с описанием
         elif type(resources[0]) is dict:
             full_resources = resources
             resources = set([item['resource'] for item in resources])
