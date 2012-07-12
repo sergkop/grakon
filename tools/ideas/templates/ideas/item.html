@@ -29,6 +29,13 @@
                             ownResourcesList = $(".js-resource-items li[own]", idea),
                             addBtn = $(".add-resource-btn", idea);
 
+                        {# по клику кнопки откроется слайдер списка ресурсов, если закрыт #}
+                        addBtn.click( function(){
+                            if ($(".gr-slider", idea).hasClass("gr-slider-inactive")) {
+                                $(".js-resources-list", idea).click();
+                            }
+                        });
+
                         if (ownResourcesList.length) {
 
                             new Resource.ListView({
@@ -38,12 +45,6 @@
                                 popupClass: Resource.PopupSelectorView,
                                 addBtn: addBtn,
                                 provider: "true"
-                            });
-
-                            // FIXME: this is a hack which doesn't work when addBtn is pressed a few times
-                            addBtn.one("click", function(){
-                                $(".js-resources-list", idea).click();
-                                $(this).click();
                             });
                         } else {
                             {# если в списке учавствующих в идее нет себя -- при первом клике на "+" надо себя добавлять  #}
@@ -62,7 +63,6 @@
                                     provider: "true"
                                 });
 
-                                $(".js-resources-list", idea).click();
                                 $(this).click();
                             });
                         }
