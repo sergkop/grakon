@@ -90,7 +90,7 @@
                         <ul>
                             {% for info in lists_data.ideas %}
                                 <li>
-                                    <a href="{{ info.instance.url }}">{{ info.instance.description|truncatewords_html:15|safe }}</a>
+                                    <a href="{{ info.instance.url }}">{{ info.instance.description|truncatewords_html:11|safe }}</a>
                                     <div class="gr-info-bar">
                                         Поддержали: {{ info.resources|length }}
                                         <span class="gr-bullet">&nbsp;</span>

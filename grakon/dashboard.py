@@ -85,7 +85,20 @@ class StatsDashboard(Dashboard):
     def __init__(self, **kwargs):
         Dashboard.__init__(self, **kwargs)
 
-        self.children.append(modules.AppList(title=u'Приложения', exclude=('django.contrib.sites.*', 'django.contrib.auth.models.Group')))
+        tech_models_list = (
+            'djcelery.*',
+            'authentication.*',
+            'notifications.*',
+            'social_auth.*',
+            'services.*',
+        )
+
+        exclude=('django.contrib.sites.*', 'django.contrib.auth.models.Group')
+
+        self.children.append(modules.AppList(title=u'Контент', exclude=tech_models_list+exclude))
+
+        self.children.append(modules.AppList(title=u'Приложения', models=tech_models_list,
+                exclude=exclude))
 
         self.children.append(modules.Group(title=u'Статистика', display='tabs',
                 children=[SiteStats(title=u'Общая статистика')]))
