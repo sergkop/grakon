@@ -4,16 +4,19 @@
     _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_ID }}']);
     _gaq.push(['_trackPageview']);
 
-    {% if not DEBUG and request.profile.id > 2 %}{# This is a hack to exclude two active internal users #}
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+    {% if not DEBUG %}
+        {# This is a hack to exclude two active internal users #}
+        {% if not request.profile or request.profile.id > 2 %}
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
 
-        window.onerror = function(message, file, line) {
-            var sFormattedMessage = '[' + file + ' (' + line + ')] ' + message;
-            _gaq.push(['_trackEvent', 'exceptions', 'javascript', sFormattedMessage, null, true]);
-        };
+            window.onerror = function(message, file, line) {
+                var sFormattedMessage = '[' + file + ' (' + line + ')] ' + message;
+                _gaq.push(['_trackEvent', 'exceptions', 'javascript', sFormattedMessage, null, true]);
+            };
+        {% endif %}
     {% endif %}
 </script>
