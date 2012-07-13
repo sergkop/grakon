@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 
 from users.models import Message, Profile
 
@@ -16,3 +17,6 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Profile, ProfileAdmin)
+
+# A hack to show is_active field in User model admin instead of is_stuff
+admin.site._registry[User].list_display = ('username', 'email', 'first_name', 'last_name', 'is_active')

@@ -11,7 +11,7 @@ class ProfileMiddleware(object):
             }
 
             # used for Google Analytics custom variable
-            request.user_type = 'active' if request.profile.rating >1 else 'logged in' 
+            request.user_type = 'active' if request.profile.rating>1 else 'logged in'
         else:
             request.profile = None
             request.PROFILE = {}

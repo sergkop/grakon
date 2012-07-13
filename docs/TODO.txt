@@ -1,30 +1,22 @@
-* user name is not shown in new idea notification
-* Notification about resource provided for project comes twice
+* links in breadcrumbs should depend on type of page or tab on location
 
-* show first 50 symbols of intro field, ... and title OR move project date somewhere and show 70 symbols
+* don't show user name in user's lists of tasks and projects
 
 * automate analytics collection for emails (percent of read + GA campaign)
+* admin stats for read/unread emails
 
-* show targets of projects in the lists instead of plan
+* Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
+
+* Don't ask password in registration until email is confirmed (like in gravatar.com)
+* depricate usernames
+
+* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
+
+* Notification about resource provided for project comes twice
 
 * separate analytics of elections site
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 * use ga events to monitor pressing buttons, registration and other activities
-
-* last month means from the beginning of the month in stats
-* statistics for last day, week, month in dashboard is wrong
-* stats for read/unread emails
-
-* in User admin table show is_active field, statistics of inactivated users
-
-
-* Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
-* introduce time of reading email
-
-* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
-
-* Don't ask password in registration until email is confirmed (like in gravatar.com)
-* depricate usernames?
 
 Yulia:
     * send message dialog
@@ -47,16 +39,16 @@ UI:
 
 * unsubscribe from letters + subscription configuration
 
-* links in breadcrumbs should depend on type of page or tab on location
-
 * display data for logged in user at main page (no redirect) - data from followed entities
 
 * minification of static files (http://developer.yahoo.com/yui/compressor/)
 
 * update ratings on any changes (adding, deleting, following, etc)
 * override save() method of EntityProperty models to reset cache
-
 ---------------------------------------------------------------------
+* analytics of read time for emails
+* analytics of email domains
+
 * sorting entities lists by rating, date (choose sorting type)
 
 * sort resources in idea and profile (by title?)
@@ -132,6 +124,8 @@ Social registration
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 -------------------------------------------------------------------------
+* test for users similar to http://www.bg.ru/good/
+
 * allow user to start working without confirmation of his email, but limit his functionality (?)
 
 Testing:

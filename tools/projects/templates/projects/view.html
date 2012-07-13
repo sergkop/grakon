@@ -5,7 +5,6 @@
                 {% include "participants/person.html" %}
             {% endwith %}
         </div>
-        <div class="dimmed" align="right">{{ info.instance.add_time }}</div>
         <div class="ym-clearfix">&nbsp;</div>
     </div>
 
@@ -51,5 +50,10 @@
                 {% endfor %}
             </div>
         {% endif %}
+    </div>
+
+    <div class="gr-mb20">
+        <div class="dimmed" align="right">{{ info.instance.add_time }}</div>
+        <div class="ym-clearfix">&nbsp;</div>
     </div>
 </div>

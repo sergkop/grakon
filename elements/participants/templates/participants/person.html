@@ -1,1 +1,7 @@
-<a href="{{ person.url }}">{{ person.full_name }}</a>{% if person.intro %}, {{ person.intro }}{% endif %}
+<a href="{{ person.url }}">{{ person.full_name }}</a>{% if person.intro %},
+    {% if person.intro|length <= 70 %}
+        {{ person.intro }}
+    {% else %}
+        <span title="{{ person.intro }}">{{ person.intro|truncatechars:70 }}</span>
+    {% endif %}
+{% endif %}
