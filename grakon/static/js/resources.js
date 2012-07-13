@@ -187,6 +187,14 @@ var Resource = {
             $(".remove_resource_btn", this.$el).on("click", $.proxy(this.removeResource, this));
         },
 
+        validate: function(data) {
+            // проверка на то, что введен сам ресурс
+            if (!data.resource) {
+                return false
+            }
+            return true
+        },
+
         createNew: function() {
             var context = {popup_id: this.el};
 
@@ -245,24 +253,26 @@ var Resource = {
             var view = this,
                 data = this.fetchFromHTML();
 
-            _.extend(this.params, data);
+            if (this.validate(data)) {
+                _.extend(this.params, data);
 
-            // api сервера требует id
-            this.params.id = this.params.entity_id;
-            delete this.params.entity_id;
+                // api сервера требует id
+                this.params.id = this.params.entity_id;
+                delete this.params.entity_id;
 
-            post_shortcut(
-                    url,
-                    this.params,
-                    function() {
-                        if (callback) {
-                            callback.call(view.caller, view.params)
-                        }
-                    },
-                    false
-            )();
+                post_shortcut(
+                        url,
+                        this.params,
+                        function() {
+                            if (callback) {
+                                callback.call(view.caller, view.params)
+                            }
+                        },
+                        false
+                )();
 
-            this.remove()
+                this.remove()
+            }
         },
 
         remove: function() {
@@ -399,7 +409,7 @@ _.extend(Resource, {
                 title: $("select option:selected", this.$el).text(),
                 resource: $("select", this.$el).val(),
                 description: $("textarea", this.$el).val()
-            };
+            }
         }
     }),
 
@@ -431,7 +441,7 @@ _.extend(Resource, {
                 title: $("input", this.$el).val(),
                 resource: $("input", this.$el).val(),
                 description: $("textarea", this.$el).val()
-            };
+            }
         }
     })
 })

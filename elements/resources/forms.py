@@ -31,13 +31,14 @@ def resources_init(cls):
 
 
 def labeled_resources_init(cls):
-    """ Добавляет на форму элемент выбора ресурсов и их обработчик при ее сохранении """
+    """ Декоратор для класса формы. Добавляет на форму элемент выбора ресурсов и их обработчик при ее сохранении """
 
     attrs = {'resource_labels': forms.Field(label=u'Требуемые ресурсы', required=False, widget=ResourceLabelsAreaWidget,
         help_text=u'Можно выбрать несколько')}
     new_cls = cls.__metaclass__(cls.__name__, (cls,), attrs)
 
     def fetch_resources(data):
+        """ забирает из данных формы ресурсы по маске resource__{{index}}__{{field}} """
         resources = {}
         for key in data.keys():
             if 'resource__' in key:
@@ -47,6 +48,7 @@ def labeled_resources_init(cls):
 
         return resources.values()
 
+    # перекрываем стандартный save оборачиваемого класса, добавляя сохранение ресурсов после оригинального save
     save = new_cls.save
     def new_save(form):
         entity = save(form)
