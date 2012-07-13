@@ -10,7 +10,6 @@
 * separate analytics of elections site
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
 * use ga events to monitor pressing buttons, registration and other activities
-* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
 
 * last month means from the beginning of the month in stats
 * statistics for last day, week, month in dashboard is wrong
