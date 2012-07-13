@@ -1,43 +1,83 @@
+* user name is not shown in new idea notification
+* Notification about resource provided for project comes twice
+
+* show first 50 symbols of intro field, ... and title
+
+* rating is not updated properly
+
+* automate analytics collection for emails (percent of read + GA campaign)
+
+* separate analytics of elections site
+* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
+* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
+* use ga events to monitor pressing buttons, registration and other activities
+* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
+
+* last month means from the beginning of the month in stats
+* statistics for last day, week, month in dashboard is wrong
+* stats for read/unread emails
+
+* in User admin table show is_active field, statistics of inactivated users
+
+
+* Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
+* introduce time of reading email
+
+* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
+
+* Don't ask password in registration until email is confirmed (like in gravatar.com)
+* depricate usernames?
+
+Yulia:
+    * send message dialog
+    * feedback form formatting
+    * popup for linking idea to project
+    * when user closes slidedown list of followers or projects, boldness of link doesn't go away
+    * form fields are not highlighted anymore (with uniform script)
+    * consider all the cases for showing lists under task/idea (press one button first, then another, also close)
+
 UI:
     * поменять кнопки на главной
     * счетчики под плюсиками 0 - непонятно, что они кликабельны
 
-* separate analytics of elections site
-* analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
-* use ga events to monitor pressing buttons, registration and other activities
-* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
-* exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
+* use tinymce parameters from settings.py in js
+* rewrite tinymce widget
+* getContent() should be taken for specific tinymce instances, not active
+
+* split nginx logs in 10mb files
 
 * unsubscribe from letters + subscription configuration
 
+* links in breadcrumbs should depend on type of page or tab on location
+
+* display data for logged in user at main page (no redirect) - data from followed entities
+
+* minification of static files (http://developer.yahoo.com/yui/compressor/)
+
+* update ratings on any changes (adding, deleting, following, etc)
+* override save() method of EntityProperty models to reset cache
+
+---------------------------------------------------------------------
+* sorting entities lists by rating, date (choose sorting type)
+
 * sort resources in idea and profile (by title?)
 * sort resources in project right panel by creation time
-
-* client-side error logging - http://www.thetaboard.com/blog/client-side-error-logging-with-google-analytics?r=378
-
-Emails:
-    * redirect url to track pressing on external links in emails
-    * automatically add target="_blank" to links in emails (is it needed?)
-    * 3 lists of old emails - active, unknown, inactive; unsent emails
-    * use Amazon SNS to receive bounce and complaints notifications
-    * suggest users to add our emails to contacts lists
-    * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
-    * send emails about считайте сами
-    * model with emails which should be blacklisted
-    * Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
-
-* show notifications on the website
-* configure celery to perform notification tasks periodically
 
 Account activation:
     * fix sending profile activation email via admin
     * what happens when account activation link expires? is it possible to register again?
 
-* links in breadcrumbs should depend on type of page or tab on location
+* ability to delete ideas, tasks (without resources), projects, comments
+* ability to request entity deletion (like with profiles)
+
+* new widget for location editor; add location in location list editor
+
+* include other factors in users sorting (number of contacts, etc.)
 
 * get comment id from ajax request
+* autolinking in comments
 
-* tags for projects, tasks (like ЖКХ, здравоохранение, etc.)
+* don't load social networks scripts (vkontakte - include loading scripts in elements/share.html)
 
 Search
     * min-width in locations/select.html
@@ -47,45 +87,38 @@ Search
     * full-text search of entities
     * autocompletion
 
-* display data for logged in user at main page (no redirect) - data from followed entities
-* minification of static files (http://developer.yahoo.com/yui/compressor/)
+* show notifications on the website
+* configure celery to perform notification tasks periodically
 
-* new widget for location editor; add location in location list editor
+Emails:
+    * redirect url to track pressing on external links in emails
+    * 3 lists of old emails - active, unknown, inactive; unsent emails
+    * use Amazon SNS to receive bounce and complaints notifications
+    * suggest users to add our emails to contacts lists
+    * script to retrieve and analyze bounce messages, spam complaints (celery tasks checking gmail messages)
+    * send emails about считайте сами
+    * model with emails which should be blacklisted
 
-* autolinking in comments
+* tags for projects, tasks (like ЖКХ, здравоохранение, etc.)
 
-* ability to delete ideas, tasks (without resources), projects, comments
-* ability to request entity deletion (like with profiles)
+* how to edit task/project location?
 
-* don't load social networks scripts (include loading scripts in elements/share.html)
-
-* add tabs names to title for entities, image url and description should be specified as context variable
-* in url crop GA campaign get parameters
-
-* include other factors in users sorting (number of contacts, etc.)
-
-* update ratings on any changes (adding, deleting, following, etc)
-* override save() method of EntityProperty models to reset cache
-
-* drop yandex metrika?
+* database backups
 
 * no breadcrumbs on create form pages
 * in registration form check that russian letters are used in first and last name
 
 * open share dialogs in popups (vk, fb, twitter)
-
-* how to edit task/project location?
-
-* in User admin table show is_active field
-
-* database backups
-
-* Invite friends button under contacts in profile
+* add tabs names to title for entities, image url and description should be specified as context variable
+* in url crop GA campaign get parameters
 
 * suggest tasks, projects to follow (based on geography)
 
-* Don't ask password in registration until email is confirmed (like in gravatar.com)
-* allow user to start working without confirmation of his email, but limit his functionality (?)
+* Invite friends button under contacts in profile
+
+* restructure main menu
+
+* when user is removed his projects, tasks, ideas are left and cause errors
 
 Social registration
     * configure registration with fb, vk, google
@@ -99,24 +132,9 @@ Social registration
     * file with all passwords, social applications (where to get them)
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
-* Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
-
-Yulia:
-    * send message dialog
-    * feedback form formatting
-    * popup for linking idea to project
-    * when user closes slidedown list of followers or projects, boldness of link doesn't go away
-    * form fields are not highlighted anymore (with uniform script)
-    * consider all the cases for showing lists under task/idea (press one button first, then another, also close)
-
-* restructure main menu
-
-* use tinymce parameters from settings.py in js
-* rewrite tinymce widget
-* getContent() should be taken for specific tinymce instances, not active
-
-* when user is removed his projects, tasks, ideas are left and cause errors
 -------------------------------------------------------------------------
+* allow user to start working without confirmation of his email, but limit his functionality (?)
+
 Testing:
     * perform code testing after commit (github hooks)
     * testing in browsers, selenium, http://www.browserstack.com
@@ -157,11 +175,7 @@ Code improvements:
 
     * depricate account activated page and registration failed page
 
-* statistics for last day, week, month in dashboard is wrong
-* stats for read/unread emails
-* some messages are not sent
-
-* sorting lists by popularity, date (choose sorting type)
+* some email were not sent (see status)
 
 * hide follow/unfollow button for admin
 * can admin unfollow an entity?

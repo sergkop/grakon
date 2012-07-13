@@ -152,7 +152,7 @@ class BaseEntityManager(models.Manager):
 # TODO: add complaints, files/images
 # TODO: reset cache key on changing any of related data or save/delete (base method/decorator)
 class BaseEntityModel(models.Model):
-    rating = models.IntegerField(default=0, editable=False) # used for sorting entities
+    rating = models.FloatField(default=0, editable=False) # used for sorting entities
 
     time = models.DateTimeField(auto_now=True, null=True, db_index=True)
     add_time = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
