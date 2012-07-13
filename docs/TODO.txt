@@ -1,9 +1,7 @@
 * user name is not shown in new idea notification
 * Notification about resource provided for project comes twice
 
-* show first 50 symbols of intro field, ... and title
-
-* rating is not updated properly
+* show first 50 symbols of intro field, ... and title OR move project date somewhere and show 70 symbols
 
 * automate analytics collection for emails (percent of read + GA campaign)
 
@@ -35,6 +33,7 @@ Yulia:
     * when user closes slidedown list of followers or projects, boldness of link doesn't go away
     * form fields are not highlighted anymore (with uniform script)
     * consider all the cases for showing lists under task/idea (press one button first, then another, also close)
+    * bug when pressing edit resource button
 
 UI:
     * поменять кнопки на главной
