@@ -9,6 +9,10 @@ class ProfileMiddleware(object):
                 'full_name': unicode(request.profile),
                 'url': request.profile.get_absolute_url(),
             }
+
+            # used for Google Analytics custom variable
+            request.user_type = 'active' if request.profile.rating >1 else 'logged in' 
         else:
             request.profile = None
             request.PROFILE = {}
+            request.user_type = 'anonym'

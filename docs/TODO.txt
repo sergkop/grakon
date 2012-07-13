@@ -5,9 +5,10 @@
 
 * automate analytics collection for emails (percent of read + GA campaign)
 
+* show targets of projects in the lists instead of plan
+
 * separate analytics of elections site
 * analytics of registration (events in GA - http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html) - success, errors, just visits
-* use GA custom variables to track groups of users (e.g. logged in, anonymous) - https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingCustomVariables
 * use ga events to monitor pressing buttons, registration and other activities
 * exclude internal traffic from analytics - http://www.mcbuzz.com/2011/how-to-exclude-visitors-from-google-analytics/
 
