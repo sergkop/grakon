@@ -4,10 +4,10 @@ input[type=radio] {vertical-align: top;}
 
 .gr-breadcrumbs {margin: 1em 0 0; clear: both; border-left: 1px solid #d8d8d8; border-radius: .3em;  padding-left: 6px;}
     .gr-breadcrumbs i {position: absolute; top:50%; margin-top: -12px; right: -10px; width: 11px; height: 26px; background:url(../images/bg-breadcrumbs.png) 0 -1px no-repeat; z-index:1}
-	.gr-breadcrumbs li.on a:hover  i {background-position: 0 -56px;} 
+	.gr-breadcrumbs li a:hover  i {background-position: 0 -56px !important;} 
 	.gr-breadcrumbs li.on a i {background-position: 0 -28px;}
-    .gr-breadcrumbs li.on a:active i {background-position: 0 -84px;}
-	.gr-breadcrumbs li.on a {color: #fff; border-color: #009dc4; box-shadow: inset 0 1px 0 #8acff1;}
+    .gr-breadcrumbs li a:active i {background-position: 0 -84px !important;}
+	.gr-breadcrumbs li.on a, .gr-breadcrumbs li:hover a {color: #fff; border-color: #009dc4; box-shadow: inset 0 1px 0 #8acff1;}
         .gr-breadcrumbs li.on a:hover {box-shadow: inset 0 1px 0 #7bc5e8;}
 
 /*Общие стили для постоянного использования*/
@@ -62,7 +62,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /*Кнопки соцсетей*/
 .gr-share-icons {float: right;}
-    .jquery_tabs .gr-share-icons {width: 30%; padding: .7em 0 .7em 1.8em;}
+    .jquery_tabs .gr-share-icons {width: 30%; padding: 1.1em 0 .6em 1.8em;}
 	td.gr-share-icons {margin: 0; vertical-align: middle; float: none;}
 		td.gr-share-icons a {margin: 0;}
 	.gr-share-icons img {opacity: .5;}
@@ -250,13 +250,15 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 /* Комментарии */
 
-.gr-add-comment {margin-bottom: .7em}
+.gr-add-comment {margin: 0}
 .gr-add-comment td {padding: 0;}
 .gr-add-comment td .ym-button {margin: 0 0 0 1em;}
 .gr-add-comment textarea {font-size: 1.2em; width: 100%}
-.gr-comment {padding: 10px 0;}
-.gr-comment .gr-info-bar {padding: 0 0 1em; border-bottom: 1px solid #ddd;}   
+.gr-comment {margin-top: 1em;}
+.gr-comment .gr-info-bar {padding: 0 0 .7em; margin: 0; border-bottom: 1px solid #ddd;}  
+    .gr-last-comment .gr-info-bar { border-bottom: none; padding-bottom: 0;}
     .gr-comment .gr-info-bar .highlight {cursor: pointer;}
     .gr-comment .gr-info-bar .gr-add-comment {margin-bottom: 0;}    
 .gr-child-comments {margin-left: 44px;}
 input:focus, textarea:focus {border-color: rgba(82, 168, 236, 0.8); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);}
+.gr-inner-comment {padding: 10px; margin-bottom: 1em; background-color: #edf4f7;}
