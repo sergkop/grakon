@@ -10,6 +10,7 @@ class DateTimeWidget(DateTimeInput):
         }
         js = ('libs/timepicker/timepicker.js',)
 
+    # TODO: raises errors when used in admin
     def render(self, name, value, attrs=None):
         html = super(DateTimeWidget, self).render(name, value, attrs)
         html += '<script type="text/javascript">' \

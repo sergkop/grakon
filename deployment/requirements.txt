@@ -43,6 +43,5 @@ django-admin-tools
 python-dateutil==1.5
 pytz
 django-qsstats-magic
-django-chart-tools
 
 #django-simple-captcha

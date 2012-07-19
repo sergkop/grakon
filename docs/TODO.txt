@@ -1,14 +1,22 @@
-* links in breadcrumbs should depend on type of page or tab on location
-
-* don't show user name in user's lists of tasks and projects
-
 * automate analytics collection for emails (percent of read + GA campaign)
 * admin stats for read/unread emails
 
-* Emails: DomainKeys, Sender ID, DKIM (dns configuration + document it)
-
 * Don't ask password in registration until email is confirmed (like in gravatar.com)
 * depricate usernames
+
+* additional list of old team members + add Timur
+
+
+1) после добавления длинного комментария на несколько строк поле для добавления нового комментария не уменьшается обратно до 1 строчки (это происходит только после перезагрузки страницы)
+2) когда жмешь "ответить", то едет верстка: нет отступа между разделительной чертой и полем для ввода ответа
+3) сделайте, пожалуйста, по нажатию "enter" добавление комментария, а не перенос строки. Это более естественно и не приводит к обманчивому предположению, что можно добавить несколько абзацев.
+4) notifications about comments
+
+* recalculate ratings on save (e.g. in profiles)
+
+* links in breadcrumbs should depend on type of page or tab on location
+
+* don't show user name in user's lists of tasks and projects
 
 * Invite old users and simplify account creation for them (autofill name, insert hash to confirm email), registration form must be able to take get parameters
 
@@ -46,6 +54,12 @@ UI:
 * update ratings on any changes (adding, deleting, following, etc)
 * override save() method of EntityProperty models to reset cache
 ---------------------------------------------------------------------
+* notifications about adding to contacts
+* weekly letters with a list of new projects/tasks
+
+* show counters of provided resources for project in the right panel
+* show provided resources in profile and profile list item + count in ratings
+
 * analytics of read time for emails
 * analytics of email domains
 
@@ -92,6 +106,8 @@ Emails:
 
 * tags for projects, tasks (like ЖКХ, здравоохранение, etc.)
 
+* in html fields remove last empty line on cleaning
+
 * how to edit task/project location?
 
 * database backups
@@ -124,6 +140,8 @@ Social registration
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 -------------------------------------------------------------------------
+* Emails: DomainKeys, Sender ID (dns configuration + document it)
+
 * test for users similar to http://www.bg.ru/good/
 
 * allow user to start working without confirmation of his email, but limit his functionality (?)

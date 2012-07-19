@@ -1,6 +1,6 @@
 {% extends "admin_tools/dashboard/module.html" %}
 
-{% load gr_chart_tags %}
+{% load chart_tags %}
 
 {% block module_content %}
     {{ module.period_form.media }}
@@ -12,84 +12,70 @@
                 <label for="id_start">Начало: </label>
                 {{ module.period_form.start }}&nbsp;
                 <label for="id_end">Конец: </label>
-                {{ module.period_form.end }}
+                {{ module.period_form.end }}&nbsp;
+                <input type="submit" value="Показать"/>
+
                 </br>
                 {{ module.period_form.start.errors }}
                 {{ module.period_form.end.errors }}
-
-                <label for="mailtype">Тип письма: </label>
-                <select name="mailtype">
-                    <option value="all">Все</option>
-                    {% for mailtype in module.mailtypes %}
-                        <option {% if mailtype == module.mailtype %}selected{% endif %} value="{{ mailtype }}">{{ mailtype }}</option>
-                    {% endfor %}
-                </select>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Показать"/>
             </div>
 
         </form>
     </div>
 
     <div align="center" id="graphics" style="padding-top:10px;">
-        {% gr_bar_chart module.mail_values module.day_captions '580x150' 'E-mails' %}
-
-        <div align="left">
-            <p style="font-size:0.9em;">
-                За сегодня: <strong>{{ module.mails_read_qss.this_day }}/{{ module.mails_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.mails_read_qss.this_week }}/{{ module.mails_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.mails_read_qss.this_month }}/{{ module.mails_qss.this_month }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                (прочитано/отправлено)
-            </p>
-        </div>
-
-        {% gr_bar_chart module.users_values module.day_captions '580x150' 'Users' %}
+        <h3 align="center">Users</h3>
+        {% bar_chart module.users_values module.day_captions '580x150' %}
 
         <div align="left">
             <p style="font-size:0.9em;">
                 За сегодня: <strong>{{ module.users_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.users_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.users_qss.this_month }}</strong>
+                За неделю: <strong>{{ module.users_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.users_qss.last_month }}</strong>
             </p>
         </div>
 
-        {% gr_bar_chart module.ideas_values module.day_captions '580x150' 'Ideas' %}
+        <h3 align="center">Ideas</h3>
+        {% bar_chart module.ideas_values module.day_captions '580x150' %}
 
         <div align="left">
             <p style="font-size:0.9em;">
                 За сегодня: <strong>{{ module.ideas_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.ideas_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.ideas_qss.this_month }}</strong>
+                За неделю: <strong>{{ module.ideas_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.ideas_qss.last_month }}</strong>
             </p>
         </div>
 
-        {% gr_bar_chart module.projects_values module.day_captions '580x150' 'Projects' %}
+        <h3 align="center">Projects</h3>
+        {% bar_chart module.projects_values module.day_captions '580x150' %}
 
         <div align="left">
             <p style="font-size:0.9em;">
                 За сегодня: <strong>{{ module.projects_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.projects_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.projects_qss.this_month }}</strong>
+                За неделю: <strong>{{ module.projects_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.projects_qss.last_month }}</strong>
             </p>
         </div>
 
-        {% gr_bar_chart module.tasks_values module.day_captions '580x150' 'Tasks' %}
+        <h3 align="center">Tasks</h3>
+        {% bar_chart module.tasks_values module.day_captions '580x150' %}
 
         <div align="left">
             <p style="font-size:0.9em;">
                 За сегодня: <strong>{{ module.tasks_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.tasks_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.tasks_qss.this_month }}</strong>
+                За неделю: <strong>{{ module.tasks_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.tasks_qss.last_month }}</strong>
             </p>
         </div>
 
-        {% gr_bar_chart module.messages_values module.day_captions '580x150' 'Messages' %}
+        <h3 align="center">Messages</h3>
+        {% bar_chart module.messages_values module.day_captions '580x150' %}
 
-        <div align = "left">
+        <div align="left">
             <p style="font-size:0.9em;">
                 За сегодня: <strong>{{ module.messages_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За неделю: <strong>{{ module.messages_qss.this_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                За месяц: <strong>{{ module.messages_qss.this_month }}</strong>
+                За неделю: <strong>{{ module.messages_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.messages_qss.last_month }}</strong>
             </p>
         </div>
     </div>
@@ -111,7 +97,7 @@
             if (!width || width >= windowWidth/2)
                 width = Math.round((windowWidth-100)/2);
 
-            $("#graphics img").each(function(i, el){
+            $("#graphics img, #emails img").each(function(i, el){
                 var imageSrc = $(el).attr("src");
                 imageSrc = imageSrc.replace(new RegExp("&chs=[0-9]+x[0-9]+&","g"),"&chs="+width+"x150&");
                 $(el).attr("src", imageSrc);

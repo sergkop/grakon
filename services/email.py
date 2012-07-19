@@ -8,7 +8,6 @@ from django.template.loader import render_to_string
 
 import boto
 from boto.ses import SESConnection
-import dkim
 from lxml.etree import tostring
 from lxml.html.soupparser import fromstring
 
@@ -67,17 +66,6 @@ def send_email(recipient, subject, template, ctx, type, from_email='noreply', re
     msg.attach_alternative(html, "text/html")
 
     message = msg.message().as_string()
-
-    # Sign headers with DKIM
-    """
-    To enable DKIM signing you should specify values for the DKIM_PRIVATE_KEY and DKIM_DOMAIN settings.
-    You can generate a private key with a command such as openssl genrsa 512 and get the public key portion
-    with openssl rsa -pubout <private.key. The public key should be published to ses._domainkey.grakon.org
-    """
-    # TODO: test it
-    sig = dkim.sign(message, settings.DKIM_SELECTOR, settings.DKIM_DOMAIN, settings.DKIM_PRIVATE_KEY,
-            include_headers=['From', 'To', 'Cc', 'Subject'])
-    message = sig + message
 
     # TODO: set priority
     email = Email(recipient=recipient, hash=hash, type=type, raw_msg=message, from_email=from_email,

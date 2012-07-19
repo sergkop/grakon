@@ -1,0 +1,34 @@
+{% extends "admin_tools/dashboard/module.html" %}
+
+{% load chart_tags %}
+
+{% block module_content %}
+    Тип письма:
+    <select id="mailtype">
+        <option value="all">Все</option>
+        {% for mailtype in module.mailtypes %}
+            <option {% if mailtype == module.mailtype %}selected{% endif %} value="{{ mailtype }}">{{ mailtype }}</option>
+        {% endfor %}
+    </select>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#mailtype option").click(function(){
+                window.location.href = document.URL.split("?")[0]+"?mailtype="+$(this).val();
+            });
+        });
+    </script>
+
+    <div align="center" id="emails" style="padding-top:10px;">
+        {% bar_chart module.all_emails_values module.day_captions '580x150' %}
+
+        <div align="left">
+            <p style="font-size:0.9em;">
+                За сегодня: <strong>{{ module.emails_read_qss.this_day }}/{{ module.emails_qss.this_day }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За неделю: <strong>{{ module.emails_read_qss.last_week }}/{{ module.emails_qss.last_week }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                За месяц: <strong>{{ module.emails_read_qss.last_month }}/{{ module.emails_qss.last_month }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                (прочитано/отправлено)
+            </p>
+        </div>
+    </div>
+{% endblock %}
