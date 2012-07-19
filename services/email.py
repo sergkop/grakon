@@ -29,7 +29,7 @@ def send_email(recipient, subject, template, ctx, type, from_email='noreply', re
     # TODO: replace <a href="url">text</a> with 'text url', no GA tracking in it
     text = html
 
-    name = recipient.username if recipient else 'grakon'
+    name = str(recipient.user_id) if recipient else 'grakon'
     hash = hashlib.md5(name+' '+str(datetime.now())).hexdigest()[:20]
 
     params = urlencode({'mh': hash, 'utm_campaign': type, 'utm_medium': 'email', 'utm_source': 'main'})

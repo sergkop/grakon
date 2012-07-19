@@ -5,7 +5,6 @@ class ProfileMiddleware(object):
             request.profile_info = request.profile.info(related=True)
             request.PROFILE = {
                 'id': request.profile.id,
-                'username': request.profile.username,
                 'full_name': unicode(request.profile),
                 'url': request.profile.get_absolute_url(),
             }

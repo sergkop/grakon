@@ -18,7 +18,7 @@ var Resource = {
             this.existingResources = this.parent.existingResources;
 
             //  отбивка для не аутентифицированных
-            if (!PROFILE.username){
+            if (!PROFILE.id){
                 login_dialog_init();
                 return;
             }
@@ -131,7 +131,7 @@ var Resource = {
 
         renderAddWindow: function(){
             //  отбивка для не аутентифицированных
-            if (!PROFILE.username){
+            if (!PROFILE.id){
                 login_dialog_init();
                 return;
             }

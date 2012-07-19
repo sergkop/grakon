@@ -61,7 +61,7 @@ class LocationManager(models.Manager):
                 # Comments
                 other_res[loc.id]['comments'] = comments_data[loc.id]
 
-            profiles_by_id = ENTITIES_MODELS['participants'].objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+            profiles_by_id = ENTITIES_MODELS['participants'].objects.only('id', 'first_name', 'last_name', 'intro', 'rating') \
                     .in_bulk(set(participants_ids))
 
             for loc in locations:

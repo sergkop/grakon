@@ -42,6 +42,6 @@ urlpatterns += patterns('',
     *static_tabs_urls('static_pages/how_to_help/base.html', [
         ('how_to_help', u'...мозгами', 'static_pages/how_to_help/join_us.html', ''),
         ('donate', u'...деньгами', 'static_pages/how_to_help/donate.html', ''),
-        ('share', u'... делитесь информацией', 'static_pages/how_to_help/share.html', ''),
+        ('share', u'...распространением информацией', 'static_pages/how_to_help/share.html', ''),
     ])
 )

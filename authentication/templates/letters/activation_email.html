@@ -3,7 +3,7 @@
 {% block content %}
     Здравствуйте, {{ recipient }}!
     <br/><br/>
-    Чтобы активировать ваш аккаунт <b>{{ recipient.username }}</b> на сайте Гракон перейдите по ссылке
+    Чтобы активировать ваш аккаунт на Граконе перейдите по ссылке
     <br/><br/>
     <a href="{{ URL_PREFIX }}{% url activate_account activation_key %}">{{ URL_PREFIX }}{% url activate_account activation_key %}</a>
     <br/><br/>

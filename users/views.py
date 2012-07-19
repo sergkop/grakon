@@ -24,15 +24,15 @@ class BaseProfileView(object):
     def get_context_data(self, **kwargs):
         ctx = super(BaseProfileView, self).get_context_data(**kwargs)
 
-        username = self.kwargs.get('username')
+        user_id = int(self.kwargs.get('id'))
 
-        ctx.update(entity_base_view(self, Profile, {'username': username}))
+        ctx.update(entity_base_view(self, Profile, {'user': user_id}))
 
         self.tabs = [
-            ('view', u'Инфо', reverse('profile', args=[username]), 'profiles/view.html'),
-            ('tasks', u'Задачи: %i' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[username]), 'tasks/list.html'),
-            ('projects', u'Проекты: %i' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[username]), 'projects/list.html'),
-            ('ideas', u'Идеи: %i' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[username]), 'ideas/list.html'),
+            ('view', u'Инфо', reverse('profile', args=[user_id]), 'profiles/view.html'),
+            ('tasks', u'Задачи: %i' % self.info['tasks']['admin']['count'], reverse('profile_tasks', args=[user_id]), 'tasks/list.html'),
+            ('projects', u'Проекты: %i' % self.info['projects']['admin']['count'], reverse('profile_projects', args=[user_id]), 'projects/list.html'),
+            ('ideas', u'Идеи: %i' % self.info['ideas']['admin']['count'], reverse('profile_ideas', args=[user_id]), 'ideas/list.html'),
         ]
 
         ctx.update(entity_tabs_view(self))
@@ -79,16 +79,10 @@ class ProfileIdeasView(BaseProfileView, TemplateView):
     def update_context(self):
         return table_data(self.request, 'ideas', participant_in(self.entity, 'admin', 'ideas'))
 
-#class ProfileContactsView(BaseProfileView, TemplateView):
-#    tab = 'contacts'
-#
-#    def update_context(self):
-#        return table_data(self.request, 'participants', self.entity.get_follower)
-
 def remove_account(request):
     if request.user.is_authenticated():
         # TODO: fix the way to send user notification of account deletion
-        subject = u'[УДАЛЕНИЕ АККАУНТА] %s - %s %s' % (request.user.username,
+        subject = u'[УДАЛЕНИЕ АККАУНТА] id=%s - %s %s' % (request.user.id,
                 request.profile.first_name, request.profile.last_name)
         send_email(None, subject, 'letters/remove_account.html', {'profile': request.profile},
                 'remove_account', 'noreply')

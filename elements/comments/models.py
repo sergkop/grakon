@@ -11,7 +11,7 @@ class EntityCommentManager(BaseEntityPropertyManager):
         comments = self.filter(content_type=ContentType.objects.get_for_model(model), entity_id__in=ids)
 
         from users.models import Profile
-        profiles = Profile.objects.only('id', 'username', 'first_name', 'last_name') \
+        profiles = Profile.objects.only('id', 'first_name', 'last_name') \
                 .in_bulk(set(c.person_id for c in comments))
 
         for id in ids:
@@ -38,7 +38,6 @@ class EntityCommentManager(BaseEntityPropertyManager):
                     },
                     'author': {
                         'id': profile.id,
-                        'username': profile.username,
                         'full_name': unicode(profile),
                         'url': profile.get_absolute_url(),
                     },

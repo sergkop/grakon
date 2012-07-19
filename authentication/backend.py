@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class EmailAuthenticationBackend(ModelBackend):
     """ Used to allow authentication with email instead of username """
+    supports_inactive_user = False
+
     def authenticate(self, username, password=None):
         # TODO: what if there are several users with the same email?
         try:

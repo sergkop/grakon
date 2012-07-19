@@ -22,7 +22,7 @@ class EntityParticipantManager(BaseEntityPropertyManager):
 
         # Get all related profiles
         from users.models import Profile
-        profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+        profiles_by_id = Profile.objects.only('id', 'first_name', 'last_name', 'intro', 'rating') \
                 .in_bulk(set([r[1] for r in roles_data]))
 
         res = {}

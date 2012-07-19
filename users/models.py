@@ -15,7 +15,7 @@ class ProfileManager(BaseEntityManager):
         # Get contacts
         contacts = EntityParticipant.objects.participant_in('follower', ids, Profile)
         contacts_ids = set(c_id for id in ids for c_id in contacts[id]['ids'])
-        contacts_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+        contacts_by_id = Profile.objects.only('id', 'first_name', 'last_name', 'intro', 'rating') \
                 .in_bulk(contacts_ids)
 
         for id in ids:
@@ -57,16 +57,12 @@ class ProfileManager(BaseEntityManager):
                     data[id][entity_name][role]['entities'] = [entities_info[e_id] \
                             for e_id in data[id][entity_name][role]['ids']]
 
-# TODO: depricate show_name
 @entity_class(['resources', 'locations', 'participants'])
 class Profile(BaseEntityModel):
     user = models.OneToOneField(User)
-    username = models.CharField(max_length=30, db_index=True)
 
     first_name = models.CharField(u'Имя', max_length=40, help_text=u'на русском языке')
     last_name = models.CharField(u'Фамилия', max_length=40, help_text=u'на русском языке')
-    show_name = models.BooleanField(u'Показывать настоящее имя', default=True,
-            help_text=u'Снимите эту галку, чтобы скрыть свое имя от других пользователей')
 
     intro = models.CharField(u'Кратко о себе', max_length=100, blank=True,
             help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
@@ -128,7 +124,7 @@ class Profile(BaseEntityModel):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('profile', [self.username])
+        return ('profile', [self.user_id])
 
     def __unicode__(self):
         return self.first_name + u' ' + self.last_name
@@ -137,7 +133,6 @@ def create_profile(sender, **kwargs):
     if kwargs.get('created', False):
         profile = Profile()
         profile.user = kwargs['instance']
-        profile.username = profile.user.username
         profile.save()
 
 models.signals.post_save.connect(create_profile, sender=User)

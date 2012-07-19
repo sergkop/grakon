@@ -2,7 +2,7 @@ $(function(){
     var tourArr = {
         tourId:             'intro',
         onTourClose: function(){
-                if(!PROFILE.username) {
+                if(!PROFILE.id) {
                        window.document.location.href='/register?utm_campaign=register&utm_medium=link&utm_source=tour';  
                 }
                 else{
@@ -230,7 +230,7 @@ $(function(){
         ]
     }
 
-    if (PROFILE.username)
+    if (PROFILE.id)
         tourArr['pages'].splice(0, 1);
 
      $.jTour(tourArr);

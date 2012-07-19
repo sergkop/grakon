@@ -1,8 +1,6 @@
-* automate analytics collection for emails (percent of read + GA campaign)
-* admin stats for read/unread emails
-
 * Don't ask password in registration until email is confirmed (like in gravatar.com)
-* depricate usernames
+
+* redesing of registration form
 
 * additional list of old team members + add Timur
 * a short list of team members we are looking for in the top of the page
@@ -54,6 +52,8 @@ UI:
 * update ratings on any changes (adding, deleting, following, etc)
 * override save() method of EntityProperty models to reset cache
 ---------------------------------------------------------------------
+* automate analytics collection for emails (percent of read + GA campaign)
+
 * notifications about adding to contacts
 * weekly letters with a list of new projects/tasks
 

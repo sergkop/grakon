@@ -6,17 +6,17 @@ from users.models import Message, Profile
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender', 'receiver', 'title', 'show_email', 'time')
     ordering = ('-time',)
-    search_fields = ('sender__username', 'receiver__username')
+    search_fields = ('sender', 'receiver')
     raw_id_fields = ('sender', 'receiver')
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'first_name', 'last_name', 'intro', 'about', 'rating')
     ordering = ('-add_time',)
-    search_fields = ('username', 'user__email', 'first_name', 'last_name')
+    search_fields = ('user__email', 'first_name', 'last_name')
     raw_id_fields = ('user',)
 
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Profile, ProfileAdmin)
 
 # A hack to show is_active field in User model admin instead of is_stuff
-admin.site._registry[User].list_display = ('username', 'email', 'first_name', 'last_name', 'is_active')
+admin.site._registry[User].list_display = ('email', 'first_name', 'last_name', 'is_active')

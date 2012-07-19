@@ -19,7 +19,7 @@ class EntityResourceManager(BaseEntityPropertyManager):
 
         # Get all related profiles
         from users.models import Profile
-        profiles_by_id = Profile.objects.only('id', 'username', 'first_name', 'last_name', 'intro', 'rating') \
+        profiles_by_id = Profile.objects.only('id', 'first_name', 'last_name', 'intro', 'rating') \
                 .in_bulk(set(r[3] for r in resources_data))
 
         # TODO: sort by provider and by resource

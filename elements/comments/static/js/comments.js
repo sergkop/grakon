@@ -13,7 +13,7 @@ var Comment = {
         respondToComment: function(){
             this.field = this.$el.children(".js-comments").children("table");
 
-            if (!PROFILE.username){
+            if (!PROFILE.id){
                 login_dialog_init();
                 return;
             }

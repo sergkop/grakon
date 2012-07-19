@@ -87,7 +87,6 @@ def social_registration(request):
 
     form.initial['first_name'] = details['first_name']
     form.initial['last_name'] = details['last_name']
-    form.initial['username'] = details['username']
 
     if not email_verified:
         form.initial['email'] = details['email']

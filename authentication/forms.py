@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import random
 import re
 
 from django import forms
@@ -7,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
 import django.contrib.auth.forms as auth_forms
 from django.contrib.auth.models import User
+from django.utils.hashcompat import sha_constructor
 from django.utils.http import int_to_base36
 from django.utils.safestring import mark_safe
 
@@ -23,15 +25,12 @@ password_digit_re = re.compile(r'\d')
 password_letter_re = re.compile(u'[a-zA-Zа-яА-Я]')
 
 class BaseRegistrationForm(forms.ModelForm):
-    username = forms.RegexField(label=u'Имя пользователя (логин)', max_length=20, min_length=4, regex=r'^[\w\.]+$',
-            help_text=u'4-20 символов (латинские буквы, цифры, подчеркивания и точки). Регистр не учитывается.')
-
     email = forms.EmailField(label=u'Электронная почта (email)',
             help_text=u'Вам будет выслано письмо со ссылкой для активации аккаунта')
 
     class Meta:
         model = Profile
-        fields = ('username', 'last_name', 'first_name', 'intro')
+        fields = ('last_name', 'first_name', 'intro')
 
 @resources_init
 @location_init(True, u'Место жительства')
@@ -43,35 +42,12 @@ class RegistrationForm(BaseRegistrationForm):
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
-        Fieldset(u'Персональные данные', 'last_name', 'first_name', 'intro', 'email', 'location_select', 'resources1'),
-        Fieldset(u'Аккаунт', 'username', 'password1', 'password2')
+        Fieldset('', 'last_name', 'first_name', 'intro', 'email', 'location_select', 'resources1'),
+        Fieldset('', 'password1', 'password2')
     )
 
-    #if CaptchaField:
-    #    captcha = CaptchaField(label=u'Код проверки', error_messages = {'invalid': u'Неверный код проверки'},
-    #            help_text=u'Пожалуйста, введите цифры и буквы с картинки слева, чтобы мы могли отличить вас от робота')
-
-    def account_exists_error(self, msg, user):
-        """ Raise username or email field error if corresponding user already exists """
-        # TODO: implement it
-        #if social account(s) are associated:
-            # suggest to use associated accounts (links) or change/set password (check if it is set)
-
-        raise forms.ValidationError(mark_safe(msg+
-                u'<br/>Если вы зарегистрировались ранее, то можете <a href="%s">войти в систему</a> '
-                u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
-                ))
-
-    def clean_username(self):
-        try:
-            user = User.objects.get(username=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            # No user with such username exists
-            return self.cleaned_data['username']
-
-        self.account_exists_error(u'Пользователь с этим именем уже <a href="%s" target="_blank">существует</a>.' % user.get_absolute_url(), user)
-
     def clean_email(self):
+        # TODO: lowercase email?
         try:
             user = User.objects.get(email=self.cleaned_data['email'])
         except User.DoesNotExist:
@@ -80,7 +56,15 @@ class RegistrationForm(BaseRegistrationForm):
             # TODO: report to admin
             user = User.objects.filter(email=self.cleaned_data['email'])[0]
 
-        self.account_exists_error(u'Пользователь с этим адресом электронной почты уже зарегистрирован', user)
+        # TODO: implement it
+        #if social account(s) are associated:
+            # suggest to use associated accounts (links) or change/set password (check if it is set)
+
+        raise forms.ValidationError(mark_safe(
+                u'Пользователь с этим адресом электронной почты уже зарегистрирован'
+                u'<br/>Если вы зарегистрировались ранее, то можете <a href="%s">войти в систему</a> '
+                u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
+                ))
 
     def clean_password1(self):
         password = self.cleaned_data['password1']
@@ -103,8 +87,10 @@ class RegistrationForm(BaseRegistrationForm):
     # TODO: check that email domain is correct (ping it) (?)
     # TODO: collect domains from old users and warn if entered is not one of them
     def save(self):
-        username, email, password = self.cleaned_data['username'], \
-                self.cleaned_data['email'], self.cleaned_data.get('password1', '')
+        email, password = self.cleaned_data['email'], self.cleaned_data.get('password1', '')
+
+        # TODO: generate username
+        username = sha_constructor(str(random.random())).hexdigest()[:20]
 
         # TODO: make sure email is still unique (use transaction)
         user = User.objects.create_user(username, email, password)
@@ -133,7 +119,7 @@ class SocialRegistrationForm(BaseRegistrationForm):
 
         super(SocialRegistrationForm, self).__init__(*args, **kwargs)
 
-        fields = ['last_name', 'first_name', 'email', 'location_select', 'username']
+        fields = ['last_name', 'first_name', 'email', 'location_select']
 
         if self.email_verified:
             del self.fields['email']
@@ -142,22 +128,12 @@ class SocialRegistrationForm(BaseRegistrationForm):
         self.helper.layout = Layout(Fieldset('', *fields))
 
     def account_exists_error(self, msg, user):
-        """ Raise username or email field error if corresponding user already exists """
+        """ Raise email field error if corresponding user already exists """
         # TODO: fix it (offer to merge accounts)
         raise forms.ValidationError(mark_safe(msg+
                 u'<br/>Если вы зарегистрировались ранее, то можете <a href="%s">войти в систему</a> '
                 u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
                 ))
-
-    def clean_username(self):
-        # TODO: check if self.email_verified
-        try:
-            user = User.objects.get(username=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            # No user with such username exists
-            return self.cleaned_data['username']
-
-        self.account_exists_error(u'Пользователь с этим именем уже <a href="%s" target="_blank">существует</a>.' % user.get_absolute_url(), user)
 
     def clean_email(self):
         try:
@@ -203,7 +179,7 @@ class LoginForm(auth_forms.AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = u'Имя пользователя или электронная почта'
+        self.fields['username'].label = u'Электронная почта'
 
     def clean(self):
         username = self.cleaned_data.get('username')
@@ -212,7 +188,7 @@ class LoginForm(auth_forms.AuthenticationForm):
         if username and password:
             self.user_cache = authenticate(username=username, password=password)
             if self.user_cache is None:
-                raise forms.ValidationError(u'Пожалуйста, введите корретное имя пользователя или адрес электронной почты и пароль.')
+                raise forms.ValidationError(u'Пожалуйста, введите корретный адрес электронной почты и пароль')
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(u'Эта учётная запись неактивна')
         self.check_for_test_cookie() # TODO: what is it for?

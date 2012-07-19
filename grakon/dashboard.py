@@ -78,6 +78,7 @@ class EmailStats(BaseSiteStats):
 
         # TODO: choose time range from the first email till the last
         # TODO: show average read time and rate (for each 24h slot and total)
+        # TODO: get analytics from GA
 
         #self.period_form = PeriodForm({'start': self.startdate, 'end': self.enddate,
         #        'mailtypes.choices': self.mailtypes})

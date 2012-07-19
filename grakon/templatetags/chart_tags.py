@@ -4,6 +4,7 @@ register = template.Library()
 
 @register.simple_tag()
 def bar_chart(values, labels, size='580x150'):
+    """ values is a list of values or [values_list1, values_list2] """
     if len(values)==2 and type(values[0]) is list:
         chd = ','.join(str(val) for val in values[0]) + '|' + ','.join(str(val) for val in values[1])
     else:
