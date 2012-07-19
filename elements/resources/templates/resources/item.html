@@ -1,5 +1,6 @@
 {#  описание из аттрибута descr показывается в попапе при наведении  #}
-<span class="gr-resource-item {% if resource.description %}gr-resource-item-active{% endif %}" name="{{ resource.name }}" descr="{{ resource.description }}">
-    <span class="gr-resource-title">{{ resource.title }}</span><i>&nbsp;</i>
+<span class="gr-resource-item {% if resource.description%}gr-resource-item-active{% endif %}  {% if resource_editable %}gr-resource_editable js-edit-resource{% endif %}" name="{{ resource.name }}" descr="{{ resource.description }}">
+    <span class="gr-resource-title">{{ resource.title }}</span>
+    {% if resource.description %}<i>&nbsp;</i>{% endif %}
     {% if resource_editable %}<b class="js-edit-resource">&nbsp;</b>{% endif %}
 </span>

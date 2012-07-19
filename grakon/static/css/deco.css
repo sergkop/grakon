@@ -28,7 +28,7 @@ footer {
     background: linear-gradient(top, #5cbceb, #1A98C2);
 }
 
-.ym-hlist ul li.on a:hover, .ym-button:hover, .gr-follow-button:hover {
+.ym-hlist ul li a:hover, .ym-button:hover, .gr-follow-button:hover {
 	background-color: #1582a7;
     background: -moz-linear-gradient(top, #4bafe1, #1582a7);
     background: -ms-linear-gradient(top, #4bafe1, #1582a7);
@@ -38,8 +38,8 @@ footer {
     background: linear-gradient(top, #4bafe1, #1582a7);
 }
 
-.ym-hlist ul li.on a:active, .ym-button:active, .gr-follow-button:active {
-	box-shadow: inset 0 2px 4px #308dc3;
+.ym-hlist ul li a:active, .ym-button:active, .gr-follow-button:active {
+	box-shadow: inset 0 2px 4px #308dc3 !important;
 }
 
 

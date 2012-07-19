@@ -1,4 +1,4 @@
-<div class="gr-descr">
+<div class="gr-descr gr-bb-grey-lt">
     <div class="gr-mb10">
         {% with person=admin %}
             {% include "participants/person.html" %}
@@ -38,11 +38,9 @@
         </div>
     </div>
 
-    <div class="hidden js-comments">
+    <div class="hidden js-comments gr-inner-comment">
         {% include "comments/list.html" %}
     </div>
-
-    {% if ideas %} <div class="gr-mt10 gr-bb-grey-lt">&nbsp;</div>{% endif %}
 </div>
 
 {% if ideas %}   

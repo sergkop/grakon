@@ -228,7 +228,7 @@ var Resource = {
         /* Выставляем позицию попапа */
         condifgurePosition: function() {
             this.$el.css("top", this.position.top)
-                        .css("left", this.position.left);
+                        .css("left", this.position.left);             
         },
 
         /* Сохранение ресурса с данными из окна-попапа */
