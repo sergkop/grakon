@@ -221,6 +221,7 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 
 .gr-job-item {border-bottom: 1px solid #ddd; padding: 25px 0 15px;}
 .gr-static {margin-bottom: 2em;}
+#set_password_form #div_id_username {display: none;}
 
 /* ----- Переиспользуемые элементы ----- */
 

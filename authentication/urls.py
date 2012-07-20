@@ -8,11 +8,7 @@ urlpatterns = patterns('authentication.views',
     url(r'^registration_completed$', 'registration_completed', name='registration_completed'),
     url(r'^email_not_sent$', 'email_not_sent', name='email_not_sent'),
 
-    # Activation keys get matched by \w+ instead of the more specific
-    # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
-    # that way it can return a sensible "invalid key" message instead of a
-    # confusing 404.
-    url(r'^activate/(?P<activation_key>\w+)$', 'activate', name='activate_account'),
+    url(r'^activate/(?P<activation_key>[a-f0-9]{40})$', 'activate', name='activate_account'),
     url(r'^activation_completed$', 'activation_completed', name='activation_completed'),
 
     url(r'^login$', 'login', name='login'),

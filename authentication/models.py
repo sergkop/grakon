@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import datetime
 import random
-import re
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -11,27 +10,8 @@ from django.utils.hashcompat import sha_constructor
 from services.email import send_email
 
 ACTIVATED = 'ALREADY_ACTIVATED'
-SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 class ActivationManager(models.Manager):
-    def activate_user(self, activation_key):
-        if SHA1_RE.search(activation_key):
-            try:
-                profile = self.filter(activation_key=activation_key).latest()
-            except self.model.DoesNotExist:
-                return False
-
-            if not profile.activation_key_expired():
-                user = profile.user
-                user.is_active = True
-                user.save()
-
-                profile.activation_key = ACTIVATED
-                profile.save()
-                return user
-
-        return False
-
     @transaction.commit_on_success
     def init_activation(self, user):
         # The activation key is a SHA1 hash, generated from a combination of the username and a random salt
@@ -84,6 +64,13 @@ class ActivationProfile(models.Model):
         send_email(self.user.get_profile(), u'Активация учетной записи на grakon.org', 'letters/activation_email.html',
                 {'activation_key': self.activation_key}, 'activation', 'noreply')
 
+    def activate(self):
+        if not self.activation_key_expired():
+            self.user.is_active = True
+            self.user.save()
+
+            self.activation_key = ACTIVATED
+            self.save()
 
 # TODO: drop it
 #from social_auth.signals import pre_update

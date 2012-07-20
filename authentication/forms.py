@@ -35,15 +35,11 @@ class BaseRegistrationForm(forms.ModelForm):
 @resources_init
 @location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
-    password1 = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
-            help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну букву и одну цифру')
-    password2 = forms.CharField(label=u'Подтвердите пароль', widget=forms.PasswordInput(render_value=False))
 
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
         Fieldset('', 'last_name', 'first_name', 'intro', 'email', 'location_select', 'resources1'),
-        Fieldset('', 'password1', 'password2')
     )
 
     def clean_email(self):
@@ -66,34 +62,14 @@ class RegistrationForm(BaseRegistrationForm):
                 u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
                 ))
 
-    def clean_password1(self):
-        password = self.cleaned_data['password1']
-
-        if password != '':
-            if len(password) < 8:
-                raise forms.ValidationError(u'Пароль должен содержать не менее 8 символов')
-
-            if password_letter_re.search(password) is None or password_digit_re.search(password) is None:
-                raise forms.ValidationError(u'Пароль должен содержать по крайней мере одну латинскую букву и одну цифру')
-
-        return password
-
-    def clean_password2(self):
-        if self.cleaned_data.get('password1', '') != self.cleaned_data['password2']:
-            raise forms.ValidationError(u'Введенные вами пароли не совпадают')
-
-        return self.cleaned_data['password2']
-
     # TODO: check that email domain is correct (ping it) (?)
     # TODO: collect domains from old users and warn if entered is not one of them
     def save(self):
-        email, password = self.cleaned_data['email'], self.cleaned_data.get('password1', '')
-
-        # TODO: generate username
-        username = sha_constructor(str(random.random())).hexdigest()[:20]
+        email = self.cleaned_data['email']
+        username = sha_constructor(email+str(random.random())).hexdigest()[:20]
 
         # TODO: make sure email is still unique (use transaction)
-        user = User.objects.create_user(username, email, password)
+        user = User.objects.create_user(username, email)
 
         profile = user.get_profile()
         for field in self.Meta.fields:
@@ -194,9 +170,42 @@ class LoginForm(auth_forms.AuthenticationForm):
         self.check_for_test_cookie() # TODO: what is it for?
         return self.cleaned_data
 
-# TODO: set minimum password complexity
-class SetPasswordForm(auth_forms.SetPasswordForm):
+class SetPasswordForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(label=u'Пароль', widget=forms.PasswordInput(render_value=False),
+            help_text=u'Пароль должен быть не короче <b>8 знаков</b> и содержать по крайней мере одну букву и одну цифру')
+    password2 = forms.CharField(label=u'Подтвердите пароль', widget=forms.PasswordInput(render_value=False))
+
     helper = form_helper('', u'Установить пароль')
+    helper.form_id = 'set_password_form'
+
+    def __init__(self, user, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)
+        self.user = user
+        self.fields['username'].initial = user.email # this field is used by browsers to save login credentials
+
+    def clean_password1(self):
+        password = self.cleaned_data['password']
+
+        if password != '':
+            if len(password) < 8:
+                raise forms.ValidationError(u'Пароль должен содержать не менее 8 символов')
+
+            if password_letter_re.search(password) is None or password_digit_re.search(password) is None:
+                raise forms.ValidationError(u'Пароль должен содержать по крайней мере одну латинскую букву и одну цифру')
+
+        return password
+
+    def clean_password2(self):
+        if self.cleaned_data.get('password', '') != self.cleaned_data['password2']:
+            raise forms.ValidationError(u'Введенные вами пароли не совпадают')
+
+        return self.cleaned_data['password2']
+
+    def save(self):
+        self.user.set_password(self.cleaned_data['password'])
+        self.user.save()
+        return self.user
 
 # TODO: set minimum password complexity
 class PasswordChangeForm(auth_forms.PasswordChangeForm):

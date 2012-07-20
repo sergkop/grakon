@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from authentication.forms import LoginForm, RegistrationForm, SocialRegistrationForm
+from authentication.forms import LoginForm, RegistrationForm, SetPasswordForm, SocialRegistrationForm
 from authentication.models import ActivationProfile
 from authentication.utils import authenticated_profile_redirect
 
@@ -95,13 +95,29 @@ def social_registration(request):
 
 @authenticated_profile_redirect
 def activate(request, activation_key):
-    user = ActivationProfile.objects.activate_user(activation_key)
-    if user:
-        backend = auth.get_backends()[0] # TODO: is it ok?
-        user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
-        auth.login(request, user)
-        return redirect('login')
-    return TemplateResponse(request, 'auth/activation_fail.html')
+    try:
+        profile = ActivationProfile.objects.filter(activation_key=activation_key) \
+                .select_related('user').latest()
+    except ActivationProfile.DoesNotExist:
+        return TemplateResponse(request, 'auth/activation_fail.html')
+
+    if profile.activation_key_expired():
+        return TemplateResponse(request, 'auth/activation_expired.html')
+
+    if request.method == 'POST':
+        form = SetPasswordForm(profile.user, request.POST)
+
+        if form.is_valid():
+            form.save()
+            profile.activate()
+            backend = auth.get_backends()[0] # TODO: is it ok?
+            profile.user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
+            auth.login(request, profile.user)
+            return redirect('profile')
+    else:
+        form = SetPasswordForm(profile.user)
+
+    return TemplateResponse(request, 'auth/set_password.html', {'form': form})
 
 # TODO: introduce shortcut for it or write it shorter
 @authenticated_profile_redirect

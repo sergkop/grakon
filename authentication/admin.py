@@ -11,9 +11,10 @@ class ActivationProfileAdmin(admin.ModelAdmin):
 
     def activate_users(self, request, queryset):
         for profile in queryset:
-            ActivationProfile.objects.activate_user(profile.activation_key)
+            profile.activate()
     activate_users.short_description = u'Активировать пользователей'
 
+    # TODO: fix it
     def resend_activation_email(self, request, queryset):
         for profile in queryset:
             if not profile.activation_key_expired():

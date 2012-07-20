@@ -31,7 +31,7 @@
   
   /* Some generals and more resets */
   .uniForm fieldset{ border: none; margin: 0; padding: 0; }
-    .uniForm fieldset legend{ margin: 0; padding: 1em 0 0; }
+    .uniForm fieldset legend{ margin: 0; padding: 0; }
     
     /* This are the main units that contain form elements */
     .uniForm .ctrlHolder,

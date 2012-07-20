@@ -1,4 +1,4 @@
-* Don't ask password in registration until email is confirmed (like in gravatar.com)
+* Make browsers remember passwords
 
 * redesing of registration form
 

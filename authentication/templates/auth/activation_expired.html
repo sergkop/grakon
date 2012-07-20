@@ -1,0 +1,15 @@
+{% extends "auth/base.html" %}
+
+{% block title %}Истек срок активации аккаунта{% endblock %}
+
+{% block top %}
+    <h1>Истек срок активации аккаунта</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="gr-descr">
+        <p>Эта ссылка для активации аккаунта работала в течение 5 дней после регистрации.
+        Чтобы активировать свой аккаунт пожалуйста свяжитесь с нами <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>.
+        </p>
+    </div>
+{% endblock %}
