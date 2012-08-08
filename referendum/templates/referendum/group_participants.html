@@ -1,0 +1,9 @@
+<div class="gr-descr">
+    <ul class="gr-source-list-slider js-resource-items-visible gr-bb-grey-list">
+        {% for person in info.participants.follower.entities %}
+            <li class="gr-mb20">
+                <p>{% include "participants/person.html" %}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

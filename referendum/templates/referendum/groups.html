@@ -1,0 +1,31 @@
+{% for info in groups %}
+    <div class="gr-ideas-item">
+        <div class="gr-ideas-content">
+            <h4><a href="{{ info.instance.url }}">{{ info.location.name }}</a></h4>
+        </div>
+
+        <div class="gr-info-bar">
+            <div class="gr-fl">
+                <span class="dimmed gr-pseudolink js-follow">Участники: {{ info.participants.follower.count }}</span>
+                <span class="gr-bullet">&nbsp;</span>
+
+                {% include "comments/counter.html" %}
+            </div>
+
+            <div class="ym-clearfix">&nbsp;</div>
+        </div>
+
+        <div class="gr-slider js-follow-content">
+            <div class="gr-close js-slide-close">&nbsp;</div>
+            <div class="dimmed">
+                {% with person_entities=info.participants.follower.entities %}
+                    {% include "participants/list.html" %}
+                {% endwith %}
+            </div>
+        </div>
+
+        <div class="hidden js-comments gr-inner-comment">
+            {% include "comments/list.html" %}
+        </div>
+    </div>
+{% endfor %}

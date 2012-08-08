@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block top %}
+    <h1><a href="{% url referendum %}">Вопросы</a>: {{ question.title }}</h1>
+{% endblock %}
+
+{% block right_column %}
+    <div align="center" class="gr-mb20">
+        {% with is_participant=is_follower button=question.follow_button btn_class="gr-follow-button" pressed_button="gr-grey-button" %}
+            {% include "participants/participate_button.html" %}
+        {% endwith %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% include template_path %}
+{% endblock %}
