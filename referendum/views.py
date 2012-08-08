@@ -44,8 +44,9 @@ class GroupsView(BaseReferendumView, TemplateView):
 
     def update_context(self):
         group_ids = InitiativeGroup.objects.order_by('location__name').values_list('id', flat=True)
+        groups_data = InitiativeGroup.objects.info_for(group_ids, True)
         return {
-            'groups': InitiativeGroup.objects.info_for(group_ids, True).values(),
+            'groups': [groups_data[id] for id in group_ids],
         }
 
 class AboutView(BaseReferendumView, TemplateView):
