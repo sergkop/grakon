@@ -3,7 +3,7 @@ import os.path
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-VK_APP_ID = 2798211
+VK_APP_ID = 2798211 # TODO: use VKONTAKTE_OAUTH2_APP_ID instead
 
 GOOGLE_ANALYTICS_ID = 'UA-28992589-1'
 

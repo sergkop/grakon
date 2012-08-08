@@ -1,14 +1,16 @@
 # -*- coding:utf-8 -*-
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
+from social_auth.utils import setting
+
 from authentication.forms import LoginForm, RegistrationForm, SetPasswordForm, SocialRegistrationForm
 from authentication.models import ActivationProfile
 from authentication.utils import authenticated_profile_redirect
-
 from elements.resources.models import RESOURCE_DICT
 
 @authenticated_profile_redirect
@@ -35,33 +37,66 @@ def social_registration_pipeline(request, *args, **kwargs):
         return None
     return redirect('social_registration')
 
-# TODO: @authenticated_profile_redirect ?
-def social_registration(request):
-    # TODO: if user is logged in - redirect
+def finish_social_registration(request, data, user):
+    name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
+    data[name] = 5 # TODO: fix it; start with settings.SOCIAL_AUTH_PIPELINE_RESUME_ENTRY
+    data['kwargs']['user'] = user
+    data['kwargs']['is_new'] = True
+    request.session[name] = data
 
-    from social_auth.utils import setting
+    return redirect('socialauth_complete', backend=data['backend'])
+
+def social_registration(request):
     name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
     data = request.session.get(name)
+
+    from pprint import pprint
+    pprint(data)
 
     if not data:
         return redirect('login')
 
     details = data['kwargs']['details']
+    response = data['kwargs']['response']
 
-    # TODO: data from google
-    #data['kwargs']['response']['link']
-    #data['kwargs']['response']['picture']
-    #data['kwargs']['response']['verified_email']
+    email = details['email']
+    location = None
 
-    # TODO: data['kwargs']['is_new'] - what is it?
-
-    email_verified = False
-    if data['backend']=='google-oauth2' and data['kwargs']['response']['verified_email']:
+    # Check whether email is verified
+    if data['backend'] == 'google-oauth2':
+        email_verified = data['kwargs']['response']['verified_email']
+        link = response['link']
+        picture = response['picture']
+        gender = response['gender']
+    elif data['backend'] == 'facebook':
         email_verified = True
+        link = response['link']
+        picture = response['picture']
+        gender = response['gender']
+        # TODO: use location to autofill form field (hometown/location);
+    elif data['backend'] == 'vkontakte-oauth2':
+        email_verified = False
+        link = 'http://vk.com/id' + str(response['user_id'])
+        picture = response['photo']
+        gender = ''
+        # TODO: get more data http://vk.com/developers.php?oid=-1&p=%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9_%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%B0_fields
+
+    # TODO: use link, picture, gender
+
+    # Check if account with this email already exists
+    try:
+        user = User.objects.get(email=email)
+    except (User.DoesNotExist, User.MultipleObjectsReturned):
+        pass
+    else:
+        if email_verified:
+            return finish_social_registration(request, data, user)
+        else:
+            pass # TODO: what to do?
 
     form_params = {'email_verified': email_verified}
     if email_verified:
-        form_params['email'] = details['email']
+        form_params['email'] = email
 
     if request.method == 'POST':
         form = SocialRegistrationForm(request.POST, **form_params)
@@ -70,14 +105,10 @@ def social_registration(request):
             profile = form.save()
 
             if email_verified:
-                from django.conf import settings
-                name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
-                data[name] = 5 # TODO: fix it; start with settings.SOCIAL_AUTH_PIPELINE_RESUME_ENTRY
-                data['kwargs']['user'] = profile.user
-                data['kwargs']['is_new'] = True
-                request.session[name] = data
-
-                return redirect('socialauth_complete', backend=data['backend'])
+                return finish_social_registration(request, data, profile.user)
+            else:
+                # TODO: redirect to registration_completed before logging in
+                return finish_social_registration(request, data, profile.user)
 
             # TODO: if email needs to be confirmed, redirect to registration_completed or /complete/<backend>/,
             #       else - profile
@@ -89,7 +120,7 @@ def social_registration(request):
     form.initial['last_name'] = details['last_name']
 
     if not email_verified:
-        form.initial['email'] = details['email']
+        form.initial['email'] = email
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 
@@ -118,6 +149,23 @@ def activate(request, activation_key):
         form = SetPasswordForm(profile.user)
 
     return TemplateResponse(request, 'auth/set_password.html', {'form': form})
+
+@authenticated_profile_redirect
+def social_activate(request, activation_key):
+    try:
+        profile = ActivationProfile.objects.filter(activation_key=activation_key) \
+                .select_related('user').latest()
+    except ActivationProfile.DoesNotExist:
+        return TemplateResponse(request, 'auth/activation_fail.html')
+
+    if profile.activation_key_expired():
+        return TemplateResponse(request, 'auth/activation_expired.html')
+
+    profile.activate()
+    backend = auth.get_backends()[0] # TODO: is it ok?
+    profile.user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
+    auth.login(request, profile.user)
+    return redirect('profile')
 
 # TODO: introduce shortcut for it or write it shorter
 @authenticated_profile_redirect

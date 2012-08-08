@@ -1,14 +1,26 @@
-* Make browsers remember passwords
-
-* redesing of registration form
-
-* additional list of old team members + add Timur
 * a short list of team members we are looking for in the top of the page
+
+Social registration
+    * social activate
+    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
+    * consider case when user refuses to give rights to application
+    * configure django-social-auth
+
+    * create page for LOGIN_ERROR_URL
+    * create google oauth2 app from grakon account (?)
+    * file with all passwords, social applications (where to get them)
+
+* Make browsers remember passwords (check that it works)
+
+* additional list of old team members
 
 1) после добавления длинного комментария на несколько строк поле для добавления нового комментария не уменьшается обратно до 1 строчки (это происходит только после перезагрузки страницы)
 2) когда жмешь "ответить", то едет верстка: нет отступа между разделительной чертой и полем для ввода ответа
 3) сделайте, пожалуйста, по нажатию "enter" добавление комментария, а не перенос строки. Это более естественно и не приводит к обманчивому предположению, что можно добавить несколько абзацев.
 4) notifications about comments
+
+* redesing of registration form
+* use required input attribute in fields
 
 * recalculate ratings on save (e.g. in profiles)
 
@@ -126,17 +138,6 @@ Emails:
 * restructure main menu
 
 * when user is removed his projects, tasks, ideas are left and cause errors
-
-Social registration
-    * configure registration with fb, vk, google
-    * consider case when user refuses to give rights to application
-    * create page for LOGIN_ERROR_URL
-    * configure django-social-auth
-    * merge accounts from social and email (see SOCIAL_AUTH_ASSOCIATE_BY_MAIL)
-    * google allows to login automatically if account with this email already exists (is it ok?)
-    * set application permissions (e.g. FACEBOOK_EXTENDED_PERMISSIONS)
-    * create google oauth2 app from grakon account (?)
-    * file with all passwords, social applications (where to get them)
 
 * предлагать друзей на площадке пользуясь списком друзей в соц сетях
 -------------------------------------------------------------------------

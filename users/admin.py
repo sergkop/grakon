@@ -19,4 +19,4 @@ admin.site.register(Message, MessageAdmin)
 admin.site.register(Profile, ProfileAdmin)
 
 # A hack to show is_active field in User model admin instead of is_stuff
-admin.site._registry[User].list_display = ('email', 'first_name', 'last_name', 'is_active')
+admin.site._registry[User].list_display = ('email', 'is_active', 'date_joined', 'last_login')

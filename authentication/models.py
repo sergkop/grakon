@@ -22,20 +22,6 @@ class ActivationManager(models.Manager):
         return registration_profile.send_activation_email()
 
     def delete_expired_users(self):
-        """
-        Remove expired instances of ActivationProfile and their associated User's.
-
-        It is recommended that this method be executed regularly as
-        part of your routine site maintenance; this application
-        provides a custom management command which will call this
-        method, accessible as ``manage.py cleanupregistration``.
-
-        If you have a troublesome User and wish to disable their
-        account while keeping it in the database, simply delete the
-        associated ActivationProfile; an inactive User which
-        does not have an associated ActivationProfile will not
-        be deleted.
-        """
         for profile in self.all():
             if profile.activation_key_expired():
                 user = profile.user
@@ -71,12 +57,3 @@ class ActivationProfile(models.Model):
 
             self.activation_key = ACTIVATED
             self.save()
-
-# TODO: drop it
-#from social_auth.signals import pre_update
-#from social_auth.backends.google import GoogleOAuth2
-
-#def google_extra_values(sender, user, response, details, **kwargs):
-#    return True
-
-#pre_update.connect(google_extra_values, sender=GoogleOAuth2)

@@ -35,7 +35,6 @@ class BaseRegistrationForm(forms.ModelForm):
 @resources_init
 @location_init(True, u'Место жительства')
 class RegistrationForm(BaseRegistrationForm):
-
     helper = form_helper('register', u'Зарегистрироваться')
     helper.form_id = 'registration_form'
     helper.layout = Layout(
@@ -84,6 +83,7 @@ class RegistrationForm(BaseRegistrationForm):
         return profile
 
 # TODO: add next hidden field
+@resources_init
 @location_init(True, u'Место жительства')
 class SocialRegistrationForm(BaseRegistrationForm):
     helper = form_helper('social_registration', u'Зарегистрироваться')
@@ -93,9 +93,9 @@ class SocialRegistrationForm(BaseRegistrationForm):
         self.email_verified = kwargs.pop('email_verified')
         self.email = kwargs.pop('email', None)
 
-        super(SocialRegistrationForm, self).__init__(*args, **kwargs)
+        BaseRegistrationForm.__init__(self, *args, **kwargs)
 
-        fields = ['last_name', 'first_name', 'email', 'location_select']
+        fields = ['last_name', 'first_name', 'intro', 'email', 'location_select', 'resources1']
 
         if self.email_verified:
             del self.fields['email']
@@ -112,6 +112,7 @@ class SocialRegistrationForm(BaseRegistrationForm):
                 ))
 
     def clean_email(self):
+        # TODO: use lowercase email (?)
         try:
             user = User.objects.get(email=self.cleaned_data['email'])
         except User.DoesNotExist:
@@ -124,12 +125,15 @@ class SocialRegistrationForm(BaseRegistrationForm):
 
     def save(self):
         # TODO: consider both values of self.email_verified
-
         if not self.email_verified:
             self.email = self.cleaned_data['email']
 
-        # TODO: make sure email is still unique (use transaction)
-        user = User.objects.create_user(self.cleaned_data['username'], self.email)
+        try:
+            user = User.objects.get(email=self.email)
+        except (User.DoesNotExist, User.MultipleObjectsReturned):
+            # TODO: make sure email is still unique (use transaction)
+            username = sha_constructor(self.email+str(random.random())).hexdigest()[:20]
+            user = User.objects.create_user(username, self.email)
 
         profile = user.get_profile()
         for field in self.Meta.fields:

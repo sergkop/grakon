@@ -214,14 +214,18 @@ nav .ym-wrapper {padding: 1.8em 0 1em;}
 			#main .markup .gr-popular-list ul a:hover {text-decoration: underline;}
 		.gr-popular-list li {font-size: .9em; background:url(../images/icons/main-bullet.png) 0 0 repeat-x; padding-top: 1em;}
 			.gr-popular-list li .gr-info-bar {font-size: .9em; color: #fff;}
-		.gr-popular-list .gr-info-bar {margin-top: .5em;}		
-		.gr-popular-list li a {color: #000;}		
+		.gr-popular-list .gr-info-bar {margin-top: .5em;}
+		.gr-popular-list li a {color: #000;}
 
-/*Static pages*/
-
+/* Static pages */
 .gr-job-item {border-bottom: 1px solid #ddd; padding: 25px 0 15px;}
 .gr-static {margin-bottom: 2em;}
 #set_password_form #div_id_username {display: none;}
+
+/* Login form */
+#login_form {}
+#login_form .ctrlHolder {border-bottom: none; padding: 1em 0;}
+/*#login_form .buttonHolder {text-align: center;}*/
 
 /* ----- Переиспользуемые элементы ----- */
 

@@ -32,7 +32,6 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'grakon.dashboard.StatsDashboard'
 STATICFILES_DIRS = ()
 
 STATICFILES_FINDERS = (
-    #'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
@@ -111,6 +110,7 @@ INSTALLED_APPS = (
     'tools.tasks',
     'tools.ideas',
     'tools.projects',
+    'referendum',
     'services',
     'notifications',
 )
@@ -147,29 +147,29 @@ LOGGING = {
 AUTH_PROFILE_MODULE = 'users.Profile'
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/profile' # must be the same as reverse('profile')
-#LOGIN_ERROR_URL    = '/login-error/'
+#LOGIN_ERROR_URL = '/login'
 
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/social_registration' # the same as reverse('social_registration')
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
     'social_auth.backends.pipeline.associate.associate_by_email',
-    'social_auth.backends.pipeline.user.get_username',
+    #'social_auth.backends.pipeline.user.get_username',
 
     'social_auth.backends.pipeline.misc.save_status_to_session',
     'authentication.views.social_registration_pipeline',
 
-    #'social_auth.backends.pipeline.user.create_user',
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
     #'social_auth.backends.pipeline.user.update_user_details'
 )
 
-SOCIAL_AUTH_PIPELINE_RESUME_ENTRY = 'social_auth.backends.pipeline.user.create_user'
+#SOCIAL_AUTH_PIPELINE_RESUME_ENTRY = 'social_auth.backends.pipeline.user.create_user'
 
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.contrib.vkontakte.VKontakteOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'authentication.backend.EmailAuthenticationBackend',
 )

@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^', include('tools.ideas.urls')),
     url(r'^', include('tools.projects.urls')),
     url(r'^', include('search.urls')),
+    url(r'^', include('referendum.urls')),
 
     url(r'', include('social_auth.urls')),
     url(r'^tinymce/', include('tinymce.urls')),

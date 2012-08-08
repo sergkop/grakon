@@ -30,7 +30,7 @@ class ProfileManager(BaseEntityManager):
 
         # TODO: use ratings to sort entities
 
-        for entity_name in ('ideas', 'tasks', 'projects'):
+        for entity_name in ('ideas', 'tasks', 'projects', 'questions'):
             model = ENTITIES_MODELS[entity_name]
 
             for id in ids:
@@ -45,7 +45,7 @@ class ProfileManager(BaseEntityManager):
                     data[id][entity_name][role]['count'] = len(data[id][entity_name][role]['ids'])
 
     def get_related_info(self, data, ids):
-        for entity_name in ('ideas', 'tasks', 'projects'):
+        for entity_name in ('ideas', 'tasks', 'projects', 'questions'):
             model = ENTITIES_MODELS[entity_name]
 
             entities_ids = set(e_id for id in ids for role in model.roles \
@@ -98,8 +98,9 @@ class Profile(BaseEntityModel):
             'url': self.get_absolute_url(),
             'full_name': unicode(self),
         }
-        if intro:
-            res['intro'] = self.intro
+        res['intro'] = self.intro
+        #if intro: # TODO: do we need it?
+        #    res['intro'] = self.intro
         return res
 
     def calc_rating(self):
