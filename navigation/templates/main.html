@@ -54,15 +54,18 @@
 
     <div align="center">
         <a id="register_btn" href="{% url register %}" class="gr-follow-button">Поехали!</a>
+        
+          
         <table width="500" class="markup gr-mb20">
             <tr>
                 <td width="33%" align="center">
                     <a href="{{ country_url }}">Посмотреть площадку</a>
                 </td>
                 <td align="center"><a href="#jTour/intro" class="jtour" onclick="_gaq.push(['_trackEvent', 'tour', 'start']); return true;">Виртуальный тур</a></td>
-                <td align="center"><a href="{% url about %}?utm_campaign=about&utm_medium=link&utm_source=main_page">Подробнее о проекте</a></td>
+                <td width="33%" align="center"><a href="{% url about %}?utm_campaign=about&utm_medium=link&utm_source=main_page">Подробнее о проекте</a></td>
             </tr>
         </table>
+        
 
         <table width="100%" class="markup">
             <tr>

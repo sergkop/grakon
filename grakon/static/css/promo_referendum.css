@@ -1,0 +1,24 @@
+    body#promo .ym-hlist, body#promo .ym-column  {background-color: #58bae9;}
+    body#promo .gr-content {background-color: #fff;}
+    #promo .gr-content {box-shadow: 0 90px 0 #fff, 100px -40px 100px #0e9bc3, -100px -40px 100px #0e9bc3;}
+    #promo .jquery_tabs ul.tabs-list li a {color: #fff;}
+        #promo .jquery_tabs ul.tabs-list li.current a  {color: #000;}
+    
+    #promo h1 {color: #fff; text-transform: uppercase; text-shadow: 0 1px 0 #1e9bc7;}   
+    #promo h4 {color: #fff; text-transform: uppercase; margin-bottom: .2em;}
+        #promo .gr-content h4 {text-transform: none;}
+        .promo-logo {margin: 20px 15px 30px -63px; float: left}
+        #promo .gr-ideas-item {min-height: 7em;}
+        #promo .gr-add {left: -65px; top: 2px; width: 5em;}
+        #promo .gr-arrow-up, #promo .gr-arrow-down {width: 22px; height: 23px; display: block; background: url(/static/images/icons/promo_arrow.png) 0 0 no-repeat; float: right; cursor: pointer;}
+        #promo .gr-arrow-down {background-position: 0 -26px;}
+            #promo .gr-arrow-up:hover {background-position: -25px 0;}
+            #promo .gr-arrow-down:hover {background-position: -25px -26px;}
+            
+            #promo .gr-arrow-up:active {background-position: -50px 0;}
+            #promo .gr-arrow-down:active {background-position: -50px -26px;}
+            
+            #promo .gr-arrow-up.disabled {background-position: -76px 0; cursor: auto;}
+            #promo .gr-arrow-down.disabled {background-position: -76px -26px;  cursor: auto;}
+        #promo .gr-add i {display: block; margin: .2em 0 .1em; padding-right: .4em; color: #1890bb; font-size: 1.6em; font-weight: bold; font-style: normal; clear:both; text-align:right}
+        #promo .gr-info-bar {position: absolute; left: 0; bottom: 0;}

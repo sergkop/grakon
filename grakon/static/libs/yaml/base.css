@@ -70,7 +70,7 @@
 	
 	header, footer, nav, .ym-column {text-align:center;}
 	
-	nav {margin-bottom: .8em; padding-top: 2.5em}
+	nav {padding-bottom: .8em; padding-top: 2.5em}
 	
 	footer {height: 3.3em; position: relative; padding: .8em 0 1em; font-size: .9em; border-top: 2px solid #ddd;}
 
