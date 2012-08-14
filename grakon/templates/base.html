@@ -42,7 +42,7 @@
 
     {% include "services/google-analytics.html" %}
 </head>
-{% block body %}<body {% if is_main %}id="main"{% endif %}>{% endblock %}
+{% block body %}<body {% if is_main %}id="main"{% endif %}  id="{% block page_id %}{% endblock %}">{% endblock %}
     <div class="gr-wrapper">
         <header>
             <div class="ym-wrapper">
