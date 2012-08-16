@@ -34,9 +34,10 @@ class QuestionsView(BaseReferendumView, TemplateView):
     tab = 'questions'
 
     def update_context(self):
-        question_ids = Question.objects.values_list('id', flat=True)
+        question_ids = Question.objects.order_by('-rating').values_list('id', flat=True)
+        questions_data = Question.objects.info_for(question_ids, True)
         return {
-            'questions': Question.objects.info_for(question_ids, True).values(),
+            'questions': [questions_data[q_id] for q_id in question_ids],
         }
 
 class GroupsView(BaseReferendumView, TemplateView):

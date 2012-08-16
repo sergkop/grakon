@@ -4,13 +4,13 @@
     #promo .jquery_tabs ul.tabs-list li a {color: #fff;}
         #promo .jquery_tabs ul.tabs-list li.current a  {color: #000;}
     
-    #promo h1 {color: #fff; text-transform: uppercase; text-shadow: 0 1px 0 #1e9bc7;}   
+    #promo h1 {color: #fff; text-transform: uppercase; text-shadow: 0 1px 0 #1e9bc7;}
     #promo h4 {color: #fff; text-transform: uppercase; margin-bottom: .2em;}
         #promo .gr-content h4 {text-transform: none;}
         .promo-logo {margin: 20px 15px 30px -63px; float: left}
         #promo .gr-ideas-item {min-height: 7em;}
         #promo .gr-add {left: -65px; top: 2px; width: 5em;}
-        #promo .gr-arrow-up, #promo .gr-arrow-down {width: 22px; height: 23px; display: block; background: url(/static/images/icons/promo_arrow.png) 0 0 no-repeat; float: right; cursor: pointer;}
+        #promo .gr-arrow-up, #promo .gr-arrow-down {width: 22px; height: 23px; display: block; background: url(../images/icons/promo_arrow.png) 0 0 no-repeat; float: right; cursor: pointer;}
         #promo .gr-arrow-down {background-position: 0 -26px;}
             #promo .gr-arrow-up:hover {background-position: -25px 0;}
             #promo .gr-arrow-down:hover {background-position: -25px -26px;}

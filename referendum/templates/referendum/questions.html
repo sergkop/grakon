@@ -1,6 +1,6 @@
 {% for info in questions %}
     <div class="gr-ideas-item">
-        <div class="gr-add"><span class="gr-arrow-up" title="Добавить ресурсы">&nbsp;</span><i>7990</i><span class="gr-arrow-down disabled" title="Добавить ресурсы">&nbsp;</span></div>
+        <div class="gr-add"><span class="gr-arrow-up" title="Добавить ресурсы">&nbsp;</span><i>{{ info.participants.follower.count }}</i><span class="gr-arrow-down disabled" title="Добавить ресурсы">&nbsp;</span></div>
         <div class="gr-ideas-content">
             <h4><a href="{{ info.instance.url }}">{{ info.instance.title }}</a></h4>
         </div>
