@@ -9,7 +9,7 @@ class QuestionManager(BaseEntityManager):
 
 @entity_class(['participants', 'comments'])
 class Question(BaseEntityModel):
-    title = models.CharField(max_length=250)
+    title = models.CharField('Вопрос', max_length=250)
 
     objects = QuestionManager()
 
@@ -17,7 +17,7 @@ class Question(BaseEntityModel):
     entity_title = u'Вопросы'
     cache_prefix = 'questions/'
 
-    roles = ['follower']
+    roles = ['admin', 'follower']
 
     follow_button = {
         'role': 'follower',

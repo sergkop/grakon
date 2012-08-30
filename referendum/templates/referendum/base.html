@@ -26,9 +26,15 @@
 {% endblock %}
 
 {% block right_column %}
-    {% if not request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
+        {% if request.profile.referendum == 'expert' %}
+            <div align="center" class="gr-mb30">
+                <a class="gr-follow-button" href="{% url create_question %}">Добавить вопрос</a>
+            </div>
+        {% endif %}
+    {% else %}
         <div align="center" class="gr-mb30">
-            <a class="gr-follow-button" href="{% url register %}">Регистрация</a>
+            <a class="gr-follow-button" href="{% url referendum_register %}">Регистрация</a>
         </div>
     {% endif %}
 {% endblock %}

@@ -4,6 +4,7 @@ from authentication.forms import PasswordChangeForm, PasswordResetForm, SetPassw
 
 urlpatterns = patterns('authentication.views',
     url(r'^register$', 'register', name='register'),
+    url(r'^referendum_register$', 'referendum_register', name='referendum_register'),
     url(r'^social_registration$', 'social_registration', name='social_registration'),
     url(r'^registration_completed$', 'registration_completed', name='registration_completed'),
     url(r'^email_not_sent$', 'email_not_sent', name='email_not_sent'),

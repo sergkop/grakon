@@ -8,7 +8,7 @@ from django.template.response import TemplateResponse
 
 from social_auth.utils import setting
 
-from authentication.forms import LoginForm, RegistrationForm, SetPasswordForm, SocialRegistrationForm
+from authentication.forms import LoginForm, ReferendumRegistrationForm, RegistrationForm, SetPasswordForm, SocialRegistrationForm
 from authentication.models import ActivationProfile
 from authentication.utils import authenticated_profile_redirect
 from elements.resources.models import RESOURCE_DICT
@@ -31,6 +31,19 @@ def register(request):
 
     return TemplateResponse(request, 'auth/register.html', {'form': form})
 
+@authenticated_profile_redirect
+def referendum_register(request):
+    if request.method == 'POST':
+        form = ReferendumRegistrationForm(request.POST)
+
+        if form.is_valid():
+            profile = form.save()
+            return redirect('registration_completed')
+    else:
+        form = ReferendumRegistrationForm()
+
+    return TemplateResponse(request, 'auth/register.html', {'form': form})
+
 def social_registration_pipeline(request, *args, **kwargs):
     # TODO: don't show this form if kwargs['user']
     if kwargs['user']:
@@ -49,9 +62,6 @@ def finish_social_registration(request, data, user):
 def social_registration(request):
     name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
     data = request.session.get(name)
-
-    from pprint import pprint
-    pprint(data)
 
     if not data:
         return redirect('login')
@@ -127,26 +137,31 @@ def social_registration(request):
 @authenticated_profile_redirect
 def activate(request, activation_key):
     try:
-        profile = ActivationProfile.objects.filter(activation_key=activation_key) \
+        activation_profile = ActivationProfile.objects.filter(activation_key=activation_key) \
                 .select_related('user').latest()
     except ActivationProfile.DoesNotExist:
         return TemplateResponse(request, 'auth/activation_fail.html')
 
-    if profile.activation_key_expired():
+    if activation_profile.activation_key_expired():
         return TemplateResponse(request, 'auth/activation_expired.html')
 
     if request.method == 'POST':
-        form = SetPasswordForm(profile.user, request.POST)
+        form = SetPasswordForm(activation_profile.user, request.POST)
 
         if form.is_valid():
             form.save()
-            profile.activate()
+            activation_profile.activate()
             backend = auth.get_backends()[0] # TODO: is it ok?
-            profile.user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
-            auth.login(request, profile.user)
+            activation_profile.user.backend = "%s.%s" % (backend.__module__, backend.__class__.__name__)
+            auth.login(request, activation_profile.user)
+
+            profile = activation_profile.user.get_profile()
+            if profile.referendum != '':
+                return redirect('referendum')
+
             return redirect('profile')
     else:
-        form = SetPasswordForm(profile.user)
+        form = SetPasswordForm(activation_profile.user)
 
     return TemplateResponse(request, 'auth/set_password.html', {'form': form})
 

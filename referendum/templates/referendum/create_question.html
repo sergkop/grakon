@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Добавить вопрос референдума - Гракон{% endblock %}
+
+{% block top %}
+    <h1>Добавить вопрос референдума</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="gr-descr">
+        {% crispy form form.helper %}
+    </div>
+{% endblock %}

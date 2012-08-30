@@ -15,7 +15,7 @@
                 <td colspan="2" valign="middle" align="center">
                     <input id="login_form_submit" type="submit" value="Войти" class="ym-button" onclick="_gaq.push(['_trackEvent', 'login', 'login']); return true;" />&nbsp;
                     <!--<a id="login_form_submit" class="ym-button" href="{% url login %}?next={{ request.get_full_path }}">Войти</a>-->
-                    <button type="button" id="login_dialog_register" class="ym-button" onclick="window.location='{% url register %}?utm_campaign=register&utm_medium=link&utm_source=login_dialog'">Регистрация</button>
+                    <button type="button" id="login_dialog_register" class="ym-button" onclick="window.location='{% if is_referendum_page %}{% url referendum_register %}{% else %}{% url register %}{% endif %}?utm_campaign=register&utm_medium=link&utm_source=login_dialog'">Регистрация</button>
                 </td>
             </tr>
             <tr>

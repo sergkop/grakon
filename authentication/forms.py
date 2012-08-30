@@ -82,6 +82,76 @@ class RegistrationForm(BaseRegistrationForm):
 
         return profile
 
+@location_init(True, u'Место жительства')
+class ReferendumRegistrationForm(BaseRegistrationForm):
+    is_expert = forms.BooleanField(label=u'Являетесь ли вы экспертом в вопросах референдума?',
+            help_text=u'Только эксперты могут предлагать новые вопросы для референдума')
+
+    helper = form_helper('referendum_register', u'Зарегистрироваться')
+    helper.form_id = 'registration_form'
+    helper.layout = Layout(
+        Fieldset('', 'last_name', 'first_name', 'intro', 'email', 'location_select', 'is_expert', 'about'),
+        HTML(r'<script type="text/javascript">' \
+                '$(function(){' \
+                    '$("#div_id_about").hide();' \
+                    '$("#id_is_expert").one("click", function(){ $("#div_id_about").show();});' 
+                '});' \
+            '</script>'
+        ),
+    )
+
+    class Meta:
+        model = Profile
+        fields = ('last_name', 'first_name', 'intro', 'about')
+
+    # TODO: duplication of RegistrationForm.clean_email
+    def clean_email(self):
+        # TODO: lowercase email?
+        try:
+            user = User.objects.get(email=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data['email']
+        except User.MultipleObjectsReturned:
+            # TODO: report to admin
+            user = User.objects.filter(email=self.cleaned_data['email'])[0]
+
+        # TODO: implement it
+        #if social account(s) are associated:
+            # suggest to use associated accounts (links) or change/set password (check if it is set)
+
+        raise forms.ValidationError(mark_safe(
+                u'Пользователь с этим адресом электронной почты уже зарегистрирован'
+                u'<br/>Если вы зарегистрировались ранее, то можете <a href="%s">войти в систему</a> '
+                u'или <a href="%s">восстановить пароль</a>' % (reverse('login'), reverse('password_reset'))
+                ))
+
+    # TODO: check that email domain is correct (ping it) (?)
+    # TODO: collect domains from old users and warn if entered is not one of them
+    def save(self):
+        email = self.cleaned_data['email']
+        username = sha_constructor(email+str(random.random())).hexdigest()[:20]
+
+        # TODO: make sure email is still unique (use transaction)
+        user = User.objects.create_user(username, email)
+
+        profile = user.get_profile()
+        for field in self.Meta.fields:
+            setattr(profile, field, self.cleaned_data[field])
+
+        if self.cleaned_data['is_expert']:
+            profile.referendum = 'expert' if self.cleaned_data['about'] else 'voter'
+        else:
+            profile.referendum = 'voter'
+
+        profile.save()
+
+        user.is_active = False
+        user.save()
+
+        ActivationProfile.objects.init_activation(user)
+
+        return profile
+
 # TODO: add next hidden field
 @resources_init
 @location_init(True, u'Место жительства')

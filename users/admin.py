@@ -10,7 +10,7 @@ class MessageAdmin(admin.ModelAdmin):
     raw_id_fields = ('sender', 'receiver')
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'first_name', 'last_name', 'intro', 'about', 'rating')
+    list_display = ('id', 'user', 'first_name', 'last_name', 'intro', 'referendum', 'about', 'rating')
     ordering = ('-add_time',)
     search_fields = ('user__email', 'first_name', 'last_name')
     raw_id_fields = ('user',)

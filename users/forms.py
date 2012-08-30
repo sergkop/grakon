@@ -11,7 +11,7 @@ from users.models import Message, Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user',)
+        exclude = ('user', 'referendum')
 
     helper = form_helper('', u'Сохранить')
     helper.layout = Layout(

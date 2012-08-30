@@ -1,9 +1,14 @@
 # -*- coding:utf-8 -*-
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 
+from elements.participants.models import EntityParticipant
 from elements.views import entity_base_view, entity_tabs_view
+from referendum.forms import QuestionForm
 from referendum.models import InitiativeGroup, Question
 
 class BaseReferendumView(object):
@@ -26,6 +31,7 @@ class BaseReferendumView(object):
 
         ctx.update({
             'title': u'Референдум',
+            'is_referendum_page': True,
         })
         ctx.update(self.update_context())
         return ctx
@@ -78,6 +84,7 @@ class BaseQuestionView(object):
         ctx.update({
             'title': u'Вопрос: '+self.entity.title,
             'question': self.entity,
+            'is_referendum_page': True,
         })
         return ctx
 
@@ -87,6 +94,24 @@ class QuestionView(BaseQuestionView, TemplateView):
 class QuestionSupportersView(BaseQuestionView, TemplateView):
     tab = 'supporters'
 
+class CreateQuestionView(CreateView):
+    template_name = 'referendum/create_question.html'
+    form_class = QuestionForm
+    model = Question
+
+    def form_valid(self, form):
+        if self.request.profile.referendum != 'expert':
+            return HttpResponse(u'Только эксперты могут добавлять вопросы для референдума')
+
+        question = form.save()
+
+        EntityParticipant.objects.add(question, self.request.profile, 'admin')
+        EntityParticipant.objects.add(question, self.request.profile, 'follower')
+
+        response = super(CreateQuestionView, self).form_valid(form)
+        return response
+
+create_question = login_required(CreateQuestionView.as_view())
 
 class BaseInitiativeGroupView(object):
     template_name = 'referendum/group_base.html'
@@ -112,6 +137,7 @@ class BaseInitiativeGroupView(object):
         ctx.update({
             'title': u'Инициативная группа: '+self.entity.location.name,
             'group': self.entity,
+            'is_referendum_page': True,
         })
         return ctx
 

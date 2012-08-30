@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from referendum.views import AboutView, GroupsView, InitiativeGroupView, InitiativeGroupSupportersView, \
-        QuestionsView, QuestionView, QuestionSupportersView
+from referendum.views import *
 
 urlpatterns = patterns('',
     url(r'^referendum$', QuestionsView.as_view(), name='referendum'),
@@ -10,6 +9,7 @@ urlpatterns = patterns('',
 
     url(r'^question/(?P<id>\d+)$', QuestionView.as_view(), name='question'),
     url(r'^question/(?P<id>\d+)/supporters$', QuestionSupportersView.as_view(), name='question_supporters'),
+    url(r'^create_question$', CreateQuestionView.as_view(), name='create_question'),
 
     url(r'^initiative_group/(?P<id>\d+)$', InitiativeGroupView.as_view(), name='initiative_group'),
     url(r'^initiative_group/(?P<id>\d+)/supporters$', InitiativeGroupSupportersView.as_view(), name='initiative_group_participants'),

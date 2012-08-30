@@ -1,6 +1,23 @@
 {% for info in questions %}
     <div class="gr-ideas-item">
-        <div class="gr-add"><span class="gr-arrow-up" title="Добавить ресурсы">&nbsp;</span><i>{{ info.participants.follower.count }}</i><span class="gr-arrow-down disabled" title="Добавить ресурсы">&nbsp;</span></div>
+        {% with id=info.instance.id ct=info.ct %}
+            <div class="gr-add"><span id="arrow_up_{{ ct }}_{{ id }}" class="gr-arrow-up {% if request.user.is_authenticated and id in request.profile_info.questions.follower.ids %}disabled{% endif %}" title="Добавить ресурсы">&nbsp;</span><i>{{ info.participants.follower.count }}</i><span id="arrow_down_{{ ct }}_{{ id }}" class="gr-arrow-down {% if not request.user.is_authenticated or id not in request.profile_info.questions.follower.ids %}disabled{% endif %}" title="Добавить ресурсы">&nbsp;</span></div>
+
+            <script type="text/javascript">
+                $(function(){
+                    {% if request.user.is_authenticated %}
+                        {% if id in request.profile_info.questions.follower.ids %}
+                            $("#arrow_down_{{ ct }}_{{ id }}").click(function(){$("#cancel_follower_dialog_{{ ct }}_{{ id }}").dialog("open");});
+                        {% else %}
+                            $("#arrow_up_{{ ct }}_{{ id }}").click(function(){$("#confirm_follower_dialog_{{ ct }}_{{ id }}").dialog("open");});
+                        {% endif %}
+                    {% else %}
+                        $("#arrow_up_{{ ct }}_{{ id }}").click(login_dialog_init);
+                    {% endif %}
+                });
+            </script>
+        {% endwith %}
+
         <div class="gr-ideas-content">
             <h4><a href="{{ info.instance.url }}">{{ info.instance.title }}</a></h4>
         </div>
@@ -11,17 +28,18 @@
 
                 <span class="gr-bullet">&nbsp;</span>
                 <span class="dimmed gr-pseudolink js-follow">Поддержали: {{ info.participants.follower.count }}</span>
-                <span class="gr-bullet">&nbsp;</span>
 
-                {% if request.user.is_authenticated and info.instance.id in request.profile_info.questions.follower.ids %}
-                    {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
-                        {% include "participants/participate_button.html" %}
-                    {% endwith %}
-                {% else %}
-                    {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
-                        {% include "participants/participate_button.html" %}
-                    {% endwith %}
-                {% endif %}
+                <span class="hidden">
+                    {% if request.user.is_authenticated and info.instance.id in request.profile_info.questions.follower.ids %}
+                        {% with is_participant=1 button=info.instance.follow_button btn_class="bold" %}
+                            {% include "participants/participate_button.html" %}
+                        {% endwith %}
+                    {% else %}
+                        {% with is_participant=0 button=info.instance.follow_button btn_class="bold" %}
+                            {% include "participants/participate_button.html" %}
+                        {% endwith %}
+                    {% endif %}
+                </span>
             </div>
 
             <div class="ym-clearfix">&nbsp;</div>

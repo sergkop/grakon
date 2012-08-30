@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block right_column %}
+    <div class="gr-side-item gr-mb15">
+        <h4>Предложил:</h4>
+        {% with person=info.participants.admin.entities.0 %}
+            {% include "participants/person.html" %}
+        {% endwith %}
+    </div>
+
     <div align="center" class="gr-mb20">
         {% with is_participant=is_follower button=question.follow_button btn_class="gr-follow-button" pressed_button="gr-grey-button" %}
             {% include "participants/participate_button.html" %}

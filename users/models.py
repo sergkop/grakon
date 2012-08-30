@@ -68,6 +68,10 @@ class Profile(BaseEntityModel):
             help_text=u'например: "юрист", "создатель проекта Гракон", "любитель рисовать карикатуры"')
     about = HTMLField(u'О себе', default='', blank=True)
 
+    referendum = models.CharField(max_length=10, default='',
+            choices=(('', ''), ('voter', 'voter'), ('expert', 'expert'))
+    )
+
     objects = ProfileManager()
 
     entity_name = 'participants'
