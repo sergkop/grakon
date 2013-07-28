@@ -12,8 +12,8 @@ from navigation.forms import FeedbackForm
 def main(request):
     country = Location.objects.country()
 
-    if request.user.is_authenticated():
-        return redirect(country.get_absolute_url())
+    #if request.user.is_authenticated():
+    return redirect(country.get_absolute_url())
 
     data = {}
     for entity_type in ('tasks', 'ideas', 'projects'):
